@@ -24,6 +24,10 @@ services:
     image: node:22-alpine
     environment:
       HISTFILE: /root/log/.history
+    ports:
+      - 4000:4000
+      - 4001:4001
+      - 4002:4002
     volumes:
       - ./:/app
       - ./tmp/.history:/root/log/.history
