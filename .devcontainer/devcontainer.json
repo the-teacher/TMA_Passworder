@@ -1,0 +1,17 @@
+{
+  "name": "TMA Dev Container",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "node",
+  "remoteUser": "root",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    },
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "/bin/sh",
+      "typescript.tsdk": "/app/_Frontend/node_modules/typescript/lib",
+      "eslint.workingDirectories": ["/app"]
+    }
+  }
+}
