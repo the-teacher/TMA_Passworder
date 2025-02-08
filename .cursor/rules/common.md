@@ -8,3 +8,5 @@
 6. Keep consistency in versions of Node.js, Module system, TypeScript, in configurations for ESLint, Jest, Prettier, build.mjs and package.json.
 7. TypeScript. Always prefer using types instead of interfaces.
 8. Always use `yarn` instead of `npm`.
+9. ENV variables should be defined on the top of the file and be in uppercase.
+10. Where possible, use 2 spaces for indentation and configure linters and formatters to use 2 spaces for indentation.
