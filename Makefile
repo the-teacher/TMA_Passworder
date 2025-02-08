@@ -10,14 +10,19 @@ status:
 node_shell:
 	docker compose exec node sh
 
-node_backend_shell:
+backend_shell:
 	docker compose exec node sh -c "cd _Backend && sh"
 
-node_frontend_shell:
+frontend_shell:
 	docker compose exec node sh -c "cd _Frontend && sh"
 
-node_bot_shell:
+bot_shell:
 	docker compose exec node sh -c "cd _Bot && sh"
 
 postgres_shell:
 	docker compose exec postgres bash
+
+yarn_upgrade:
+	docker compose exec node sh -c "corepack enable"
+	docker compose exec node sh -c "corepack prepare yarn@latest --activate"
+	docker compose exec node sh -c "yarn -v"
