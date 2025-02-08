@@ -7,3 +7,4 @@
 5. Things related to JEST configuration should be in `.eslintrc.cjs` file. Never put them in `package.json`.
 6. Keep consistency in versions of Node.js, Module system, TypeScript, in configurations for ESLint, Jest, Prettier, build.mjs and package.json.
 7. TypeScript. Always prefer using types instead of interfaces.
+8. Always use `yarn` instead of `npm`.
