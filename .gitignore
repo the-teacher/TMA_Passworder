@@ -1,0 +1,31 @@
+# COMMON
+.DS_Store
+/tmp
+/dist
+/build
+/coverage
+/logs
+/data
+
+# FOR NODE
+/node_modules
+
+# FOR YARN
+.yarn
+.yarnrc
+.yarnrc.yml
+.yarn/
+.yarn/cache
+
+# FOR NPM
+.npmrc
+.npm
+.npm/
+.npm/cache
+.npm/tmp
+
+# FOR PNPM
+.pnpm
+.pnpm/
+.pnpm/cache
+.pnpm/tmp

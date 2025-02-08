@@ -1,0 +1,31 @@
+name: tma-start-kit
+
+services:
+  # ================================
+  # Postgres
+  # ================================
+  postgres:
+    image: postgres:16
+    environment:
+      PSQL_HISTFILE: /root/log/.psql_history
+      PGPORT: 5432
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: initial_database
+    volumes:
+      - ./data/PSQL:/var/lib/postgresql/data
+      - ./tmp/.psql_history:/root/log/.psql_history
+
+  # ================================
+  # Node
+  # ================================
+  node:
+    image: node:22-alpine
+    environment:
+      HISTFILE: /root/log/.history
+    volumes:
+      - ./:/app
+      - ./tmp/.history:/root/log/.history
+    working_dir: /app
+    command: sleep infinity
