@@ -9,6 +9,16 @@
 
 ### Module Structure
 
+Important rules for file organization:
+
+1. If there is only ONE file of a certain type (test, util, service, etc), it should be placed directly in the component's root folder, NOT in a subfolder
+2. Create specialized subfolders (**tests**, utils/, services/, etc) ONLY when there are MULTIPLE files of that type
+3. Examples:
+   - Single test file → `MyComponent/MyComponent.test.ts`
+   - Multiple test files → `MyComponent/__tests__/MyComponent.test1.ts`, `MyComponent/__tests__/MyComponent.test2.ts`
+   - Single utility file → `MyComponent/utils.ts`
+   - Multiple utility files → `MyComponent/utils/utils.time.ts`, `MyComponent/utils/utils.string.ts`
+
 If I have a component with name `MyComponent`
 It has the following structure:
 
@@ -62,4 +72,22 @@ const MyComponent = () => {
 };
 
 export default MyComponent;
+```
+
+### Child components and types
+
+Not Expected:
+
+```ts
+type AsideLeftProps = {
+  children: ReactNode;
+};
+
+const AsideLeft = ({ children }: AsideLeftProps) => (...);
+```
+
+Expected:
+
+```ts
+const AsideLeft = ({ children }: { children: ReactNode }) => (...);
 ```

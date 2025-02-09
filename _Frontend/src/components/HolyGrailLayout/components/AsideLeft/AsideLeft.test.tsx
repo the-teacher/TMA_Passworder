@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import AsideLeft from "../AsideLeft";
+import AsideLeft from "./AsideLeft";
 
 describe("AsideLeft", () => {
   it("should render children correctly", () => {
