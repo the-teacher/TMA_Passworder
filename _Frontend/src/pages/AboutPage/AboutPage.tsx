@@ -1,6 +1,7 @@
 const AboutPage = () => (
-  <div className="about-page">
-    <h1>About Page</h1>
+  <div>
+    <h2>About Page</h2>
+    <p>Learn more about our application.</p>
   </div>
 );
 

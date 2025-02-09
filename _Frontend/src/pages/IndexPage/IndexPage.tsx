@@ -1,6 +1,7 @@
 const IndexPage = () => (
-  <div className="index-page">
-    <h1>Home Page</h1>
+  <div>
+    <h2>Home Page</h2>
+    <p>Welcome to the home page!</p>
   </div>
 );
 

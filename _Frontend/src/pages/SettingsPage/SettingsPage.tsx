@@ -1,6 +1,7 @@
 const SettingsPage = () => (
-  <div className="settings-page">
-    <h1>Settings Page</h1>
+  <div>
+    <h2>Settings Page</h2>
+    <p>Manage your application settings here.</p>
   </div>
 );
 
