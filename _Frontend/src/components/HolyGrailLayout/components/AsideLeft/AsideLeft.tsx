@@ -1,10 +1,6 @@
 import { type ReactNode } from "react";
 
-type AsideLeftProps = {
-  children: ReactNode;
-};
-
-const AsideLeft = ({ children }: AsideLeftProps) => (
+const AsideLeft = ({ children }: { children: ReactNode }) => (
   <aside className="holy-grail--aside">{children}</aside>
 );
 

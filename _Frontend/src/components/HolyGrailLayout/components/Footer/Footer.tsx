@@ -1,10 +1,6 @@
 import { type ReactNode } from "react";
 
-type FooterProps = {
-  children: ReactNode;
-};
-
-const Footer = ({ children }: FooterProps) => (
+const Footer = ({ children }: { children: ReactNode }) => (
   <footer className="holy-grail--footer">
     <div className="holy-grail--container">{children}</div>
   </footer>

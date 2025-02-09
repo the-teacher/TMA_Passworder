@@ -1,10 +1,6 @@
 import { type ReactNode } from "react";
 
-type HeaderProps = {
-  children: ReactNode;
-};
-
-const Header = ({ children }: HeaderProps) => (
+const Header = ({ children }: { children: ReactNode }) => (
   <header className="holy-grail--header">
     <div className="holy-grail--container">{children}</div>
   </header>

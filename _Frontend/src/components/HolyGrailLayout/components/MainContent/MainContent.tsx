@@ -1,10 +1,6 @@
 import { type ReactNode } from "react";
 
-type MainContentProps = {
-  children: ReactNode;
-};
-
-const MainContent = ({ children }: MainContentProps) => (
+const MainContent = ({ children }: { children: ReactNode }) => (
   <main className="holy-grail--content">{children}</main>
 );
 
