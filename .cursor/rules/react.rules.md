@@ -74,6 +74,26 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 
+### Naming of styles
+
+Not Expected:
+
+```
+MyComponent/
+    index.ts
+    MyComponent.tsx
+    MyComponent.scss
+```
+
+Expected:
+
+```
+MyComponent/
+    index.ts
+    MyComponent.tsx
+    styles.scss
+```
+
 ### Child components and types
 
 Not Expected:
@@ -90,4 +110,28 @@ Expected:
 
 ```ts
 const AsideLeft = ({ children }: { children: ReactNode }) => (...);
+```
+
+### Components without return when it is not necessary
+
+Not Expected:
+
+```ts
+const IndexPage = () => {
+  return (
+    <div className="index-page">
+      <h1>Home Page</h1>
+    </div>
+  );
+};
+```
+
+Expected:
+
+```ts
+const IndexPage = () => (
+  <div className="index-page">
+    <h1>Home Page</h1>
+  </div>
+);
 ```
