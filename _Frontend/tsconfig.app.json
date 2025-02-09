@@ -16,7 +16,7 @@
     "jsx": "react-jsx",
 
     /* React specific */
-    "types": ["react", "react-dom"],
+    "types": ["react", "react-dom", "jest"],
     "allowJs": true,
     "esModuleInterop": true,
 
