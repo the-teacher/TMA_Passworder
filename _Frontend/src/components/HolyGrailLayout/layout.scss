@@ -1,13 +1,6 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 16px;
-}
+/* Variables */
+$header-min-height: 40px;
+$footer-min-height: 40px;
 
 /* Layout */
 body {
@@ -30,7 +23,7 @@ body {
   &--header {
     width: 100%;
     background-color: #dcdcdc;
-    min-height: 100px;
+    min-height: $header-min-height;
     padding: 0 15px;
   }
 
@@ -75,7 +68,7 @@ body {
   &--footer {
     width: 100%;
     background-color: #dcdcdc;
-    min-height: 100px;
+    min-height: $footer-min-height;
     padding: 0 15px;
 
     display: flex;

@@ -3,6 +3,7 @@ import { routes } from "./routes";
 import { HolyGrailLayoutWithParams } from "./components/HolyGrailLayout";
 import { Suspense } from "react";
 import Navigation from "./components/Navigation";
+import "./globalStyles.scss";
 
 const router = createBrowserRouter(routes);
 
