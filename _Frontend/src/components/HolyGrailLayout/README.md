@@ -1,12 +1,12 @@
 # HolyGrailLayout Component
 
-This component implements the Holy Grail Layout using React. It is broken down into subcomponents to allow for easy customization and insertion of content.
+This component implements the Holy Grail Layout using React. It provides two different ways to compose the layout.
 
-## Usage
+## Usage Option 1: Component Composition
+
+Using nested components for explicit layout structure:
 
 ```jsx
-import React from "react";
-import ReactDOM from "react-dom";
 import HolyGrailLayout, {
   Header,
   Footer,
@@ -14,30 +14,85 @@ import HolyGrailLayout, {
   AsideRight,
   MainContent,
   MainColumns,
-} from "./HolyGrailLayout.jsx";
+} from "./components/HolyGrailLayout";
 
-ReactDOM.render(
+const App = () => (
   <HolyGrailLayout>
-    <Header>Header Content</Header>
+    <Header>
+      <h1>Header Content</h1>
+    </Header>
+
     <MainColumns>
-      <AsideLeft>Sidebar</AsideLeft>
-      <MainContent>Main Content</MainContent>
-      <AsideRight>Sidebar</AsideRight>
+      <AsideLeft>
+        <h2>Left Sidebar</h2>
+      </AsideLeft>
+      <MainContent>
+        <h2>Main Content</h2>
+      </MainContent>
+      <AsideRight>
+        <h2>Right Sidebar</h2>
+      </AsideRight>
     </MainColumns>
-    <Footer>Footer Content</Footer>
-  </HolyGrailLayout>,
-  document.getElementById("root")
+
+    <Footer>
+      <p>Footer Content</p>
+    </Footer>
+  </HolyGrailLayout>
+);
+```
+
+## Usage Option 2: Props-based Layout
+
+Using props to define each section, with optional sections:
+
+```jsx
+import { HolyGrailLayoutWithParams } from "./components/HolyGrailLayout";
+
+const App = () => (
+  <HolyGrailLayoutWithParams
+    header={<h1>Header Content</h1>}
+    leftSidebar={<h2>Left Sidebar</h2>}
+    content={<h2>Main Content</h2>}
+    rightSidebar={<h2>Right Sidebar</h2>}
+    footer={<p>Footer Content</p>}
+  />
 );
 ```
 
 ## Components
 
-- `HolyGrailLayout`: The main layout component.
-- `Header`: The header component.
-- `Footer`: The footer component.
-- `AsideLeft`: The left sidebar component.
-- `AsideRight`: The right sidebar component.
-- `MainContent`: The main content component.
-- `MainColumns`: The main columns container component.
+### Base Components
 
-Each component accepts `children` as props to allow for the insertion of custom content.
+- `HolyGrailLayout`: The main layout component for composition approach
+- `HolyGrailLayoutWithParams`: Alternative props-based layout component
+
+### Layout Sections
+
+- `Header`: The header component
+- `Footer`: The footer component
+- `AsideLeft`: The left sidebar component
+- `AsideRight`: The right sidebar component
+- `MainContent`: The main content component
+- `MainColumns`: The main columns container component
+
+## Props
+
+### HolyGrailLayout
+
+- `children`: ReactNode - Layout sections as child components
+
+### HolyGrailLayoutWithParams
+
+- `header?`: ReactNode - Optional header content
+- `leftSidebar?`: ReactNode - Optional left sidebar content
+- `content`: ReactNode - Required main content
+- `rightSidebar?`: ReactNode - Optional right sidebar content
+- `footer?`: ReactNode - Optional footer content
+
+## Features
+
+- Responsive layout
+- Flexible composition
+- Optional sections (when using HolyGrailLayoutWithParams)
+- Maintains semantic HTML structure
+- Consistent styling across both usage patterns
