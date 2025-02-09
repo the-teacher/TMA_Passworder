@@ -10,3 +10,5 @@
 8. Always use `yarn` instead of `npm`.
 9. ENV variables should be defined on the top of the file and be in uppercase.
 10. Where possible, use 2 spaces for indentation and configure linters and formatters to use 2 spaces for indentation.
+11. Always use TypeScript by default.
+12. Use Yarn with Node Modules and `"moduleResolution": "node"` for TypeScript configuration.
