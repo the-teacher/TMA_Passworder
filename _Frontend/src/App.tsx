@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router";
 import AppRoutes from "./routes";
 
 // import Navigation from "./components/Navigation";
+import Header from "./components/Header";
 import { HolyGrailLayoutWithParams } from "./components/HolyGrailLayout";
 import FooterNavigation from "./components/FooterNavigation/FooterNavigation";
 
@@ -12,7 +13,7 @@ const App = () => (
   <Suspense fallback={<div>Loading...</div>}>
     <BrowserRouter>
       <HolyGrailLayoutWithParams
-        header={<h1>Password Manager</h1>}
+        header={<Header />}
         // leftSidebar={<Navigation />}
         content={<AppRoutes />}
         footer={<FooterNavigation />}

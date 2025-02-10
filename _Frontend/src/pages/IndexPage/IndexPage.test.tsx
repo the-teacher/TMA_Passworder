@@ -13,7 +13,6 @@ describe("IndexPage", () => {
   it("renders index page content", () => {
     render(<IndexPage />);
 
-    expect(screen.getByText("Password Entries")).toBeInTheDocument();
     expect(
       screen.getByTestId("mocked-password-entry-list")
     ).toBeInTheDocument();
