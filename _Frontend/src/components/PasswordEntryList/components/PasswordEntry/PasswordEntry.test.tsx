@@ -21,12 +21,12 @@ describe("PasswordEntry", () => {
     expect(screen.getByText(mockProps.name)).toBeInTheDocument();
   });
 
-  it("renders view button with correct link", () => {
+  it("renders entry link with correct href", () => {
     renderWithRouter();
-    const viewButton = screen.getByText("View");
-    expect(viewButton.closest("a")).toHaveAttribute(
+    const entryLink = screen.getByText(mockProps.name).closest("a");
+    expect(entryLink).toHaveAttribute(
       "href",
-      `/entry/${mockProps.id}`
+      `/password-entry/${mockProps.id}`
     );
   });
 });

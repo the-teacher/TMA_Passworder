@@ -16,7 +16,7 @@ const mockEntries: PasswordEntryType[] = Array.from(
 );
 
 const PasswordEntryList = () => (
-  <div className="password-list">
+  <div className="password-entry-list">
     {mockEntries.map((entry) => (
       <PasswordEntry key={entry.id} {...entry} />
     ))}

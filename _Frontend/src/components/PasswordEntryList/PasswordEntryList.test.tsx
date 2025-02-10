@@ -18,16 +18,16 @@ describe("PasswordEntryList", () => {
     expect(entries).toHaveLength(30);
   });
 
-  it("renders view buttons with correct links", () => {
+  it("renders entries with correct links", () => {
     renderWithRouter();
 
-    const viewButtons = screen.getAllByText("View");
-    expect(viewButtons).toHaveLength(30);
+    const entries = screen.getAllByText(/Password Entry \d+/);
+    expect(entries).toHaveLength(30);
 
-    viewButtons.forEach((button, index) => {
-      expect(button.closest("a")).toHaveAttribute(
+    entries.forEach((entry, index) => {
+      expect(entry.closest("a")).toHaveAttribute(
         "href",
-        `/entry/entry-${index + 1}`
+        `/password-entry/entry-${index + 1}`
       );
     });
   });

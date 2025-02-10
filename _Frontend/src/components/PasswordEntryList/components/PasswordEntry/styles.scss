@@ -1,3 +1,4 @@
+// Main entry container
 .password-entry {
   display: flex;
   justify-content: space-between;
@@ -6,22 +7,32 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  transition: background-color 0.15s ease-in-out;
+}
 
-  &--name {
-    font-size: 16px;
-    color: #333;
-  }
+// Entry name element
+.password-entry--name {
+  font-size: 16px;
+  color: #333;
+}
 
-  &--view-btn {
-    padding: 6px 16px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
+// Hover state for desktop devices
+@media (hover: hover) {
+  .password-entry:hover {
+    background-color: #f8f9fa;
     text-decoration: none;
-    font-size: 14px;
+  }
+}
 
-    &:hover {
-      background-color: #0056b3;
-    }
+// Active state for mobile tap
+.password-entry:active {
+  background-color: #e9ecef;
+}
+
+// Mobile styles
+@media (0 < width < 520px) {
+  .password-entry {
+    padding: 16px;
   }
 }
