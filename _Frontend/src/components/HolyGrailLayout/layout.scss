@@ -1,13 +1,30 @@
 /* Variables */
 $header-min-height: 40px;
-$footer-min-height: 40px;
+$footer-min-height: 60px;
+
+// Colors
+// $color-body-bg: #f0f0f0;
+// $color-header-bg: #dcdcdc;
+// $color-footer-bg: #dcdcdc;
+// $color-main-bg: #e8e8e8;
+// $color-container-bg: #f1f1f1;
+// $color-aside-bg: #dfffdf;
+// $color-content-bg: #fff;
+
+$color-body-bg: #fff;
+$color-header-bg: #fff;
+$color-footer-bg: #fff;
+$color-main-bg: #fff;
+$color-container-bg: #fff;
+$color-aside-bg: #fff;
+$color-content-bg: #fff;
 
 /* Layout */
 body {
   /* Ensure full viewport height on mobile devices */
   min-height: 100dvh;
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: $color-body-bg;
 
   /* Flex container (as parent) */
   display: flex;
@@ -22,14 +39,14 @@ body {
 .holy-grail {
   &--header {
     width: 100%;
-    background-color: #dcdcdc;
+    background-color: $color-header-bg;
     min-height: $header-min-height;
     padding: 0 15px;
   }
 
   &--main {
     width: 100%;
-    background-color: #e8e8e8;
+    background-color: $color-main-bg;
     padding: 0 15px;
 
     /* Fill remaining space (as child) */
@@ -43,7 +60,7 @@ body {
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    background-color: #f1f1f1;
+    background-color: $color-container-bg;
   }
 
   &--main-columns {
@@ -53,21 +70,21 @@ body {
   }
 
   &--aside {
-    background-color: #dfffdf;
+    background-color: $color-aside-bg;
     padding: 15px;
     min-width: 200px;
     max-width: 300px;
   }
 
   &--content {
-    background-color: #fff;
+    background-color: $color-content-bg;
     padding: 15px;
     flex: 1;
   }
 
   &--footer {
     width: 100%;
-    background-color: #dcdcdc;
+    background-color: $color-footer-bg;
     min-height: $footer-min-height;
     padding: 0 15px;
 
@@ -83,23 +100,23 @@ body {
 }
 
 // Media queries at root level
-.holy-grail--container {
-  @media (0 < width < 520px) {
-    padding: 0 16px;
-  }
+// .holy-grail--container {
+//   @media (0 < width < 520px) {
+//     padding: 0 16px;
+//   }
 
-  @media (520px < width < 840px) {
-    padding: 0 24px;
-  }
+//   @media (520px < width < 840px) {
+//     padding: 0 24px;
+//   }
 
-  @media (840px < width < 1200px) {
-    padding: 0 32px;
-  }
+//   @media (840px < width < 1200px) {
+//     padding: 0 32px;
+//   }
 
-  @media (1200px < width < 1440px) {
-    padding: 0 40px;
-  }
-}
+//   @media (1200px < width < 1440px) {
+//     padding: 0 40px;
+//   }
+// }
 
 .holy-grail--main-columns {
   @media (0 < width < 840px) {

@@ -6,6 +6,11 @@
   padding: 8px 0;
   background-color: #fff;
   border-top: 1px solid #eee;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .footer-navigation__item {
@@ -22,8 +27,8 @@
 }
 
 .footer-navigation__icon {
-  width: 24px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
 }
 
 .footer-navigation__text {
@@ -35,10 +40,10 @@
     padding: 12px 0;
   }
 
-  .footer-navigation__icon {
-    width: 20px;
-    height: 20px;
-  }
+  // .footer-navigation__icon {
+  //   width: 20px;
+  //   height: 20px;
+  // }
 
   .footer-navigation__text {
     font-size: 10px;

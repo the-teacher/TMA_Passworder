@@ -1,11 +1,38 @@
-1. Where is is possible and reasonable use arrow functions instead of function declarations.
-2. If file has more then 3 exports, export at the end of the file.
-3. Use `yarn` instead of `npm`.
-4. Always use TypeScript by default.
-5. Use SCSS by default.
-6. Use BEM naming convention for CSS classes.
-7. Do not use `React.FC` for components.
-8. Use Yarn with Node Modules and `"moduleResolution": "node"` for TypeScript configuration.
+### Use Arrow Functions
+
+Where is is possible and reasonable use arrow functions instead of function declarations.
+
+### Export at the end of the file
+
+If file has more then 3 exports, export functions at the end of the file.
+
+### Use Yarn
+
+Use `yarn` instead of `npm`.
+
+### Use TypeScript
+
+Always use TypeScript by default.
+
+### Use SCSS
+
+Use SCSS by default.
+
+### Use BEM
+
+Use BEM naming convention for CSS classes.
+
+### Do not use
+
+Do not use `React.FC` for components.
+
+### TypeScript
+
+Use Yarn with Node Modules and `"moduleResolution": "node"` for TypeScript configuration.
+
+### React Router 7
+
+Instead of `"react-router-dom"` use `"react-router"`
 
 ### Module Structure
 
@@ -76,7 +103,7 @@ export default MyComponent;
 
 ### Naming of styles
 
-Not Expected:
+Bad:
 
 ```
 MyComponent/
@@ -85,7 +112,7 @@ MyComponent/
     MyComponent.scss
 ```
 
-Expected:
+Good:
 
 ```
 MyComponent/
@@ -96,7 +123,7 @@ MyComponent/
 
 ### Child components and types
 
-Not Expected:
+Bad:
 
 ```ts
 type AsideLeftProps = {
@@ -106,7 +133,7 @@ type AsideLeftProps = {
 const AsideLeft = ({ children }: AsideLeftProps) => (...);
 ```
 
-Expected:
+Good:
 
 ```ts
 const AsideLeft = ({ children }: { children: ReactNode }) => (...);
@@ -114,7 +141,7 @@ const AsideLeft = ({ children }: { children: ReactNode }) => (...);
 
 ### Components without return when it is not necessary
 
-Not Expected:
+Bad:
 
 ```ts
 const IndexPage = () => {
@@ -126,7 +153,7 @@ const IndexPage = () => {
 };
 ```
 
-Expected:
+Good:
 
 ```ts
 const IndexPage = () => (

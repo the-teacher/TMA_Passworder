@@ -1,8 +1,10 @@
+import PasswordEntryList from "../../components/PasswordEntryList";
+
 const IndexPage = () => (
-  <>
-    <h2>Home Page</h2>
-    <p>Welcome to the home page!</p>
-  </>
+  <div>
+    <h2>Password Entries</h2>
+    <PasswordEntryList />
+  </div>
 );
 
 export default IndexPage;
