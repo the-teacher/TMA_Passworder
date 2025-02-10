@@ -15,17 +15,6 @@ const SuspenseWrapper = ({ children }: { children: ReactNode }) => (
   <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
 );
 
-const AppRoute = ({
-  element,
-  ...props
-}: {
-  element: ReactNode;
-  path?: string;
-  index?: boolean;
-}) => (
-  <Route {...props} element={<SuspenseWrapper>{element}</SuspenseWrapper>} />
-);
-
 const routesConfig = [
   { index: true, element: <IndexPage /> },
   { path: "create", element: <CreatePage /> },
