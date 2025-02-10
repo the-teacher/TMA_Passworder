@@ -1,0 +1,12 @@
+.loading-fallback {
+  &--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  &--text {
+    font-size: 1.25rem;
+  }
+}

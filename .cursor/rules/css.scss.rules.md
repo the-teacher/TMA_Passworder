@@ -90,3 +90,15 @@ Sould be written like this:
 ### No Tags in CSS
 
 Do not use tags in CSS. Use classes instead.
+
+### Units
+
+Use PX units for all values.
+
+Example:
+
+```scss
+.holy-grail {
+  &--container {
+    max-width: 1440px;
+```
