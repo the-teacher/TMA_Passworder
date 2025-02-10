@@ -1,7 +1,8 @@
 export default {
   preset: "ts-jest",
   testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
+  setupFiles: ["<rootDir>/test/setupFiles.ts"],
+  setupFilesAfterEnv: ["<rootDir>/test/setupFilesAfterEnv.ts"],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "^@/(.*)$": "<rootDir>/src/$1",

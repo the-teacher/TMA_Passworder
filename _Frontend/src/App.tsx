@@ -1,20 +1,27 @@
-import { RouterProvider, createBrowserRouter } from "react-router";
-import { routes } from "./routes";
-import { HolyGrailLayoutWithParams } from "./components/HolyGrailLayout";
 import { Suspense } from "react";
+import { BrowserRouter, useRoutes } from "react-router";
+import { routes } from "./routes";
+
 import Navigation from "./components/Navigation";
+import { HolyGrailLayoutWithParams } from "./components/HolyGrailLayout";
+import FooterNavigation from "./components/FooterNavigation/FooterNavigation";
+
 import "./globalStyles.scss";
 
-const router = createBrowserRouter(routes);
+const AppRoutes = () => {
+  return useRoutes(routes);
+};
 
 const App = () => (
   <Suspense fallback={<div>Loading...</div>}>
-    <HolyGrailLayoutWithParams
-      header={<h1>My Application</h1>}
-      leftSidebar={<Navigation />}
-      content={<RouterProvider router={router} />}
-      footer={<p>Footer Content © 2024</p>}
-    />
+    <BrowserRouter>
+      <HolyGrailLayoutWithParams
+        header={<h1>My Application</h1>}
+        leftSidebar={<Navigation />}
+        content={<AppRoutes />}
+        footer={<FooterNavigation />}
+      />
+    </BrowserRouter>
   </Suspense>
 );
 

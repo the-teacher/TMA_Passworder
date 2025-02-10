@@ -1,22 +1,35 @@
-1. Breakpoints:
-   - Mobile: 520px (0-520px is mobile)
-   - Tablet: 840px (521-840px is tablet)
-   - Desktop: 1200px (841-1200px is desktop)
-   - Large Desktop: 1440px (1201-1440px is large desktop)
-   - Limit container max-width to 1440px.
-2. Use modern width syntax for media queries. Like this:
-   ```css
-   @media (0 < width < 520px) {
-     ...;
-   }
-   ```
-3. Use BEM naming convention for CSS classes.
-   `-` - delimiter in names of (block, element, modifier).
-   `--` - delimiter between block and element.
-   `__` - delimiter between element and modifier.
-4. Where possible Use SCSS by default.
-5. Follow modern SCSS syntax. Use `@use`, `@forward` and other modern SCSS features.
-6. In SCSS try to avoid using more then 2 levels of nesting (It is difficult to read and maintain).
+### Breakpoints:
+
+- Mobile: 520px (0-520px is mobile)
+- Tablet: 840px (521-840px is tablet)
+- Desktop: 1200px (841-1200px is desktop)
+- Large Desktop: 1440px (1201-1440px is large desktop)
+- Limit container max-width to 1440px.
+
+### Media Queries
+
+Use modern width syntax for media queries. Like this:
+
+```css
+@media (0 < width < 520px) {
+  ...;
+}
+```
+
+### BEM Naming Convention
+
+Use BEM naming convention for CSS classes.
+`-` - delimiter in names of (block, element, modifier).
+`--` - delimiter between block and element.
+`__` - delimiter between element and modifier. 4. Where possible Use SCSS by default.
+
+### Modern SCSS
+
+Follow modern SCSS syntax. Use `@use`, `@forward` and other modern SCSS features.
+
+### SCSS Nesting
+
+In SCSS try to avoid using more then 2 levels of nesting (It is difficult to read and maintain).
 
 Example:
 
@@ -73,3 +86,7 @@ Sould be written like this:
   }
 }
 ```
+
+### No Tags in CSS
+
+Do not use tags in CSS. Use classes instead.
