@@ -8,5 +8,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: FRONTEND_PORT,
-  },
+    strictPort: true
+  }
 });
