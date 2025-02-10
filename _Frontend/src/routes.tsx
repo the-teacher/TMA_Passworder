@@ -1,5 +1,5 @@
 import { Suspense, lazy, ReactNode } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, RouteProps } from "react-router";
 import LoadingFallback from "./components/LoadingFallback";
 
 const IndexPage = lazy(() => import("./pages/IndexPage"));
@@ -15,72 +15,37 @@ const SuspenseWrapper = ({ children }: { children: ReactNode }) => (
   <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
 );
 
+const AppRoute = ({
+  element,
+  ...props
+}: {
+  element: ReactNode;
+  path?: string;
+  index?: boolean;
+}) => (
+  <Route {...props} element={<SuspenseWrapper>{element}</SuspenseWrapper>} />
+);
+
+const routesConfig = [
+  { index: true, element: <IndexPage /> },
+  { path: "create", element: <CreatePage /> },
+  { path: "search", element: <SearchPage /> },
+  { path: "favorites", element: <FavoritesPage /> },
+  { path: "logout", element: <LogoutPage /> },
+  { path: "settings", element: <SettingsPage /> },
+  { path: "about", element: <AboutPage /> },
+  { path: "*", element: <NotFoundPage /> },
+];
+
 const AppRoutes = () => (
   <Routes>
-    <Route
-      index
-      element={
-        <SuspenseWrapper>
-          <IndexPage />
-        </SuspenseWrapper>
-      }
-    />
-    <Route
-      path="create"
-      element={
-        <SuspenseWrapper>
-          <CreatePage />
-        </SuspenseWrapper>
-      }
-    />
-    <Route
-      path="search"
-      element={
-        <SuspenseWrapper>
-          <SearchPage />
-        </SuspenseWrapper>
-      }
-    />
-    <Route
-      path="favorites"
-      element={
-        <SuspenseWrapper>
-          <FavoritesPage />
-        </SuspenseWrapper>
-      }
-    />
-    <Route
-      path="logout"
-      element={
-        <SuspenseWrapper>
-          <LogoutPage />
-        </SuspenseWrapper>
-      }
-    />
-    <Route
-      path="settings"
-      element={
-        <SuspenseWrapper>
-          <SettingsPage />
-        </SuspenseWrapper>
-      }
-    />
-    <Route
-      path="about"
-      element={
-        <SuspenseWrapper>
-          <AboutPage />
-        </SuspenseWrapper>
-      }
-    />
-    <Route
-      path="*"
-      element={
-        <SuspenseWrapper>
-          <NotFoundPage />
-        </SuspenseWrapper>
-      }
-    />
+    {routesConfig.map(({ element, ...routeProps }, index) => (
+      <Route
+        key={index}
+        {...routeProps}
+        element={<SuspenseWrapper>{element}</SuspenseWrapper>}
+      />
+    ))}
   </Routes>
 );
 
