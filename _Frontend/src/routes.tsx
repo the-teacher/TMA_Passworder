@@ -1,5 +1,5 @@
 import { Suspense, lazy, ReactNode } from "react";
-import { Routes, Route, RouteProps } from "react-router";
+import { Routes, Route } from "react-router";
 import LoadingFallback from "./components/LoadingFallback";
 
 const IndexPage = lazy(() => import("./pages/IndexPage"));
