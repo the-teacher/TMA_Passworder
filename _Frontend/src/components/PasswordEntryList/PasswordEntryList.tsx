@@ -11,7 +11,7 @@ const mockEntries: PasswordEntryType[] = Array.from(
   { length: 30 },
   (_, index) => ({
     id: `entry-${index + 1}`,
-    name: `Password Entry ${index + 1}`,
+    name: `Password Entry ${index + 1}`
   })
 );
 

@@ -6,7 +6,7 @@ import {
   AsideLeft,
   MainContent,
   AsideRight,
-  Footer,
+  Footer
 } from "./";
 
 type HolyGrailLayoutWithParamsProps = {
@@ -22,7 +22,7 @@ const HolyGrailLayoutWithParams = ({
   leftSidebar,
   content,
   rightSidebar,
-  footer,
+  footer
 }: HolyGrailLayoutWithParamsProps) => (
   <div className="holy-grail" style={{ display: "contents" }}>
     {header && <Header>{header}</Header>}

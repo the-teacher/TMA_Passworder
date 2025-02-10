@@ -18,7 +18,7 @@ describe("HolyGrailLayoutWithParams", () => {
       leftSidebar: "Left Sidebar",
       content: "Main Content",
       rightSidebar: "Right Sidebar",
-      footer: "Footer Content",
+      footer: "Footer Content"
     };
 
     render(<HolyGrailLayoutWithParams {...props} />);
@@ -46,7 +46,7 @@ describe("HolyGrailLayoutWithParams", () => {
       leftSidebar: <div data-testid="complex-left">Complex Left</div>,
       content: <div data-testid="complex-main">Complex Main</div>,
       rightSidebar: <div data-testid="complex-right">Complex Right</div>,
-      footer: <div data-testid="complex-footer">Complex Footer</div>,
+      footer: <div data-testid="complex-footer">Complex Footer</div>
     };
 
     render(<HolyGrailLayoutWithParams {...complexContent} />);

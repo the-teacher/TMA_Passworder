@@ -13,7 +13,7 @@ import HolyGrailLayout, {
   AsideLeft,
   AsideRight,
   MainContent,
-  MainColumns,
+  MainColumns
 } from "./components/HolyGrailLayout";
 
 const App = () => (

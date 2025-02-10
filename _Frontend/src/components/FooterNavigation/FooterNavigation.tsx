@@ -15,12 +15,12 @@ interface ImageTitleProps {
 const Image = ({
   src,
   alt,
-  className = "footer-navigation__icon",
+  className = "footer-navigation__icon"
 }: ImageProps) => <img className={className} src={src} alt={alt} />;
 
 const ImageTitle = ({
   children,
-  className = "footer-navigation__text",
+  className = "footer-navigation__text"
 }: ImageTitleProps) => <span className={className}>{children}</span>;
 
 const FooterNavigation = () => (

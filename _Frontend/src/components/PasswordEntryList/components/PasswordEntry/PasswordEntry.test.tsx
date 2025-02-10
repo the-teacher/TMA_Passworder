@@ -5,7 +5,7 @@ import PasswordEntry from "./PasswordEntry";
 describe("PasswordEntry", () => {
   const mockProps = {
     id: "test-1",
-    name: "Test Entry",
+    name: "Test Entry"
   };
 
   const renderWithRouter = () => {

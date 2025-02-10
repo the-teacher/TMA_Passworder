@@ -6,7 +6,7 @@ jest.mock("../../components/PasswordEntryList", () => ({
   __esModule: true,
   default: () => (
     <div data-testid="mocked-password-entry-list">Mocked Password List</div>
-  ),
+  )
 }));
 
 describe("IndexPage", () => {

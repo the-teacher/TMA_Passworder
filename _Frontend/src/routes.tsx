@@ -23,7 +23,7 @@ const routesConfig = [
   { path: "logout", element: <LogoutPage /> },
   { path: "settings", element: <SettingsPage /> },
   { path: "about", element: <AboutPage /> },
-  { path: "*", element: <NotFoundPage /> },
+  { path: "*", element: <NotFoundPage /> }
 ];
 
 const AppRoutes = () => (

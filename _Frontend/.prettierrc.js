@@ -1,6 +1,6 @@
 export default {
   semi: true,
-  trailingComma: "all",
+  trailingComma: "none",
   singleQuote: false,
   printWidth: 80,
   tabWidth: 2,
@@ -9,5 +9,5 @@ export default {
   bracketSpacing: true,
   jsxSingleQuote: false,
   quoteProps: "as-needed",
-  useTabs: false,
+  useTabs: false
 };
