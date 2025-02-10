@@ -6,9 +6,7 @@ type HolyGrailLayoutProps = {
 };
 
 const HolyGrailLayout = ({ children }: HolyGrailLayoutProps) => (
-  <div className="holy-grail" style={{ display: "contents" }}>
-    {children}
-  </div>
+  <div className="holy-grail">{children}</div>
 );
 
 export default HolyGrailLayout;
