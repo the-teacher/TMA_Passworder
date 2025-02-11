@@ -4,8 +4,8 @@ import Header from "./";
 const meta: Meta<typeof Header> = {
   title: "Components/Header",
   component: Header,
-  // tags: ["autodocs"],
   parameters: {
+    docs: { disable: true },
     layout: "fullscreen"
   }
 };
@@ -18,22 +18,6 @@ export const Default: Story = {};
 
 // Version with additional content
 export const WithContent: Story = {
-  args: {
-    children: <div style={{ color: "#666" }}>Additional header content</div>
-  }
-};
-
-// Mobile version
-export const Mobile: Story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile1"
-    }
-  }
-};
-
-// Version with complex content
-export const WithComplexContent: Story = {
   args: {
     children: (
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>

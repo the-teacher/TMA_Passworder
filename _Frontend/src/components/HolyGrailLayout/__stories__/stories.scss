@@ -1,0 +1,30 @@
+.holy-grail {
+  &--header {
+    background-color: #ffebee;
+    border: 2px dashed #ef9a9a;
+  }
+
+  &--main {
+    background-color: #e3f2fd;
+    border: 2px dashed #90caf9;
+  }
+
+  &--content {
+    background-color: #e8f5e9;
+    border: 2px dashed #a5d6a7;
+  }
+
+  &--aside {
+    background-color: #fff3e0;
+    border: 2px dashed #ffcc80;
+  }
+
+  &--footer {
+    background-color: #f3e5f5;
+    border: 2px dashed #ce93d8;
+  }
+}
+
+.holy-grail--text {
+  margin: 8px;
+}

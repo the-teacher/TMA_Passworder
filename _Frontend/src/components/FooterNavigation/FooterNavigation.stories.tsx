@@ -14,10 +14,7 @@ const meta: Meta<typeof FooterNavigation> = {
   ],
   parameters: {
     docs: { disable: true },
-    layout: "fullscreen",
-    viewport: {
-      defaultViewport: "mobile1"
-    }
+    layout: "fullscreen"
   }
 };
 
@@ -25,12 +22,3 @@ export default meta;
 type Story = StoryObj<typeof FooterNavigation>;
 
 export const Default: Story = {};
-
-export const Mobile: Story = {
-  parameters: {
-    docs: { disable: true },
-    viewport: {
-      defaultViewport: "mobile1"
-    }
-  }
-};
