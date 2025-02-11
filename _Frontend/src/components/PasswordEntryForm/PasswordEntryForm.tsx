@@ -150,7 +150,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
             className={getElementClass("button-reset")}
             onClick={handleReset}
           >
-            Back
+            Reset
           </button>
         </div>
       </form>
