@@ -15,6 +15,10 @@
 .password-entry--name {
   font-size: 16px;
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 // Hover state for desktop devices

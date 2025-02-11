@@ -33,3 +33,25 @@ title: "2-Core/2-FooterNavigation"
 
 Use forward slashes for nesting and hyphens for naming. Avoid using dots in paths.
 
+### View Formats
+
+By default use `Iphone` view in storybooks. 
+
+- Mobile (Iphone): 390x724
+- Tablet: 840x100%
+- Desktop: 1200x100%
+- Large Desktop: 1440x100%
+
+### React Router 
+
+I use new version of React Router
+
+Right:
+
+- `import { BrowserRouter } from "react-router";`
+
+Wrong:
+
+- `import { BrowserRouter } from "react-router-dom";`
+
+
