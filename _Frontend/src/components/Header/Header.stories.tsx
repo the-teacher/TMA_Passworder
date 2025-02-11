@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Header from "./";
 
 const meta: Meta<typeof Header> = {
-  title: "Components/Header",
+  title: "2-Core/1-Header",
   component: Header,
   parameters: {
     docs: { disable: true },

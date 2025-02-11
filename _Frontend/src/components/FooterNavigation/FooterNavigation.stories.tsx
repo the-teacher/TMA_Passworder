@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router";
 import FooterNavigation from "./FooterNavigation";
 
 const meta: Meta<typeof FooterNavigation> = {
-  title: "Components/FooterNavigation",
+  title: "2-Core/2-FooterNavigation",
   component: FooterNavigation,
   decorators: [
     (Story) => (

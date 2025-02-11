@@ -3,7 +3,7 @@ import { HolyGrailLayoutWithParams } from "..";
 import "./stories.scss";
 
 const meta: Meta<typeof HolyGrailLayoutWithParams> = {
-  title: "Layouts/HolyGrailLayoutWithParams",
+  title: "1-Layouts/2-HolyGrailLayoutWithParams",
   component: HolyGrailLayoutWithParams,
   parameters: {
     docs: { disable: true },

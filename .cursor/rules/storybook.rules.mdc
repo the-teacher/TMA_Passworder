@@ -5,3 +5,31 @@ globs: *.stories.tsx, *.stories.ts, *.stories.jsx, *.stories.js
 ### Folders and structure
 
 If a component's folder contains more then 2 storybook files `*.stories.*`, then create folder `__stories__` and move all related files to it.
+
+ # Storybook Organization Rules
+
+### Story Hierarchy
+
+Use numeric prefixes for clear hierarchy and sorting:
+
+1. Main categories:
+- 1-Layouts/     (layout components)
+- 2-Core/        (core structural components)
+- 3-Components/  (reusable components)
+- 4-Features/    (feature components)
+- 5-Pages/       (page components)
+
+2. Sub-components should also use numeric prefixes:
+
+```typescript
+// Layout example
+title: "1-Layouts/1-HolyGrailLayout"
+title: "1-Layouts/2-HolyGrailLayoutWithParams"
+
+// Core components example
+title: "2-Core/1-Header"
+title: "2-Core/2-FooterNavigation"
+```
+
+Use forward slashes for nesting and hyphens for naming. Avoid using dots in paths.
+

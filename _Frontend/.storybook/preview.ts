@@ -38,12 +38,18 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i
+        date: /Date$/
       }
     },
     viewport: {
       viewports: customViewports,
       defaultViewport: "mobile"
+    },
+    options: {
+      storySort: {
+        order: ["1-Layout", "2-Components"],
+        method: "alphabetical"
+      }
     }
   }
 };
