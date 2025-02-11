@@ -24,35 +24,28 @@ type Story = StoryObj<typeof HolyGrailLayout>;
 // Component Composition approach
 export const Default: Story = {
   render: () => (
-    <div
-      className="layout__body"
-      style={{ width: "100%", height: "100%", border: "1px solid red" }}
-    >
-      <div id="root">
-        <HolyGrailLayout>
-          <Header>
-            <h1>Header</h1>
-          </Header>
-          <MainColumns>
-            <AsideLeft>
-              <h2>Left Sidebar</h2>
-              <p>Navigation links could go here</p>
-            </AsideLeft>
-            <MainContent>
-              <h2>Main Content</h2>
-              <p>This is the main content area of the layout.</p>
-            </MainContent>
-            <AsideRight>
-              <h2>Right Sidebar</h2>
-              <p>Additional information could go here</p>
-            </AsideRight>
-          </MainColumns>
-          <Footer>
-            <p>Footer content</p>
-          </Footer>
-        </HolyGrailLayout>
-      </div>
-    </div>
+    <HolyGrailLayout layoutRoot="#storybook-root">
+      <Header>
+        <h1>Header</h1>
+      </Header>
+      <MainColumns>
+        <AsideLeft>
+          <h2>Left Sidebar</h2>
+          <p>Navigation links could go here</p>
+        </AsideLeft>
+        <MainContent>
+          <h2>Main Content</h2>
+          <p>This is the main content area of the layout.</p>
+        </MainContent>
+        <AsideRight>
+          <h2>Right Sidebar</h2>
+          <p>Additional information could go here</p>
+        </AsideRight>
+      </MainColumns>
+      <Footer>
+        <p>Footer content</p>
+      </Footer>
+    </HolyGrailLayout>
   )
 };
 
@@ -60,6 +53,7 @@ export const Default: Story = {
 export const WithParams: Story = {
   render: () => (
     <HolyGrailLayoutWithParams
+      layoutRoot="#storybook-root"
       header={<h1>Header</h1>}
       leftSidebar={
         <>
@@ -88,6 +82,7 @@ export const WithParams: Story = {
 export const NoSidebars: Story = {
   render: () => (
     <HolyGrailLayoutWithParams
+      layoutRoot="#storybook-root"
       header={<h1>Header</h1>}
       content={
         <>
@@ -108,7 +103,7 @@ export const Mobile: Story = {
     }
   },
   render: () => (
-    <HolyGrailLayout>
+    <HolyGrailLayout layoutRoot="#storybook-root">
       <Header>
         <h1>Header</h1>
       </Header>

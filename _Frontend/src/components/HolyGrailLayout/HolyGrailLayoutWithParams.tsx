@@ -8,6 +8,7 @@ import {
   AsideRight,
   Footer
 } from "./";
+import HolyGrailLayout from "./HolyGrailLayout";
 
 type HolyGrailLayoutWithParamsProps = {
   header?: ReactNode;
@@ -15,6 +16,7 @@ type HolyGrailLayoutWithParamsProps = {
   content: ReactNode;
   rightSidebar?: ReactNode;
   footer?: ReactNode;
+  layoutRoot?: string;
 };
 
 const HolyGrailLayoutWithParams = ({
@@ -22,9 +24,10 @@ const HolyGrailLayoutWithParams = ({
   leftSidebar,
   content,
   rightSidebar,
-  footer
+  footer,
+  layoutRoot
 }: HolyGrailLayoutWithParamsProps) => (
-  <div className="holy-grail" style={{ display: "contents" }}>
+  <HolyGrailLayout layoutRoot={layoutRoot}>
     {header && <Header>{header}</Header>}
 
     <MainColumns>
@@ -34,7 +37,7 @@ const HolyGrailLayoutWithParams = ({
     </MainColumns>
 
     {footer && <Footer>{footer}</Footer>}
-  </div>
+  </HolyGrailLayout>
 );
 
 export default HolyGrailLayoutWithParams;

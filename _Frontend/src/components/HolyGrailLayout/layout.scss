@@ -20,7 +20,23 @@ $color-aside-bg: #fff;
 $color-content-bg: #fff;
 
 /* Layout */
-body {
+// body {
+//   /* Ensure full viewport height on mobile devices */
+//   min-height: 100dvh;
+//   font-family: Arial, sans-serif;
+//   background-color: $color-body-bg;
+
+//   /* Flex container (as parent) */
+//   display: flex;
+//   flex-direction: column;
+//   gap: 15px;
+// }
+
+#root {
+  display: contents;
+}
+
+.holy-grail {
   /* Ensure full viewport height on mobile devices */
   min-height: 100dvh;
   font-family: Arial, sans-serif;
@@ -30,16 +46,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
-
-#root {
-  display: contents;
-}
-
-.holy-grail {
-  // height: 100%;
-  // display: flex;
-  // flex-direction: column;
 
   &--header {
     width: 100%;
