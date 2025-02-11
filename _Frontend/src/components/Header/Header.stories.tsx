@@ -4,7 +4,7 @@ import Header from "./";
 const meta: Meta<typeof Header> = {
   title: "Components/Header",
   component: Header,
-  tags: ["autodocs"],
+  // tags: ["autodocs"],
   parameters: {
     layout: "fullscreen"
   }

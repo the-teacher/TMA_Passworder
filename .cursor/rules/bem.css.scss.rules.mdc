@@ -1,10 +1,13 @@
-### Breakpoints:
+---
+description: Block Element Modifier in CSS and CSS solutions
+globs: *.css, *.scss, *.sass, *.js, *.jsx, *.ts, *.tsx, *.html
+---
+### BEM Naming Convention
 
-- Mobile: 520px (0-520px is mobile)
-- Tablet: 840px (521-840px is tablet)
-- Desktop: 1200px (841-1200px is desktop)
-- Large Desktop: 1440px (1201-1440px is large desktop)
-- Limit container max-width to 1440px.
+Use BEM naming convention for CSS classes.
+`-` - delimiter in names of (block, element, modifier).
+`--` - delimiter between block and element.
+`__` - delimiter between element and modifier. 4. Where possible Use SCSS by default.
 
 ### Media Queries
 
@@ -15,13 +18,6 @@ Use modern width syntax for media queries. Like this:
   ...;
 }
 ```
-
-### BEM Naming Convention
-
-Use BEM naming convention for CSS classes.
-`-` - delimiter in names of (block, element, modifier).
-`--` - delimiter between block and element.
-`__` - delimiter between element and modifier. 4. Where possible Use SCSS by default.
 
 ### Modern SCSS
 

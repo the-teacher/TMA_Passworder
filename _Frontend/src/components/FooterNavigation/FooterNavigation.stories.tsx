@@ -5,7 +5,6 @@ import FooterNavigation from "./FooterNavigation";
 const meta: Meta<typeof FooterNavigation> = {
   title: "Components/FooterNavigation",
   component: FooterNavigation,
-  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <BrowserRouter>
@@ -14,6 +13,7 @@ const meta: Meta<typeof FooterNavigation> = {
     )
   ],
   parameters: {
+    docs: { disable: true },
     layout: "fullscreen",
     viewport: {
       defaultViewport: "mobile1"
@@ -28,6 +28,7 @@ export const Default: Story = {};
 
 export const Mobile: Story = {
   parameters: {
+    docs: { disable: true },
     viewport: {
       defaultViewport: "mobile1"
     }

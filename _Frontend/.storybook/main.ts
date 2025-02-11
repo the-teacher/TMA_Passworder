@@ -7,9 +7,9 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {}
   },
-  docs: {
-    autodocs: true
-  },
+  // docs: {
+  //   autodocs: true
+  // },
   core: {
     disableTelemetry: true,
     builder: "@storybook/builder-vite"

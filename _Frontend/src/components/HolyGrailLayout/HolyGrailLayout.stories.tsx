@@ -12,7 +12,6 @@ import HolyGrailLayout, {
 const meta: Meta<typeof HolyGrailLayout> = {
   title: "Layouts/HolyGrailLayout",
   component: HolyGrailLayout,
-  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen"
   }
