@@ -15,7 +15,7 @@ const CreatePage = () => {
 
   return (
     <div className="create-page--container">
-      <h2 className="create-page--title">Create New Password Entry</h2>
+      <h2 className="create-page--title">Create Password Entry</h2>
       <PasswordEntryForm onSubmit={handleSubmit} />
     </div>
   );

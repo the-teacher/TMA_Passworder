@@ -35,8 +35,27 @@ $color-white: white;
 
   &--password-container {
     display: flex;
+    flex-direction: column;
     gap: 8px;
+  }
+
+  &--password-actions {
+    padding: 10px 0 0 0;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  &--icon-button {
+    background: none;
+    border: 1px solid $color-border;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    flex: 1;
   }
 }
 
@@ -48,23 +67,6 @@ $color-white: white;
 
 .password-entry-form--password-container .password-entry-form--input {
   flex: 1;
-}
-
-.password-entry-form {
-  &--icon-button {
-    background: none;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-.password-entry-form--icon-button:hover {
-  background-color: $color-background-hover;
-  border-radius: 4px;
 }
 
 .password-entry-form {
@@ -138,6 +140,11 @@ $color-white: white;
     &--icon {
       width: 24px;
       height: 24px;
+    }
+
+    &--password-actions {
+      flex-direction: row;
+      gap: 8px;
     }
 
     &--icon-button {

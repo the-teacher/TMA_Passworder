@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import "./styles.scss";
 
-const PASSWORD_LENGTH = 7;
+const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 const BLOCK_NAME = "password-entry-form";
@@ -54,6 +54,14 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }));
     };
 
+  const copyPassword = async () => {
+    try {
+      await navigator.clipboard.writeText(formData.password);
+    } catch (err) {
+      console.error("Failed to copy password:", err);
+    }
+  };
+
   return (
     <div className={`${BLOCK_NAME}--container`}>
       <form className={BLOCK_NAME} onSubmit={handleSubmit}>
@@ -75,15 +83,15 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
           <label className={getElementClass("label")} htmlFor="password">
             Password
           </label>
-          <div className={getElementClass("password-container")}>
-            <input
-              className={getElementClass("input")}
-              id="password"
-              type={showPassword ? "text" : "password"}
-              value={formData.password}
-              onChange={handleInputChange("password")}
-              required
-            />
+          <input
+            className={getElementClass("input")}
+            id="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleInputChange("password")}
+            required
+          />
+          <div className={getElementClass("password-actions")}>
             <button
               type="button"
               className={getElementClass("icon-button")}
@@ -93,6 +101,17 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
                 className={getElementClass("icon")}
                 src={`/icons/${showPassword ? "eye-off" : "eye"}.svg`}
                 alt={showPassword ? "Hide password" : "Show password"}
+              />
+            </button>
+            <button
+              type="button"
+              className={getElementClass("icon-button")}
+              onClick={copyPassword}
+            >
+              <img
+                className={getElementClass("icon")}
+                src="/icons/clipboard-check.svg"
+                alt="Copy password"
               />
             </button>
             <button
