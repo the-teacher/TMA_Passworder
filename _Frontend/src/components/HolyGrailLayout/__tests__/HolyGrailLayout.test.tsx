@@ -9,14 +9,6 @@ describe("HolyGrailLayout", () => {
     expect(screen.getByText(testContent)).toBeInTheDocument();
   });
 
-  it("should have correct CSS class and display style", () => {
-    const { container } = render(<HolyGrailLayout>Content</HolyGrailLayout>);
-
-    const layoutElement = container.firstChild as HTMLElement;
-    expect(layoutElement).toHaveClass("holy-grail");
-    expect(layoutElement).toHaveStyle({ display: "contents" });
-  });
-
   it("should render multiple children correctly", () => {
     render(
       <HolyGrailLayout>
@@ -27,5 +19,19 @@ describe("HolyGrailLayout", () => {
 
     expect(screen.getByText("Child 1")).toBeInTheDocument();
     expect(screen.getByText("Child 2")).toBeInTheDocument();
+  });
+
+  it("should add holy-grail class to layoutRoot element", () => {
+    // Create a div to serve as layoutRoot
+    const layoutRoot = document.createElement("div");
+    layoutRoot.id = "test-root";
+    document.body.appendChild(layoutRoot);
+
+    render(<HolyGrailLayout layoutRoot="#test-root">Content</HolyGrailLayout>);
+
+    expect(layoutRoot).toHaveClass("holy-grail");
+
+    // Cleanup
+    document.body.removeChild(layoutRoot);
   });
 });

@@ -30,14 +30,23 @@ describe("HolyGrailLayoutWithParams", () => {
     expect(screen.getByText(props.footer)).toBeInTheDocument();
   });
 
-  it("should have correct CSS class and display style", () => {
-    const { container } = render(
-      <HolyGrailLayoutWithParams content="Content" />
+  it("should add holy-grail class to layoutRoot element", () => {
+    // Create a div to serve as layoutRoot
+    const layoutRoot = document.createElement("div");
+    layoutRoot.id = "test-root";
+    document.body.appendChild(layoutRoot);
+
+    render(
+      <HolyGrailLayoutWithParams
+        layoutRoot="#test-root"
+        content="Test Content"
+      />
     );
 
-    const layoutElement = container.firstChild as HTMLElement;
-    expect(layoutElement).toHaveClass("holy-grail");
-    expect(layoutElement).toHaveStyle({ display: "contents" });
+    expect(layoutRoot).toHaveClass("holy-grail");
+
+    // Cleanup
+    document.body.removeChild(layoutRoot);
   });
 
   it("should render complex content in each section", () => {
