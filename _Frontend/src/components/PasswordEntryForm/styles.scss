@@ -1,33 +1,28 @@
-// Block: password-entry-form
 .password-entry-form {
   &--container {
     max-width: 500px;
     margin: 0 auto;
   }
 
-  // Element: field
   &--field {
     margin-bottom: 20px;
   }
 
-  // Element: label
   &--label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
   }
 
-  // Element: input and textarea
   &--input,
   &--textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #eee;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
-  // Element: password container
   &--password-container {
     display: flex;
     gap: 8px;
@@ -35,7 +30,6 @@
   }
 }
 
-// Nested selectors and interactions
 .password-entry-form--input__focused,
 .password-entry-form--textarea__focused {
   outline: none;
@@ -47,7 +41,6 @@
 }
 
 .password-entry-form {
-  // Element: icon button
   &--icon-button {
     background: none;
     border: none;
@@ -59,20 +52,17 @@
   }
 }
 
-// Выносим hover-эффект
 .password-entry-form--icon-button:hover {
   background-color: #f5f5f5;
   border-radius: 4px;
 }
 
 .password-entry-form {
-  // Element: icon
   &--icon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
   }
 
-  // Element: actions container
   &--actions {
     display: flex;
     gap: 16px;
@@ -80,17 +70,16 @@
     margin-top: 24px;
   }
 
-  // Element: button base styles
   &--button {
-    padding: 12px 24px;
+    padding: 14px 28px;
     border: none;
     border-radius: 4px;
     font-weight: 500;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s ease;
   }
 
-  // Element: submit button
   &--button-submit {
     @extend .password-entry-form--button;
     background-color: #007bff;
@@ -98,13 +87,11 @@
   }
 }
 
-// Выносим hover-эффекты кнопок
 .password-entry-form--button-submit:hover {
   background-color: #0056b3;
 }
 
 .password-entry-form {
-  // Element: reset button
   &--button-reset {
     @extend .password-entry-form--button;
     background-color: #f8f9fa;
@@ -112,36 +99,50 @@
   }
 }
 
-// Выносим hover-эффект reset кнопки
 .password-entry-form--button-reset:hover {
   background-color: #e2e6ea;
 }
 
-// Media queries at root level
 @media (0 < width < 520px) {
   .password-entry-form {
     &--container {
-      padding: 10px;
+      padding: 16px;
+      width: 100%;
     }
 
     &--field {
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    &--label {
+      font-size: 16px;
+      margin-bottom: 10px;
     }
 
     &--input,
     &--textarea {
-      padding: 10px;
-      font-size: 12px;
+      padding: 14px;
+      font-size: 16px;
     }
 
     &--icon {
-      width: 16px;
-      height: 16px;
+      width: 24px;
+      height: 24px;
+    }
+
+    &--icon-button {
+      padding: 12px;
     }
 
     &--button {
-      padding: 10px 20px;
-      font-size: 12px;
+      padding: 14px 28px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    &--actions {
+      flex-direction: column;
+      gap: 12px;
     }
   }
 }
