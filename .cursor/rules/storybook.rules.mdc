@@ -1,0 +1,7 @@
+---
+description: To organize storybook files
+globs: *.stories.tsx, *.stories.ts, *.stories.jsx, *.stories.js
+---
+### Folders and structure
+
+If a component's folder contains more then 2 storybook files `*.stories.*`, then create folder `__stories__` and move all related files to it.
