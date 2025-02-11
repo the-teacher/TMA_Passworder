@@ -3,20 +3,18 @@ import { BrowserRouter } from "react-router";
 import PasswordEntry from "../PasswordEntry";
 
 const meta = {
-  title: "3-Components/1-PasswordEntryList/1-PasswordEntry",
+  title: "3-Components/2-PasswordEntry",
   component: PasswordEntry,
   parameters: {
     layout: "centered",
     viewport: {
-      defaultViewport: "iphone12"
+      defaultViewport: "mobile"
     }
   },
   decorators: [
     (Story) => (
       <BrowserRouter>
-        <div style={{ width: "390px" }}>
-          <Story />
-        </div>
+        <Story />
       </BrowserRouter>
     )
   ]

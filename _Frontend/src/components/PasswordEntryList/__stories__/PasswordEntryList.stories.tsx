@@ -8,15 +8,13 @@ const meta = {
   parameters: {
     layout: "centered",
     viewport: {
-      defaultViewport: "iphone12"
+      defaultViewport: "mobile"
     }
   },
   decorators: [
     (Story) => (
       <BrowserRouter>
-        <div style={{ width: "390px" }}>
-          <Story />
-        </div>
+        <Story />
       </BrowserRouter>
     )
   ]

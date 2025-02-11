@@ -1,4 +1,4 @@
-import PasswordEntry from "./components/PasswordEntry";
+import PasswordEntry from "../PasswordEntry";
 import "./styles.scss";
 
 type PasswordEntryType = {
