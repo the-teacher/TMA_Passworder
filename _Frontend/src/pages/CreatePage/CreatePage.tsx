@@ -1,8 +1,24 @@
-const CreatePage = () => (
-  <div>
-    <h2>Create Page</h2>
-    <p>Create new content here.</p>
-  </div>
-);
+import PasswordEntryForm from "../../components/PasswordEntryForm";
+import "./styles.scss";
+
+type PasswordEntryData = {
+  serviceName: string;
+  password: string;
+  notes: string;
+};
+
+const CreatePage = () => {
+  const handleSubmit = (data: PasswordEntryData) => {
+    // Handle form submission
+    console.log("Form submitted:", data);
+  };
+
+  return (
+    <div className="create-page--container">
+      <h2 className="create-page--title">Create New Password Entry</h2>
+      <PasswordEntryForm onSubmit={handleSubmit} />
+    </div>
+  );
+};
 
 export default CreatePage;

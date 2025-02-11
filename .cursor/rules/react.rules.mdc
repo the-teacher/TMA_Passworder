@@ -166,3 +166,15 @@ const IndexPage = () => (
   </div>
 );
 ```
+
+### Constants
+
+Try to move static values into constants and move to the top of the file.
+
+### Function definition inside React components
+
+Try to avoid defining helper function inside components. When possible move them outside the component's code.
+
+### `type` not `interface`
+
+Where it is possible try to use `type`. Avoid using `interface` keyword.
