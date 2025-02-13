@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import SearchPage from "./SearchPage";
-import { TestWrapper } from "../../../test/testUtils";
+import { TestWrapper } from "@test/testUtils";
 
 // Mock AppLayout
 jest.mock("../../components/AppLayout", () => ({

@@ -10,7 +10,8 @@
     "baseUrl": ".",
     "paths": {
       "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@test/*": ["test/*"]
     }
   },
   "include": ["src", "src/types", "test/testUtils.tsx"]

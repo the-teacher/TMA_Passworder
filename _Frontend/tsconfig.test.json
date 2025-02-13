@@ -5,7 +5,13 @@
     "target": "es2019",
     "types": ["jest", "@testing-library/jest-dom", "node"],
     "typeRoots": ["./node_modules/@types", "./src/types"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@test/*": ["test/*"]
+    }
   },
   "include": [
     "src/**/*.test.ts",
