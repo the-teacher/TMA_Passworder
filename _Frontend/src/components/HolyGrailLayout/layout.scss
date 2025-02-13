@@ -96,25 +96,6 @@ $color-content-bg: #fff;
   }
 }
 
-// Media queries at root level
-// .holy-grail--container {
-//   @media (0 < width < 520px) {
-//     padding: 0 16px;
-//   }
-
-//   @media (520px < width < 840px) {
-//     padding: 0 24px;
-//   }
-
-//   @media (840px < width < 1200px) {
-//     padding: 0 32px;
-//   }
-
-//   @media (1200px < width < 1440px) {
-//     padding: 0 40px;
-//   }
-// }
-
 .holy-grail--main-columns {
   @media (0 < width < 840px) {
     flex-direction: column;
