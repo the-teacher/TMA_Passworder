@@ -1,4 +1,4 @@
-import AppLayout from "../../components/AppLayout";
+import AppLayout from "@components/AppLayout";
 
 const LogoutPage = () => {
   // В реальном приложении здесь будет логика выхода

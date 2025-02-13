@@ -3,13 +3,13 @@ import IndexPage from "./IndexPage";
 import { TestWrapper } from "../../../test/testUtils";
 
 // Mock AppLayout
-jest.mock("../../components/AppLayout", () => ({
+jest.mock("@components/AppLayout", () => ({
   __esModule: true,
   default: ({ children }: { children: React.ReactNode }) => <>{children}</>
 }));
 
 // Mock the PasswordEntryList component
-jest.mock("../../components/PasswordEntryList", () => ({
+jest.mock("@components/PasswordEntryList", () => ({
   __esModule: true,
   default: () => (
     <div data-testid="mocked-password-entry-list">Mocked Password List</div>

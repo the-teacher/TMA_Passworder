@@ -1,4 +1,4 @@
-import AppLayout from "../../components/AppLayout";
+import AppLayout from "@components/AppLayout";
 import "./styles.scss";
 
 const NotFoundPage = () => (

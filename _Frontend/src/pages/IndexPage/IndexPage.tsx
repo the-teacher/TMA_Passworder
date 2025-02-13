@@ -1,5 +1,5 @@
-import AppLayout from "../../components/AppLayout";
-import PasswordEntryList from "../../components/PasswordEntryList";
+import AppLayout from "@components/AppLayout";
+import PasswordEntryList from "@components/PasswordEntryList";
 
 const IndexPage = () => (
   <AppLayout>
