@@ -1,6 +1,6 @@
 ---
 description: Common expectations for projects
-globs: 
+globs: */**.*
 ---
 ### Language for Comments
 

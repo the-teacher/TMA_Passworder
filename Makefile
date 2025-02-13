@@ -22,7 +22,3 @@ bot_shell:
 postgres_shell:
 	docker compose exec postgres bash
 
-yarn_upgrade:
-	docker compose exec node sh -c "corepack enable"
-	docker compose exec node sh -c "corepack prepare yarn@latest --activate"
-	docker compose exec node sh -c "yarn -v"

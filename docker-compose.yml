@@ -21,7 +21,7 @@ services:
   # Node
   # ================================
   node:
-    image: node:22-alpine
+    build: .
     environment:
       HISTFILE: /root/log/.history
     ports:
@@ -32,4 +32,3 @@ services:
       - ./:/app
       - ./tmp/.history:/root/log/.history
     working_dir: /app
-    command: sleep infinity
