@@ -6,12 +6,44 @@ type PasswordEntryType = {
   name: string;
 };
 
-// Mock data - 30 entries
-const mockEntries: PasswordEntryType[] = Array.from(
-  { length: 30 },
-  (_, index) => ({
+// Mock data - 30 popular services
+const popularServices = [
+  "Google",
+  "Facebook",
+  "Twitter",
+  "Instagram",
+  "LinkedIn",
+  "Amazon",
+  "Netflix",
+  "Spotify",
+  "Dropbox",
+  "Slack",
+  "GitHub",
+  "Reddit",
+  "Pinterest",
+  "Snapchat",
+  "WhatsApp",
+  "YouTube",
+  "Zoom",
+  "Microsoft",
+  "Apple",
+  "Adobe",
+  "PayPal",
+  "eBay",
+  "Airbnb",
+  "Uber",
+  "Lyft",
+  "Twitch",
+  "Discord",
+  "TikTok",
+  "Shopify",
+  "Salesforce"
+];
+
+const mockEntries: PasswordEntryType[] = popularServices.map(
+  (service, index) => ({
     id: `entry-${index + 1}`,
-    name: `Password Entry ${index + 1}`
+    name: service
   })
 );
 
