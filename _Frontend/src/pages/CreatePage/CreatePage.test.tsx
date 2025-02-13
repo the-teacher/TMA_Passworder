@@ -5,6 +5,6 @@ import "../../../test/setupFilesAfterEnv";
 describe("CreatePage", () => {
   it("renders create page content", () => {
     render(<CreatePage />);
-    expect(screen.getByText("Hello World")).toBeInTheDocument();
+    expect(screen.getByText("Create a Password Entry")).toBeInTheDocument();
   });
 });

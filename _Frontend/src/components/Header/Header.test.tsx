@@ -1,31 +1,50 @@
 import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router";
 import Header from "./Header";
 
-describe("Header", () => {
-  it("renders children correctly", () => {
-    const testContent = "Test Header";
-    render(<Header>{testContent}</Header>);
+// Mock react-i18next
+jest.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key: string) => {
+      const translations: { [key: string]: string } = {
+        "app.name": "HamsterPass",
+        "app.settings": "Settings"
+      };
+      return translations[key] || key;
+    }
+  })
+}));
 
-    expect(screen.getByText(testContent)).toBeInTheDocument();
+const renderWithRouter = (component: React.ReactNode) => {
+  return render(<BrowserRouter>{component}</BrowserRouter>);
+};
+
+describe("Header", () => {
+  it("renders app name", () => {
+    renderWithRouter(<Header />);
+    expect(screen.getByText("HamsterPass")).toBeInTheDocument();
   });
 
   it("has correct CSS classes", () => {
-    const { container } = render(<Header>Content</Header>);
+    const { container } = renderWithRouter(<Header />);
 
     const headerElement = container.firstChild as HTMLElement;
     expect(headerElement).toHaveClass("app-header");
-    expect(headerElement.firstChild).toHaveClass("app-header__container");
+    expect(
+      headerElement.querySelector(".app-header__title")
+    ).toBeInTheDocument();
+    expect(
+      headerElement.querySelector(".app-header__settings")
+    ).toBeInTheDocument();
   });
 
-  it("renders complex content", () => {
-    render(
-      <Header>
-        <h1>Title</h1>
-        <div>Subtitle</div>
-      </Header>
-    );
+  it("renders settings link with icon", () => {
+    renderWithRouter(<Header />);
 
-    expect(screen.getByText("Title")).toBeInTheDocument();
-    expect(screen.getByText("Subtitle")).toBeInTheDocument();
+    const settingsLink = screen.getByRole("link", { name: /settings/i });
+    expect(settingsLink).toHaveAttribute("href", "/settings");
+
+    const settingsIcon = screen.getByAltText("Settings");
+    expect(settingsIcon).toHaveAttribute("src", "/icons/settings.svg");
   });
 });
