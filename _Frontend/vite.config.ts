@@ -27,6 +27,10 @@ export default defineConfig({
       {
         find: "@test",
         replacement: path.resolve(__dirname, "test")
+      },
+      {
+        find: "@routes",
+        replacement: path.resolve(__dirname, "src/routes")
       }
     ]
   }

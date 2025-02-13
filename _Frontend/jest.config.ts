@@ -8,7 +8,8 @@ export default {
     "^@/(.*)$": "<rootDir>/src/$1",
     "^@pages/(.*)$": "<rootDir>/src/pages/$1",
     "^@components/(.*)$": "<rootDir>/src/components/$1",
-    "^@test/(.*)$": "<rootDir>/test/$1"
+    "^@test/(.*)$": "<rootDir>/test/$1",
+    "^@routes/(.*)$": "<rootDir>/src/routes/$1"
   },
   transform: {
     "^.+\\.tsx?$": [
