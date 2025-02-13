@@ -1,5 +1,6 @@
 import PasswordEntryForm from "../../components/PasswordEntryForm";
 import { useTranslation } from "react-i18next";
+import AppLayout from "../../components/AppLayout";
 import "./styles.scss";
 
 type PasswordEntryData = {
@@ -17,10 +18,12 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="create-page--container">
-      <h2 className="create-page--title">{t("createPage.title")}</h2>
-      <PasswordEntryForm onSubmit={handleSubmit} />
-    </div>
+    <AppLayout>
+      <div className="create-page--container">
+        <h2 className="create-page--title">{t("createPage.title")}</h2>
+        <PasswordEntryForm onSubmit={handleSubmit} />
+      </div>
+    </AppLayout>
   );
 };
 
