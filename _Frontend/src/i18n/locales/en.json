@@ -1,5 +1,18 @@
 {
   "translations": {
-    "createPage.title": "Hello World"
+    "createPage.title": "Create a Password Entry"
+  },
+  "passwordEntry": {
+    "serviceName": "Service Name",
+    "password": "Password",
+    "notes": "Notes",
+    "actions": {
+      "save": "Save",
+      "reset": "Reset",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "copyPassword": "Copy password",
+      "generatePassword": "Generate password"
+    }
   }
 }

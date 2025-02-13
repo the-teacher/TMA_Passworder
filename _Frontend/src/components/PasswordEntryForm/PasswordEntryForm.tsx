@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import "./styles.scss";
 
 const PASSWORD_LENGTH = 10;
@@ -19,6 +20,7 @@ type PasswordEntryFormProps = {
 const getElementClass = (element: string) => `${BLOCK_NAME}--${element}`;
 
 const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
+  const { t } = useTranslation("passwordEntry");
   const [formData, setFormData] = useState<PasswordEntryFormData>({
     serviceName: "",
     password: "",
@@ -67,7 +69,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
       <form className={BLOCK_NAME} onSubmit={handleSubmit}>
         <div className={getElementClass("field")}>
           <label className={getElementClass("label")} htmlFor="serviceName">
-            Service Name
+            {t("serviceName")}
           </label>
           <input
             className={getElementClass("input")}
@@ -81,7 +83,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
 
         <div className={getElementClass("field")}>
           <label className={getElementClass("label")} htmlFor="password">
-            Password
+            {t("password")}
           </label>
           <input
             className={getElementClass("input")}
@@ -96,33 +98,40 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
               type="button"
               className={getElementClass("icon-button")}
               onClick={() => setShowPassword(!showPassword)}
+              title={t(
+                showPassword ? "actions.hidePassword" : "actions.showPassword"
+              )}
             >
               <img
                 className={getElementClass("icon")}
                 src={`/icons/${showPassword ? "eye-off" : "eye"}.svg`}
-                alt={showPassword ? "Hide password" : "Show password"}
+                alt={t(
+                  showPassword ? "actions.hidePassword" : "actions.showPassword"
+                )}
               />
             </button>
             <button
               type="button"
               className={getElementClass("icon-button")}
               onClick={copyPassword}
+              title={t("actions.copyPassword")}
             >
               <img
                 className={getElementClass("icon")}
                 src="/icons/clipboard-check.svg"
-                alt="Copy password"
+                alt={t("actions.copyPassword")}
               />
             </button>
             <button
               type="button"
               className={getElementClass("icon-button")}
               onClick={generatePassword}
+              title={t("actions.generatePassword")}
             >
               <img
                 className={getElementClass("icon")}
                 src="/icons/refresh.svg"
-                alt="Generate password"
+                alt={t("actions.generatePassword")}
               />
             </button>
           </div>
@@ -130,7 +139,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
 
         <div className={getElementClass("field")}>
           <label className={getElementClass("label")} htmlFor="notes">
-            Notes
+            {t("notes")}
           </label>
           <textarea
             className={getElementClass("textarea")}
@@ -143,14 +152,14 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
 
         <div className={getElementClass("actions")}>
           <button type="submit" className={getElementClass("button-submit")}>
-            Save
+            {t("actions.save")}
           </button>
           <button
             type="button"
             className={getElementClass("button-reset")}
             onClick={handleReset}
           >
-            Reset
+            {t("actions.reset")}
           </button>
         </div>
       </form>

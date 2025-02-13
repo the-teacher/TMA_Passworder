@@ -1,5 +1,18 @@
 {
   "translations": {
-    "createPage.title": "Привет Мир"
+    "createPage.title": "Новая запись пароля"
+  },
+  "passwordEntry": {
+    "serviceName": "Название сервиса",
+    "password": "Пароль",
+    "notes": "Заметки",
+    "actions": {
+      "save": "Сохранить",
+      "reset": "Сбросить",
+      "showPassword": "Показать пароль",
+      "hidePassword": "Скрыть пароль",
+      "copyPassword": "Копировать пароль",
+      "generatePassword": "Сгенерировать пароль"
+    }
   }
 }

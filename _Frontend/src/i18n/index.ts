@@ -12,8 +12,8 @@ i18n.use(initReactI18next).init({
     en,
     ru
   },
-  ns: ["translations"],
   defaultNS: "translations",
+  fallbackNS: Object.keys(en).filter((ns) => ns !== "translations"),
   interpolation: {
     escapeValue: false
   }
