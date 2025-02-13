@@ -36,6 +36,9 @@ export const Default: Story = {
     onSubmit: (data) => {
       console.log("Form submitted with data:", data);
     }
+  },
+  play: async () => {
+    await i18n.changeLanguage("en");
   }
 };
 
@@ -48,17 +51,5 @@ export const Russian: Story = {
   },
   play: async () => {
     await i18n.changeLanguage("ru");
-  }
-};
-
-// English version
-export const English: Story = {
-  args: {
-    onSubmit: (data) => {
-      console.log("Form submitted with data:", data);
-    }
-  },
-  play: async () => {
-    await i18n.changeLanguage("en");
   }
 };
