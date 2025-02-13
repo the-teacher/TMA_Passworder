@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import CreatePage from "./CreatePage";
-import { TestWrapper } from "../../test/testUtils";
+import { TestWrapper } from "../../../test/testUtils";
 import "../../../test/setupFilesAfterEnv";
 
 // Mock AppLayout
