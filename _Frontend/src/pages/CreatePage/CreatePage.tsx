@@ -1,6 +1,6 @@
-import PasswordEntryForm from "../../components/PasswordEntryForm";
+import PasswordEntryForm from "@components/PasswordEntryForm";
 import { useTranslation } from "react-i18next";
-import AppLayout from "../../components/AppLayout";
+import AppLayout from "@components/AppLayout";
 import "./styles.scss";
 
 type PasswordEntryData = {
