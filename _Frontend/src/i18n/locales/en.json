@@ -1,6 +1,10 @@
 {
   "translations": {
-    "createPage.title": "Create a Password Entry"
+    "createPage.title": "Create a Password Entry",
+    "app": {
+      "name": "HamsterPass",
+      "settings": "Settings"
+    }
   },
   "passwordEntry": {
     "serviceName": "Service Name",

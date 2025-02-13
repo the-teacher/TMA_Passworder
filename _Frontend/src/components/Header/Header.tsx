@@ -1,13 +1,22 @@
-import { type ReactNode } from "react";
+import { NavLink } from "react-router";
+import { useTranslation } from "react-i18next";
 import "./styles.scss";
 
-const Header = ({ children }: { children?: ReactNode }) => (
-  <header className="app-header">
-    <div className="app-header__container">
-      <h1 className="app-header__title">Password Manager</h1>
-      {children}
-    </div>
-  </header>
-);
+const Header = () => {
+  const { t } = useTranslation();
+
+  return (
+    <header className="app-header">
+      <h1 className="app-header__title">{t("app.name")}</h1>
+      <NavLink to="/settings" className="app-header__settings">
+        <img
+          className="app-header__settings-icon"
+          src="/icons/settings.svg"
+          alt={t("app.settings")}
+        />
+      </NavLink>
+    </header>
+  );
+};
 
 export default Header;
