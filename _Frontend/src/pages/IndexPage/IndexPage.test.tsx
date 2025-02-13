@@ -1,5 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import IndexPage from "./IndexPage";
+import { TestWrapper } from "../../test/testUtils";
+
+// Mock AppLayout
+jest.mock("../../components/AppLayout", () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>
+}));
 
 // Mock the PasswordEntryList component
 jest.mock("../../components/PasswordEntryList", () => ({
@@ -11,8 +18,7 @@ jest.mock("../../components/PasswordEntryList", () => ({
 
 describe("IndexPage", () => {
   it("renders index page content", () => {
-    render(<IndexPage />);
-
+    render(<IndexPage />, { wrapper: TestWrapper });
     expect(
       screen.getByTestId("mocked-password-entry-list")
     ).toBeInTheDocument();
