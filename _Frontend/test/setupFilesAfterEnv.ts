@@ -2,6 +2,8 @@ import "@testing-library/jest-dom";
 import "@testing-library/dom";
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
+import en from "../src/i18n/locales/en.json";
+import ru from "../src/i18n/locales/ru.json";
 
 const defaultLanguage = "en";
 
@@ -13,16 +15,8 @@ i18n.use(initReactI18next).init({
   ns: ["translations"],
   defaultNS: "translations",
   resources: {
-    en: {
-      translations: {
-        "createPage.title": "Hello World"
-      }
-    },
-    ru: {
-      translations: {
-        "createPage.title": "Привет Мир"
-      }
-    }
+    en,
+    ru
   },
   interpolation: {
     escapeValue: false
