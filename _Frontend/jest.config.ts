@@ -5,18 +5,18 @@ export default {
   setupFilesAfterEnv: ["<rootDir>/test/setupFilesAfterEnv.ts"],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@/(.*)$": "<rootDir>/src/$1"
   },
   transform: {
     "^.+\\.tsx?$": [
       "ts-jest",
       {
-        tsconfig: "tsconfig.test.json",
-      },
-    ],
+        tsconfig: "tsconfig.test.json"
+      }
+    ]
   },
   testMatch: [
     "**/__tests__/**/*.test.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[jt]s?(x)",
-  ],
+    "**/?(*.)+(spec|test).[jt]s?(x)"
+  ]
 };

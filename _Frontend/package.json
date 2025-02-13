@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "vite dev --host 0.0.0.0 --port 4000",
-    "build": "tsc -b && vite build",
+    "build:clean": "rm -rf dist",
+    "build": "yarn build:clean && yarn tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "preview": "vite preview",
@@ -14,7 +15,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "storybook": "storybook dev -p 4000 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "all-checks": "yarn format && yarn format:check && yarn lint && yarn lint:fix && yarn test"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",

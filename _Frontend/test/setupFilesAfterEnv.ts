@@ -1,6 +1,3 @@
-/// <reference types="@testing-library/jest-dom" />
-/// <reference types="@testing-library/dom" />
-
 import "@testing-library/jest-dom";
 import "@testing-library/dom";
 import i18next from "i18next";
