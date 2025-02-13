@@ -14,5 +14,12 @@
       "copyPassword": "Копировать пароль",
       "generatePassword": "Сгенерировать пароль"
     }
+  },
+  "footerNavigation": {
+    "home": "Главная",
+    "create": "Создать",
+    "search": "Поиск",
+    "favorites": "Избранное",
+    "logout": "Выход"
   }
 }

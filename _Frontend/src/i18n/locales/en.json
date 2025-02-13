@@ -14,5 +14,12 @@
       "copyPassword": "Copy password",
       "generatePassword": "Generate password"
     }
+  },
+  "footerNavigation": {
+    "home": "Home",
+    "create": "Create",
+    "search": "Search",
+    "favorites": "Favorites",
+    "logout": "Logout"
   }
 }

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router";
+import { useTranslation } from "react-i18next";
 import "./styles.scss";
 
 interface ImageProps {
@@ -23,29 +24,33 @@ const ImageTitle = ({
   className = "footer-navigation__text"
 }: ImageTitleProps) => <span className={className}>{children}</span>;
 
-const FooterNavigation = () => (
-  <nav className="footer-navigation">
-    <NavLink to="/" className="footer-navigation__item">
-      <Image src="/icons/home.svg" alt="Home" />
-      <ImageTitle>Home</ImageTitle>
-    </NavLink>
-    <NavLink to="/create" className="footer-navigation__item">
-      <Image src="/icons/circle-plus.svg" alt="Create" />
-      <ImageTitle>Create</ImageTitle>
-    </NavLink>
-    <NavLink to="/search" className="footer-navigation__item">
-      <Image src="/icons/search.svg" alt="Search" />
-      <ImageTitle>Search</ImageTitle>
-    </NavLink>
-    <NavLink to="/favorites" className="footer-navigation__item">
-      <Image src="/icons/star.svg" alt="Favorites" />
-      <ImageTitle>Favorites</ImageTitle>
-    </NavLink>
-    <NavLink to="/logout" className="footer-navigation__item">
-      <Image src="/icons/square-x.svg" alt="Logout" />
-      <ImageTitle>Logout</ImageTitle>
-    </NavLink>
-  </nav>
-);
+const FooterNavigation = () => {
+  const { t } = useTranslation("footerNavigation");
+
+  return (
+    <nav className="footer-navigation">
+      <NavLink to="/" className="footer-navigation__item">
+        <Image src="/icons/home.svg" alt={t("home")} />
+        <ImageTitle>{t("home")}</ImageTitle>
+      </NavLink>
+      <NavLink to="/create" className="footer-navigation__item">
+        <Image src="/icons/circle-plus.svg" alt={t("create")} />
+        <ImageTitle>{t("create")}</ImageTitle>
+      </NavLink>
+      <NavLink to="/search" className="footer-navigation__item">
+        <Image src="/icons/search.svg" alt={t("search")} />
+        <ImageTitle>{t("search")}</ImageTitle>
+      </NavLink>
+      <NavLink to="/favorites" className="footer-navigation__item">
+        <Image src="/icons/star.svg" alt={t("favorites")} />
+        <ImageTitle>{t("favorites")}</ImageTitle>
+      </NavLink>
+      <NavLink to="/logout" className="footer-navigation__item">
+        <Image src="/icons/square-x.svg" alt={t("logout")} />
+        <ImageTitle>{t("logout")}</ImageTitle>
+      </NavLink>
+    </nav>
+  );
+};
 
 export default FooterNavigation;
