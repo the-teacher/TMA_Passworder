@@ -7,7 +7,7 @@ const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <header className="app-header">
+    <div className="app-header">
       <h1 className="app-header__title">{t("app.name")}</h1>
       <NavLink to={settingsPath()} className="app-header__settings">
         <img
@@ -16,7 +16,7 @@ const Header = () => {
           alt={t("app.settings")}
         />
       </NavLink>
-    </header>
+    </div>
   );
 };
 

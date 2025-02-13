@@ -1,11 +1,15 @@
 .footer-navigation {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 8px 0;
+  padding: 8px 32px;
   background-color: #fff;
   border-top: 1px solid #eee;
+
+  min-height: 60px;
+  margin: auto;
+  max-width: 1440px;
 
   position: fixed;
   bottom: 0;
@@ -37,13 +41,8 @@
 
 @media (0 < width < 520px) {
   .footer-navigation {
-    padding: 12px 0;
+    padding: 12px 16px;
   }
-
-  // .footer-navigation__icon {
-  //   width: 20px;
-  //   height: 20px;
-  // }
 
   .footer-navigation__text {
     font-size: 10px;
