@@ -8,7 +8,9 @@
   },
   "passwordEntry": {
     "serviceName": "Service Name",
+    "username": "Username",
     "password": "Password",
+    "url": "URL",
     "notes": "Notes",
     "actions": {
       "save": "Save",
@@ -18,6 +20,12 @@
       "copyPassword": "Copy password",
       "generatePassword": "Generate password"
     }
+  },
+  "common": {
+    "edit": "Edit",
+    "copy": "Copy",
+    "show": "Show",
+    "hide": "Hide"
   },
   "footerNavigation": {
     "home": "Home",

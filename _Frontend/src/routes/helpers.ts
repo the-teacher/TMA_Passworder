@@ -10,6 +10,7 @@ export const aboutPath = () => "/about";
 // Dynamic paths with params
 export const passwordEntryPath = (id: string) => `/passwords/${id}`;
 export const editPasswordEntryPath = (id: string) => `/passwords/${id}/edit`;
+export const showPasswordEntryPath = (id: string) => `/passwords/${id}`;
 
 // API paths
 export const apiPasswordEntriesPath = () => "/api/v1/password_entries";

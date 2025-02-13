@@ -8,7 +8,9 @@
   },
   "passwordEntry": {
     "serviceName": "Название сервиса",
+    "username": "Имя пользователя",
     "password": "Пароль",
+    "url": "URL",
     "notes": "Заметки",
     "actions": {
       "save": "Сохранить",
@@ -18,6 +20,12 @@
       "copyPassword": "Копировать пароль",
       "generatePassword": "Сгенерировать пароль"
     }
+  },
+  "common": {
+    "edit": "Редактировать",
+    "copy": "Копировать",
+    "show": "Показать",
+    "hide": "Скрыть"
   },
   "footerNavigation": {
     "home": "Главная",
