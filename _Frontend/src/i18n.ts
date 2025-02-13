@@ -3,8 +3,8 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 
-const DEFAULT_LANGUAGE = "ru";
-const IS_DEV = false; //import.meta.env.DEV;
+const DEFAULT_LANGUAGE = import.meta.env.VITE_DEFAULT_LANGUAGE || "ru";
+const IS_DEV = import.meta.env.DEV;
 
 const COOKIE_DOMAIN = "localhost:4000";
 const COOKIE_EXPIRATION_MINUTES = 60 * 24 * 30; // 30 days
