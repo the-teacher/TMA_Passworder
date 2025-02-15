@@ -14,6 +14,64 @@ Use BEM naming convention for CSS classes.
 
 Follow modern SCSS syntax. Use `@use`, `@forward` and other modern SCSS features.
 
+```scss
+@use "sass:color";
+
+$primary: #3498db;
+
+.btn {
+  background-color: $primary;
+
+  &--dark {
+    background-color: color.scale($primary, $lightness: -15%);
+  }
+
+  &--dark1 {
+    background-color: color.darken($primary, 15%);
+  }
+
+  &--light {
+    background-color: color.adjust($primary, $lightness: 15%);
+  }
+
+  &--transparent {
+    background-color: color.change($primary, $alpha: 0.5);
+  }
+}
+```
+
+
+```scss
+@use "sass:string";
+
+$prefix: "btn";
+$variant: "primary";
+
+.#{$prefix}--#{$variant} {
+  background-color: blue;
+}
+
+.content::before {
+  content: string.to-upper-case("hello world");
+}
+```
+
+```scss
+@use "sass:math";
+
+$base-size: 16px;
+$scale: 1.5;
+
+h1 {
+  font-size: math.mul($base-size, $scale);
+}
+
+.container {
+  width: math.div(100%, 3);
+}
+```
+
+
 ### SCSS Nesting
 
 Always put Elements and Modifiers in Blocks (Scopes)

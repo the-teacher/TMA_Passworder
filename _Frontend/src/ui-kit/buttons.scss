@@ -1,11 +1,19 @@
-// Color variables
-$color-primary: #3a76d2;
+@use "sass:color";
+
+// Update color variables to match styles.scss
+$color-primary: #007bff;
+$color-primary-dark: #0056b3;
 $color-secondary: #868e96;
 $color-success: #4caf50;
 $color-warning: #e0a800;
 $color-danger: #c82333;
 $color-info: #138496;
 $color-disabled: #ced4da;
+$color-text: #212529;
+$color-background-light: #f8f9fa;
+$color-background-hover: #f5f5f5;
+$color-background-darker: #e2e6ea;
+$color-white: white;
 
 // Base button style
 .btn {
@@ -27,85 +35,85 @@ $color-disabled: #ced4da;
 
   &--primary {
     background-color: $color-primary;
-    color: #fff;
+    color: $color-white;
   }
 
   &--primary:hover {
-    background-color: darken($color-primary, 10%);
+    background-color: color.scale($color-primary, $lightness: -10%);
   }
 
   &--primary:active {
-    background-color: darken($color-primary, 15%);
+    background-color: color.scale($color-primary, $lightness: -15%);
   }
 
   &--secondary {
     background-color: $color-secondary;
-    color: #fff;
+    color: $color-white;
   }
 
   &--secondary:hover {
-    background-color: darken($color-secondary, 10%);
+    background-color: color.scale($color-secondary, $lightness: -10%);
   }
 
   &--secondary:active {
-    background-color: darken($color-secondary, 15%);
+    background-color: color.scale($color-secondary, $lightness: -15%);
   }
 
   &--success {
     background-color: $color-success;
-    color: #fff;
+    color: $color-white;
   }
 
   &--success:hover {
-    background-color: darken($color-success, 10%);
+    background-color: color.scale($color-success, $lightness: -10%);
   }
 
   &--success:active {
-    background-color: darken($color-success, 15%);
+    background-color: color.scale($color-success, $lightness: -15%);
   }
 
   &--warning {
     background-color: $color-warning;
-    color: #000;
+    color: $color-text;
   }
 
   &--warning:hover {
-    background-color: darken($color-warning, 10%);
+    background-color: color.scale($color-warning, $lightness: -10%);
   }
 
   &--warning:active {
-    background-color: darken($color-warning, 15%);
+    background-color: color.scale($color-warning, $lightness: -15%);
   }
 
   &--danger {
     background-color: $color-danger;
-    color: #fff;
+    color: $color-white;
   }
 
   &--danger:hover {
-    background-color: darken($color-danger, 10%);
+    background-color: color.scale($color-danger, $lightness: -10%);
   }
 
   &--danger:active {
-    background-color: darken($color-danger, 15%);
+    background-color: color.scale($color-danger, $lightness: -15%);
   }
 
   &--info {
     background-color: $color-info;
-    color: #fff;
+    color: $color-white;
   }
 
   &--info:hover {
-    background-color: darken($color-info, 10%);
+    background-color: color.scale($color-info, $lightness: -10%);
   }
 
   &--info:active {
-    background-color: darken($color-info, 15%);
+    background-color: color.scale($color-info, $lightness: -15%);
   }
 
   &:disabled {
     background-color: $color-disabled;
-    color: #6c757d;
+    color: $color-text;
     cursor: not-allowed;
     opacity: 0.6;
   }
