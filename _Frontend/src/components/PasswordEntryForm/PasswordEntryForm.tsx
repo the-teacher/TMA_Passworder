@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import "./styles.scss";
+import "../../ui-kit/buttons.scss";
 
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
@@ -151,12 +152,12 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
         </div>
 
         <div className={getElementClass("actions")}>
-          <button type="submit" className={getElementClass("button-submit")}>
+          <button type="submit" className="btn btn--primary">
             {t("actions.save")}
           </button>
           <button
             type="button"
-            className={getElementClass("button-reset")}
+            className="btn btn--secondary"
             onClick={handleReset}
           >
             {t("actions.reset")}

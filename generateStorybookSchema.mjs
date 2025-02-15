@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Quick start:
+// node generateStorybookSchema.mjs _Frontend/src/ _Frontend/.storybook/
+
 /**
  * This script generates a structured schema of Storybook stories from a specified directory.
  * It scans for files with extensions .stories.tsx, .stories.jsx, .stories.js, and .stories.ts,

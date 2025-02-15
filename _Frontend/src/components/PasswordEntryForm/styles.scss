@@ -81,38 +81,6 @@ $color-white: white;
     justify-content: flex-end;
     margin-top: 24px;
   }
-
-  &--button {
-    padding: 14px 28px;
-    border: none;
-    border-radius: 4px;
-    font-weight: 500;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  &--button-submit {
-    @extend .password-entry-form--button;
-    background-color: $color-primary;
-    color: $color-white;
-  }
-}
-
-.password-entry-form--button-submit:hover {
-  background-color: $color-primary-dark;
-}
-
-.password-entry-form {
-  &--button-reset {
-    @extend .password-entry-form--button;
-    background-color: $color-background-light;
-    color: $color-text;
-  }
-}
-
-.password-entry-form--button-reset:hover {
-  background-color: $color-background-darker;
 }
 
 @media (0 < width < 520px) {
@@ -151,11 +119,11 @@ $color-white: white;
       padding: 12px;
     }
 
-    &--button {
-      padding: 14px 28px;
-      font-size: 16px;
-      width: 100%;
-    }
+    // &--button {
+    //   padding: 14px 28px;
+    //   font-size: 16px;
+    //   width: 100%;
+    // }
 
     &--actions {
       flex-direction: column;
