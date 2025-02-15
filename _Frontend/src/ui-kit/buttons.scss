@@ -28,82 +28,82 @@ $color-disabled: #ced4da;
   &--primary {
     background-color: $color-primary;
     color: #fff;
+  }
 
-    &:hover {
-      background-color: darken($color-primary, 10%);
-    }
+  &--primary:hover {
+    background-color: darken($color-primary, 10%);
+  }
 
-    &:active {
-      background-color: darken($color-primary, 15%);
-    }
+  &--primary:active {
+    background-color: darken($color-primary, 15%);
   }
 
   &--secondary {
     background-color: $color-secondary;
     color: #fff;
+  }
 
-    &:hover {
-      background-color: darken($color-secondary, 10%);
-    }
+  &--secondary:hover {
+    background-color: darken($color-secondary, 10%);
+  }
 
-    &:active {
-      background-color: darken($color-secondary, 15%);
-    }
+  &--secondary:active {
+    background-color: darken($color-secondary, 15%);
   }
 
   &--success {
     background-color: $color-success;
     color: #fff;
+  }
 
-    &:hover {
-      background-color: darken($color-success, 10%);
-    }
+  &--success:hover {
+    background-color: darken($color-success, 10%);
+  }
 
-    &:active {
-      background-color: darken($color-success, 15%);
-    }
+  &--success:active {
+    background-color: darken($color-success, 15%);
   }
 
   &--warning {
     background-color: $color-warning;
     color: #000;
+  }
 
-    &:hover {
-      background-color: darken($color-warning, 10%);
-    }
+  &--warning:hover {
+    background-color: darken($color-warning, 10%);
+  }
 
-    &:active {
-      background-color: darken($color-warning, 15%);
-    }
+  &--warning:active {
+    background-color: darken($color-warning, 15%);
   }
 
   &--danger {
     background-color: $color-danger;
     color: #fff;
+  }
 
-    &:hover {
-      background-color: darken($color-danger, 10%);
-    }
+  &--danger:hover {
+    background-color: darken($color-danger, 10%);
+  }
 
-    &:active {
-      background-color: darken($color-danger, 15%);
-    }
+  &--danger:active {
+    background-color: darken($color-danger, 15%);
   }
 
   &--info {
     background-color: $color-info;
     color: #fff;
-
-    &:hover {
-      background-color: darken($color-info, 10%);
-    }
-
-    &:active {
-      background-color: darken($color-info, 15%);
-    }
   }
 
-  &--disabled {
+  &--info:hover {
+    background-color: darken($color-info, 10%);
+  }
+
+  &--info:active {
+    background-color: darken($color-info, 15%);
+  }
+
+  &:disabled {
     background-color: $color-disabled;
     color: #6c757d;
     cursor: not-allowed;

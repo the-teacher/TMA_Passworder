@@ -1,6 +1,6 @@
 ---
-description: 
-globs: 
+description: Rules for SCSS and SASS files
+globs: *.scss, *.sass
 ---
 
 ### BEM Naming Convention
@@ -15,6 +15,76 @@ Use BEM naming convention for CSS classes.
 Follow modern SCSS syntax. Use `@use`, `@forward` and other modern SCSS features.
 
 ### SCSS Nesting
+
+Always put Elements and Modifiers in Blocks (Scopes)
+
+**Bad**
+
+Elements are not places in the Block (Scope) `.btn`
+
+```scss
+.btn--warning {
+  background-color: $color-warning;
+  color: #000;
+
+  &:hover {
+    background-color: darken($color-warning, 10%);
+  }
+
+  &:active {
+    background-color: darken($color-warning, 15%);
+  }
+}
+
+.btn--danger {
+  background-color: $color-danger;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($color-danger, 10%);
+  }
+
+  &:active {
+    background-color: darken($color-danger, 15%);
+  }
+}
+```
+
+**Good**
+
+- Elements are placed in the Block (Scope) `.btn`
+- Structure has only 2 levels of nesting.
+
+```
+.btn {
+  &--warning {
+    background-color: $color-warning;
+    color: #000;
+  }
+
+  &--warning:hover {
+    background-color: darken($color-warning, 10%);
+  }
+
+  &--warning:active {
+    background-color: darken($color-warning, 15%);
+  }
+
+
+  &--danger {
+    background-color: $color-danger;
+    color: #fff;
+  }
+
+  &--danger:hover {
+    background-color: darken($color-danger, 10%);
+  }
+
+  &--danger:active {
+    background-color: darken($color-danger, 15%);
+  }
+}
+```
 
 In SCSS try to avoid using more then 2 levels of nesting (It is difficult to read and maintain).
 
@@ -129,5 +199,26 @@ Example:
   &--container {
     max-width: 1440px;
   }
+}
+```
+
+
+### `disabled` state
+
+Do not use classes for `disabled`
+
+**Bad**
+
+```scss 
+.btn {
+  &--disabled { ... }
+}
+```
+
+**Good**
+
+```scss 
+.btn {
+  &:disabled { ... }
 }
 ```
