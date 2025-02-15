@@ -1,0 +1,144 @@
+// Color variables
+$color-primary: #3a76d2;
+$color-secondary: #868e96;
+$color-success: #4caf50;
+$color-warning: #e0a800;
+$color-danger: #c82333;
+$color-info: #138496;
+$color-disabled: #ced4da;
+
+// Base button style
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+
+  &--primary {
+    background-color: $color-primary;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($color-primary, 10%);
+    }
+
+    &:active {
+      background-color: darken($color-primary, 15%);
+    }
+  }
+
+  &--secondary {
+    background-color: $color-secondary;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($color-secondary, 10%);
+    }
+
+    &:active {
+      background-color: darken($color-secondary, 15%);
+    }
+  }
+
+  &--success {
+    background-color: $color-success;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($color-success, 10%);
+    }
+
+    &:active {
+      background-color: darken($color-success, 15%);
+    }
+  }
+
+  &--warning {
+    background-color: $color-warning;
+    color: #000;
+
+    &:hover {
+      background-color: darken($color-warning, 10%);
+    }
+
+    &:active {
+      background-color: darken($color-warning, 15%);
+    }
+  }
+
+  &--danger {
+    background-color: $color-danger;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($color-danger, 10%);
+    }
+
+    &:active {
+      background-color: darken($color-danger, 15%);
+    }
+  }
+
+  &--info {
+    background-color: $color-info;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($color-info, 10%);
+    }
+
+    &:active {
+      background-color: darken($color-info, 15%);
+    }
+  }
+
+  &--disabled {
+    background-color: $color-disabled;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  // Button sizes
+  &--small {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  &--medium {
+    padding: 10px 16px;
+    font-size: 16px;
+  }
+
+  &--large {
+    padding: 14px 20px;
+    font-size: 18px;
+  }
+
+  // Button variants with icons
+  &--icon {
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--icon-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}

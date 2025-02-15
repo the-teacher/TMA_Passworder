@@ -1,8 +1,10 @@
 ---
-description: Common expectations for projects
-globs: */**.*
+description: Use it for all files in all projects
+globs: 
 ---
 ### Language for Comments
+
+In chat communicate in language that developer uses.
 
 Always write comments to code in english.
 

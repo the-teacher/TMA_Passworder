@@ -18,10 +18,50 @@ Follow modern SCSS syntax. Use `@use`, `@forward` and other modern SCSS features
 
 In SCSS try to avoid using more then 2 levels of nesting (It is difficult to read and maintain).
 
+**Bad**
+
+More then 3 levels of nesting:
+
+```scss
+.btn {
+  background-color: #fff;
+
+  &--primary {
+    &:hover {
+      background-color: #000;
+    }
+
+    &:active {
+      background-color: #000;
+    }
+  }
+}
+```
+
+**Good**
+
+2 levels structure:
+
+```scss
+.btn {
+  background-color: #fff;
+
+  &--primary:hover {
+    background-color: #000;
+  }
+
+  &--primary:active {
+    background-color: #000;
+  }
+}
+```
+
+### SCSS Nesting
+
 Example:
 
 ```scss
-.holy-grail {
+.search-field {
   &--container {
     max-width: 1440px;
     margin: 0 auto;
@@ -48,14 +88,14 @@ Example:
 Sould be written like this:
 
 ```scss
-.holy-grail {
+.search-field {
   &--container {
     max-width: 1440px;
     margin: 0 auto;
   }
 }
 
-.holy-grail--container {
+.search-field {
   @media (0 < width < 520px) {
     // mobile styles
   }
@@ -85,7 +125,9 @@ Use PX units for all values.
 Example:
 
 ```scss
-.holy-grail {
+.search-field {
   &--container {
     max-width: 1440px;
+  }
+}
 ```
