@@ -34,23 +34,13 @@
 │   ├── Default
 │   └── Russian
 │
-├── Buttons/
-│   ├── Primary
-│   ├── Secondary
-│   ├── Success
-│   ├── Warning
-│   ├── Danger
-│   ├── Info
-│   ├── Disabled
-│   ├── Small
-│   ├── Medium
-│   ├── Large
-│   ├── Icon
-│   └── IconText
-│
 ├── LoadingFallback/
 │   ├── Default
 │   ├── CustomStyling
 │   └── WithBackground
+│
+4-UI-Kit/
+├── Buttons/
+│   └── AllButtons
 │
 ```

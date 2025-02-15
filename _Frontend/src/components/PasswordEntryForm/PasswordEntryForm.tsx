@@ -6,7 +6,6 @@ import "../../ui-kit/buttons.scss";
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-const BLOCK_NAME = "password-entry-form";
 
 type PasswordEntryFormData = {
   serviceName: string;
@@ -17,8 +16,6 @@ type PasswordEntryFormData = {
 type PasswordEntryFormProps = {
   onSubmit: (data: PasswordEntryFormData) => void;
 };
-
-const getElementClass = (element: string) => `${BLOCK_NAME}--${element}`;
 
 const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
   const { t } = useTranslation("passwordEntry");
@@ -66,14 +63,14 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
   };
 
   return (
-    <div className={`${BLOCK_NAME}--container`}>
-      <form className={BLOCK_NAME} onSubmit={handleSubmit}>
-        <div className={getElementClass("field")}>
-          <label className={getElementClass("label")} htmlFor="serviceName">
+    <div className="password-entry-form--container">
+      <form className="password-entry-form" onSubmit={handleSubmit}>
+        <div className="password-entry-form--field">
+          <label className="password-entry-form--label" htmlFor="serviceName">
             {t("serviceName")}
           </label>
           <input
-            className={getElementClass("input")}
+            className="password-entry-form--input"
             id="serviceName"
             type="text"
             value={formData.serviceName}
@@ -82,29 +79,29 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
           />
         </div>
 
-        <div className={getElementClass("field")}>
-          <label className={getElementClass("label")} htmlFor="password">
+        <div className="password-entry-form--field">
+          <label className="password-entry-form--label" htmlFor="password">
             {t("password")}
           </label>
           <input
-            className={getElementClass("input")}
+            className="password-entry-form--input"
             id="password"
             type={showPassword ? "text" : "password"}
             value={formData.password}
             onChange={handleInputChange("password")}
             required
           />
-          <div className={getElementClass("password-actions")}>
+          <div className="password-entry-form--password-actions">
             <button
               type="button"
-              className={getElementClass("icon-button")}
+              className="password-entry-form--icon-button"
               onClick={() => setShowPassword(!showPassword)}
               title={t(
                 showPassword ? "actions.hidePassword" : "actions.showPassword"
               )}
             >
               <img
-                className={getElementClass("icon")}
+                className="password-entry-form--icon"
                 src={`/icons/${showPassword ? "eye-off" : "eye"}.svg`}
                 alt={t(
                   showPassword ? "actions.hidePassword" : "actions.showPassword"
@@ -113,24 +110,24 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
             </button>
             <button
               type="button"
-              className={getElementClass("icon-button")}
+              className="password-entry-form--icon-button"
               onClick={copyPassword}
               title={t("actions.copyPassword")}
             >
               <img
-                className={getElementClass("icon")}
+                className="password-entry-form--icon"
                 src="/icons/clipboard-check.svg"
                 alt={t("actions.copyPassword")}
               />
             </button>
             <button
               type="button"
-              className={getElementClass("icon-button")}
+              className="password-entry-form--icon-button"
               onClick={generatePassword}
               title={t("actions.generatePassword")}
             >
               <img
-                className={getElementClass("icon")}
+                className="password-entry-form--icon"
                 src="/icons/refresh.svg"
                 alt={t("actions.generatePassword")}
               />
@@ -138,12 +135,12 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
           </div>
         </div>
 
-        <div className={getElementClass("field")}>
-          <label className={getElementClass("label")} htmlFor="notes">
+        <div className="password-entry-form--field">
+          <label className="password-entry-form--label" htmlFor="notes">
             {t("notes")}
           </label>
           <textarea
-            className={getElementClass("textarea")}
+            className="password-entry-form--textarea"
             id="notes"
             value={formData.notes}
             onChange={handleInputChange("notes")}
@@ -151,7 +148,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
           />
         </div>
 
-        <div className={getElementClass("actions")}>
+        <div className="password-entry-form--actions">
           <button type="submit" className="btn btn--primary">
             {t("actions.save")}
           </button>
