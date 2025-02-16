@@ -44,6 +44,10 @@ export const AllFormInputs: Story = {
             placeholder="Success Input"
           />
         </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Disabled</h4>
+          <input className="form-input" placeholder="Disabled Input" disabled />
+        </div>
       </div>
 
       <div>
@@ -69,6 +73,15 @@ export const AllFormInputs: Story = {
         <div style={{ marginBottom: "16px" }}>
           <h4>Success</h4>
           <select className="form-select form-input--success">
+            <option value="">Select an option</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Disabled</h4>
+          <select className="form-select" disabled>
             <option value="">Select an option</option>
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
@@ -101,6 +114,15 @@ export const AllFormInputs: Story = {
             className="form-textarea form-input--success"
             placeholder="Success Textarea"
             rows={4}
+          />
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Disabled</h4>
+          <textarea
+            className="form-textarea"
+            placeholder="Disabled Textarea"
+            rows={4}
+            disabled
           />
         </div>
       </div>
