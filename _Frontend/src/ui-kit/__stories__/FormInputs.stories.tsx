@@ -21,8 +21,7 @@ export const AllFormInputs: Story = {
         display: "flex",
         flexDirection: "column",
         gap: "32px",
-        padding: "16px",
-        maxWidth: "400px"
+        padding: "16px"
       }}
     >
       <div>
