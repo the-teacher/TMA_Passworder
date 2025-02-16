@@ -34,6 +34,10 @@
 │   ├── Default
 │   └── Russian
 │
+├── AppIcon/
+│   ├── Default
+│   └── AllIcons
+│
 ├── LoadingFallback/
 │   ├── Default
 │   ├── CustomStyling
@@ -42,5 +46,18 @@
 4-UI-Kit/
 ├── Buttons/
 │   └── AllButtons
+│
+├── FormGroups/
+│   └── FormGroupExample
+│
+├── FormInputs/
+│   └── AllFormInputs
+│
+├── InfoBlocks/
+│   ├── ClosableInfoBlocks
+│   └── AllInfoBlocks
+│
+├── TextStyles/
+│   └── AllTextStyles
 │
 ```

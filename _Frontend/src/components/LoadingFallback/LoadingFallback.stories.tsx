@@ -16,17 +16,6 @@ type Story = StoryObj<typeof LoadingFallback>;
 // Default loading state
 export const Default: Story = {};
 
-// Custom styling example
-export const CustomStyling: Story = {
-  decorators: [
-    (Story) => (
-      <div style={{ height: "50vh" }}>
-        <Story />
-      </div>
-    )
-  ]
-};
-
 // With background color
 export const WithBackground: Story = {
   decorators: [
