@@ -46,30 +46,10 @@ $color-white: white;
     justify-content: flex-start;
   }
 
-  &--icon-button {
-    background: none;
-    border: 1px solid $color-border;
-    padding: 8px 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
+  &--password-actions > .btn {
     flex: 1;
   }
-}
 
-.password-entry-form--input__focused,
-.password-entry-form--textarea__focused {
-  outline: none;
-  border-color: $color-primary;
-}
-
-.password-entry-form--password-container .password-entry-form--input {
-  flex: 1;
-}
-
-.password-entry-form {
   &--icon {
     width: 24px;
     height: 24px;
@@ -81,6 +61,10 @@ $color-white: white;
     justify-content: flex-end;
     margin-top: 24px;
   }
+}
+
+.password-entry-form--password-container .password-entry-form--input {
+  flex: 1;
 }
 
 @media (0 < width < 520px) {
@@ -105,25 +89,10 @@ $color-white: white;
       font-size: 16px;
     }
 
-    &--icon {
-      width: 24px;
-      height: 24px;
-    }
-
     &--password-actions {
       flex-direction: row;
       gap: 8px;
     }
-
-    &--icon-button {
-      padding: 12px;
-    }
-
-    // &--button {
-    //   padding: 14px 28px;
-    //   font-size: 16px;
-    //   width: 100%;
-    // }
 
     &--actions {
       flex-direction: column;

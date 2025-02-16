@@ -94,7 +94,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
           <div className="password-entry-form--password-actions">
             <button
               type="button"
-              className="password-entry-form--icon-button"
+              className="btn btn--icon"
               onClick={() => setShowPassword(!showPassword)}
               title={t(
                 showPassword ? "actions.hidePassword" : "actions.showPassword"
@@ -110,7 +110,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
             </button>
             <button
               type="button"
-              className="password-entry-form--icon-button"
+              className="btn btn--icon"
               onClick={copyPassword}
               title={t("actions.copyPassword")}
             >
@@ -122,7 +122,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
             </button>
             <button
               type="button"
-              className="password-entry-form--icon-button"
+              className="btn btn--icon"
               onClick={generatePassword}
               title={t("actions.generatePassword")}
             >
