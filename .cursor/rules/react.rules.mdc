@@ -30,6 +30,10 @@ Use BEM naming convention for CSS classes.
 
 Do not use `React.FC` for components.
 
+### Do not use
+
+Do not use `.propTypes` for components.
+
 ### TypeScript
 
 Use Yarn with Node Modules and `"moduleResolution": "node"` for TypeScript configuration.

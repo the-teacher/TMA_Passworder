@@ -22,6 +22,7 @@ export const FormGroupExample: Story = {
       <div className="form-group">
         <label className="form-group__label text--dark" htmlFor="username">
           Username
+          <img src="/icons/eye.svg" alt="Icon" />
         </label>
         <input
           className="form-group__input form-input"
@@ -37,6 +38,7 @@ export const FormGroupExample: Story = {
       <div className="form-group">
         <label className="form-group__label text--dark" htmlFor="email">
           Email
+          <img src="/icons/home.svg" alt="Icon" />
         </label>
         <input
           className="form-group__input form-input"
