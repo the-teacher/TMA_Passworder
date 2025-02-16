@@ -9,7 +9,8 @@ export default {
     "^@pages/(.*)$": "<rootDir>/src/pages/$1",
     "^@components/(.*)$": "<rootDir>/src/components/$1",
     "^@test/(.*)$": "<rootDir>/test/$1",
-    "^@routes/(.*)$": "<rootDir>/src/routes/$1"
+    "^@routes/(.*)$": "<rootDir>/src/routes/$1",
+    "^@ui-kit/(.*)$": "<rootDir>/src/ui-kit/$1"
   },
   transform: {
     "^.+\\.tsx?$": [

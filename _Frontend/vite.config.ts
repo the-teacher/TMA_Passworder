@@ -31,6 +31,10 @@ export default defineConfig({
       {
         find: "@routes",
         replacement: path.resolve(__dirname, "src/routes")
+      },
+      {
+        find: "@ui-kit",
+        replacement: path.resolve(__dirname, "src/ui-kit")
       }
     ]
   }

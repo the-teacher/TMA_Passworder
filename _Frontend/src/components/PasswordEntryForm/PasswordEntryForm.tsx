@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import "./styles.scss";
-import "../../ui-kit/buttons.scss";
+import "@ui-kit//buttons.scss";
 
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =

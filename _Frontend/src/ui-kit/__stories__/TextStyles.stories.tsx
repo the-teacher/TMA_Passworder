@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import "../text-styles.scss";
+import "@ui-kit/text-styles.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/TextStyles",

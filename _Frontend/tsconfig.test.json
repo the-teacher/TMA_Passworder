@@ -11,7 +11,8 @@
       "@pages/*": ["src/pages/*"],
       "@components/*": ["src/components/*"],
       "@test/*": ["test/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@ui-kit/*": ["src/ui-kit/*"]
     }
   },
   "include": [
