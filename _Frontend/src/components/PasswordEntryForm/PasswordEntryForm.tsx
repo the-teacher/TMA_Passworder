@@ -2,7 +2,9 @@ import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/buttons.scss";
+import "@ui-kit/form-groups.scss";
 import "./styles.scss";
+import AppIcon from "@components/AppIcon";
 
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
@@ -64,10 +66,10 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
   };
 
   return (
-    <div className="password-entry-form--container">
+    <div className="password-entry-form-container">
       <form className="password-entry-form" onSubmit={handleSubmit}>
-        <div className="password-entry-form--field">
-          <label className="password-entry-form--label" htmlFor="serviceName">
+        <div className="form-group">
+          <label className="form-group--label" htmlFor="serviceName">
             {t("serviceName")}
           </label>
           <input
@@ -80,35 +82,32 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
           />
         </div>
 
-        <div className="password-entry-form--field">
-          <label className="password-entry-form--label" htmlFor="password">
+        <div className="form-group">
+          <label className="form-group--label" htmlFor="password">
             {t("password")}
-          </label>
-          <input
-            className="form-input"
-            id="password"
-            type={showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleInputChange("password")}
-            required
-          />
-          <div className="password-entry-form--password-actions">
-            <button
-              type="button"
-              className="btn btn--icon"
+
+            <AppIcon
+              size={16}
+              type={showPassword ? "eye-off" : "eye"}
               onClick={() => setShowPassword(!showPassword)}
               title={t(
                 showPassword ? "actions.hidePassword" : "actions.showPassword"
               )}
-            >
-              <img
-                className="password-entry-form--icon"
-                src={`/icons/${showPassword ? "eye-off" : "eye"}.svg`}
-                alt={t(
-                  showPassword ? "actions.hidePassword" : "actions.showPassword"
-                )}
-              />
-            </button>
+              alt={t(
+                showPassword ? "actions.hidePassword" : "actions.showPassword"
+              )}
+            />
+          </label>
+          <div className="form-group--input form-group--with-icon">
+            <input
+              className="form-input"
+              id="password"
+              type={showPassword ? "text" : "password"}
+              value={formData.password}
+              onChange={handleInputChange("password")}
+              required
+            />
+
             <button
               type="button"
               className="btn btn--icon"
@@ -116,11 +115,11 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
               title={t("actions.copyPassword")}
             >
               <img
-                className="password-entry-form--icon"
                 src="/icons/clipboard-check.svg"
                 alt={t("actions.copyPassword")}
               />
             </button>
+
             <button
               type="button"
               className="btn btn--icon"
@@ -128,7 +127,6 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
               title={t("actions.generatePassword")}
             >
               <img
-                className="password-entry-form--icon"
                 src="/icons/refresh.svg"
                 alt={t("actions.generatePassword")}
               />
@@ -136,8 +134,8 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
           </div>
         </div>
 
-        <div className="password-entry-form--field">
-          <label className="password-entry-form--label" htmlFor="notes">
+        <div className="form-group">
+          <label className="form-group--label" htmlFor="notes">
             {t("notes")}
           </label>
           <textarea

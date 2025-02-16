@@ -1,41 +1,4 @@
 .password-entry-form {
-  &--container {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  &--field {
-    margin-bottom: 20px;
-  }
-
-  &--label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  &--password-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &--password-actions {
-    padding: 10px 0 0 0;
-    display: flex;
-    gap: 8px;
-    justify-content: flex-start;
-  }
-
-  &--password-actions > .btn {
-    flex: 1;
-  }
-
-  &--icon {
-    width: 24px;
-    height: 24px;
-  }
-
   &--actions {
     display: flex;
     gap: 16px;
@@ -50,25 +13,6 @@
 
 @media (0 < width < 520px) {
   .password-entry-form {
-    &--container {
-      padding: 16px;
-      width: 100%;
-    }
-
-    &--field {
-      margin-bottom: 20px;
-    }
-
-    &--label {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    &--password-actions {
-      flex-direction: row;
-      gap: 8px;
-    }
-
     &--actions {
       flex-direction: column;
       gap: 12px;

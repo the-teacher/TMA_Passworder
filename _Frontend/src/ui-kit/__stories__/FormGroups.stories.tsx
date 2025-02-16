@@ -44,7 +44,7 @@ export const FormGroupExample: Story = {
         <label className="form-group--label text--dark" htmlFor="email">
           <AppIcon size={16} type="search" /> Email
         </label>
-        <div className="form-group--input form-group--with-icon">
+        <div className="form-group--input form-group__with-icon">
           <input
             className="form-input"
             id="email"
