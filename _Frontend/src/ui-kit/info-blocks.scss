@@ -1,0 +1,66 @@
+@use "sass:color";
+
+$color-primary: #007bff;
+$color-secondary: #868e96;
+$color-success: #4caf50;
+$color-warning: #ffc107;
+$color-danger: #c82333;
+$color-info: #138496;
+$color-light: #f8f9fa;
+$color-dark: #343a40;
+$color-text: #212529;
+$color-background-light: #f8f9fa;
+
+.info {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1.5;
+  border: 1px solid transparent;
+
+  background-color: color.scale($color-info, $lightness: 90%);
+  border-color: $color-info;
+  color: $color-info;
+
+  &--primary {
+    background-color: color.scale($color-primary, $lightness: 90%);
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+
+  &--secondary {
+    background-color: color.scale($color-secondary, $lightness: 90%);
+    border-color: $color-secondary;
+    color: $color-secondary;
+  }
+
+  &--success {
+    background-color: color.scale($color-success, $lightness: 90%);
+    border-color: $color-success;
+    color: $color-success;
+  }
+
+  &--danger {
+    background-color: color.scale($color-danger, $lightness: 90%);
+    border-color: $color-danger;
+    color: $color-danger;
+  }
+
+  &--warning {
+    background-color: color.scale($color-warning, $lightness: 90%);
+    border-color: $color-warning;
+    color: $color-warning;
+  }
+
+  &--light {
+    background-color: $color-light;
+    border-color: color.scale($color-light, $lightness: -10%);
+    color: $color-text;
+  }
+
+  &--dark {
+    background-color: $color-dark;
+    border-color: color.scale($color-dark, $lightness: -10%);
+    color: $color-light;
+  }
+}
