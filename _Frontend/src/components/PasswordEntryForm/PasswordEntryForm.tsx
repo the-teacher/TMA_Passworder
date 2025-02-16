@@ -1,7 +1,8 @@
 import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
+import "@ui-kit/form-inputs.scss";
+import "@ui-kit/buttons.scss";
 import "./styles.scss";
-import "@ui-kit//buttons.scss";
 
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
@@ -70,7 +71,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
             {t("serviceName")}
           </label>
           <input
-            className="password-entry-form--input"
+            className="form-input"
             id="serviceName"
             type="text"
             value={formData.serviceName}
@@ -84,7 +85,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
             {t("password")}
           </label>
           <input
-            className="password-entry-form--input"
+            className="form-input"
             id="password"
             type={showPassword ? "text" : "password"}
             value={formData.password}
@@ -140,7 +141,7 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
             {t("notes")}
           </label>
           <textarea
-            className="password-entry-form--textarea"
+            className="form-input"
             id="notes"
             value={formData.notes}
             onChange={handleInputChange("notes")}
