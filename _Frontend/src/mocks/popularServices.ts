@@ -1,0 +1,35 @@
+// Mock data - 30 popular services
+const popularServices = [
+  "Google",
+  "Facebook",
+  "Twitter",
+  "Instagram",
+  "LinkedIn",
+  "Amazon",
+  "Netflix",
+  "Spotify",
+  "Dropbox",
+  "Slack",
+  "GitHub",
+  "Reddit",
+  "Pinterest",
+  "Snapchat",
+  "WhatsApp",
+  "YouTube",
+  "Zoom",
+  "Microsoft",
+  "Apple",
+  "Adobe",
+  "PayPal",
+  "eBay",
+  "Airbnb",
+  "Uber",
+  "Lyft",
+  "Twitch",
+  "Discord",
+  "TikTok",
+  "Shopify",
+  "Salesforce"
+];
+
+export default popularServices;

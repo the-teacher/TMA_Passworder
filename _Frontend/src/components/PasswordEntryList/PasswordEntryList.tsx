@@ -1,44 +1,11 @@
 import PasswordEntry from "@components/PasswordEntry";
+import popularServices from "../../mocks/popularServices"; // Import the mock data
 import "./styles.scss";
 
 type PasswordEntryType = {
   id: string;
   name: string;
 };
-
-// Mock data - 30 popular services
-const popularServices = [
-  "Google",
-  "Facebook",
-  "Twitter",
-  "Instagram",
-  "LinkedIn",
-  "Amazon",
-  "Netflix",
-  "Spotify",
-  "Dropbox",
-  "Slack",
-  "GitHub",
-  "Reddit",
-  "Pinterest",
-  "Snapchat",
-  "WhatsApp",
-  "YouTube",
-  "Zoom",
-  "Microsoft",
-  "Apple",
-  "Adobe",
-  "PayPal",
-  "eBay",
-  "Airbnb",
-  "Uber",
-  "Lyft",
-  "Twitch",
-  "Discord",
-  "TikTok",
-  "Shopify",
-  "Salesforce"
-];
 
 const mockEntries: PasswordEntryType[] = popularServices.map(
   (service, index) => ({

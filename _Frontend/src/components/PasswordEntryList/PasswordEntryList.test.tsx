@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
 import PasswordEntryList from "./PasswordEntryList";
+import popularServices from "../../mocks/popularServices";
 
 describe("PasswordEntryList", () => {
   const renderWithRouter = () => {
@@ -14,39 +15,6 @@ describe("PasswordEntryList", () => {
   it("renders all 30 popular service entries", () => {
     renderWithRouter();
 
-    const popularServices = [
-      "Google",
-      "Facebook",
-      "Twitter",
-      "Instagram",
-      "LinkedIn",
-      "Amazon",
-      "Netflix",
-      "Spotify",
-      "Dropbox",
-      "Slack",
-      "GitHub",
-      "Reddit",
-      "Pinterest",
-      "Snapchat",
-      "WhatsApp",
-      "YouTube",
-      "Zoom",
-      "Microsoft",
-      "Apple",
-      "Adobe",
-      "PayPal",
-      "eBay",
-      "Airbnb",
-      "Uber",
-      "Lyft",
-      "Twitch",
-      "Discord",
-      "TikTok",
-      "Shopify",
-      "Salesforce"
-    ];
-
     popularServices.forEach((service) => {
       expect(screen.getByText(service)).toBeInTheDocument();
     });
@@ -54,39 +22,6 @@ describe("PasswordEntryList", () => {
 
   it("renders entries with correct links", () => {
     renderWithRouter();
-
-    const popularServices = [
-      "Google",
-      "Facebook",
-      "Twitter",
-      "Instagram",
-      "LinkedIn",
-      "Amazon",
-      "Netflix",
-      "Spotify",
-      "Dropbox",
-      "Slack",
-      "GitHub",
-      "Reddit",
-      "Pinterest",
-      "Snapchat",
-      "WhatsApp",
-      "YouTube",
-      "Zoom",
-      "Microsoft",
-      "Apple",
-      "Adobe",
-      "PayPal",
-      "eBay",
-      "Airbnb",
-      "Uber",
-      "Lyft",
-      "Twitch",
-      "Discord",
-      "TikTok",
-      "Shopify",
-      "Salesforce"
-    ];
 
     popularServices.forEach((service, index) => {
       const entry = screen.getByText(service);
