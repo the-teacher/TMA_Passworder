@@ -1,14 +1,5 @@
 @use "sass:color";
-
-$color-primary: #007bff;
-$color-secondary: #868e96;
-$color-success: #4caf50;
-$color-warning: #ffc107;
-$color-danger: #c82333;
-$color-info: #138496;
-$color-light: #f8f9fa;
-$color-dark: #343a40;
-$color-text: #212529;
+@use "./colors" as *;
 
 .text {
   font-size: 16px;

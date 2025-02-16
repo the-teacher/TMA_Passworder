@@ -1,19 +1,5 @@
 @use "sass:color";
-
-// Update color variables to match styles.scss
-$color-primary: #007bff;
-$color-primary-dark: #0056b3;
-$color-secondary: #868e96;
-$color-success: #4caf50;
-$color-warning: #ffc107;
-$color-danger: #c82333;
-$color-info: #138496;
-$color-disabled: #ced4da;
-$color-text: #212529;
-$color-background-light: #f8f9fa;
-$color-background-hover: #f5f5f5;
-$color-background-darker: #e2e6ea;
-$color-white: white;
+@use "./colors" as *;
 
 // Base button style
 .btn {
