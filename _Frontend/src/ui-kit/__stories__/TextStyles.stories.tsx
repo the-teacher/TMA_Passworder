@@ -62,7 +62,7 @@ export const AllTextStyles: Story = {
       <p className="info text text--info text--small">
         Small Info Text: Ensure that you have saved all necessary data.
       </p>
-      <p className="info info--dark text text--dark text--small">
+      <p className="info text text--dark text--small">
         Small Light Text: Light text on a dark background.
       </p>
       <p className="info text text--dark text--small">

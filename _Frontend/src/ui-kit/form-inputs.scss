@@ -1,0 +1,36 @@
+@use "sass:color";
+@use "./colors" as *;
+
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid $color-dark;
+  border-radius: 4px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  outline: none;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px color.scale($color-primary, $alpha: -70%);
+  }
+
+  &--error {
+    border-color: $color-danger;
+    box-shadow: 0 0 0 3px color.scale($color-danger, $alpha: -70%);
+  }
+
+  &--success {
+    border-color: $color-success;
+    box-shadow: 0 0 0 3px color.scale($color-success, $alpha: -70%);
+  }
+
+  &--disabled {
+    background-color: $color-disabled;
+    border-color: $color-light;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
