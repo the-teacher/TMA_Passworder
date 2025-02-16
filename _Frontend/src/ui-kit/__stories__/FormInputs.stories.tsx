@@ -6,8 +6,7 @@ const meta: Meta = {
   title: "4-UI-Kit/FormInputs",
   component: "input",
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 

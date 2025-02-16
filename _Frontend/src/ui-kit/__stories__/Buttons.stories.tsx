@@ -5,8 +5,7 @@ const meta: Meta = {
   title: "4-UI-Kit/Buttons",
   component: "button",
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 

@@ -6,7 +6,6 @@ const meta = {
   title: "3-Components/1-PasswordEntryList",
   component: PasswordEntryList,
   parameters: {
-    layout: "centered",
     viewport: {
       defaultViewport: "mobile"
     }

@@ -4,7 +4,9 @@
   gap: 8px;
   margin-bottom: 16px;
 
-  &__label {
+  &__label,
+  &__input,
+  &__info {
     display: flex;
     align-items: center;
     gap: 4px;

@@ -5,8 +5,7 @@ const meta: Meta<typeof LoadingFallback> = {
   title: "3-Components/LoadingFallback",
   component: LoadingFallback,
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 

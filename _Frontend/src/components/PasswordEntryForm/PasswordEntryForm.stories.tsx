@@ -12,7 +12,6 @@ const meta: Meta<typeof PasswordEntryForm> = {
   decorators: [withRouter],
   parameters: {
     docs: { disable: true },
-    layout: "fullscreen",
     viewport: {
       defaultViewport: "mobile"
     },

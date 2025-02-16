@@ -13,8 +13,7 @@ const meta: Meta<typeof FooterNavigation> = {
     )
   ],
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 

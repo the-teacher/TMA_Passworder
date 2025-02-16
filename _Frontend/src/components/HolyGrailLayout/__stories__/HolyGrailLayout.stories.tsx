@@ -13,8 +13,7 @@ const meta: Meta<typeof HolyGrailLayout> = {
   title: "1-Layouts/1-HolyGrailLayout",
   component: HolyGrailLayout,
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 

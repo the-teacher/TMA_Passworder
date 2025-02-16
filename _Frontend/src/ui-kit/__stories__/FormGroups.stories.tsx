@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/text-styles.scss"; // Assuming text styles are defined here
+import AppIcon from "@components/AppIcon"; // Import AppIcon
 
 const meta: Meta = {
   title: "4-UI-Kit/FormGroups",
   component: "div",
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 
@@ -18,11 +18,11 @@ type Story = StoryObj;
 // Form group story
 export const FormGroupExample: Story = {
   render: () => (
-    <div className="p16">
+    <div style={{ padding: "16px", maxWidth: "400px" }}>
       <div className="form-group">
         <label className="form-group__label text--dark" htmlFor="username">
           Username
-          <img src="/icons/eye.svg" alt="Icon" />
+          <AppIcon size={16} type="eye" />
         </label>
         <input
           className="form-group__input form-input"
@@ -31,14 +31,13 @@ export const FormGroupExample: Story = {
           placeholder="Enter your username"
         />
         <div className="form-group__info text--info text--small">
-          Please enter a unique username.
+          <AppIcon size={12} type="refresh" /> Please enter a unique username.
         </div>
       </div>
 
       <div className="form-group">
         <label className="form-group__label text--dark" htmlFor="email">
-          Email
-          <img src="/icons/home.svg" alt="Icon" />
+          <AppIcon size={16} type="search" /> Email
         </label>
         <input
           className="form-group__input form-input"
@@ -53,7 +52,7 @@ export const FormGroupExample: Story = {
 
       <div className="form-group">
         <label className="form-group__label text--dark" htmlFor="password">
-          Password
+          <AppIcon size={16} type="eye-off" /> Password
         </label>
         <input
           className="form-group__input form-input"

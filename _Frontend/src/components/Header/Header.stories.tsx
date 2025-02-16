@@ -6,8 +6,7 @@ const meta: Meta<typeof Header> = {
   title: "2-Core/1-Header",
   component: Header,
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   },
   decorators: [
     (Story) => (

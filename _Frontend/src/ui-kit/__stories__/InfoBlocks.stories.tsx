@@ -5,8 +5,7 @@ const meta: Meta = {
   title: "4-UI-Kit/InfoBlocks",
   component: "div",
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 

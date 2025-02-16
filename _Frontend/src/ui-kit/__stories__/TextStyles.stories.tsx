@@ -5,8 +5,7 @@ const meta: Meta = {
   title: "4-UI-Kit/TextStyles",
   component: "p",
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 

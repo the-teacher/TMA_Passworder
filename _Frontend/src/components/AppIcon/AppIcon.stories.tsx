@@ -7,7 +7,6 @@ const meta: Meta<typeof AppIcon> = {
   component: AppIcon,
   parameters: {
     docs: { disable: true },
-    layout: "tablet",
     viewport: {
       defaultViewport: "tablet"
     }

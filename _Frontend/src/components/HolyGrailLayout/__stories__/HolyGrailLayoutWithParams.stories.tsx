@@ -6,8 +6,7 @@ const meta: Meta<typeof HolyGrailLayoutWithParams> = {
   title: "1-Layouts/2-HolyGrailLayoutWithParams",
   component: HolyGrailLayoutWithParams,
   parameters: {
-    docs: { disable: true },
-    layout: "fullscreen"
+    docs: { disable: true }
   }
 };
 
