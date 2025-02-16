@@ -63,4 +63,35 @@ $color-background-light: #f8f9fa;
     border-color: color.scale($color-dark, $lightness: -10%);
     color: $color-light;
   }
+
+  &--closable {
+    position: relative;
+    padding-right: 40px;
+  }
+
+  &__close {
+    position: absolute;
+    top: 20px;
+    right: 8px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &__close:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }
