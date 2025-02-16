@@ -12,6 +12,12 @@
     gap: 8px;
   }
 
+  &--actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
   &--icon {
     display: flex;
     align-items: center;
@@ -23,5 +29,14 @@
 
   &__with-icon {
     align-items: normal;
+  }
+}
+
+@media (0 < width < 520px) {
+  .form-group {
+    &--actions {
+      flex-direction: column;
+      gap: 8px;
+    }
   }
 }

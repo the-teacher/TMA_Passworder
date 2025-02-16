@@ -66,101 +66,96 @@ const PasswordEntryForm = ({ onSubmit }: PasswordEntryFormProps) => {
   };
 
   return (
-    <div className="password-entry-form-container">
-      <form className="password-entry-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="serviceName">
-            {t("serviceName")}
-          </label>
+    <form className="password-entry-form" onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label className="form-group--label" htmlFor="serviceName">
+          {t("serviceName")}
+        </label>
+        <input
+          className="form-input"
+          id="serviceName"
+          type="text"
+          value={formData.serviceName}
+          onChange={handleInputChange("serviceName")}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-group--label" htmlFor="password">
+          {t("password")}
+
+          <AppIcon
+            size={16}
+            type={showPassword ? "eye-off" : "eye"}
+            onClick={() => setShowPassword(!showPassword)}
+            title={t(
+              showPassword ? "actions.hidePassword" : "actions.showPassword"
+            )}
+            alt={t(
+              showPassword ? "actions.hidePassword" : "actions.showPassword"
+            )}
+          />
+        </label>
+        <div className="form-group--input form-group--with-icon">
           <input
             className="form-input"
-            id="serviceName"
-            type="text"
-            value={formData.serviceName}
-            onChange={handleInputChange("serviceName")}
+            id="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleInputChange("password")}
             required
           />
-        </div>
 
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="password">
-            {t("password")}
-
-            <AppIcon
-              size={16}
-              type={showPassword ? "eye-off" : "eye"}
-              onClick={() => setShowPassword(!showPassword)}
-              title={t(
-                showPassword ? "actions.hidePassword" : "actions.showPassword"
-              )}
-              alt={t(
-                showPassword ? "actions.hidePassword" : "actions.showPassword"
-              )}
-            />
-          </label>
-          <div className="form-group--input form-group--with-icon">
-            <input
-              className="form-input"
-              id="password"
-              type={showPassword ? "text" : "password"}
-              value={formData.password}
-              onChange={handleInputChange("password")}
-              required
-            />
-
-            <button
-              type="button"
-              className="btn btn--icon"
-              onClick={copyPassword}
-              title={t("actions.copyPassword")}
-            >
-              <img
-                src="/icons/clipboard-check.svg"
-                alt={t("actions.copyPassword")}
-              />
-            </button>
-
-            <button
-              type="button"
-              className="btn btn--icon"
-              onClick={generatePassword}
-              title={t("actions.generatePassword")}
-            >
-              <img
-                src="/icons/refresh.svg"
-                alt={t("actions.generatePassword")}
-              />
-            </button>
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="notes">
-            {t("notes")}
-          </label>
-          <textarea
-            className="form-input"
-            id="notes"
-            value={formData.notes}
-            onChange={handleInputChange("notes")}
-            rows={4}
-          />
-        </div>
-
-        <div className="password-entry-form--actions">
-          <button type="submit" className="btn btn--primary">
-            {t("actions.save")}
-          </button>
           <button
             type="button"
-            className="btn btn--secondary"
-            onClick={handleReset}
+            className="btn btn--icon"
+            onClick={copyPassword}
+            title={t("actions.copyPassword")}
           >
-            {t("actions.reset")}
+            <img
+              src="/icons/clipboard-check.svg"
+              alt={t("actions.copyPassword")}
+            />
+          </button>
+
+          <button
+            type="button"
+            className="btn btn--icon"
+            onClick={generatePassword}
+            title={t("actions.generatePassword")}
+          >
+            <img src="/icons/refresh.svg" alt={t("actions.generatePassword")} />
           </button>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <div className="form-group">
+        <label className="form-group--label" htmlFor="notes">
+          {t("notes")}
+        </label>
+        <textarea
+          className="form-input"
+          id="notes"
+          value={formData.notes}
+          onChange={handleInputChange("notes")}
+          rows={4}
+        />
+      </div>
+
+      <div className="form-group--actions">
+        <button type="submit" className="btn btn--primary">
+          {t("actions.save")}
+        </button>
+        <button
+          type="button"
+          className="btn btn--secondary"
+          onClick={handleReset}
+        >
+          {t("actions.reset")}
+        </button>
+      </div>
+    </form>
   );
 };
 
