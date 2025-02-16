@@ -1,0 +1,48 @@
+// spaces.scss
+// This file provides utility classes for consistent spacing throughout the project.
+// It includes margin and padding classes for top, bottom, left, right, and all sides.
+// The classes are generated using SCSS loops for the following spacing values: 8px, 16px, 24px, 32px.
+//
+// Usage:
+// - Margin classes: .m8, .mt8, .mb8, .ml8, .mr8, etc.
+// - Padding classes: .p8, .pt8, .pb8, .pl8, .pr8, etc.
+
+@use "sass:map";
+
+$spacing-values: (0, 8, 16, 24, 32);
+
+@each $value in $spacing-values {
+  .m#{$value} {
+    margin: #{$value}px;
+  }
+  .mt#{$value} {
+    margin-top: #{$value}px;
+  }
+  .mb#{$value} {
+    margin-bottom: #{$value}px;
+  }
+  .ml#{$value} {
+    margin-left: #{$value}px;
+  }
+  .mr#{$value} {
+    margin-right: #{$value}px;
+  }
+}
+
+@each $value in $spacing-values {
+  .p#{$value} {
+    padding: #{$value}px;
+  }
+  .pt#{$value} {
+    padding-top: #{$value}px;
+  }
+  .pb#{$value} {
+    padding-bottom: #{$value}px;
+  }
+  .pl#{$value} {
+    padding-left: #{$value}px;
+  }
+  .pr#{$value} {
+    padding-right: #{$value}px;
+  }
+}

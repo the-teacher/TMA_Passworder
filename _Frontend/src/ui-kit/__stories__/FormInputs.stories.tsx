@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-inputs.scss";
+import "@ui-kit/spaces.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/FormInputs",
@@ -16,43 +17,36 @@ type Story = StoryObj;
 // All form inputs story
 export const AllFormInputs: Story = {
   render: () => (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "32px",
-        padding: "16px"
-      }}
-    >
-      <div>
+    <div className="p16">
+      <div className="mb32">
         <h3>Text Input</h3>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Default</h4>
           <input className="form-input" placeholder="Default Input" />
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Error</h4>
           <input
             className="form-input form-input--error"
             placeholder="Error Input"
           />
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Success</h4>
           <input
             className="form-input form-input--success"
             placeholder="Success Input"
           />
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Disabled</h4>
           <input className="form-input" placeholder="Disabled Input" disabled />
         </div>
       </div>
 
-      <div>
+      <div className="mb32">
         <h3>Select Input</h3>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Default</h4>
           <select className="form-select">
             <option value="">Select an option</option>
@@ -61,7 +55,7 @@ export const AllFormInputs: Story = {
             <option value="option3">Option 3</option>
           </select>
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Error</h4>
           <select className="form-select form-input--error">
             <option value="">Select an option</option>
@@ -70,7 +64,7 @@ export const AllFormInputs: Story = {
             <option value="option3">Option 3</option>
           </select>
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Success</h4>
           <select className="form-select form-input--success">
             <option value="">Select an option</option>
@@ -79,7 +73,7 @@ export const AllFormInputs: Story = {
             <option value="option3">Option 3</option>
           </select>
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Disabled</h4>
           <select className="form-select" disabled>
             <option value="">Select an option</option>
@@ -90,9 +84,9 @@ export const AllFormInputs: Story = {
         </div>
       </div>
 
-      <div>
+      <div className="mb32">
         <h3>Textarea Input</h3>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Default</h4>
           <textarea
             className="form-textarea"
@@ -100,7 +94,7 @@ export const AllFormInputs: Story = {
             rows={4}
           />
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Error</h4>
           <textarea
             className="form-textarea form-input--error"
@@ -108,7 +102,7 @@ export const AllFormInputs: Story = {
             rows={4}
           />
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Success</h4>
           <textarea
             className="form-textarea form-input--success"
@@ -116,7 +110,7 @@ export const AllFormInputs: Story = {
             rows={4}
           />
         </div>
-        <div style={{ marginBottom: "16px" }}>
+        <div className="mb16">
           <h4>Disabled</h4>
           <textarea
             className="form-textarea"
