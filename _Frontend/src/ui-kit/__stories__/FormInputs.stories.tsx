@@ -20,27 +20,91 @@ export const AllFormInputs: Story = {
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "16px",
+        gap: "32px",
         padding: "16px",
         maxWidth: "400px"
       }}
     >
-      <h3>Default Input:</h3>
-      <input className="form-input" placeholder="Default Input" />
-      <input className="form-input" placeholder="Focused Input" autoFocus />
-      <input
-        className="form-input form-input--error"
-        placeholder="Error Input"
-      />
-      <input
-        className="form-input form-input--success"
-        placeholder="Success Input"
-      />
-      <input
-        className="form-input form-input--disabled"
-        placeholder="Disabled Input"
-        disabled
-      />
+      <div>
+        <h3>Text Input</h3>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Default</h4>
+          <input className="form-input" placeholder="Default Input" />
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Error</h4>
+          <input
+            className="form-input form-input--error"
+            placeholder="Error Input"
+          />
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Success</h4>
+          <input
+            className="form-input form-input--success"
+            placeholder="Success Input"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3>Select Input</h3>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Default</h4>
+          <select className="form-select">
+            <option value="">Select an option</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Error</h4>
+          <select className="form-select form-input--error">
+            <option value="">Select an option</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Success</h4>
+          <select className="form-select form-input--success">
+            <option value="">Select an option</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <h3>Textarea Input</h3>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Default</h4>
+          <textarea
+            className="form-textarea"
+            placeholder="Enter text here"
+            rows={4}
+          />
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Error</h4>
+          <textarea
+            className="form-textarea form-input--error"
+            placeholder="Error Textarea"
+            rows={4}
+          />
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <h4>Success</h4>
+          <textarea
+            className="form-textarea form-input--success"
+            placeholder="Success Textarea"
+            rows={4}
+          />
+        </div>
+      </div>
     </div>
   )
 };
