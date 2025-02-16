@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import "./buttons.scss";
+import "../buttons.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/Buttons",

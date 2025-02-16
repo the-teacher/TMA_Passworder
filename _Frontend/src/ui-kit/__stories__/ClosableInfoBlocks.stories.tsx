@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import "./info-blocks.scss";
+import "../info-blocks.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/InfoBlocks",
