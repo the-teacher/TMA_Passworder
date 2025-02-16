@@ -1,0 +1,62 @@
+@use "sass:color";
+
+$color-primary: #007bff;
+$color-secondary: #868e96;
+$color-success: #4caf50;
+$color-warning: #ffc107;
+$color-danger: #c82333;
+$color-info: #138496;
+$color-light: #f8f9fa;
+$color-dark: #343a40;
+$color-text: #212529;
+
+.text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+
+  &--primary {
+    color: $color-primary;
+  }
+
+  &--secondary {
+    color: $color-secondary;
+  }
+
+  &--success {
+    color: $color-success;
+  }
+
+  &--danger {
+    color: $color-danger;
+  }
+
+  &--warning {
+    color: $color-warning;
+  }
+
+  &--info {
+    color: $color-info;
+  }
+
+  &--light {
+    color: $color-light;
+  }
+
+  &--dark {
+    color: $color-dark;
+  }
+
+  // Text sizes
+  &--small {
+    font-size: 14px;
+  }
+
+  &--medium {
+    font-size: 16px;
+  }
+
+  &--large {
+    font-size: 20px;
+  }
+}

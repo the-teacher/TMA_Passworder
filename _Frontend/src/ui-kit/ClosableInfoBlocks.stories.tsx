@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import "./info-blocks.scss";
 
 const meta: Meta = {
-  title: "4-UI-Kit/ClosableInfo",
+  title: "4-UI-Kit/InfoBlocks",
   component: "div",
   parameters: {
     docs: { disable: true },

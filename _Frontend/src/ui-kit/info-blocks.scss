@@ -14,13 +14,11 @@ $color-background-light: #f8f9fa;
 .info {
   padding: 8px 16px;
   border-radius: 4px;
-  font-size: 16px;
   line-height: 1.5;
   border: 1px solid transparent;
 
-  background-color: color.scale($color-info, $lightness: 90%);
-  border-color: $color-info;
-  color: $color-info;
+  background-color: $color-light;
+  border-color: color.scale($color-light, $lightness: -10%);
 
   &--primary {
     background-color: color.scale($color-primary, $lightness: 90%);
@@ -53,9 +51,9 @@ $color-background-light: #f8f9fa;
   }
 
   &--light {
-    background-color: $color-light;
-    border-color: color.scale($color-light, $lightness: -10%);
-    color: $color-text;
+    background-color: color.scale($color-info, $lightness: 90%);
+    border-color: $color-info;
+    color: $color-info;
   }
 
   &--dark {
