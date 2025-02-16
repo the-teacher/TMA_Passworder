@@ -20,47 +20,62 @@ export const FormGroupExample: Story = {
   render: () => (
     <div style={{ padding: "16px", maxWidth: "400px" }}>
       <div className="form-group">
-        <label className="form-group__label text--dark" htmlFor="username">
+        <label className="form-group--label text--dark" htmlFor="username">
           Username
           <AppIcon size={16} type="eye" />
         </label>
-        <input
-          className="form-group__input form-input"
-          id="username"
-          type="text"
-          placeholder="Enter your username"
-        />
-        <div className="form-group__info text--info text--small">
+        <div className="form-group--input form-group--with-icon">
+          <input
+            className="form-input"
+            id="username"
+            type="text"
+            placeholder="Enter your username"
+          />
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
+        </div>
+        <div className="form-group--info text--info text--small">
           <AppIcon size={12} type="refresh" /> Please enter a unique username.
         </div>
       </div>
 
       <div className="form-group">
-        <label className="form-group__label text--dark" htmlFor="email">
+        <label className="form-group--label text--dark" htmlFor="email">
           <AppIcon size={16} type="search" /> Email
         </label>
-        <input
-          className="form-group__input form-input"
-          id="email"
-          type="email"
-          placeholder="Enter your email"
-        />
-        <div className="form-group__info text--danger text--small">
+        <div className="form-group--input form-group--with-icon">
+          <input
+            className="form-input"
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+          />
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
+        </div>
+        <div className="form-group--info text--danger text--small">
           Please enter a valid email address.
         </div>
       </div>
 
       <div className="form-group">
-        <label className="form-group__label text--dark" htmlFor="password">
+        <label className="form-group--label text--dark" htmlFor="password">
           <AppIcon size={16} type="eye-off" /> Password
         </label>
-        <input
-          className="form-group__input form-input"
-          id="password"
-          type="password"
-          placeholder="Enter your password"
-        />
-        <div className="form-group__info text--success text--small">
+        <div className="form-group--input form-group--with-icon">
+          <input
+            className="form-input"
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+          />
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
+        </div>
+        <div className="form-group--info text--success text--small">
           Your password is strong.
         </div>
       </div>

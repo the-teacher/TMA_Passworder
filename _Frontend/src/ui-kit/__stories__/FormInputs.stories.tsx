@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/spaces.scss";
+import AppIcon from "@components/AppIcon";
 
 const meta: Meta = {
   title: "4-UI-Kit/FormInputs",
@@ -117,6 +118,70 @@ export const AllFormInputs: Story = {
             rows={4}
             disabled
           />
+        </div>
+      </div>
+    </div>
+  )
+};
+
+// Form input with icon story
+export const FormInputWithIcon: Story = {
+  render: () => (
+    <div className="p16">
+      <div className="form-group mb24">
+        <label className="form-group--label text--dark" htmlFor="icon-input">
+          Input with Icon
+        </label>
+        <div className="form-group--input form-group__with-icon">
+          <input
+            className="form-input"
+            id="icon-input"
+            type="text"
+            placeholder="Enter text"
+          />
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
+        </div>
+      </div>
+
+      <div className="form-group mb24">
+        <label className="form-group--label text--dark" htmlFor="icon-input">
+          Input with Icon
+        </label>
+        <div className="form-group--input form-group__with-icon">
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
+          <input
+            className="form-input"
+            id="icon-input"
+            type="text"
+            placeholder="Enter text"
+          />
+        </div>
+      </div>
+
+      <div className="form-group mb24">
+        <label className="form-group--label text--dark" htmlFor="icon-input">
+          Input with Icon
+        </label>
+        <div className="form-group--input form-group__with-icon">
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
+          <input
+            className="form-input"
+            id="icon-input"
+            type="text"
+            placeholder="Enter text"
+          />
+          <div className="form-group--icon">
+            <AppIcon size={24} type="search" />
+          </div>
         </div>
       </div>
     </div>

@@ -4,11 +4,24 @@
   gap: 8px;
   margin-bottom: 16px;
 
-  &__label,
-  &__input,
-  &__info {
+  &--label,
+  &--input,
+  &--info {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
+  }
+
+  &--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    padding: 0 8px;
+    border-radius: 4px;
+  }
+
+  &__with-icon {
+    align-items: normal;
   }
 }
