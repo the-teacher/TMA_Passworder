@@ -4,9 +4,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -15,6 +12,9 @@ body {
   font-weight: 400;
   font-style: normal;
   font-variation-settings: "wdth" 100;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -35,4 +35,19 @@ select,
 textarea,
 button {
   font-family: "Roboto", serif;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+  list-style-position: inside;
+}
+
+ul {
+  list-style: circle;
+}
+
+ol {
+  list-style: decimal;
 }
