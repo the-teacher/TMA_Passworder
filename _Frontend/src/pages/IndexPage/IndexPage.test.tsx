@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import IndexPage from "./IndexPage";
+import IndexPage from "@pages/IndexPage";
 import { TestWrapper } from "@test/testUtils";
 
 // Mock AppLayout

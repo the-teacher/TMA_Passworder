@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
-import FooterNavigation from "./FooterNavigation";
+import FooterNavigation from "@components/FooterNavigation";
 
 describe("FooterNavigation", () => {
   const renderComponent = () =>

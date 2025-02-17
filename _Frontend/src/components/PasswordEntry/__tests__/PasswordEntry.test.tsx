@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
-import PasswordEntry from "./PasswordEntry";
+import PasswordEntry from "@components/PasswordEntry";
 
 describe("PasswordEntry", () => {
   const mockProps = {

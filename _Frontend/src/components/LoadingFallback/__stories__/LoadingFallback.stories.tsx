@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import LoadingFallback from "./LoadingFallback";
+import LoadingFallback from "@components/LoadingFallback";
 
 const meta: Meta<typeof LoadingFallback> = {
   title: "3-Components/LoadingFallback",

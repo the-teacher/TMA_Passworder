@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { HolyGrailLayoutWithParams } from "..";
+import { HolyGrailLayoutWithParams } from "@components/HolyGrailLayout";
 import "./stories.scss";
 
 const meta: Meta<typeof HolyGrailLayoutWithParams> = {

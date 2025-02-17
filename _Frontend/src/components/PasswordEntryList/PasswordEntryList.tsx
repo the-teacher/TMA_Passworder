@@ -1,5 +1,5 @@
 import PasswordEntry from "@components/PasswordEntry";
-import popularServices from "../../mocks/popularServices"; // Import the mock data
+import popularServices from "@mocks/popularServices"; // Import the mock data
 import "./styles.scss";
 
 type PasswordEntryType = {

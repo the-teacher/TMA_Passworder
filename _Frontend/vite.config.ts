@@ -35,6 +35,10 @@ export default defineConfig({
       {
         find: "@ui-kit",
         replacement: path.resolve(__dirname, "src/ui-kit")
+      },
+      {
+        find: "@mocks",
+        replacement: path.resolve(__dirname, "src/mocks")
       }
     ]
   }

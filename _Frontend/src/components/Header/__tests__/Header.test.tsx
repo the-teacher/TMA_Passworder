@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
-import Header from "./Header";
+import Header from "@components/Header";
 
 // Mock react-i18next
 jest.mock("react-i18next", () => ({

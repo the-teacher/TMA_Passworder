@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import AppIcon, { IconSize, IconType } from "./AppIcon";
+import AppIcon, { IconSize, IconType } from "@components/AppIcon";
 import "@ui-kit/spaces.scss";
 
 const meta: Meta<typeof AppIcon> = {

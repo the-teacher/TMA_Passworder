@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
-import FooterNavigation from "./FooterNavigation";
+import FooterNavigation from "@components/FooterNavigation";
 
 const meta: Meta<typeof FooterNavigation> = {
   title: "2-Core/2-FooterNavigation",

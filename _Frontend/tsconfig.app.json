@@ -13,7 +13,8 @@
       "@components/*": ["src/components/*"],
       "@test/*": ["test/*"],
       "@routes/*": ["src/routes/*"],
-      "@ui-kit/*": ["src/ui-kit/*"]
+      "@ui-kit/*": ["src/ui-kit/*"],
+      "@mocks/*": ["src/mocks/*"]
     }
   },
   "include": ["src", "src/types", "test/testUtils.tsx"]

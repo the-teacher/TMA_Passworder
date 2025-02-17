@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import CreatePage from "./CreatePage";
+import CreatePage from "@pages/CreatePage";
 import { TestWrapper } from "@test/testUtils";
-import "../../../test/setupFilesAfterEnv";
+import "@test/setupFilesAfterEnv";
 
 // Mock AppLayout
-jest.mock("../../components/AppLayout", () => ({
+jest.mock("@components/AppLayout", () => ({
   __esModule: true,
   default: ({ children }: { children: React.ReactNode }) => <>{children}</>
 }));
