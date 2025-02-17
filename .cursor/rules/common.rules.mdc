@@ -1,6 +1,6 @@
 ---
 description: Use it for all files in all projects
-globs: 
+globs: *.*
 ---
 ### Language for Comments
 

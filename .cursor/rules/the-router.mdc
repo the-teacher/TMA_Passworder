@@ -1,6 +1,6 @@
 ---
-description: 
-globs: 
+description: NodeJS for Backend
+globs: *.js, *.ts
 ---
 # `The Router`
 
