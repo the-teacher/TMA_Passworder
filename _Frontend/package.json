@@ -12,6 +12,8 @@
     "preview": "vite preview",
     "test:note": "NODE_NO_WARNINGS=1 is for suppressing the warning about deprecated `punycode` package",
     "test": "NODE_NO_WARNINGS=1 jest --config jest.config.ts",
+    "test:coverage": "NODE_NO_WARNINGS=1 jest --coverage --config jest.config.ts",
+    "test:watch": "NODE_NO_WARNINGS=1 jest --watch --config jest.config.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "storybook": "storybook dev -p 4000 --no-open",
