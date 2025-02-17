@@ -19,10 +19,10 @@ type AppIconProps = {
   alt: string;
 } & React.HTMLAttributes<HTMLElement>;
 
-const AppIcon: React.FC<AppIconProps> = ({ size, type, alt, ...props }) => {
+function AppIcon({ size, type, alt, ...props }: AppIconProps) {
   const iconPath = `/icons/${type}.svg`;
 
-  return <img src={iconPath} alt={alt} width={size} height={size} {...props} />;
-};
+  return <img src={iconPath} width={size} height={size} alt={alt} {...props} />;
+}
 
 export default AppIcon;

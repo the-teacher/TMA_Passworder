@@ -22,9 +22,9 @@ export const FormGroupExample: Story = {
       <div className="form-group">
         <label className="form-group--label text--dark" htmlFor="username">
           Username
-          <AppIcon size={16} type="eye" />
+          <AppIcon size={16} type="eye" alt="eye" />
         </label>
-        <div className="form-group--input form-group--with-icon">
+        <div className="form-group--input form-group__with-icon">
           <input
             className="form-input"
             id="username"
@@ -32,17 +32,18 @@ export const FormGroupExample: Story = {
             placeholder="Enter your username"
           />
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
         </div>
         <div className="form-group--info text--info text--small">
-          <AppIcon size={12} type="refresh" /> Please enter a unique username.
+          <AppIcon size={12} type="refresh" alt="refresh" /> Please enter a
+          unique username.
         </div>
       </div>
 
       <div className="form-group">
         <label className="form-group--label text--dark" htmlFor="email">
-          <AppIcon size={16} type="search" /> Email
+          <AppIcon size={16} type="search" alt="search" /> Email
         </label>
         <div className="form-group--input form-group__with-icon">
           <input
@@ -52,7 +53,7 @@ export const FormGroupExample: Story = {
             placeholder="Enter your email"
           />
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
         </div>
         <div className="form-group--info text--danger text--small">
@@ -62,9 +63,9 @@ export const FormGroupExample: Story = {
 
       <div className="form-group">
         <label className="form-group--label text--dark" htmlFor="password">
-          <AppIcon size={16} type="eye-off" /> Password
+          <AppIcon size={16} type="eye-off" alt="eye-off" /> Password
         </label>
-        <div className="form-group--input form-group--with-icon">
+        <div className="form-group--input form-group__with-icon">
           <input
             className="form-input"
             id="password"
@@ -72,7 +73,7 @@ export const FormGroupExample: Story = {
             placeholder="Enter your password"
           />
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
         </div>
         <div className="form-group--info text--success text--small">

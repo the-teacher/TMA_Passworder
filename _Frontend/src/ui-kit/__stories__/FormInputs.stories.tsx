@@ -140,7 +140,7 @@ export const FormInputWithIcon: Story = {
             placeholder="Enter text"
           />
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@ export const FormInputWithIcon: Story = {
         </label>
         <div className="form-group--input form-group__with-icon">
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
           <input
             className="form-input"
@@ -168,10 +168,10 @@ export const FormInputWithIcon: Story = {
         </label>
         <div className="form-group--input form-group__with-icon">
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
           <input
             className="form-input"
@@ -180,7 +180,7 @@ export const FormInputWithIcon: Story = {
             placeholder="Enter text"
           />
           <div className="form-group--icon">
-            <AppIcon size={24} type="search" />
+            <AppIcon size={24} type="search" alt="search" />
           </div>
         </div>
       </div>

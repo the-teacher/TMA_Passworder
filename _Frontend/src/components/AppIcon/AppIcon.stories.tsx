@@ -42,7 +42,11 @@ export const Default: Story = {
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             {iconTypes.map((iconType) => (
               <div key={iconType} style={{ textAlign: "center" }}>
-                <AppIcon size={size as IconSize} type={iconType} />
+                <AppIcon
+                  size={size as IconSize}
+                  type={iconType}
+                  alt={iconType}
+                />
                 <div style={{ marginTop: "8px" }}>{iconType}</div>
               </div>
             ))}

@@ -15,6 +15,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
     "storybook": "storybook dev -p 4000 --no-open",
+    "story": "yarn storybook",
     "build-storybook": "storybook build",
     "all-checks": "yarn format && yarn format:check && yarn lint && yarn lint:fix && yarn test"
   },
