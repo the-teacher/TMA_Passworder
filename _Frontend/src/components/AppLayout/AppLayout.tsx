@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Header from "@components/Header";
-import FooterNavigation from "@components/FooterNavigation/FooterNavigation";
+import FooterNavigation from "@components/FooterNavigation";
 import { HolyGrailLayoutWithParams } from "@components/HolyGrailLayout";
 
 interface AppLayoutProps {

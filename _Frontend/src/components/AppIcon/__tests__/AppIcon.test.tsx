@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import AppIcon, { IconType, IconSize } from "../AppIcon";
+import AppIcon, { IconType, IconSize } from "@components/AppIcon";
 
 describe("AppIcon", () => {
   const iconTypes: IconType[] = [
