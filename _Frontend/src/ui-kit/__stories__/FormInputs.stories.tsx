@@ -5,7 +5,7 @@ import AppIcon from "@components/AppIcon";
 
 const meta: Meta = {
   title: "4-UI-Kit/FormInputs",
-  component: "input",
+  // component: "input",
   parameters: {
     docs: { disable: true }
   }

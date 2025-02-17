@@ -3,7 +3,7 @@ import "@ui-kit/info-blocks.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/InfoBlocks",
-  component: "div",
+  // component: "div",
   parameters: {
     docs: { disable: true }
   }

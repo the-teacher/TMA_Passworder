@@ -6,7 +6,7 @@ import AppIcon from "@components/AppIcon"; // Import AppIcon
 
 const meta: Meta = {
   title: "4-UI-Kit/FormGroups",
-  component: "div",
+  // component: "div",
   parameters: {
     docs: { disable: true }
   }

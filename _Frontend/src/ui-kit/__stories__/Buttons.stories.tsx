@@ -3,7 +3,7 @@ import "@ui-kit/buttons.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/Buttons",
-  component: "button",
+  // component: "button",
   parameters: {
     docs: { disable: true }
   }

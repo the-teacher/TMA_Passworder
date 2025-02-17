@@ -3,7 +3,7 @@ import "@ui-kit/text-styles.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/TextStyles",
-  component: "p",
+  // component: "p",
   parameters: {
     docs: { disable: true }
   }
