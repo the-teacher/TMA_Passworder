@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import HolyGrailLayout from "../HolyGrailLayout";
+import HolyGrailLayout from "@components/HolyGrailLayout";
 
 describe("HolyGrailLayout", () => {
   it("should render children correctly", () => {

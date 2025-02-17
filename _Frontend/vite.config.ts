@@ -39,6 +39,10 @@ export default defineConfig({
       {
         find: "@mocks",
         replacement: path.resolve(__dirname, "src/mocks")
+      },
+      {
+        find: "@storybook",
+        replacement: path.resolve(__dirname, "src/.storybook")
       }
     ]
   }

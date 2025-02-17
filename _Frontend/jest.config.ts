@@ -11,7 +11,8 @@ export default {
     "^@test/(.*)$": "<rootDir>/test/$1",
     "^@routes/(.*)$": "<rootDir>/src/routes/$1",
     "^@ui-kit/(.*)$": "<rootDir>/src/ui-kit/$1",
-    "^@mocks/(.*)$": "<rootDir>/src/mocks/$1"
+    "^@mocks/(.*)$": "<rootDir>/src/mocks/$1",
+    "^@storybook/(.*)$": "<rootDir>/src/.storybook/$1"
   },
   transform: {
     "^.+\\.tsx?$": [

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import HolyGrailLayoutWithParams from "../HolyGrailLayoutWithParams";
+import HolyGrailLayoutWithParams from "@components/HolyGrailLayout/HolyGrailLayoutWithParams";
 
 describe("HolyGrailLayoutWithParams", () => {
   it("should render only required content when optional props are not provided", () => {

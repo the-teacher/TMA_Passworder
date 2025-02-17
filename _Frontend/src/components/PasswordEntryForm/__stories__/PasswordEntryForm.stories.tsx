@@ -4,7 +4,7 @@ import {
   reactRouterParameters
 } from "storybook-addon-remix-react-router";
 import PasswordEntryForm from "@components/PasswordEntryForm";
-import i18n from "../../../../.storybook/i18next";
+import i18n from "@storybook/i18next";
 
 const meta: Meta<typeof PasswordEntryForm> = {
   title: "3-Components/3-PasswordEntryForm",

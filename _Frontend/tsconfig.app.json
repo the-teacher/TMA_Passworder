@@ -14,7 +14,8 @@
       "@test/*": ["test/*"],
       "@routes/*": ["src/routes/*"],
       "@ui-kit/*": ["src/ui-kit/*"],
-      "@mocks/*": ["src/mocks/*"]
+      "@mocks/*": ["src/mocks/*"],
+      "@storybook/*": ["src/.storybook/*"]
     }
   },
   "include": ["src", "src/types", "test/testUtils.tsx"]
