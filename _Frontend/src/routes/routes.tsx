@@ -16,7 +16,7 @@ const SuspenseWrapper = ({ children }: { children: ReactNode }) => (
   <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
 );
 
-const routesConfig = [
+export const routesConfig = [
   { index: true, element: <IndexPage /> },
   { path: "create", element: <CreatePage /> },
   { path: "search", element: <SearchPage /> },
