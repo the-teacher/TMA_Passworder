@@ -17,4 +17,14 @@ describe("AboutPage", () => {
       screen.getByText("Learn more about our application.")
     ).toBeInTheDocument();
   });
+
+  it("renders with correct layout", () => {
+    render(<AboutPage />, { wrapper: TestWrapper });
+
+    const layoutContent = screen.getByText("About Page").closest("div");
+    expect(layoutContent).toBeInTheDocument();
+    expect(layoutContent).toHaveTextContent(
+      "Learn more about our application."
+    );
+  });
 });
