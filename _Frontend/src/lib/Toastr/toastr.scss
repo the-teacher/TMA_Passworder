@@ -1,0 +1,26 @@
+.toastr {
+  &-container {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &-toast {
+    animation: toastr-slide-in 0.2s ease-out;
+  }
+}
+
+@keyframes toastr-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
