@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import toastr from "@lib/Toastr";
-import "../toastr.scss";
 import "@ui-kit/info-blocks.scss";
+import "@ui-kit/spaces.scss";
+// Add custom styles for demo
+import "../toastr.scss";
+import "./toastr.stories.scss";
 
 const meta = {
   title: "3-Components/5-Toastr",
@@ -98,21 +101,22 @@ export const Default: Story = {
         id="custom-container"
         style={{
           position: "relative",
-          height: "200px",
           border: "1px dashed #ccc",
           padding: "16px",
           marginBottom: "16px"
         }}
       >
-        <button
-          className="btn btn--primary"
-          onClick={() => {
-            toastr.initialize("#custom-container");
-            toastr.info("Toast in custom container");
-          }}
-        >
-          Show in Container
-        </button>
+        <div className="mb20">
+          <button
+            className="btn btn--primary"
+            onClick={() => {
+              toastr.initialize("#custom-container");
+              toastr.info("Toast in custom container");
+            }}
+          >
+            Show in Container
+          </button>
+        </div>
       </div>
     </div>
   )

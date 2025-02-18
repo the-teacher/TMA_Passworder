@@ -40,7 +40,7 @@ const createContainer = (parentSelector: string = DEFAULT_PARENT_SELECTOR) => {
   return container;
 };
 
-const container = createContainer();
+let container = createContainer();
 
 const show = (
   message: string,
@@ -93,8 +93,13 @@ const clear = () => {
 };
 
 const initialize = (parentSelector?: string) => {
+  // Clear existing toasts
+  clear();
+  // Remove existing container
   container.remove();
-  return createContainer(parentSelector);
+  // Create and store new container
+  container = createContainer(parentSelector);
+  return container;
 };
 
 export default {

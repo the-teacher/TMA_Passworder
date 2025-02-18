@@ -9,7 +9,7 @@
 
 @use "sass:map";
 
-$spacing-values: (0, 8, 16, 24, 32);
+$spacing-values: (0, 8, 16, 20, 24, 32);
 
 @each $value in $spacing-values {
   .m#{$value} {
