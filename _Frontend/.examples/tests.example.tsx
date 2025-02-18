@@ -56,6 +56,7 @@ describe("HolyGrailLayout", () => {
   });
 });
 
+
 // components/HolyGrailLayout/__tests__/HolyGrailLayoutWithParams.test.tsx
 import { render, screen } from "@testing-library/react";
 import HolyGrailLayoutWithParams from "@components/HolyGrailLayout/HolyGrailLayoutWithParams";
@@ -127,6 +128,7 @@ describe("HolyGrailLayoutWithParams", () => {
   });
 });
 
+
 // components/PasswordEntryList/__tests__/PasswordEntryList.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -163,6 +165,7 @@ describe("PasswordEntryList", () => {
   });
 });
 
+
 // components/LoadingFallback/__tests__/LoadingFallback.test.tsx
 import { render, screen } from "@testing-library/react";
 import LoadingFallback from "@components/LoadingFallback";
@@ -183,6 +186,7 @@ describe("LoadingFallback", () => {
     expect(textDiv).toHaveClass("loading-fallback--text");
   });
 });
+
 
 // components/FooterNavigation/__tests__/FooterNavigation.test.tsx
 import "@testing-library/jest-dom";
@@ -253,6 +257,83 @@ describe("FooterNavigation", () => {
   });
 });
 
+
+// components/AppIcon/__tests__/AppIcon.test.tsx
+import { render, screen } from "@testing-library/react";
+import AppIcon, { IconType, IconSize } from "@components/AppIcon";
+
+describe("AppIcon", () => {
+  const iconTypes: IconType[] = [
+    "circle-plus",
+    "clipboard-check",
+    "eye-off",
+    "eye",
+    "home",
+    "refresh",
+    "search",
+    "settings",
+    "square-x",
+    "star"
+  ];
+
+  const iconSizes: IconSize[] = [12, 16, 20, 24, 28, 32];
+
+  iconTypes.forEach((iconType) => {
+    iconSizes.forEach((iconSize) => {
+      it(`renders ${iconType} icon with size ${iconSize} correctly`, () => {
+        render(<AppIcon size={iconSize} type={iconType} alt={iconType} />);
+        const icon = screen.getByAltText(iconType);
+        expect(icon).toBeInTheDocument();
+        expect(icon).toHaveAttribute("src", `/icons/${iconType}.svg`);
+        expect(icon).toHaveAttribute("width", iconSize.toString());
+        expect(icon).toHaveAttribute("height", iconSize.toString());
+      });
+    });
+  });
+
+  it("applies additional props to the img element", () => {
+    render(<AppIcon size={24} type="home" alt="home" data-testid="app-icon" />);
+    const icon = screen.getByTestId("app-icon");
+    expect(icon).toBeInTheDocument();
+  });
+});
+
+
+// components/PasswordEntry/__tests__/PasswordEntry.test.tsx
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router";
+import PasswordEntry from "@components/PasswordEntry";
+
+describe("PasswordEntry", () => {
+  const mockProps = {
+    id: "test-1",
+    name: "Test Entry"
+  };
+
+  const renderWithRouter = () => {
+    render(
+      <BrowserRouter>
+        <PasswordEntry {...mockProps} />
+      </BrowserRouter>
+    );
+  };
+
+  it("renders entry name", () => {
+    renderWithRouter();
+    expect(screen.getByText(mockProps.name)).toBeInTheDocument();
+  });
+
+  it("renders entry link with correct href", () => {
+    renderWithRouter();
+    const entryLink = screen.getByText(mockProps.name).closest("a");
+    expect(entryLink).toHaveAttribute(
+      "href",
+      `/password-entry/${mockProps.id}`
+    );
+  });
+});
+
+
 // components/CreatePasswordForm/__tests__/CreatePasswordForm.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
 import CreatePasswordForm from "@components/CreatePasswordForm";
@@ -279,47 +360,84 @@ describe("CreatePasswordForm", () => {
     render(<CreatePasswordForm onSubmit={mockOnSubmit} />);
   };
 
-  it("renders form fields", () => {
+  it("renders all form fields", () => {
     setup();
     expect(screen.getByLabelText(/service name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^url$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/notes/i)).toBeInTheDocument();
   });
 
-  it("submits form data", () => {
+  it("submits form data with all fields", () => {
     setup();
     const serviceNameInput = screen.getByLabelText(/service name/i);
+    const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
+    const urlInput = screen.getByLabelText(/^url$/i);
     const notesInput = screen.getByLabelText(/notes/i);
 
     fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
+    fireEvent.change(urlInput, {
+      target: { value: "https://test.com" }
+    });
     fireEvent.change(notesInput, { target: { value: "Some notes" } });
 
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
     expect(mockOnSubmit).toHaveBeenCalledWith({
       serviceName: "Test Service",
+      username: "testuser",
       password: "TestPassword123",
+      serviceUrl: "https://test.com",
       notes: "Some notes"
     });
   });
 
-  it("resets form fields", () => {
+  it("resets all form fields", () => {
     setup();
     const serviceNameInput = screen.getByLabelText(/service name/i);
+    const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
+    const urlInput = screen.getByLabelText(/^url$/i);
     const notesInput = screen.getByLabelText(/notes/i);
 
+    // Fill in all fields
     fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
+    fireEvent.change(urlInput, {
+      target: { value: "https://test.com" }
+    });
     fireEvent.change(notesInput, { target: { value: "Some notes" } });
 
+    // Reset the form
     fireEvent.click(screen.getByRole("button", { name: /reset/i }));
 
+    // Verify all fields are empty
     expect(serviceNameInput).toHaveValue("");
+    expect(usernameInput).toHaveValue("");
     expect(passwordInput).toHaveValue("");
+    expect(urlInput).toHaveValue("");
     expect(notesInput).toHaveValue("");
+  });
+
+  it("validates required fields", () => {
+    setup();
+    const submitButton = screen.getByRole("button", { name: /save/i });
+
+    fireEvent.click(submitButton);
+
+    // Check that required fields are marked as invalid
+    expect(screen.getByLabelText(/service name/i)).toBeInvalid();
+    expect(screen.getByLabelText(/username/i)).toBeInvalid();
+    expect(screen.getByLabelText(/password/i)).toBeInvalid();
+
+    // Service URL and notes are optional
+    expect(screen.getByLabelText(/^url$/i)).not.toBeInvalid();
+    expect(screen.getByLabelText(/notes/i)).not.toBeInvalid();
   });
 
   it("toggles password visibility", () => {
@@ -365,92 +483,18 @@ describe("CreatePasswordForm", () => {
     const generateButton = screen.getByTitle(/generate password/i);
     const copyButton = screen.getByTitle(/copy password/i);
 
-    // Setup clipboard to throw error
     mockClipboard.writeText.mockRejectedValueOnce(new Error("Clipboard error"));
 
     fireEvent.click(generateButton);
     await fireEvent.click(copyButton);
 
-    await expect(mockConsoleError).toHaveBeenCalledWith(
+    expect(mockConsoleError).toHaveBeenCalledWith(
       "Failed to copy password:",
       expect.any(Error)
     );
   });
 });
 
-// components/AppIcon/__tests__/AppIcon.test.tsx
-import { render, screen } from "@testing-library/react";
-import AppIcon, { IconType, IconSize } from "@components/AppIcon";
-
-describe("AppIcon", () => {
-  const iconTypes: IconType[] = [
-    "circle-plus",
-    "clipboard-check",
-    "eye-off",
-    "eye",
-    "home",
-    "refresh",
-    "search",
-    "settings",
-    "square-x",
-    "star"
-  ];
-
-  const iconSizes: IconSize[] = [12, 16, 20, 24, 28, 32];
-
-  iconTypes.forEach((iconType) => {
-    iconSizes.forEach((iconSize) => {
-      it(`renders ${iconType} icon with size ${iconSize} correctly`, () => {
-        render(<AppIcon size={iconSize} type={iconType} alt={iconType} />);
-        const icon = screen.getByAltText(iconType);
-        expect(icon).toBeInTheDocument();
-        expect(icon).toHaveAttribute("src", `/icons/${iconType}.svg`);
-        expect(icon).toHaveAttribute("width", iconSize.toString());
-        expect(icon).toHaveAttribute("height", iconSize.toString());
-      });
-    });
-  });
-
-  it("applies additional props to the img element", () => {
-    render(<AppIcon size={24} type="home" alt="home" data-testid="app-icon" />);
-    const icon = screen.getByTestId("app-icon");
-    expect(icon).toBeInTheDocument();
-  });
-});
-
-// components/PasswordEntry/__tests__/PasswordEntry.test.tsx
-import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router";
-import PasswordEntry from "@components/PasswordEntry";
-
-describe("PasswordEntry", () => {
-  const mockProps = {
-    id: "test-1",
-    name: "Test Entry"
-  };
-
-  const renderWithRouter = () => {
-    render(
-      <BrowserRouter>
-        <PasswordEntry {...mockProps} />
-      </BrowserRouter>
-    );
-  };
-
-  it("renders entry name", () => {
-    renderWithRouter();
-    expect(screen.getByText(mockProps.name)).toBeInTheDocument();
-  });
-
-  it("renders entry link with correct href", () => {
-    renderWithRouter();
-    const entryLink = screen.getByText(mockProps.name).closest("a");
-    expect(entryLink).toHaveAttribute(
-      "href",
-      `/password-entry/${mockProps.id}`
-    );
-  });
-});
 
 // components/Header/__tests__/Header.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -504,6 +548,7 @@ describe("Header", () => {
   });
 });
 
+
 // components/AppLayout/__tests__/AppLayout.test.tsx
 import { render, screen } from "@testing-library/react";
 import AppLayout from "@components/AppLayout";
@@ -540,6 +585,7 @@ describe("AppLayout", () => {
     expect(screen.getByText("Mock Footer")).toBeInTheDocument();
   });
 });
+
 
 // __tests__/App.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -587,6 +633,7 @@ describe("App", () => {
     expect(container.childNodes).toHaveLength(1);
   });
 });
+
 
 // __tests__/index.test.tsx
 import { createRoot } from "react-dom/client";
@@ -654,6 +701,7 @@ describe("Index", () => {
     expect(createRoot).not.toHaveBeenCalled();
   });
 });
+
 
 // pages/ShowPage/__tests__/ShowPage.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -752,6 +800,7 @@ describe("ShowPage", () => {
   });
 });
 
+
 // pages/LogoutPage/__tests__/LogoutPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import LogoutPage from "@pages/LogoutPage";
@@ -774,6 +823,7 @@ describe("LogoutPage", () => {
   });
 });
 
+
 // pages/SearchPage/__tests__/SearchPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import SearchPage from "@pages/SearchPage";
@@ -794,54 +844,6 @@ describe("SearchPage", () => {
   });
 });
 
-// pages/CreatePasswordPage/__tests__/CreatePasswordPage.test.tsx
-import { render, screen, fireEvent } from "@testing-library/react";
-import CreatePasswordPage from "@pages/CreatePasswordPage";
-import { TestWrapper } from "@test/testUtils";
-import "@test/setupFilesAfterEnv";
-
-// Mock AppLayout
-jest.mock("@components/AppLayout", () => ({
-  __esModule: true,
-  default: ({ children }: { children: React.ReactNode }) => <>{children}</>
-}));
-
-describe("CreatePasswordPage", () => {
-  const mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("renders create page content", () => {
-    render(<CreatePasswordPage />, { wrapper: TestWrapper });
-    expect(screen.getByText("Create a Password Entry")).toBeInTheDocument();
-  });
-
-  it("handles form submission correctly", () => {
-    render(<CreatePasswordPage />, { wrapper: TestWrapper });
-
-    // Fill in the form
-    const serviceNameInput = screen.getByLabelText(/service name/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const notesInput = screen.getByLabelText(/notes/i);
-
-    fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
-    fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
-    fireEvent.change(notesInput, { target: { value: "Test Notes" } });
-
-    // Submit the form
-    const submitButton = screen.getByRole("button", { name: /save/i });
-    fireEvent.click(submitButton);
-
-    // Verify console.log was called with correct data
-    expect(mockConsoleLog).toHaveBeenCalledWith("Form submitted:", {
-      serviceName: "Test Service",
-      password: "TestPassword123",
-      notes: "Test Notes"
-    });
-  });
-});
 
 // pages/SettingsPage/__tests__/SettingsPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -864,6 +866,7 @@ describe("SettingsPage", () => {
     ).toBeInTheDocument();
   });
 });
+
 
 // pages/IndexPage/__tests__/IndexPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -892,6 +895,7 @@ describe("IndexPage", () => {
     ).toBeInTheDocument();
   });
 });
+
 
 // pages/FavoritesPage/__tests__/FavoritesPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -922,6 +926,7 @@ describe("FavoritesPage", () => {
     expect(layoutContent).toHaveTextContent("View your favorite items here.");
   });
 });
+
 
 // pages/AboutPage/__tests__/AboutPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -954,6 +959,66 @@ describe("AboutPage", () => {
     );
   });
 });
+
+
+// pages/CreatePasswordPage/__tests__/CreatePasswordPage.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import CreatePasswordPage from "@pages/CreatePasswordPage";
+import { TestWrapper } from "@test/testUtils";
+import "@test/setupFilesAfterEnv";
+
+// Mock AppLayout
+jest.mock("@components/AppLayout", () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>
+}));
+
+describe("CreatePasswordPage", () => {
+  const mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders create page content", () => {
+    render(<CreatePasswordPage />, { wrapper: TestWrapper });
+    expect(screen.getByText("Create Password Entry")).toBeInTheDocument();
+  });
+
+  it("handles form submission correctly", () => {
+    render(<CreatePasswordPage />);
+
+    // Fill in form fields
+    fireEvent.change(screen.getByLabelText(/service name/i), {
+      target: { value: "Test Service" }
+    });
+    fireEvent.change(screen.getByLabelText(/username/i), {
+      target: { value: "testuser" }
+    });
+    fireEvent.change(screen.getByLabelText(/password/i), {
+      target: { value: "TestPassword123" }
+    });
+    fireEvent.change(screen.getByLabelText(/^url$/i), {
+      target: { value: "https://test.com" }
+    });
+    fireEvent.change(screen.getByLabelText(/notes/i), {
+      target: { value: "Test Notes" }
+    });
+
+    // Submit form
+    fireEvent.click(screen.getByRole("button", { name: /save/i }));
+
+    // Verify console.log was called with correct data
+    expect(mockConsoleLog).toHaveBeenCalledWith("Form submitted:", {
+      serviceName: "Test Service",
+      username: "testuser",
+      password: "TestPassword123",
+      serviceUrl: "https://test.com",
+      notes: "Test Notes"
+    });
+  });
+});
+
 
 // routes/__tests__/routes.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -1088,6 +1153,7 @@ describe("AppRoutes", () => {
   });
 });
 
+
 // routes/__tests__/index.test.tsx
 import AppRoutes from "../routes";
 import RoutesExport from "../index";
@@ -1106,3 +1172,5 @@ describe("Routes index", () => {
     expect(RoutesExport).toBe("mocked-routes");
   });
 });
+
+

@@ -28,7 +28,7 @@ describe("CreatePasswordForm", () => {
     expect(screen.getByLabelText(/service name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/serviceurl/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^url$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/notes/i)).toBeInTheDocument();
   });
 
@@ -37,13 +37,13 @@ describe("CreatePasswordForm", () => {
     const serviceNameInput = screen.getByLabelText(/service name/i);
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
-    const serviceUrlInput = screen.getByLabelText(/serviceurl/i);
+    const urlInput = screen.getByLabelText(/^url$/i);
     const notesInput = screen.getByLabelText(/notes/i);
 
     fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
     fireEvent.change(usernameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
-    fireEvent.change(serviceUrlInput, {
+    fireEvent.change(urlInput, {
       target: { value: "https://test.com" }
     });
     fireEvent.change(notesInput, { target: { value: "Some notes" } });
@@ -64,14 +64,14 @@ describe("CreatePasswordForm", () => {
     const serviceNameInput = screen.getByLabelText(/service name/i);
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
-    const serviceUrlInput = screen.getByLabelText(/serviceurl/i);
+    const urlInput = screen.getByLabelText(/^url$/i);
     const notesInput = screen.getByLabelText(/notes/i);
 
     // Fill in all fields
     fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
     fireEvent.change(usernameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
-    fireEvent.change(serviceUrlInput, {
+    fireEvent.change(urlInput, {
       target: { value: "https://test.com" }
     });
     fireEvent.change(notesInput, { target: { value: "Some notes" } });
@@ -83,7 +83,7 @@ describe("CreatePasswordForm", () => {
     expect(serviceNameInput).toHaveValue("");
     expect(usernameInput).toHaveValue("");
     expect(passwordInput).toHaveValue("");
-    expect(serviceUrlInput).toHaveValue("");
+    expect(urlInput).toHaveValue("");
     expect(notesInput).toHaveValue("");
   });
 
@@ -99,7 +99,7 @@ describe("CreatePasswordForm", () => {
     expect(screen.getByLabelText(/password/i)).toBeInvalid();
 
     // Service URL and notes are optional
-    expect(screen.getByLabelText(/serviceurl/i)).not.toBeInvalid();
+    expect(screen.getByLabelText(/^url$/i)).not.toBeInvalid();
     expect(screen.getByLabelText(/notes/i)).not.toBeInvalid();
   });
 

@@ -18,7 +18,7 @@ describe("CreatePasswordPage", () => {
 
   it("renders create page content", () => {
     render(<CreatePasswordPage />, { wrapper: TestWrapper });
-    expect(screen.getByText("Create a Password Entry")).toBeInTheDocument();
+    expect(screen.getByText("Create Password Entry")).toBeInTheDocument();
   });
 
   it("handles form submission correctly", () => {
@@ -34,7 +34,7 @@ describe("CreatePasswordPage", () => {
     fireEvent.change(screen.getByLabelText(/password/i), {
       target: { value: "TestPassword123" }
     });
-    fireEvent.change(screen.getByLabelText(/serviceurl/i), {
+    fireEvent.change(screen.getByLabelText(/^url$/i), {
       target: { value: "https://test.com" }
     });
     fireEvent.change(screen.getByLabelText(/notes/i), {
