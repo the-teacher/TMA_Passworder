@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2019",
-    "types": ["jest", "@testing-library/jest-dom", "node"],
+    "module": "ESNext",
+    "target": "es2020",
+    "types": ["jest", "@testing-library/jest-dom", "node", "vite/client"],
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "esModuleInterop": true,
     "baseUrl": ".",

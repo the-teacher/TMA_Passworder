@@ -1,7 +1,7 @@
 export default {
   preset: "ts-jest",
   testEnvironment: "jsdom",
-  setupFiles: ["<rootDir>/test/setupFiles.ts"],
+  setupFiles: ["<rootDir>/test/setupFiles.ts", "<rootDir>/test/mocks/vite.ts"],
   setupFilesAfterEnv: ["<rootDir>/test/setupFilesAfterEnv.ts"],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
@@ -19,7 +19,11 @@ export default {
     "^.+\\.tsx?$": [
       "ts-jest",
       {
-        tsconfig: "tsconfig.test.json"
+        tsconfig: "tsconfig.test.json",
+        useESM: true,
+        diagnostics: {
+          ignoreCodes: [1343]
+        }
       }
     ]
   },
