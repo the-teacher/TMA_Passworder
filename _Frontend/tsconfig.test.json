@@ -14,7 +14,8 @@
       "@routes/*": ["src/routes/*"],
       "@ui-kit/*": ["src/ui-kit/*"],
       "@mocks/*": ["src/mocks/*"],
-      "@storybook/*": ["src/.storybook/*"]
+      "@storybook/*": ["src/.storybook/*"],
+      "@lib/*": ["src/lib/*"]
     }
   },
   "include": [

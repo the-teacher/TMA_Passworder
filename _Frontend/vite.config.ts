@@ -43,6 +43,10 @@ export default defineConfig({
       {
         find: "@storybook",
         replacement: path.resolve(__dirname, "src/.storybook")
+      },
+      {
+        find: "@lib",
+        replacement: path.resolve(__dirname, "src/lib")
       }
     ]
   }
