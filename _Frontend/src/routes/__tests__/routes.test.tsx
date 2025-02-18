@@ -9,7 +9,7 @@ const mockComponent = (name: string) => ({
 });
 
 jest.mock("@pages/IndexPage", () => mockComponent("Index Page"));
-jest.mock("@pages/CreatePage", () => mockComponent("Create Page"));
+jest.mock("@pages/CreatePasswordPage", () => mockComponent("Create Page"));
 jest.mock("@pages/SearchPage", () => mockComponent("Search Page"));
 jest.mock("@pages/FavoritesPage", () => mockComponent("Favorites Page"));
 jest.mock("@pages/LogoutPage", () => mockComponent("Logout Page"));

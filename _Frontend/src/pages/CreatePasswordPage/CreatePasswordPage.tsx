@@ -9,7 +9,7 @@ type PasswordEntryData = {
   notes: string;
 };
 
-const CreatePage = () => {
+const CreatePasswordPage = () => {
   const { t } = useTranslation();
 
   const handleSubmit = (data: PasswordEntryData) => {
@@ -19,12 +19,14 @@ const CreatePage = () => {
 
   return (
     <AppLayout>
-      <div className="create-page--container">
-        <h2 className="create-page--title">{t("createPage.title")}</h2>
+      <div className="create-password-page--container">
+        <h2 className="create-password-page--title">
+          {t("CreatePasswordPage.title")}
+        </h2>
         <PasswordEntryForm onSubmit={handleSubmit} />
       </div>
     </AppLayout>
   );
 };
 
-export default CreatePage;
+export default CreatePasswordPage;

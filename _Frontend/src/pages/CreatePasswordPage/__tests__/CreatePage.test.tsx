@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import CreatePage from "@pages/CreatePage";
+import CreatePasswordPage from "@pages/CreatePasswordPage";
 import { TestWrapper } from "@test/testUtils";
 import "@test/setupFilesAfterEnv";
 
@@ -9,7 +9,7 @@ jest.mock("@components/AppLayout", () => ({
   default: ({ children }: { children: React.ReactNode }) => <>{children}</>
 }));
 
-describe("CreatePage", () => {
+describe("CreatePasswordPage", () => {
   const mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
 
   beforeEach(() => {
@@ -17,12 +17,12 @@ describe("CreatePage", () => {
   });
 
   it("renders create page content", () => {
-    render(<CreatePage />, { wrapper: TestWrapper });
+    render(<CreatePasswordPage />, { wrapper: TestWrapper });
     expect(screen.getByText("Create a Password Entry")).toBeInTheDocument();
   });
 
   it("handles form submission correctly", () => {
-    render(<CreatePage />, { wrapper: TestWrapper });
+    render(<CreatePasswordPage />, { wrapper: TestWrapper });
 
     // Fill in the form
     const serviceNameInput = screen.getByLabelText(/service name/i);

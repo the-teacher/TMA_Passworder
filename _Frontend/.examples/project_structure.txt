@@ -143,12 +143,12 @@ _Frontend/src//
         ├── __tests__
             └── AboutPage.test.tsx
         └── index.ts
-    ├── CreatePage
-        ├── CreatePage.tsx
+    ├── CreatePasswordPage
+        ├── CreatePasswordPage.tsx
         ├── __stories__
             └── *
         ├── __tests__
-            └── CreatePage.test.tsx
+            └── CreatePasswordPage.test.tsx
         ├── index.ts
         └── styles.scss
     ├── FavoritesPage

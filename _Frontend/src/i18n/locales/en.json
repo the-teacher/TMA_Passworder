@@ -1,6 +1,6 @@
 {
   "translations": {
-    "createPage.title": "Create a Password Entry",
+    "CreatePasswordPage.title": "Create a Password Entry",
     "app": {
       "name": "HamsterPass",
       "settings": "Settings"

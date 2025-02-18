@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router";
 import LoadingFallback from "@components/LoadingFallback";
 
 const IndexPage = lazy(() => import("@pages/IndexPage"));
-const CreatePage = lazy(() => import("@pages/CreatePage"));
+const CreatePasswordPage = lazy(() => import("@pages/CreatePasswordPage"));
 const SearchPage = lazy(() => import("@pages/SearchPage"));
 const FavoritesPage = lazy(() => import("@pages/FavoritesPage"));
 const LogoutPage = lazy(() => import("@pages/LogoutPage"));
@@ -18,7 +18,7 @@ const SuspenseWrapper = ({ children }: { children: ReactNode }) => (
 
 export const routesConfig = [
   { index: true, element: <IndexPage /> },
-  { path: "create", element: <CreatePage /> },
+  { path: "create", element: <CreatePasswordPage /> },
   { path: "search", element: <SearchPage /> },
   { path: "favorites", element: <FavoritesPage /> },
   { path: "logout", element: <LogoutPage /> },

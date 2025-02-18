@@ -56,7 +56,6 @@ describe("HolyGrailLayout", () => {
   });
 });
 
-
 // components/HolyGrailLayout/__tests__/HolyGrailLayoutWithParams.test.tsx
 import { render, screen } from "@testing-library/react";
 import HolyGrailLayoutWithParams from "@components/HolyGrailLayout/HolyGrailLayoutWithParams";
@@ -128,7 +127,6 @@ describe("HolyGrailLayoutWithParams", () => {
   });
 });
 
-
 // components/PasswordEntryList/__tests__/PasswordEntryList.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -165,7 +163,6 @@ describe("PasswordEntryList", () => {
   });
 });
 
-
 // components/LoadingFallback/__tests__/LoadingFallback.test.tsx
 import { render, screen } from "@testing-library/react";
 import LoadingFallback from "@components/LoadingFallback";
@@ -186,7 +183,6 @@ describe("LoadingFallback", () => {
     expect(textDiv).toHaveClass("loading-fallback--text");
   });
 });
-
 
 // components/FooterNavigation/__tests__/FooterNavigation.test.tsx
 import "@testing-library/jest-dom";
@@ -256,7 +252,6 @@ describe("FooterNavigation", () => {
     });
   });
 });
-
 
 // components/PasswordEntryForm/__tests__/PasswordEntryForm.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -383,7 +378,6 @@ describe("PasswordEntryForm", () => {
   });
 });
 
-
 // components/AppIcon/__tests__/AppIcon.test.tsx
 import { render, screen } from "@testing-library/react";
 import AppIcon, { IconType, IconSize } from "@components/AppIcon";
@@ -424,7 +418,6 @@ describe("AppIcon", () => {
   });
 });
 
-
 // components/PasswordEntry/__tests__/PasswordEntry.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -458,7 +451,6 @@ describe("PasswordEntry", () => {
     );
   });
 });
-
 
 // components/Header/__tests__/Header.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -512,7 +504,6 @@ describe("Header", () => {
   });
 });
 
-
 // components/AppLayout/__tests__/AppLayout.test.tsx
 import { render, screen } from "@testing-library/react";
 import AppLayout from "@components/AppLayout";
@@ -549,7 +540,6 @@ describe("AppLayout", () => {
     expect(screen.getByText("Mock Footer")).toBeInTheDocument();
   });
 });
-
 
 // __tests__/App.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -597,7 +587,6 @@ describe("App", () => {
     expect(container.childNodes).toHaveLength(1);
   });
 });
-
 
 // __tests__/index.test.tsx
 import { createRoot } from "react-dom/client";
@@ -665,7 +654,6 @@ describe("Index", () => {
     expect(createRoot).not.toHaveBeenCalled();
   });
 });
-
 
 // pages/ShowPage/__tests__/ShowPage.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -764,7 +752,6 @@ describe("ShowPage", () => {
   });
 });
 
-
 // pages/LogoutPage/__tests__/LogoutPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import LogoutPage from "@pages/LogoutPage";
@@ -787,7 +774,6 @@ describe("LogoutPage", () => {
   });
 });
 
-
 // pages/SearchPage/__tests__/SearchPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import SearchPage from "@pages/SearchPage";
@@ -808,10 +794,9 @@ describe("SearchPage", () => {
   });
 });
 
-
-// pages/CreatePage/__tests__/CreatePage.test.tsx
+// pages/CreatePasswordPage/__tests__/CreatePasswordPage.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
-import CreatePage from "@pages/CreatePage";
+import CreatePasswordPage from "@pages/CreatePasswordPage";
 import { TestWrapper } from "@test/testUtils";
 import "@test/setupFilesAfterEnv";
 
@@ -821,7 +806,7 @@ jest.mock("@components/AppLayout", () => ({
   default: ({ children }: { children: React.ReactNode }) => <>{children}</>
 }));
 
-describe("CreatePage", () => {
+describe("CreatePasswordPage", () => {
   const mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
 
   beforeEach(() => {
@@ -829,12 +814,12 @@ describe("CreatePage", () => {
   });
 
   it("renders create page content", () => {
-    render(<CreatePage />, { wrapper: TestWrapper });
+    render(<CreatePasswordPage />, { wrapper: TestWrapper });
     expect(screen.getByText("Create a Password Entry")).toBeInTheDocument();
   });
 
   it("handles form submission correctly", () => {
-    render(<CreatePage />, { wrapper: TestWrapper });
+    render(<CreatePasswordPage />, { wrapper: TestWrapper });
 
     // Fill in the form
     const serviceNameInput = screen.getByLabelText(/service name/i);
@@ -858,7 +843,6 @@ describe("CreatePage", () => {
   });
 });
 
-
 // pages/SettingsPage/__tests__/SettingsPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import SettingsPage from "@pages/SettingsPage";
@@ -880,7 +864,6 @@ describe("SettingsPage", () => {
     ).toBeInTheDocument();
   });
 });
-
 
 // pages/IndexPage/__tests__/IndexPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -909,7 +892,6 @@ describe("IndexPage", () => {
     ).toBeInTheDocument();
   });
 });
-
 
 // pages/FavoritesPage/__tests__/FavoritesPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -940,7 +922,6 @@ describe("FavoritesPage", () => {
     expect(layoutContent).toHaveTextContent("View your favorite items here.");
   });
 });
-
 
 // pages/AboutPage/__tests__/AboutPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -974,7 +955,6 @@ describe("AboutPage", () => {
   });
 });
 
-
 // routes/__tests__/routes.test.tsx
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
@@ -987,7 +967,7 @@ const mockComponent = (name: string) => ({
 });
 
 jest.mock("@pages/IndexPage", () => mockComponent("Index Page"));
-jest.mock("@pages/CreatePage", () => mockComponent("Create Page"));
+jest.mock("@pages/CreatePasswordPage", () => mockComponent("Create Page"));
 jest.mock("@pages/SearchPage", () => mockComponent("Search Page"));
 jest.mock("@pages/FavoritesPage", () => mockComponent("Favorites Page"));
 jest.mock("@pages/LogoutPage", () => mockComponent("Logout Page"));
@@ -1108,7 +1088,6 @@ describe("AppRoutes", () => {
   });
 });
 
-
 // routes/__tests__/index.test.tsx
 import AppRoutes from "../routes";
 import RoutesExport from "../index";
@@ -1127,5 +1106,3 @@ describe("Routes index", () => {
     expect(RoutesExport).toBe("mocked-routes");
   });
 });
-
-
