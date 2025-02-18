@@ -30,7 +30,7 @@
 │   ├── Default
 │   └── LongName
 │
-├── 3-PasswordEntryForm/
+├── 3-CreatePasswordForm/
 │   ├── Default
 │   └── Russian
 │

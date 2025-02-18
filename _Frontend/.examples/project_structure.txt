@@ -94,13 +94,13 @@ _Frontend/src//
             └── PasswordEntry.test.tsx
         ├── index.ts
         └── styles.scss
-    ├── PasswordEntryForm
-        ├── PasswordEntryForm.tsx
+    ├── CreatePasswordForm
+        ├── CreatePasswordForm.tsx
         ├── __stories__
-            ├── PasswordEntryForm.stor_ies.tsx
-            └── PasswordEntryForm.stories.tsx
+            ├── CreatePasswordForm.stor_ies.tsx
+            └── CreatePasswordForm.stories.tsx
         ├── __tests__
-            └── PasswordEntryForm.test.tsx
+            └── CreatePasswordForm.test.tsx
         ├── index.ts
         └── styles.scss
     └── PasswordEntryList
