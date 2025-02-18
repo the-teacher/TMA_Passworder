@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import PasswordEntryForm from "@components/PasswordEntryForm";
+import CreatePasswordForm from "@components/CreatePasswordForm";
 
-describe("PasswordEntryForm", () => {
+describe("CreatePasswordForm", () => {
   const mockOnSubmit = jest.fn();
   const mockClipboard = {
     writeText: jest.fn()
@@ -20,7 +20,7 @@ describe("PasswordEntryForm", () => {
   });
 
   const setup = () => {
-    render(<PasswordEntryForm onSubmit={mockOnSubmit} />);
+    render(<CreatePasswordForm onSubmit={mockOnSubmit} />);
   };
 
   it("renders form fields", () => {

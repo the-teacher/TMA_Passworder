@@ -3,12 +3,12 @@ import {
   withRouter,
   reactRouterParameters
 } from "storybook-addon-remix-react-router";
-import PasswordEntryForm from "@components/PasswordEntryForm";
+import CreatePasswordForm from "@components/CreatePasswordForm";
 import i18n from "@story/i18next";
 
-const meta: Meta<typeof PasswordEntryForm> = {
-  title: "3-Components/3-PasswordEntryForm",
-  component: PasswordEntryForm,
+const meta: Meta<typeof CreatePasswordForm> = {
+  title: "3-Components/3-CreatePasswordForm",
+  component: CreatePasswordForm,
   decorators: [withRouter],
   parameters: {
     docs: { disable: true },
@@ -27,7 +27,7 @@ const meta: Meta<typeof PasswordEntryForm> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof PasswordEntryForm>;
+type Story = StoryObj<typeof CreatePasswordForm>;
 
 // Basic version with default functionality
 export const Default: Story = {

@@ -1,7 +1,7 @@
 import CreatePasswordForm from "@components/CreatePasswordForm";
 import { useTranslation } from "react-i18next";
 import AppLayout from "@components/AppLayout";
-import "@ui-kit/common.scss";
+import "./styles.scss";
 
 type PasswordEntryData = {
   serviceName: string;
@@ -9,7 +9,7 @@ type PasswordEntryData = {
   notes: string;
 };
 
-const CreatePasswordPage = () => {
+const CreatePage = () => {
   const { t } = useTranslation();
 
   const handleSubmit = (data: PasswordEntryData) => {
@@ -19,10 +19,12 @@ const CreatePasswordPage = () => {
 
   return (
     <AppLayout>
-      <h2 className="text-center">{t("CreatePasswordPage.title")}</h2>
-      <CreatePasswordForm onSubmit={handleSubmit} />
+      <div className="create-page--container">
+        <h2 className="create-page--title">{t("createPage.title")}</h2>
+        <CreatePasswordForm onSubmit={handleSubmit} />
+      </div>
     </AppLayout>
   );
 };
 
-export default CreatePasswordPage;
+export default CreatePage;
