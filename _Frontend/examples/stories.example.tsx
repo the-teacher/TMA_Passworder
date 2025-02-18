@@ -1,4 +1,4 @@
-// _Frontend/src/ui-kit/__stories__/InfoBlocks.stories.tsx
+// ui-kit/__stories__/InfoBlocks.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/info-blocks.scss";
 
@@ -36,7 +36,8 @@ export const AllInfoBlocks: Story = {
   )
 };
 
-// _Frontend/src/ui-kit/__stories__/TextStyles.stories.tsx
+
+// ui-kit/__stories__/TextStyles.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/text-styles.scss";
 
@@ -164,7 +165,8 @@ export const AllTextStyles: Story = {
   )
 };
 
-// _Frontend/src/ui-kit/__stories__/FormInputs.stories.tsx
+
+// ui-kit/__stories__/FormInputs.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/spaces.scss";
@@ -355,7 +357,8 @@ export const FormInputWithIcon: Story = {
   )
 };
 
-// _Frontend/src/ui-kit/__stories__/FormGroups.stories.tsx
+
+// ui-kit/__stories__/FormGroups.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/form-inputs.scss";
@@ -442,7 +445,8 @@ export const FormGroupExample: Story = {
   )
 };
 
-// _Frontend/src/ui-kit/__stories__/Buttons.stories.tsx
+
+// ui-kit/__stories__/Buttons.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/buttons.scss";
 
@@ -491,7 +495,8 @@ export const AllButtons: Story = {
   )
 };
 
-// _Frontend/src/ui-kit/__stories__/ClosableInfoBlocks.stories.tsx
+
+// ui-kit/__stories__/ClosableInfoBlocks.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/info-blocks.scss";
 
@@ -577,7 +582,8 @@ export const ClosableInfoBlocks: Story = {
   )
 };
 
-// _Frontend/src/components/HolyGrailLayout/__stories__/HolyGrailLayout.stories.tsx
+
+// components/HolyGrailLayout/__stories__/HolyGrailLayout.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import HolyGrailLayout, {
   Header,
@@ -696,7 +702,8 @@ export const WithBothSidebars: Story = {
   )
 };
 
-// _Frontend/src/components/HolyGrailLayout/__stories__/HolyGrailLayoutWithParams.stories.tsx
+
+// components/HolyGrailLayout/__stories__/HolyGrailLayoutWithParams.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { HolyGrailLayoutWithParams } from "@components/HolyGrailLayout";
 import "./stories.scss";
@@ -804,7 +811,8 @@ export const WithBothSidebars: Story = {
   )
 };
 
-// _Frontend/src/components/PasswordEntryList/__stories__/PasswordEntryList.stories.tsx
+
+// components/PasswordEntryList/__stories__/PasswordEntryList.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
 import PasswordEntryList from "@components/PasswordEntryList";
@@ -831,7 +839,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-// _Frontend/src/components/LoadingFallback/__stories__/LoadingFallback.stories.tsx
+
+// components/LoadingFallback/__stories__/LoadingFallback.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import LoadingFallback from "@components/LoadingFallback";
 
@@ -860,7 +869,8 @@ export const WithBackground: Story = {
   ]
 };
 
-// _Frontend/src/components/FooterNavigation/__stories__/FooterNavigation.stories.tsx
+
+// components/FooterNavigation/__stories__/FooterNavigation.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
 import FooterNavigation from "@components/FooterNavigation";
@@ -885,7 +895,8 @@ type Story = StoryObj<typeof FooterNavigation>;
 
 export const Default: Story = {};
 
-// _Frontend/src/components/PasswordEntryForm/__stories__/PasswordEntryForm.stories.tsx
+
+// components/PasswordEntryForm/__stories__/PasswordEntryForm.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   withRouter,
@@ -941,7 +952,8 @@ export const Russian: Story = {
   }
 };
 
-// _Frontend/src/components/AppIcon/__stories__/AppIcon.stories.tsx
+
+// components/AppIcon/__stories__/AppIcon.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import AppIcon, { IconSize, IconType } from "@components/AppIcon";
 import "@ui-kit/spaces.scss";
@@ -1001,7 +1013,8 @@ export const Default: Story = {
   )
 };
 
-// _Frontend/src/components/PasswordEntry/__stories__/PasswordEntry.stories.tsx
+
+// components/PasswordEntry/__stories__/PasswordEntry.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
 import PasswordEntry from "@components/PasswordEntry";
@@ -1040,10 +1053,11 @@ export const LongName: Story = {
   }
 };
 
-// _Frontend/src/components/Header/__stories__/Header.stories.tsx
+
+// components/Header/__stories__/Header.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
-import Header from "./";
+import Header from "../";
 
 const meta: Meta<typeof Header> = {
   title: "2-Core/1-Header",
@@ -1078,3 +1092,131 @@ export const WithContent: Story = {
     )
   }
 };
+
+
+// lib/Toastr/__stories__/Toastr.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import toastr from "@lib/Toastr";
+import "@ui-kit/info-blocks.scss";
+import "@ui-kit/spaces.scss";
+// Add custom styles for demo
+import "../toastr.scss";
+import "./toastr.stories.scss";
+
+const meta = {
+  title: "3-Components/5-Toastr",
+  parameters: {
+    docs: { disable: true },
+    viewport: {
+      defaultViewport: "tablet"
+    }
+  }
+} satisfies Meta;
+
+export default meta;
+type Story = StoryObj;
+
+// Basic usage
+export const Default: Story = {
+  render: () => (
+    <div className="p16">
+      <h3>Basic Toasts</h3>
+      <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+        <button
+          className="btn btn--primary"
+          onClick={() => toastr.info("Info message")}
+        >
+          Show Info
+        </button>
+        <button
+          className="btn btn--success"
+          onClick={() => toastr.success("Success message")}
+        >
+          Show Success
+        </button>
+        <button
+          className="btn btn--warning"
+          onClick={() => toastr.warning("Warning message")}
+        >
+          Show Warning
+        </button>
+        <button
+          className="btn btn--danger"
+          onClick={() => toastr.danger("Danger message")}
+        >
+          Show Danger
+        </button>
+      </div>
+
+      <h3>Custom Options</h3>
+      <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+        <button
+          className="btn btn--primary"
+          onClick={() =>
+            toastr.show("Non-closable toast", "primary", { closable: false })
+          }
+        >
+          Non-closable
+        </button>
+        <button
+          className="btn btn--primary"
+          onClick={() =>
+            toastr.show("Long duration toast", "primary", { duration: 5000 })
+          }
+        >
+          5s Duration
+        </button>
+        <button
+          className="btn btn--primary"
+          onClick={() =>
+            toastr.show("Persistent toast", "primary", { duration: 0 })
+          }
+        >
+          Persistent
+        </button>
+      </div>
+
+      <h3>Multiple Toasts</h3>
+      <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+        <button
+          className="btn btn--primary"
+          onClick={() => {
+            toastr.info("First message");
+            toastr.success("Second message");
+            toastr.warning("Third message");
+          }}
+        >
+          Show Multiple
+        </button>
+        <button className="btn btn--danger" onClick={() => toastr.clear()}>
+          Clear All
+        </button>
+      </div>
+
+      <h3>Custom Container</h3>
+      <div
+        id="custom-container"
+        style={{
+          position: "relative",
+          border: "1px dashed #ccc",
+          padding: "16px",
+          marginBottom: "16px"
+        }}
+      >
+        <div className="mb20">
+          <button
+            className="btn btn--primary"
+            onClick={() => {
+              toastr.initialize("#custom-container");
+              toastr.info("Toast in custom container");
+            }}
+          >
+            Show in Container
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+};
+
+

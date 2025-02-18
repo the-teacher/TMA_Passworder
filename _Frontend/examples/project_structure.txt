@@ -1,5 +1,8 @@
 _Frontend/src//
 ├── App.tsx
+├── __tests__
+    ├── App.test.tsx
+    └── index.test.tsx
 ├── assets
     └── react.svg
 ├── components
@@ -8,14 +11,14 @@ _Frontend/src//
         ├── __stories__
             └── AppIcon.stories.tsx
         ├── __tests__
-            └── *
+            └── AppIcon.test.tsx
         └── index.ts
     ├── AppLayout
         ├── AppLayout.tsx
         ├── __stories__
             └── *
         ├── __tests__
-            └── *
+            └── AppLayout.test.tsx
         └── index.ts
     ├── FooterNavigation
         ├── FooterNavigation.tsx
@@ -80,7 +83,7 @@ _Frontend/src//
         ├── __stories__
             └── LoadingFallback.stories.tsx
         ├── __tests__
-            └── *
+            └── LoadingFallback.test.tsx
         ├── index.ts
         └── styles.scss
     ├── PasswordEntry
@@ -94,9 +97,10 @@ _Frontend/src//
     ├── PasswordEntryForm
         ├── PasswordEntryForm.tsx
         ├── __stories__
+            ├── PasswordEntryForm.stor_ies.tsx
             └── PasswordEntryForm.stories.tsx
         ├── __tests__
-            └── *
+            └── PasswordEntryForm.test.tsx
         ├── index.ts
         └── styles.scss
     └── PasswordEntryList
@@ -115,6 +119,20 @@ _Frontend/src//
         ├── en.json
         └── ru.json
 ├── index.tsx
+├── lib
+    ├── EventEmitter
+        ├── EventEmitter.ts
+        ├── __tests__
+            └── EventEmitter.test.ts
+        ├── index.ts
+        └── types.ts
+    └── Toastr
+        ├── Toastr.ts
+        ├── __stories__
+            ├── Toastr.stories.tsx
+            └── toastr.stories.scss
+        ├── index.ts
+        └── toastr.scss
 ├── mocks
     └── popularServices.ts
 ├── pages
@@ -139,23 +157,21 @@ _Frontend/src//
         ├── __stories__
             └── *
         ├── __tests__
-            └── *
+            └── FavoritesPage.test.tsx
         └── index.ts
     ├── IndexPage
-        ├── IndexPage.test.tsx
         ├── IndexPage.tsx
         ├── __stories__
             └── *
         ├── __tests__
-            └── *
+            └── IndexPage.test.tsx
         └── index.ts
     ├── LogoutPage
-        ├── LogoutPage.test.tsx
         ├── LogoutPage.tsx
         ├── __stories__
             └── *
         ├── __tests__
-            └── *
+            └── LogoutPage.test.tsx
         └── index.ts
     ├── NotFoundPage
         ├── NotFoundPage.test.tsx
@@ -167,30 +183,32 @@ _Frontend/src//
         ├── index.ts
         └── styles.scss
     ├── SearchPage
-        ├── SearchPage.test.tsx
         ├── SearchPage.tsx
         ├── __stories__
             └── *
         ├── __tests__
-            └── *
+            └── SearchPage.test.tsx
         └── index.ts
     ├── SettingsPage
-        ├── SettingsPage.test.tsx
         ├── SettingsPage.tsx
         ├── __stories__
             └── *
         ├── __tests__
-            └── *
+            └── SettingsPage.test.tsx
         └── index.ts
     └── ShowPage
         ├── ShowPage.tsx
         ├── __stories__
             └── *
         ├── __tests__
-            └── *
+            └── ShowPage.test.tsx
         ├── index.ts
         └── styles.scss
 ├── routes
+    ├── __tests__
+        ├── helpers.test.ts
+        ├── index.test.tsx
+        └── routes.test.tsx
     ├── helpers.ts
     ├── index.ts
     └── routes.tsx

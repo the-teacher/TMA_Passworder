@@ -1,12 +1,13 @@
 #!/bin/bash
 
+# EXAMLPE: source ./createTestsExample.sh _Frontend/src/ _Frontend/examples/
+
 # This script searches for all directories named __tests__ within the specified directory,
 # finds all files matching the pattern *.test.tsx, and concatenates them into a single file.
 # Each file's content is preceded by a comment with its relative path.
 #
 # Usage:
 #   ./createTestsExample.sh [scan_directory] [output_directory]
-#   EXAMLPE: source ./createTestsExample.sh _Frontend/src/ _Frontend/examples/
 #
 # Arguments:
 #   scan_directory     - The root directory where __tests__ folders will be searched.

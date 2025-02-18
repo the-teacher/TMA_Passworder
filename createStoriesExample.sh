@@ -1,12 +1,13 @@
 #!/bin/bash
 
+# EXAMLPE: source ./createStoriesExample.sh _Frontend/src/ _Frontend/examples/
+
 # This script searches for all directories named __stories__ within the specified directory,
 # finds all files matching the pattern *.stories.tsx, and concatenates them into a single file.
 # Each file's content is preceded by a comment with its relative path.
 #
 # Usage:
 #   ./createStoriesExample.sh [scan_directory] [output_directory]
-#   EXAMLPE: source ./createStoriesExample.sh _Frontend/src/ _Frontend/examples/
 #
 # Arguments:
 #   scan_directory     - The root directory where __stories__ folders will be searched.
