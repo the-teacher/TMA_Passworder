@@ -20,10 +20,7 @@ export default {
       "ts-jest",
       {
         tsconfig: "tsconfig.test.json",
-        useESM: true,
-        diagnostics: {
-          ignoreCodes: [1343]
-        }
+        useESM: true
       }
     ]
   },
