@@ -6,6 +6,7 @@ describe("PasswordEntryForm", () => {
   const mockClipboard = {
     writeText: jest.fn()
   };
+  const mockConsoleError = jest.spyOn(console, "error").mockImplementation();
 
   beforeAll(() => {
     Object.defineProperty(navigator, "clipboard", {
@@ -101,5 +102,22 @@ describe("PasswordEntryForm", () => {
     fireEvent.click(copyButton);
 
     expect(mockClipboard.writeText).toHaveBeenCalledWith(generatedPassword);
+  });
+
+  it("handles clipboard error gracefully", async () => {
+    setup();
+    const generateButton = screen.getByTitle(/generate password/i);
+    const copyButton = screen.getByTitle(/copy password/i);
+
+    // Setup clipboard to throw error
+    mockClipboard.writeText.mockRejectedValueOnce(new Error("Clipboard error"));
+
+    fireEvent.click(generateButton);
+    await fireEvent.click(copyButton);
+
+    await expect(mockConsoleError).toHaveBeenCalledWith(
+      "Failed to copy password:",
+      expect.any(Error)
+    );
   });
 });
