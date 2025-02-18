@@ -3,6 +3,20 @@ import PasswordEntryForm from "@components/PasswordEntryForm";
 
 describe("PasswordEntryForm", () => {
   const mockOnSubmit = jest.fn();
+  const mockClipboard = {
+    writeText: jest.fn()
+  };
+
+  beforeAll(() => {
+    Object.defineProperty(navigator, "clipboard", {
+      value: mockClipboard,
+      configurable: true
+    });
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   const setup = () => {
     render(<PasswordEntryForm onSubmit={mockOnSubmit} />);
@@ -61,5 +75,31 @@ describe("PasswordEntryForm", () => {
     fireEvent.click(toggleButton);
 
     expect(passwordInput).toHaveAttribute("type", "text");
+  });
+
+  it("generates password with correct length and characters", () => {
+    setup();
+    const passwordInput = screen.getByLabelText(/password/i);
+    const generateButton = screen.getByTitle(/generate password/i);
+
+    fireEvent.click(generateButton);
+
+    const generatedPassword = passwordInput.getAttribute("value");
+    expect(generatedPassword).toHaveLength(10);
+    expect(generatedPassword).toMatch(/^[a-zA-Z0-9!@#$%^&*]+$/);
+  });
+
+  it("copies password to clipboard", async () => {
+    setup();
+    const passwordInput = screen.getByLabelText(/password/i);
+    const generateButton = screen.getByTitle(/generate password/i);
+    const copyButton = screen.getByTitle(/copy password/i);
+
+    fireEvent.click(generateButton);
+    const generatedPassword = passwordInput.getAttribute("value");
+
+    fireEvent.click(copyButton);
+
+    expect(mockClipboard.writeText).toHaveBeenCalledWith(generatedPassword);
   });
 });
