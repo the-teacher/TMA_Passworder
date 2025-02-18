@@ -2,6 +2,12 @@ import { render, screen } from "@testing-library/react";
 import HolyGrailLayout from "@components/HolyGrailLayout";
 
 describe("HolyGrailLayout", () => {
+  const mockConsoleWarn = jest.spyOn(console, "warn").mockImplementation();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render children correctly", () => {
     const testContent = "Test Content";
     render(<HolyGrailLayout>{testContent}</HolyGrailLayout>);
@@ -33,5 +39,18 @@ describe("HolyGrailLayout", () => {
 
     // Cleanup
     document.body.removeChild(layoutRoot);
+  });
+
+  it("should warn when layoutRoot element is not found", () => {
+    const nonExistentSelector = "#non-existent-element";
+    render(
+      <HolyGrailLayout layoutRoot={nonExistentSelector}>
+        Content
+      </HolyGrailLayout>
+    );
+
+    expect(mockConsoleWarn).toHaveBeenCalledWith(
+      `Element with selector "${nonExistentSelector}" not found`
+    );
   });
 });
