@@ -71,4 +71,25 @@ describe("ShowPage", () => {
       "securePassword123"
     );
   });
+
+  it("copies URL to clipboard", async () => {
+    render(<ShowPage />, { wrapper: TestWrapper });
+
+    const copyButtons = screen.getAllByLabelText(/copy/i);
+    const urlCopyButton = copyButtons[2]; // Third copy button is for URL
+    fireEvent.click(urlCopyButton);
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      "https://gmail.com"
+    );
+  });
+
+  it("renders URL as clickable link", () => {
+    render(<ShowPage />, { wrapper: TestWrapper });
+
+    const urlLink = screen.getByText("https://gmail.com");
+    expect(urlLink).toHaveAttribute("href", "https://gmail.com");
+    expect(urlLink).toHaveAttribute("target", "_blank");
+    expect(urlLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
 });
