@@ -12,7 +12,7 @@ export default {
     "^@routes/(.*)$": "<rootDir>/src/routes/$1",
     "^@ui-kit/(.*)$": "<rootDir>/src/ui-kit/$1",
     "^@mocks/(.*)$": "<rootDir>/src/mocks/$1",
-    "^@storybook/(.*)$": "<rootDir>/src/.storybook/$1",
+    "^@story/(.*)$": "<rootDir>.storybook/$1",
     "^@lib/(.*)$": "<rootDir>/src/lib/$1"
   },
   transform: {

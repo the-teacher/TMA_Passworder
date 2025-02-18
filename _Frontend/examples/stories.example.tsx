@@ -36,7 +36,6 @@ export const AllInfoBlocks: Story = {
   )
 };
 
-
 // _Frontend/src/ui-kit/__stories__/TextStyles.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/text-styles.scss";
@@ -164,7 +163,6 @@ export const AllTextStyles: Story = {
     </div>
   )
 };
-
 
 // _Frontend/src/ui-kit/__stories__/FormInputs.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -357,7 +355,6 @@ export const FormInputWithIcon: Story = {
   )
 };
 
-
 // _Frontend/src/ui-kit/__stories__/FormGroups.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-groups.scss";
@@ -445,7 +442,6 @@ export const FormGroupExample: Story = {
   )
 };
 
-
 // _Frontend/src/ui-kit/__stories__/Buttons.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/buttons.scss";
@@ -494,7 +490,6 @@ export const AllButtons: Story = {
     </div>
   )
 };
-
 
 // _Frontend/src/ui-kit/__stories__/ClosableInfoBlocks.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -581,7 +576,6 @@ export const ClosableInfoBlocks: Story = {
     </div>
   )
 };
-
 
 // _Frontend/src/components/HolyGrailLayout/__stories__/HolyGrailLayout.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -702,7 +696,6 @@ export const WithBothSidebars: Story = {
   )
 };
 
-
 // _Frontend/src/components/HolyGrailLayout/__stories__/HolyGrailLayoutWithParams.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { HolyGrailLayoutWithParams } from "@components/HolyGrailLayout";
@@ -811,7 +804,6 @@ export const WithBothSidebars: Story = {
   )
 };
 
-
 // _Frontend/src/components/PasswordEntryList/__stories__/PasswordEntryList.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -838,7 +830,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
-
 
 // _Frontend/src/components/LoadingFallback/__stories__/LoadingFallback.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -869,7 +860,6 @@ export const WithBackground: Story = {
   ]
 };
 
-
 // _Frontend/src/components/FooterNavigation/__stories__/FooterNavigation.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -895,7 +885,6 @@ type Story = StoryObj<typeof FooterNavigation>;
 
 export const Default: Story = {};
 
-
 // _Frontend/src/components/PasswordEntryForm/__stories__/PasswordEntryForm.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import {
@@ -903,7 +892,7 @@ import {
   reactRouterParameters
 } from "storybook-addon-remix-react-router";
 import PasswordEntryForm from "@components/PasswordEntryForm";
-import i18n from "@storybook/i18next";
+import i18n from "@story/i18next";
 
 const meta: Meta<typeof PasswordEntryForm> = {
   title: "3-Components/3-PasswordEntryForm",
@@ -951,7 +940,6 @@ export const Russian: Story = {
     await i18n.changeLanguage("ru");
   }
 };
-
 
 // _Frontend/src/components/AppIcon/__stories__/AppIcon.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -1013,7 +1001,6 @@ export const Default: Story = {
   )
 };
 
-
 // _Frontend/src/components/PasswordEntry/__stories__/PasswordEntry.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -1053,7 +1040,6 @@ export const LongName: Story = {
   }
 };
 
-
 // _Frontend/src/components/Header/__stories__/Header.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -1092,5 +1078,3 @@ export const WithContent: Story = {
     )
   }
 };
-
-
