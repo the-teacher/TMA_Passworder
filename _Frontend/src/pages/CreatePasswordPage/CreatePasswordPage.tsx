@@ -19,10 +19,8 @@ const CreatePasswordPage = () => {
 
   return (
     <AppLayout>
-      <div className="create-password-page--container">
-        <h2 className="text-center">{t("CreatePasswordPage.title")}</h2>
-        <PasswordEntryForm onSubmit={handleSubmit} />
-      </div>
+      <h2 className="text-center">{t("CreatePasswordPage.title")}</h2>
+      <PasswordEntryForm onSubmit={handleSubmit} />
     </AppLayout>
   );
 };
