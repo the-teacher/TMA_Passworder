@@ -1,10 +1,10 @@
-// ui-kit/__stories__/InfoBlocks.stories.tsx
+// _Frontend/src/ui-kit/__stories__/InfoBlocks.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/info-blocks.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/InfoBlocks",
-  component: "div",
+  // component: "div",
   parameters: {
     docs: { disable: true }
   }
@@ -36,13 +36,14 @@ export const AllInfoBlocks: Story = {
   )
 };
 
-// ui-kit/__stories__/TextStyles.stories.tsx
+
+// _Frontend/src/ui-kit/__stories__/TextStyles.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/text-styles.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/TextStyles",
-  component: "p",
+  // component: "p",
   parameters: {
     docs: { disable: true }
   }
@@ -164,7 +165,8 @@ export const AllTextStyles: Story = {
   )
 };
 
-// ui-kit/__stories__/FormInputs.stories.tsx
+
+// _Frontend/src/ui-kit/__stories__/FormInputs.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/spaces.scss";
@@ -172,7 +174,7 @@ import AppIcon from "@components/AppIcon";
 
 const meta: Meta = {
   title: "4-UI-Kit/FormInputs",
-  component: "input",
+  // component: "input",
   parameters: {
     docs: { disable: true }
   }
@@ -355,7 +357,8 @@ export const FormInputWithIcon: Story = {
   )
 };
 
-// ui-kit/__stories__/FormGroups.stories.tsx
+
+// _Frontend/src/ui-kit/__stories__/FormGroups.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/form-inputs.scss";
@@ -364,7 +367,7 @@ import AppIcon from "@components/AppIcon"; // Import AppIcon
 
 const meta: Meta = {
   title: "4-UI-Kit/FormGroups",
-  component: "div",
+  // component: "div",
   parameters: {
     docs: { disable: true }
   }
@@ -442,13 +445,14 @@ export const FormGroupExample: Story = {
   )
 };
 
-// ui-kit/__stories__/Buttons.stories.tsx
+
+// _Frontend/src/ui-kit/__stories__/Buttons.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/buttons.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/Buttons",
-  component: "button",
+  // component: "button",
   parameters: {
     docs: { disable: true }
   }
@@ -491,13 +495,14 @@ export const AllButtons: Story = {
   )
 };
 
-// ui-kit/__stories__/ClosableInfoBlocks.stories.tsx
+
+// _Frontend/src/ui-kit/__stories__/ClosableInfoBlocks.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/info-blocks.scss";
 
 const meta: Meta = {
   title: "4-UI-Kit/InfoBlocks",
-  component: "div",
+  // component: "div",
   parameters: {
     docs: { disable: true }
   }
@@ -577,7 +582,8 @@ export const ClosableInfoBlocks: Story = {
   )
 };
 
-// components/HolyGrailLayout/__stories__/HolyGrailLayout.stories.tsx
+
+// _Frontend/src/components/HolyGrailLayout/__stories__/HolyGrailLayout.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import HolyGrailLayout, {
   Header,
@@ -696,7 +702,8 @@ export const WithBothSidebars: Story = {
   )
 };
 
-// components/HolyGrailLayout/__stories__/HolyGrailLayoutWithParams.stories.tsx
+
+// _Frontend/src/components/HolyGrailLayout/__stories__/HolyGrailLayoutWithParams.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { HolyGrailLayoutWithParams } from "@components/HolyGrailLayout";
 import "./stories.scss";
@@ -804,7 +811,8 @@ export const WithBothSidebars: Story = {
   )
 };
 
-// components/PasswordEntryList/__stories__/PasswordEntryList.stories.tsx
+
+// _Frontend/src/components/PasswordEntryList/__stories__/PasswordEntryList.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
 import PasswordEntryList from "@components/PasswordEntryList";
@@ -831,7 +839,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-// components/LoadingFallback/__stories__/LoadingFallback.stories.tsx
+
+// _Frontend/src/components/LoadingFallback/__stories__/LoadingFallback.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import LoadingFallback from "@components/LoadingFallback";
 
@@ -860,7 +869,8 @@ export const WithBackground: Story = {
   ]
 };
 
-// components/FooterNavigation/__stories__/FooterNavigation.stories.tsx
+
+// _Frontend/src/components/FooterNavigation/__stories__/FooterNavigation.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
 import FooterNavigation from "@components/FooterNavigation";
@@ -885,14 +895,15 @@ type Story = StoryObj<typeof FooterNavigation>;
 
 export const Default: Story = {};
 
-// components/PasswordEntryForm/__stories__/PasswordEntryForm.stories.tsx
+
+// _Frontend/src/components/PasswordEntryForm/__stories__/PasswordEntryForm.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   withRouter,
   reactRouterParameters
 } from "storybook-addon-remix-react-router";
 import PasswordEntryForm from "@components/PasswordEntryForm";
-import i18n from "../../../../.storybook/i18next";
+import i18n from "@storybook/i18next";
 
 const meta: Meta<typeof PasswordEntryForm> = {
   title: "3-Components/3-PasswordEntryForm",
@@ -941,7 +952,8 @@ export const Russian: Story = {
   }
 };
 
-// components/AppIcon/__stories__/AppIcon.stories.tsx
+
+// _Frontend/src/components/AppIcon/__stories__/AppIcon.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import AppIcon, { IconSize, IconType } from "@components/AppIcon";
 import "@ui-kit/spaces.scss";
@@ -1001,7 +1013,8 @@ export const Default: Story = {
   )
 };
 
-// components/PasswordEntry/__stories__/PasswordEntry.stories.tsx
+
+// _Frontend/src/components/PasswordEntry/__stories__/PasswordEntry.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
 import PasswordEntry from "@components/PasswordEntry";
@@ -1040,7 +1053,8 @@ export const LongName: Story = {
   }
 };
 
-// components/Header/__stories__/Header.stories.tsx
+
+// _Frontend/src/components/Header/__stories__/Header.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
 import Header from "./";
@@ -1078,3 +1092,5 @@ export const WithContent: Story = {
     )
   }
 };
+
+
