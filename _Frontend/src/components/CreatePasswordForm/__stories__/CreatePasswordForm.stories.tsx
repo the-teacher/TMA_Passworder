@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { StoryFn } from "@storybook/react";
 import {
   withRouter,
   reactRouterParameters

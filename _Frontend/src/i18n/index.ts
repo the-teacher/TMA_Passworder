@@ -1,24 +1,26 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from "./locales/en.json";
-import ru from "./locales/ru.json";
+import { loadAppLocales } from "./utils";
 
 const DEFAULT_LANGUAGE = import.meta.env.VITE_DEFAULT_LANGUAGE || "ru";
 
-i18n.use(initReactI18next).init({
-  fallbackLng: DEFAULT_LANGUAGE,
-  lng: DEFAULT_LANGUAGE,
-  resources: {
-    en,
-    ru
-  },
-  defaultNS: "translations",
-  fallbackNS: Object.keys(en).filter((ns) => ns !== "translations"),
-  interpolation: {
-    escapeValue: false
-  }
-});
+const initI18n = async () => {
+  const resources = await loadAppLocales();
 
-i18n.languages = ["en", "ru"];
+  await i18n.use(initReactI18next).init({
+    fallbackLng: DEFAULT_LANGUAGE,
+    lng: DEFAULT_LANGUAGE,
+    resources,
+    defaultNS: "translations",
+    fallbackNS: Object.keys(resources[DEFAULT_LANGUAGE] || {}),
+    interpolation: {
+      escapeValue: false
+    }
+  });
+
+  i18n.languages = ["en", "ru"];
+};
+
+initI18n();
 
 export default i18n;
