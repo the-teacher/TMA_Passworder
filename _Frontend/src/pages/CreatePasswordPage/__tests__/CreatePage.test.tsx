@@ -22,25 +22,34 @@ describe("CreatePasswordPage", () => {
   });
 
   it("handles form submission correctly", () => {
-    render(<CreatePasswordPage />, { wrapper: TestWrapper });
+    render(<CreatePasswordPage />);
 
-    // Fill in the form
-    const serviceNameInput = screen.getByLabelText(/service name/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const notesInput = screen.getByLabelText(/notes/i);
+    // Fill in form fields
+    fireEvent.change(screen.getByLabelText(/service name/i), {
+      target: { value: "Test Service" }
+    });
+    fireEvent.change(screen.getByLabelText(/username/i), {
+      target: { value: "testuser" }
+    });
+    fireEvent.change(screen.getByLabelText(/password/i), {
+      target: { value: "TestPassword123" }
+    });
+    fireEvent.change(screen.getByLabelText(/serviceurl/i), {
+      target: { value: "https://test.com" }
+    });
+    fireEvent.change(screen.getByLabelText(/notes/i), {
+      target: { value: "Test Notes" }
+    });
 
-    fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
-    fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
-    fireEvent.change(notesInput, { target: { value: "Test Notes" } });
-
-    // Submit the form
-    const submitButton = screen.getByRole("button", { name: /save/i });
-    fireEvent.click(submitButton);
+    // Submit form
+    fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
     // Verify console.log was called with correct data
     expect(mockConsoleLog).toHaveBeenCalledWith("Form submitted:", {
       serviceName: "Test Service",
+      username: "testuser",
       password: "TestPassword123",
+      serviceUrl: "https://test.com",
       notes: "Test Notes"
     });
   });

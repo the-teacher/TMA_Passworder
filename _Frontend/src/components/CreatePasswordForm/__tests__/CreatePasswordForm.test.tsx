@@ -23,47 +23,84 @@ describe("CreatePasswordForm", () => {
     render(<CreatePasswordForm onSubmit={mockOnSubmit} />);
   };
 
-  it("renders form fields", () => {
+  it("renders all form fields", () => {
     setup();
     expect(screen.getByLabelText(/service name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/serviceurl/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/notes/i)).toBeInTheDocument();
   });
 
-  it("submits form data", () => {
+  it("submits form data with all fields", () => {
     setup();
     const serviceNameInput = screen.getByLabelText(/service name/i);
+    const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
+    const serviceUrlInput = screen.getByLabelText(/serviceurl/i);
     const notesInput = screen.getByLabelText(/notes/i);
 
     fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
+    fireEvent.change(serviceUrlInput, {
+      target: { value: "https://test.com" }
+    });
     fireEvent.change(notesInput, { target: { value: "Some notes" } });
 
     fireEvent.click(screen.getByRole("button", { name: /save/i }));
 
     expect(mockOnSubmit).toHaveBeenCalledWith({
       serviceName: "Test Service",
+      username: "testuser",
       password: "TestPassword123",
+      serviceUrl: "https://test.com",
       notes: "Some notes"
     });
   });
 
-  it("resets form fields", () => {
+  it("resets all form fields", () => {
     setup();
     const serviceNameInput = screen.getByLabelText(/service name/i);
+    const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
+    const serviceUrlInput = screen.getByLabelText(/serviceurl/i);
     const notesInput = screen.getByLabelText(/notes/i);
 
+    // Fill in all fields
     fireEvent.change(serviceNameInput, { target: { value: "Test Service" } });
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "TestPassword123" } });
+    fireEvent.change(serviceUrlInput, {
+      target: { value: "https://test.com" }
+    });
     fireEvent.change(notesInput, { target: { value: "Some notes" } });
 
+    // Reset the form
     fireEvent.click(screen.getByRole("button", { name: /reset/i }));
 
+    // Verify all fields are empty
     expect(serviceNameInput).toHaveValue("");
+    expect(usernameInput).toHaveValue("");
     expect(passwordInput).toHaveValue("");
+    expect(serviceUrlInput).toHaveValue("");
     expect(notesInput).toHaveValue("");
+  });
+
+  it("validates required fields", () => {
+    setup();
+    const submitButton = screen.getByRole("button", { name: /save/i });
+
+    fireEvent.click(submitButton);
+
+    // Check that required fields are marked as invalid
+    expect(screen.getByLabelText(/service name/i)).toBeInvalid();
+    expect(screen.getByLabelText(/username/i)).toBeInvalid();
+    expect(screen.getByLabelText(/password/i)).toBeInvalid();
+
+    // Service URL and notes are optional
+    expect(screen.getByLabelText(/serviceurl/i)).not.toBeInvalid();
+    expect(screen.getByLabelText(/notes/i)).not.toBeInvalid();
   });
 
   it("toggles password visibility", () => {
@@ -109,13 +146,12 @@ describe("CreatePasswordForm", () => {
     const generateButton = screen.getByTitle(/generate password/i);
     const copyButton = screen.getByTitle(/copy password/i);
 
-    // Setup clipboard to throw error
     mockClipboard.writeText.mockRejectedValueOnce(new Error("Clipboard error"));
 
     fireEvent.click(generateButton);
     await fireEvent.click(copyButton);
 
-    await expect(mockConsoleError).toHaveBeenCalledWith(
+    expect(mockConsoleError).toHaveBeenCalledWith(
       "Failed to copy password:",
       expect.any(Error)
     );

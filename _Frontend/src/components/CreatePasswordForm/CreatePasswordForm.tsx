@@ -12,7 +12,9 @@ const PASSWORD_CHARS =
 
 type CreatePasswordFormData = {
   serviceName: string;
+  username: string;
   password: string;
+  serviceUrl: string;
   notes: string;
 };
 
@@ -24,7 +26,9 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
   const { t } = useTranslation("passwordEntry");
   const [formData, setFormData] = useState<CreatePasswordFormData>({
     serviceName: "",
+    username: "",
     password: "",
+    serviceUrl: "",
     notes: ""
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +41,9 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
   const handleReset = () => {
     setFormData({
       serviceName: "",
+      username: "",
       password: "",
+      serviceUrl: "",
       notes: ""
     });
   };
@@ -78,6 +84,34 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
           value={formData.serviceName}
           onChange={handleInputChange("serviceName")}
           required
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-group--label" htmlFor="username">
+          {t("username")}
+        </label>
+        <input
+          className="form-input"
+          id="username"
+          type="text"
+          value={formData.username}
+          onChange={handleInputChange("username")}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-group--label" htmlFor="serviceUrl">
+          {t("serviceUrl")}
+        </label>
+        <input
+          className="form-input"
+          id="serviceUrl"
+          type="url"
+          value={formData.serviceUrl}
+          onChange={handleInputChange("serviceUrl")}
+          placeholder="https://"
         />
       </div>
 
