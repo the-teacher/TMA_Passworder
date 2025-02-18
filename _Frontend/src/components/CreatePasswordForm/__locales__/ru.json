@@ -1,22 +1,19 @@
 {
   "CreatePasswordForm": {
     "title": "Новая запись пароля",
-    "form": {
-      "fields": {
-        "serviceName": "Название сервиса",
-        "username": "Имя пользователя",
-        "password": "Пароль",
-        "url": "URL",
-        "notes": "Заметки"
-      },
-      "actions": {
-        "save": "Сохранить",
-        "reset": "Сбросить",
-        "showPassword": "Показать пароль",
-        "hidePassword": "Скрыть пароль",
-        "copyPassword": "Копировать пароль",
-        "generatePassword": "Сгенерировать пароль"
-      }
+
+    "fields": {
+      "serviceName": "Название сервиса",
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "url": "URL",
+      "notes": "Заметки"
+    },
+    "actions": {
+      "showPassword": "Показать пароль",
+      "hidePassword": "Скрыть пароль",
+      "copyPassword": "Копировать пароль",
+      "generatePassword": "Сгенерировать пароль"
     }
   }
 }

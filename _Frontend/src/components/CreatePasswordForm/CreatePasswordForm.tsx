@@ -25,6 +25,7 @@ type CreatePasswordFormProps = {
 
 const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
   const { t } = useTranslation("CreatePasswordForm");
+  const { t: c } = useTranslation("common");
 
   const [formData, setFormData] = useState<CreatePasswordFormData>({
     serviceName: "",
@@ -75,12 +76,12 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
 
   return (
     <>
-      <h2 className="text-center">{t("CreatePasswordForm.title")}</h2>
+      <h2 className="text-center">{t("title")}</h2>
 
-      <form className="password-entry-form" onSubmit={handleSubmit}>
+      <form className="create-password-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-group--label" htmlFor="serviceName">
-            {t("CreatePasswordForm.form.fields.serviceName")}
+            {t("fields.serviceName")}
           </label>
           <input
             className="form-input"
@@ -94,7 +95,7 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
 
         <div className="form-group">
           <label className="form-group--label" htmlFor="username">
-            {t("CreatePasswordForm.form.fields.username")}
+            {t("fields.username")}
           </label>
           <input
             className="form-input"
@@ -108,7 +109,7 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
 
         <div className="form-group">
           <label className="form-group--label" htmlFor="serviceUrl">
-            {t("CreatePasswordForm.form.fields.url")}
+            {t("fields.url")}
           </label>
           <input
             className="form-input"
@@ -122,21 +123,17 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
 
         <div className="form-group">
           <label className="form-group--label" htmlFor="password">
-            {t("CreatePasswordForm.form.fields.password")}
+            {t("fields.password")}
 
             <AppIcon
               size={16}
               type={showPassword ? "eye-off" : "eye"}
               onClick={() => setShowPassword(!showPassword)}
               title={t(
-                showPassword
-                  ? "CreatePasswordForm.form.actions.hidePassword"
-                  : "CreatePasswordForm.form.actions.showPassword"
+                showPassword ? "actions.hidePassword" : "actions.showPassword"
               )}
               alt={t(
-                showPassword
-                  ? "CreatePasswordForm.form.actions.hidePassword"
-                  : "CreatePasswordForm.form.actions.showPassword"
+                showPassword ? "actions.hidePassword" : "actions.showPassword"
               )}
             />
           </label>
@@ -154,11 +151,11 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
               type="button"
               className="btn btn--icon"
               onClick={copyPassword}
-              title={t("CreatePasswordForm.form.actions.copyPassword")}
+              title={t("actions.copyPassword")}
             >
               <img
                 src="/icons/clipboard-check.svg"
-                alt={t("CreatePasswordForm.form.actions.copyPassword")}
+                alt={t("actions.copyPassword")}
               />
             </button>
 
@@ -166,11 +163,11 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
               type="button"
               className="btn btn--icon"
               onClick={generatePassword}
-              title={t("CreatePasswordForm.form.actions.generatePassword")}
+              title={t("actions.generatePassword")}
             >
               <img
                 src="/icons/refresh.svg"
-                alt={t("CreatePasswordForm.form.actions.generatePassword")}
+                alt={t("actions.generatePassword")}
               />
             </button>
           </div>
@@ -178,7 +175,7 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
 
         <div className="form-group">
           <label className="form-group--label" htmlFor="notes">
-            {t("CreatePasswordForm.form.fields.notes")}
+            {t("fields.notes")}
           </label>
           <textarea
             className="form-input"
@@ -191,14 +188,14 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
 
         <div className="form-group--actions">
           <button type="submit" className="btn btn--primary">
-            {t("CreatePasswordForm.form.actions.save")}
+            {c("save")}
           </button>
           <button
             type="button"
             className="btn btn--secondary"
             onClick={handleReset}
           >
-            {t("CreatePasswordForm.form.actions.reset")}
+            {c("reset")}
           </button>
         </div>
       </form>

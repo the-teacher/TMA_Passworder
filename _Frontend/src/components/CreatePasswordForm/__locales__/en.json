@@ -1,22 +1,19 @@
 {
   "CreatePasswordForm": {
     "title": "Create Password Entry",
-    "form": {
-      "fields": {
-        "serviceName": "Service Name",
-        "username": "Username",
-        "password": "Password",
-        "url": "URL",
-        "notes": "Notes"
-      },
-      "actions": {
-        "save": "Save",
-        "reset": "Reset",
-        "showPassword": "Show password",
-        "hidePassword": "Hide password",
-        "copyPassword": "Copy password",
-        "generatePassword": "Generate password"
-      }
+
+    "fields": {
+      "serviceName": "Service Name",
+      "username": "Username",
+      "password": "Password",
+      "url": "URL",
+      "notes": "Notes"
+    },
+    "actions": {
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "copyPassword": "Copy password",
+      "generatePassword": "Generate password"
     }
   }
 }

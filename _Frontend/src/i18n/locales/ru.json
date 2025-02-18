@@ -1,6 +1,5 @@
 {
   "translations": {
-    "CreatePasswordPage.title": "Новая запись пароля",
     "app": {
       "name": "HamsterPass",
       "settings": "Настройки"
@@ -13,8 +12,6 @@
     "url": "URL",
     "notes": "Заметки",
     "actions": {
-      "save": "Сохранить",
-      "reset": "Сбросить",
       "showPassword": "Показать пароль",
       "hidePassword": "Скрыть пароль",
       "copyPassword": "Копировать пароль",
@@ -22,6 +19,8 @@
     }
   },
   "common": {
+    "save": "Сохранить",
+    "reset": "Сбросить",
     "edit": "Редактировать",
     "copy": "Копировать",
     "show": "Показать",

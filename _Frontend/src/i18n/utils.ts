@@ -1,11 +1,18 @@
 import { Resource } from "i18next";
 
+type LocaleObject = {
+  [key: string]: string | LocaleObject;
+};
+
 // Helper to merge nested objects
-const mergeDeep = (target: any, source: any) => {
+const mergeDeep = (
+  target: LocaleObject,
+  source: LocaleObject
+): LocaleObject => {
   for (const key in source) {
     if (typeof source[key] === "object" && !Array.isArray(source[key])) {
       if (!target[key]) Object.assign(target, { [key]: {} });
-      mergeDeep(target[key], source[key]);
+      mergeDeep(target[key] as LocaleObject, source[key] as LocaleObject);
     } else {
       Object.assign(target, { [key]: source[key] });
     }
@@ -36,16 +43,10 @@ export const loadAppLocales = async () => {
         resources[lang] = {};
       }
 
-      // Get namespace from path
-      let namespace = "translations";
-      const componentMatch = path.match(/components\/(.+?)\/__locales__/);
-      if (componentMatch) {
-        namespace = componentMatch[1].toLowerCase();
-      }
+      const moduleData = (module as { default: LocaleObject }).default;
 
-      resources[lang] = mergeDeep(resources[lang], {
-        [namespace]: (module as any).default
-      });
+      // Merge module data with existing resources
+      resources[lang] = mergeDeep(resources[lang], moduleData);
     }
   );
 

@@ -1,6 +1,5 @@
 {
   "translations": {
-    "CreatePasswordPage.title": "Create a Password Entry",
     "app": {
       "name": "HamsterPass",
       "settings": "Settings"
@@ -13,8 +12,6 @@
     "url": "URL",
     "notes": "Notes",
     "actions": {
-      "save": "Save",
-      "reset": "Reset",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
       "copyPassword": "Copy password",
@@ -22,6 +19,8 @@
     }
   },
   "common": {
+    "save": "Save",
+    "reset": "Reset",
     "edit": "Edit",
     "copy": "Copy",
     "show": "Show",
