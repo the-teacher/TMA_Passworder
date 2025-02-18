@@ -2,6 +2,16 @@ import EventEmitter from "@lib/EventEmitter";
 import { EventTypes } from "../types";
 
 describe("EventEmitter", () => {
+  const originalConsoleLog = console.log;
+
+  beforeAll(() => {
+    console.log = jest.fn();
+  });
+
+  afterAll(() => {
+    console.log = originalConsoleLog;
+  });
+
   beforeEach(() => {
     // Clear all event listeners before each test
     const events = Object.keys(EventEmitter) as EventTypes[];
@@ -9,6 +19,7 @@ describe("EventEmitter", () => {
       const mockListener = jest.fn();
       EventEmitter.off(event, mockListener);
     });
+    jest.clearAllMocks();
   });
 
   test("should emit and receive notification events", () => {
