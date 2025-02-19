@@ -1,11 +1,11 @@
 import { Resource } from "i18next";
 
-type LocaleObject = {
+export type LocaleObject = {
   [key: string]: string | LocaleObject;
 };
 
 // Helper to merge nested objects
-const mergeDeep = (
+export const mergeDeep = (
   target: LocaleObject,
   source: LocaleObject
 ): LocaleObject => {
