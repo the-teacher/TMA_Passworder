@@ -1,0 +1,52 @@
+{
+  "CreatePasswordForm": {
+    "title": "Create Password Entry",
+    "fields": {
+      "serviceName": "Service Name",
+      "username": "Username",
+      "password": "Password",
+      "url": "URL",
+      "notes": "Notes"
+    },
+    "actions": {
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "copyPassword": "Copy password",
+      "generatePassword": "Generate password"
+    }
+  },
+  "translations": {
+    "app": {
+      "name": "HamsterPass",
+      "settings": "Settings"
+    }
+  },
+  "passwordEntry": {
+    "serviceName": "Service Name",
+    "username": "Username",
+    "password": "Password",
+    "url": "URL",
+    "notes": "Notes",
+    "actions": {
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "copyPassword": "Copy password",
+      "generatePassword": "Generate password"
+    }
+  },
+  "common": {
+    "save": "Save",
+    "reset": "Reset",
+    "edit": "Edit",
+    "copy": "Copy",
+    "show": "Show",
+    "hide": "Hide"
+  },
+  "footerNavigation": {
+    "home": "Home",
+    "create": "Create",
+    "search": "Search",
+    "favorites": "Favorites",
+    "logout": "Logout"
+  }
+}

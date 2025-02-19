@@ -1,0 +1,52 @@
+{
+  "CreatePasswordForm": {
+    "title": "Новая запись пароля",
+    "fields": {
+      "serviceName": "Название сервиса",
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "url": "URL",
+      "notes": "Заметки"
+    },
+    "actions": {
+      "showPassword": "Показать пароль",
+      "hidePassword": "Скрыть пароль",
+      "copyPassword": "Копировать пароль",
+      "generatePassword": "Сгенерировать пароль"
+    }
+  },
+  "translations": {
+    "app": {
+      "name": "HamsterPass",
+      "settings": "Настройки"
+    }
+  },
+  "passwordEntry": {
+    "serviceName": "Название сервиса",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "url": "URL",
+    "notes": "Заметки",
+    "actions": {
+      "showPassword": "Показать пароль",
+      "hidePassword": "Скрыть пароль",
+      "copyPassword": "Копировать пароль",
+      "generatePassword": "Сгенерировать пароль"
+    }
+  },
+  "common": {
+    "save": "Сохранить",
+    "reset": "Сбросить",
+    "edit": "Редактировать",
+    "copy": "Копировать",
+    "show": "Показать",
+    "hide": "Скрыть"
+  },
+  "footerNavigation": {
+    "home": "Главная",
+    "create": "Создать",
+    "search": "Поиск",
+    "favorites": "Избранное",
+    "logout": "Выход"
+  }
+}
