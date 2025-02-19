@@ -1,24 +1,24 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from "../src/i18n/locales/en.json";
-import ru from "../src/i18n/locales/ru.json";
+import { loadAppLocales } from "../src/i18n/utils";
 
-const ns = Object.keys(en);
-const supportedLngs = ["en", "ru"];
+const DEFAULT_LANGUAGE = "en"; // For Storybook we'll default to English
 
-i18n.use(initReactI18next).init({
-  lng: "en",
-  fallbackLng: "en",
-  interpolation: {
-    escapeValue: false
-  },
-  defaultNS: "translations",
-  ns,
-  supportedLngs,
-  resources: {
-    en,
-    ru
-  }
-});
+const initI18n = async () => {
+  const resources = await loadAppLocales();
+
+  await i18n.use(initReactI18next).init({
+    lng: DEFAULT_LANGUAGE,
+    fallbackLng: DEFAULT_LANGUAGE,
+    interpolation: {
+      escapeValue: false
+    },
+    resources,
+    supportedLngs: ["en", "ru"]
+  });
+};
+
+// Initialize i18n
+initI18n();
 
 export default i18n;
