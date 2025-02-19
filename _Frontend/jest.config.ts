@@ -1,7 +1,7 @@
 export default {
   preset: "ts-jest",
   testEnvironment: "jsdom",
-  setupFiles: ["<rootDir>/test/setupFiles.ts", "<rootDir>/test/mocks/vite.ts"],
+  setupFiles: ["<rootDir>/test/setupFiles.ts"],
   setupFilesAfterEnv: ["<rootDir>/test/setupFilesAfterEnv.ts"],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",

@@ -1,8 +1,9 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "es2020",
+    "module": "NodeNext",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
     "types": ["jest", "@testing-library/jest-dom", "node", "vite/client"],
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "esModuleInterop": true,
