@@ -4,8 +4,8 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 
 // Import base locales
-import enBase from "../src/i18n/__locales__/en.json";
-import ruBase from "../src/i18n/__locales__/ru.json";
+import enBase from "../src/i18n/locales.schema.en.json";
+import ruBase from "../src/i18n/locales.schema.ru.json";
 
 const DEFAULT_LANGUAGE = "en";
 
@@ -17,6 +17,10 @@ const resources: Resources = {
   ru: ruBase
 };
 
+const Namespaces = Object.keys(
+  resources[DEFAULT_LANGUAGE as keyof Resources] || {}
+);
+
 const i18n = i18next.createInstance();
 
 i18n.use(initReactI18next).init({
@@ -24,7 +28,7 @@ i18n.use(initReactI18next).init({
   lng: DEFAULT_LANGUAGE,
   resources,
   defaultNS: "translations",
-  fallbackNS: Object.keys(resources[DEFAULT_LANGUAGE as keyof Resources] || {}),
+  fallbackNS: Namespaces,
   interpolation: {
     escapeValue: false
   }

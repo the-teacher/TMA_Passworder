@@ -78,7 +78,11 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
     <>
       <h2 className="text-center">{t("title")}</h2>
 
-      <form className="create-password-form" onSubmit={handleSubmit}>
+      <form
+        className="create-password-form"
+        onSubmit={handleSubmit}
+        role="create-password-form"
+      >
         <div className="form-group">
           <label className="form-group--label" htmlFor="serviceName">
             {t("fields.serviceName")}

@@ -21,7 +21,9 @@ describe("CreatePasswordForm", () => {
   });
 
   const setup = () => {
-    render(<CreatePasswordForm onSubmit={mockOnSubmit} />);
+    render(<CreatePasswordForm onSubmit={mockOnSubmit} />, {
+      wrapper: TestWrapper
+    });
   };
 
   it("renders all form fields", () => {
@@ -93,7 +95,7 @@ describe("CreatePasswordForm", () => {
       wrapper: TestWrapper
     });
 
-    fireEvent.submit(screen.getByRole("form"));
+    fireEvent.submit(screen.getByRole("create-password-form"));
 
     // Check that required fields are marked as invalid
     expect(screen.getByLabelText("Service Name")).toBeInvalid();

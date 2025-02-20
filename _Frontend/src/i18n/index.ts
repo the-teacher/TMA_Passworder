@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import enSchema from "./locales.schema.en.json";
 import ruSchema from "./locales.schema.ru.json";
 
-const DEFAULT_LANGUAGE = import.meta.env.VITE_DEFAULT_LANGUAGE || "ru";
+const DEFAULT_LANGUAGE = import.meta.env.VITE_DEFAULT_LANGUAGE || "en";
 
 type LocaleSchema = typeof enSchema;
 type Resources = Record<string, LocaleSchema>;
@@ -13,12 +13,16 @@ const resources: Resources = {
   ru: ruSchema
 };
 
+const Namespaces = Object.keys(
+  resources[DEFAULT_LANGUAGE as keyof Resources] || {}
+);
+
 i18n.use(initReactI18next).init({
   fallbackLng: DEFAULT_LANGUAGE,
   lng: DEFAULT_LANGUAGE,
   resources,
   defaultNS: "translations",
-  fallbackNS: Object.keys(resources[DEFAULT_LANGUAGE as keyof Resources] || {}),
+  fallbackNS: Namespaces,
   interpolation: {
     escapeValue: false
   }
