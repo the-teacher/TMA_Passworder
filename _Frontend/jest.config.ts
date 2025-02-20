@@ -1,3 +1,5 @@
+import importMetaTransformer from "./test/mocks/importMetaTransformer";
+
 export default {
   preset: "ts-jest",
   testEnvironment: "jsdom",
@@ -20,7 +22,13 @@ export default {
       "ts-jest",
       {
         tsconfig: "tsconfig.test.json",
-        useESM: true
+        useESM: true,
+        diagnostics: {
+          ignoreCodes: [1343]
+        },
+        astTransformers: {
+          before: [importMetaTransformer]
+        }
       }
     ]
   },
