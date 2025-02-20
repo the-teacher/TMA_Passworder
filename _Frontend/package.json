@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite dev --host 0.0.0.0 --port 4000",
+    "locales:generate": "node src/i18n/generateLocaleSchema.js ./src ./src/i18n/",
+    "start": "yarn locales:generate && vite dev --host 0.0.0.0 --port 4000",
     "build:clean": "rm -rf dist",
     "build": "yarn build:clean && yarn tsc -b && vite build",
     "lint": "eslint .",
