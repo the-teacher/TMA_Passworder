@@ -15,10 +15,11 @@ export default {
     "^@ui-kit/(.*)$": "<rootDir>/src/ui-kit/$1",
     "^@mocks/(.*)$": "<rootDir>/src/mocks/$1",
     "^@story/(.*)$": "<rootDir>.storybook/$1",
-    "^@lib/(.*)$": "<rootDir>/src/lib/$1"
+    "^@lib/(.*)$": "<rootDir>/src/lib/$1",
+    "^(\\.{1,2}/.*)\\.js$": "$1"
   },
   transform: {
-    "^.+\\.tsx?$": [
+    "^.+\\.(t|j)sx?$": [
       "ts-jest",
       {
         tsconfig: "tsconfig.test.json",
@@ -32,6 +33,7 @@ export default {
       }
     ]
   },
+  extensionsToTreatAsEsm: [".ts", ".tsx", ".mts", ".cts"],
   testMatch: [
     "**/__tests__/**/*.test.[jt]s?(x)",
     "**/?(*.)+(spec|test).[jt]s?(x)"

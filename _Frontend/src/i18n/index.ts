@@ -1,28 +1,24 @@
-import i18n from "i18next";
+import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
-import enSchema from "./locales.schema.en.json";
-import ruSchema from "./locales.schema.ru.json";
+
+// Import base locales
+import enBase from "./locales.schema.en.json";
+import ruBase from "./locales.schema.ru.json";
 
 const DEFAULT_LANGUAGE = import.meta.env.VITE_DEFAULT_LANGUAGE || "en";
 
-type LocaleSchema = typeof enSchema;
-type Resources = Record<string, LocaleSchema>;
-
-const resources: Resources = {
-  en: enSchema,
-  ru: ruSchema
+const resources = {
+  en: enBase,
+  ru: ruBase
 };
 
-const Namespaces = Object.keys(
-  resources[DEFAULT_LANGUAGE as keyof Resources] || {}
-);
+const i18n = i18next.createInstance();
 
 i18n.use(initReactI18next).init({
-  fallbackLng: DEFAULT_LANGUAGE,
+  fallbackLng: "en",
   lng: DEFAULT_LANGUAGE,
   resources,
   defaultNS: "translations",
-  fallbackNS: Namespaces,
   interpolation: {
     escapeValue: false
   }
