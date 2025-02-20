@@ -4,8 +4,8 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 
 // Import base locales
-import enBase from "../src/i18n/locales.schema.en.json";
-import ruBase from "../src/i18n/locales.schema.ru.json";
+import enBase from "@i18n/locales.schema.en.json";
+import ruBase from "@i18n/locales.schema.ru.json";
 
 const DEFAULT_LANGUAGE = "en";
 

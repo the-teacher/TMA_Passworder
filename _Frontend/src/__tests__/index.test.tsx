@@ -12,7 +12,7 @@ jest.mock("../App", () => ({
   default: () => null
 }));
 
-jest.mock("../i18n", () => ({
+jest.mock("@i18n/index", () => ({
   __esModule: true,
   default: {}
 }));

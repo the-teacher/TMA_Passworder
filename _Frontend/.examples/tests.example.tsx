@@ -56,7 +56,6 @@ describe("HolyGrailLayout", () => {
   });
 });
 
-
 // components/HolyGrailLayout/__tests__/HolyGrailLayoutWithParams.test.tsx
 import { render, screen } from "@testing-library/react";
 import HolyGrailLayoutWithParams from "@components/HolyGrailLayout/HolyGrailLayoutWithParams";
@@ -128,7 +127,6 @@ describe("HolyGrailLayoutWithParams", () => {
   });
 });
 
-
 // components/PasswordEntryList/__tests__/PasswordEntryList.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -165,7 +163,6 @@ describe("PasswordEntryList", () => {
   });
 });
 
-
 // components/LoadingFallback/__tests__/LoadingFallback.test.tsx
 import { render, screen } from "@testing-library/react";
 import LoadingFallback from "@components/LoadingFallback";
@@ -186,7 +183,6 @@ describe("LoadingFallback", () => {
     expect(textDiv).toHaveClass("loading-fallback--text");
   });
 });
-
 
 // components/FooterNavigation/__tests__/FooterNavigation.test.tsx
 import "@testing-library/jest-dom";
@@ -257,7 +253,6 @@ describe("FooterNavigation", () => {
   });
 });
 
-
 // components/AppIcon/__tests__/AppIcon.test.tsx
 import { render, screen } from "@testing-library/react";
 import AppIcon, { IconType, IconSize } from "@components/AppIcon";
@@ -298,7 +293,6 @@ describe("AppIcon", () => {
   });
 });
 
-
 // components/PasswordEntry/__tests__/PasswordEntry.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -332,7 +326,6 @@ describe("PasswordEntry", () => {
     );
   });
 });
-
 
 // components/CreatePasswordForm/__tests__/CreatePasswordForm.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -495,7 +488,6 @@ describe("CreatePasswordForm", () => {
   });
 });
 
-
 // components/Header/__tests__/Header.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -548,7 +540,6 @@ describe("Header", () => {
   });
 });
 
-
 // components/AppLayout/__tests__/AppLayout.test.tsx
 import { render, screen } from "@testing-library/react";
 import AppLayout from "@components/AppLayout";
@@ -585,7 +576,6 @@ describe("AppLayout", () => {
     expect(screen.getByText("Mock Footer")).toBeInTheDocument();
   });
 });
-
 
 // __tests__/App.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -634,7 +624,6 @@ describe("App", () => {
   });
 });
 
-
 // __tests__/index.test.tsx
 import { createRoot } from "react-dom/client";
 
@@ -650,7 +639,7 @@ jest.mock("../App", () => ({
   default: () => null
 }));
 
-jest.mock("../i18n", () => ({
+jest.mock("@i18n", () => ({
   __esModule: true,
   default: {}
 }));
@@ -701,7 +690,6 @@ describe("Index", () => {
     expect(createRoot).not.toHaveBeenCalled();
   });
 });
-
 
 // pages/ShowPage/__tests__/ShowPage.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -800,7 +788,6 @@ describe("ShowPage", () => {
   });
 });
 
-
 // pages/LogoutPage/__tests__/LogoutPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import LogoutPage from "@pages/LogoutPage";
@@ -823,7 +810,6 @@ describe("LogoutPage", () => {
   });
 });
 
-
 // pages/SearchPage/__tests__/SearchPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import SearchPage from "@pages/SearchPage";
@@ -843,7 +829,6 @@ describe("SearchPage", () => {
     expect(screen.getByText("Search for content here.")).toBeInTheDocument();
   });
 });
-
 
 // pages/SettingsPage/__tests__/SettingsPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -866,7 +851,6 @@ describe("SettingsPage", () => {
     ).toBeInTheDocument();
   });
 });
-
 
 // pages/IndexPage/__tests__/IndexPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -895,7 +879,6 @@ describe("IndexPage", () => {
     ).toBeInTheDocument();
   });
 });
-
 
 // pages/FavoritesPage/__tests__/FavoritesPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -926,7 +909,6 @@ describe("FavoritesPage", () => {
     expect(layoutContent).toHaveTextContent("View your favorite items here.");
   });
 });
-
 
 // pages/AboutPage/__tests__/AboutPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -959,7 +941,6 @@ describe("AboutPage", () => {
     );
   });
 });
-
 
 // pages/CreatePasswordPage/__tests__/CreatePasswordPage.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -1018,7 +999,6 @@ describe("CreatePasswordPage", () => {
     });
   });
 });
-
 
 // routes/__tests__/routes.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -1153,7 +1133,6 @@ describe("AppRoutes", () => {
   });
 });
 
-
 // routes/__tests__/index.test.tsx
 import AppRoutes from "../routes";
 import RoutesExport from "../index";
@@ -1172,5 +1151,3 @@ describe("Routes index", () => {
     expect(RoutesExport).toBe("mocked-routes");
   });
 });
-
-

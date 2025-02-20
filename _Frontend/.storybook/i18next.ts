@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import enSchema from "../src/i18n/locales.schema.en.json";
-import ruSchema from "../src/i18n/locales.schema.ru.json";
+import enSchema from "@i18n/locales.schema.en.json";
+import ruSchema from "@i18n/locales.schema.ru.json";
 
 const DEFAULT_LANGUAGE = import.meta.env.VITE_DEFAULT_LANGUAGE || "en";
 

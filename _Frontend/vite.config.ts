@@ -47,6 +47,10 @@ export default defineConfig({
       {
         find: "@lib",
         replacement: path.resolve(__dirname, "src/lib")
+      },
+      {
+        find: "@i18n",
+        replacement: path.resolve(__dirname, "src/i18n")
       }
     ]
   }

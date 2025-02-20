@@ -16,6 +16,7 @@ export default {
     "^@mocks/(.*)$": "<rootDir>/src/mocks/$1",
     "^@story/(.*)$": "<rootDir>.storybook/$1",
     "^@lib/(.*)$": "<rootDir>/src/lib/$1",
+    "^@i18n/(.*)$": "<rootDir>/src/i18n/$1",
     "^(\\.{1,2}/.*)\\.js$": "$1"
   },
   transform: {
