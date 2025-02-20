@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import CreatePasswordForm from "@components/CreatePasswordForm";
+import { TestWrapper } from "@test/testUtils";
 
 describe("CreatePasswordForm", () => {
   const mockOnSubmit = jest.fn();
@@ -88,15 +89,16 @@ describe("CreatePasswordForm", () => {
   });
 
   it("validates required fields", () => {
-    setup();
-    const submitButton = screen.getByRole("button", { name: /save/i });
+    render(<CreatePasswordForm onSubmit={mockOnSubmit} />, {
+      wrapper: TestWrapper
+    });
 
-    fireEvent.click(submitButton);
+    fireEvent.submit(screen.getByRole("form"));
 
     // Check that required fields are marked as invalid
-    expect(screen.getByLabelText(/service name/i)).toBeInvalid();
-    expect(screen.getByLabelText(/username/i)).toBeInvalid();
-    expect(screen.getByLabelText(/password/i)).toBeInvalid();
+    expect(screen.getByLabelText("Service Name")).toBeInvalid();
+    expect(screen.getByLabelText("Username")).toBeInvalid();
+    expect(screen.getByLabelText("Password")).toBeInvalid();
 
     // Service URL and notes are optional
     expect(screen.getByLabelText(/^url$/i)).not.toBeInvalid();

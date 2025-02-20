@@ -2,35 +2,34 @@ import "@testing-library/jest-dom";
 import "@testing-library/dom";
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from "../src/i18n/locales/en.json";
-import ru from "../src/i18n/locales/ru.json";
 
-// Импортируем локали компонентов
-import enCreatePasswordForm from "../src/components/CreatePasswordForm/__locales__/en.json";
-import ruCreatePasswordForm from "../src/components/CreatePasswordForm/__locales__/ru.json";
+// Import base locales
+import enBase from "../src/i18n/__locales__/en.json";
+import ruBase from "../src/i18n/__locales__/ru.json";
 
-const defaultLanguage = "en";
+const DEFAULT_LANGUAGE = "en";
+
+type LocaleSchema = typeof enBase;
+type Resources = Record<string, LocaleSchema>;
+
+const resources: Resources = {
+  en: enBase,
+  ru: ruBase
+};
 
 const i18n = i18next.createInstance();
 
 i18n.use(initReactI18next).init({
-  lng: defaultLanguage,
-  fallbackLng: defaultLanguage,
-  ns: ["translations", "CreatePasswordForm", "common"],
+  fallbackLng: DEFAULT_LANGUAGE,
+  lng: DEFAULT_LANGUAGE,
+  resources,
   defaultNS: "translations",
-  resources: {
-    en: {
-      ...en,
-      ...enCreatePasswordForm
-    },
-    ru: {
-      ...ru,
-      ...ruCreatePasswordForm
-    }
-  },
+  fallbackNS: Object.keys(resources[DEFAULT_LANGUAGE as keyof Resources] || {}),
   interpolation: {
     escapeValue: false
   }
 });
+
+i18n.languages = ["en", "ru"];
 
 export default i18n;
