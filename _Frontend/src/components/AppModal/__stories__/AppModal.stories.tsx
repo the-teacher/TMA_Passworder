@@ -8,7 +8,7 @@ import "@ui-kit/spaces.scss";
 import React from "react";
 
 const meta: Meta = {
-  title: "3-Components/5-AppModal",
+  title: "3-Components/6-AppModal",
   parameters: {
     docs: { disable: true }
   }
