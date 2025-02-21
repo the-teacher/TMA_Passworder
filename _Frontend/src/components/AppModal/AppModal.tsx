@@ -1,4 +1,5 @@
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import "./styles.scss";
 import AppIcon from "@components/AppIcon";
 
@@ -29,18 +30,22 @@ type ModalContentProps = {
   close: () => void;
 };
 
-const ModalHeader = ({ title, close }: ModalHeaderProps) => (
-  <div className="app-modal--header">
-    {title && <h2 className="app-modal--title">{title}</h2>}
-    <button
-      className="btn btn--icon app-modal--close"
-      onClick={close}
-      aria-label="Close modal"
-    >
-      <AppIcon size={24} type="square-x" alt="Close" />
-    </button>
-  </div>
-);
+const ModalHeader = ({ title, close }: ModalHeaderProps) => {
+  const { t } = useTranslation("AppModal");
+
+  return (
+    <div className="app-modal--header">
+      {title && <h2 className="app-modal--title">{title}</h2>}
+      <button
+        className="btn btn--icon app-modal--close"
+        onClick={close}
+        aria-label={t("actions.close")}
+      >
+        <AppIcon size={24} type="square-x" alt={t("actions.close")} />
+      </button>
+    </div>
+  );
+};
 
 const ModalBody = ({ children }: ModalBodyProps) => (
   <div className="app-modal--body">{children}</div>

@@ -166,6 +166,434 @@ describe("PasswordEntryList", () => {
 });
 
 
+// components/AppModal/__tests__/useAppModal.test.tsx
+import { renderHook, act } from "@testing-library/react";
+import { useAppModal } from "../hooks/useAppModal";
+
+describe("useAppModal", () => {
+  const createPortalRoot = (id: string = "app-modal-root") => {
+    const element = document.createElement("div");
+    element.setAttribute("id", id);
+    document.body.appendChild(element);
+    return element;
+  };
+
+  const cleanupPortals = () => {
+    document
+      .querySelectorAll("[id$=modal-root], [id=custom-container]")
+      .forEach((el) => {
+        if (el.parentNode) {
+          el.parentNode.removeChild(el);
+        }
+      });
+  };
+
+  beforeEach(() => {
+    cleanupPortals(); // Ensure clean state
+    createPortalRoot(); // Just call without assignment
+  });
+
+  afterEach(() => {
+    cleanupPortals();
+  });
+
+  const defaultOptions = {
+    title: "Test Modal",
+    children: <div>Modal Content</div>
+  };
+
+  it("returns open, close and modal functions", () => {
+    const { result } = renderHook(() => useAppModal(defaultOptions));
+
+    expect(result.current).toHaveProperty("open");
+    expect(result.current).toHaveProperty("close");
+    expect(result.current).toHaveProperty("modal");
+  });
+
+  it("initially renders with modal closed", () => {
+    const { result } = renderHook(() => useAppModal(defaultOptions));
+    expect(result.current.modal).toBeNull();
+  });
+
+  it("opens and closes modal", () => {
+    const { result } = renderHook(() => useAppModal(defaultOptions));
+
+    act(() => {
+      result.current.open();
+    });
+    expect(result.current.modal).not.toBeNull();
+
+    act(() => {
+      result.current.close();
+    });
+    expect(result.current.modal).toBeNull();
+  });
+
+  it("uses custom container id", () => {
+    cleanupPortals(); // Clean before test
+    const customId = "custom-modal-root";
+    renderHook(() => useAppModal({ ...defaultOptions, containerId: customId }));
+
+    expect(document.getElementById(customId)).toBeInTheDocument();
+  });
+
+  it("uses custom container element", () => {
+    cleanupPortals(); // Clean before test
+    const customElement = document.createElement("div");
+    customElement.setAttribute("id", "custom-container");
+    document.body.appendChild(customElement);
+
+    renderHook(() =>
+      useAppModal({ ...defaultOptions, containerElement: customElement })
+    );
+
+    // Verify that default container was not created
+    const defaultContainer = document.getElementById("app-modal-root");
+    expect(defaultContainer).not.toBeInTheDocument();
+  });
+
+  it("supports render function as children", () => {
+    const { result } = renderHook(() =>
+      useAppModal({
+        title: "Test",
+        children: ({ close }) => (
+          <button onClick={close}>Close from children</button>
+        )
+      })
+    );
+
+    act(() => {
+      result.current.open();
+    });
+    expect(result.current.modal).not.toBeNull();
+  });
+});
+
+
+// components/AppModal/__tests__/useBodyScrollLock.test.tsx
+import { renderHook } from "@testing-library/react";
+import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
+
+describe("useBodyScrollLock", () => {
+  const originalStyle = document.body.style.overflow;
+
+  afterEach(() => {
+    document.body.style.overflow = originalStyle;
+  });
+
+  it("locks body scroll when isLocked is true", () => {
+    renderHook(() => useBodyScrollLock(true));
+    expect(document.body.style.overflow).toBe("hidden");
+  });
+
+  it("unlocks body scroll when isLocked is false", () => {
+    renderHook(() => useBodyScrollLock(false));
+    expect(document.body.style.overflow).toBe("auto");
+  });
+
+  it("restores original overflow on unmount", () => {
+    const { unmount } = renderHook(() => useBodyScrollLock(true));
+    expect(document.body.style.overflow).toBe("hidden");
+
+    unmount();
+    expect(document.body.style.overflow).toBe("auto");
+  });
+
+  it("handles multiple instances correctly", () => {
+    const { unmount: unmount1 } = renderHook(() => useBodyScrollLock(true));
+    const { unmount: unmount2 } = renderHook(() => useBodyScrollLock(true));
+
+    expect(document.body.style.overflow).toBe("hidden");
+
+    unmount1();
+    expect(document.body.style.overflow).toBe("auto");
+
+    unmount2();
+    expect(document.body.style.overflow).toBe("auto");
+  });
+});
+
+
+// components/AppModal/__tests__/useAppModalRoot.test.tsx
+import { renderHook } from "@testing-library/react";
+import { useAppModalRoot } from "../hooks/useAppModalRoot";
+
+describe("useAppModalRoot", () => {
+  const cleanupElements = () => {
+    document.querySelectorAll("[id$=modal-root]").forEach((el) => {
+      el.parentNode?.removeChild(el);
+    });
+  };
+
+  beforeEach(() => {
+    cleanupElements();
+  });
+
+  afterEach(() => {
+    cleanupElements();
+  });
+
+  it("creates default modal root element", () => {
+    const { result } = renderHook(() => useAppModalRoot());
+
+    expect(result.current).toBeInstanceOf(HTMLElement);
+    expect(result.current?.id).toBe("app-modal-root");
+    expect(document.getElementById("app-modal-root")).toBe(result.current);
+  });
+
+  it("uses custom container id", () => {
+    const customId = "custom-modal-root";
+    const { result } = renderHook(() =>
+      useAppModalRoot({ containerId: customId })
+    );
+
+    expect(result.current?.id).toBe(customId);
+    expect(document.getElementById(customId)).toBe(result.current);
+  });
+
+  it("uses provided container element", () => {
+    const customElement = document.createElement("div");
+    customElement.id = "custom-element";
+    document.body.appendChild(customElement);
+
+    const { result } = renderHook(() =>
+      useAppModalRoot({ containerElement: customElement })
+    );
+
+    expect(result.current).toBe(customElement);
+    expect(document.getElementById("app-modal-root")).not.toBeInTheDocument();
+
+    document.body.removeChild(customElement);
+  });
+
+  it("removes created element on unmount", () => {
+    const { unmount } = renderHook(() => useAppModalRoot());
+
+    expect(document.getElementById("app-modal-root")).toBeInTheDocument();
+
+    unmount();
+    expect(document.getElementById("app-modal-root")).not.toBeInTheDocument();
+  });
+
+  it("doesn't remove provided container element on unmount", () => {
+    const customElement = document.createElement("div");
+    customElement.id = "custom-element";
+    document.body.appendChild(customElement);
+
+    const { unmount } = renderHook(() =>
+      useAppModalRoot({ containerElement: customElement })
+    );
+
+    unmount();
+    expect(customElement).toBeInTheDocument();
+
+    document.body.removeChild(customElement);
+  });
+
+  it("reuses existing element with same id", () => {
+    const existingElement = document.createElement("div");
+    existingElement.id = "app-modal-root";
+    document.body.appendChild(existingElement);
+
+    const { result } = renderHook(() => useAppModalRoot());
+
+    expect(result.current).toBe(existingElement);
+    expect(document.querySelectorAll("#app-modal-root")).toHaveLength(1);
+  });
+});
+
+
+// components/AppModal/__tests__/AppModal.test.tsx
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import { AppModal } from "../AppModal";
+
+describe("AppModal", () => {
+  const mockClose = jest.fn();
+  let portalRoot: HTMLElement;
+  let defaultProps: {
+    title: string;
+    children: React.ReactNode;
+    close: () => void;
+    portalElement: HTMLElement;
+  };
+
+  beforeEach(() => {
+    // Create portal root element and add to body
+    portalRoot = document.createElement("div");
+    portalRoot.setAttribute("id", "portal-root");
+    document.body.appendChild(portalRoot);
+
+    defaultProps = {
+      title: "Test Modal",
+      children: <div>Modal Content</div>,
+      close: mockClose,
+      portalElement: portalRoot
+    };
+
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    cleanup(); // Cleanup after each test
+    if (portalRoot.parentNode) {
+      portalRoot.parentNode.removeChild(portalRoot);
+    }
+  });
+
+  const renderModal = (props = {}) => {
+    cleanup(); // Ensure clean DOM before each render
+    return render(<AppModal {...defaultProps} {...props} />);
+  };
+
+  it("renders modal with title and content", () => {
+    renderModal();
+
+    expect(
+      screen.getByRole("heading", { name: "Test Modal" })
+    ).toBeInTheDocument();
+    expect(screen.getByText("Modal Content")).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("renders modal without title", () => {
+    renderModal({ title: undefined });
+
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+    expect(screen.getByText("Modal Content")).toBeInTheDocument();
+  });
+
+  it("closes modal when clicking close button", () => {
+    renderModal();
+
+    const closeButton = screen.getByRole("button", { name: /close modal/i });
+    fireEvent.click(closeButton);
+
+    expect(mockClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("closes modal when clicking overlay", () => {
+    renderModal();
+
+    const overlay = screen.getByTestId("modal-overlay");
+    fireEvent.click(overlay);
+
+    expect(mockClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("doesn't close modal when clicking content", () => {
+    renderModal();
+
+    const content = screen.getByText("Modal Content");
+    fireEvent.click(content);
+
+    expect(mockClose).not.toHaveBeenCalled();
+  });
+
+  it("renders with different sizes", () => {
+    const sizes: Array<"small" | "medium" | "large"> = [
+      "small",
+      "medium",
+      "large"
+    ];
+
+    sizes.forEach((size) => {
+      cleanup(); // Cleanup before each iteration
+      renderModal({ size });
+
+      const modalContent = screen.getByTestId("modal-content");
+      expect(modalContent).toHaveClass(
+        `app-modal--content`,
+        `app-modal--${size}`
+      );
+    });
+  });
+
+  it("warns and returns null when portalElement is not provided", () => {
+    const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+
+    const { container } = renderModal({ portalElement: null });
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "AppModal: No portal element found, rendering inline"
+    );
+    expect(container.firstChild).toBeNull();
+
+    consoleSpy.mockRestore();
+  });
+
+  it("applies correct CSS classes", () => {
+    renderModal();
+
+    expect(screen.getByRole("dialog")).toHaveClass("app-modal");
+    expect(screen.getByRole("heading")).toHaveClass("app-modal--title");
+    expect(screen.getByRole("button", { name: /close modal/i })).toHaveClass(
+      "btn",
+      "btn--icon",
+      "app-modal--close"
+    );
+  });
+});
+
+
+// components/AppModal/__tests__/useEscapeKey.test.tsx
+import { renderHook } from "@testing-library/react";
+import { useEscapeKey } from "../hooks/useEscapeKey";
+
+describe("useEscapeKey", () => {
+  const mockCallback = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("adds event listener when active", () => {
+    const addEventListenerSpy = jest.spyOn(document, "addEventListener");
+    renderHook(() => useEscapeKey(mockCallback, true));
+
+    expect(addEventListenerSpy).toHaveBeenCalledWith(
+      "keydown",
+      expect.any(Function)
+    );
+  });
+
+  it("removes event listener when inactive", () => {
+    const removeEventListenerSpy = jest.spyOn(document, "removeEventListener");
+    const { unmount } = renderHook(() => useEscapeKey(mockCallback, true));
+
+    unmount();
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      "keydown",
+      expect.any(Function)
+    );
+  });
+
+  it("calls callback on Escape key press", () => {
+    renderHook(() => useEscapeKey(mockCallback, true));
+
+    const escapeEvent = new KeyboardEvent("keydown", { key: "Escape" });
+    document.dispatchEvent(escapeEvent);
+
+    expect(mockCallback).toHaveBeenCalled();
+  });
+
+  it("doesn't call callback on other key press", () => {
+    renderHook(() => useEscapeKey(mockCallback, true));
+
+    const enterEvent = new KeyboardEvent("keydown", { key: "Enter" });
+    document.dispatchEvent(enterEvent);
+
+    expect(mockCallback).not.toHaveBeenCalled();
+  });
+
+  it("doesn't add listener when inactive", () => {
+    const addEventListenerSpy = jest.spyOn(document, "addEventListener");
+    renderHook(() => useEscapeKey(mockCallback, false));
+
+    expect(addEventListenerSpy).not.toHaveBeenCalled();
+  });
+});
+
+
 // components/LoadingFallback/__tests__/LoadingFallback.test.tsx
 import { render, screen } from "@testing-library/react";
 import LoadingFallback from "@components/LoadingFallback";

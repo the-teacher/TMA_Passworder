@@ -20,6 +20,23 @@
         ├── __tests__
             └── AppLayout.test.tsx
         └── index.ts
+    ├── AppModal
+        ├── AppModal.tsx
+        ├── __stories__
+            └── AppModal.stories.tsx
+        ├── __tests__
+            ├── AppModal.test.tsx
+            ├── useAppModal.test.tsx
+            ├── useAppModalRoot.test.tsx
+            ├── useBodyScrollLock.test.tsx
+            └── useEscapeKey.test.tsx
+        ├── hooks
+            ├── useAppModal.tsx
+            ├── useAppModalRoot.ts
+            ├── useBodyScrollLock.ts
+            └── useEscapeKey.ts
+        ├── index.ts
+        └── styles.scss
     ├── CreatePasswordForm
         ├── CreatePasswordForm.tsx
         ├── __locales__
