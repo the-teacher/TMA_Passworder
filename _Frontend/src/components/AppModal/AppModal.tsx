@@ -2,9 +2,13 @@ import { createPortal } from "react-dom";
 import "./styles.scss";
 import AppIcon from "@components/AppIcon";
 
+type ModalRenderProps = {
+  close: () => void;
+};
+
 type AppModalProps = {
   title?: string;
-  children: React.ReactNode;
+  children: React.ReactNode | ((props: ModalRenderProps) => React.ReactNode);
   size?: "small" | "medium" | "large";
   close: () => void;
   portalElement?: HTMLElement | null;
@@ -65,10 +69,13 @@ export const AppModal = ({
     return null;
   }
 
+  const modalContent =
+    typeof children === "function" ? children({ close }) : children;
+
   const modal = (
     <ModalContent size={size} close={close}>
       <ModalHeader title={title} close={close} />
-      <ModalBody>{children}</ModalBody>
+      <ModalBody>{modalContent}</ModalBody>
     </ModalContent>
   );
 

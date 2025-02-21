@@ -48,24 +48,36 @@ const SizesExample = () => {
   const smallModal = useAppModal({
     title: "Small Modal",
     size: "small",
-    children: <p>This is a small modal with minimal content.</p>
+    children: ({ close }) => (
+      <div>
+        <p>This is a small modal with minimal content.</p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
+      </div>
+    )
   });
 
   const mediumModal = useAppModal({
     title: "Medium Modal",
     size: "medium",
-    children: (
-      <p>
-        This is a medium modal (default size) with a moderate amount of content.
-        It's suitable for most use cases.
-      </p>
+    children: ({ close }) => (
+      <div>
+        <p>
+          This is a medium modal (default size) with a moderate amount of
+          content. It's suitable for most use cases.
+        </p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
+      </div>
     )
   });
 
   const largeModal = useAppModal({
     title: "Large Modal",
     size: "large",
-    children: (
+    children: ({ close }) => (
       <div>
         <p>This is a large modal suitable for complex content.</p>
         <p>
@@ -76,6 +88,9 @@ const SizesExample = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
       </div>
     )
   });
@@ -211,10 +226,13 @@ const CustomContainerExample = () => {
     title: "Custom Container Modal",
     size: "medium",
     containerElement: containerRef.current ?? undefined,
-    children: (
+    children: ({ close }) => (
       <div>
         <p>This modal is rendered in a custom container.</p>
         <p>Check the DOM to see that it's not in the default root.</p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
       </div>
     )
   });
@@ -250,9 +268,12 @@ const CustomIdExample = () => {
   const { open: openFirst, modal: firstModal } = useAppModal({
     title: "First Modal",
     containerId: "first-modal-root",
-    children: (
+    children: ({ close }) => (
       <div>
         <p>This modal is rendered in container with ID: first-modal-root</p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
       </div>
     )
   });
@@ -260,9 +281,12 @@ const CustomIdExample = () => {
   const { open: openSecond, modal: secondModal } = useAppModal({
     title: "Second Modal",
     containerId: "second-modal-root",
-    children: (
+    children: ({ close }) => (
       <div>
         <p>This modal is rendered in container with ID: second-modal-root</p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
       </div>
     )
   });
@@ -299,14 +323,28 @@ const MultipleContainersExample = () => {
   // Default container
   const defaultModal = useAppModal({
     title: "Default Container Modal",
-    children: <p>This modal uses the default app-modal-root container</p>
+    children: ({ close }) => (
+      <div>
+        <p>This modal uses the default app-modal-root container</p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
+      </div>
+    )
   });
 
   // Custom ID container
   const customIdModal = useAppModal({
     title: "Custom ID Modal",
     containerId: "custom-modal-root",
-    children: <p>This modal uses a container with ID: custom-modal-root</p>
+    children: ({ close }) => (
+      <div>
+        <p>This modal uses a container with ID: custom-modal-root</p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
+      </div>
+    )
   });
 
   // Custom element container
@@ -314,8 +352,13 @@ const MultipleContainersExample = () => {
   const customElementModal = useAppModal({
     title: "Custom Element Modal",
     containerElement: containerRef.current ?? undefined,
-    children: (
-      <p>This modal is rendered in the custom element container below</p>
+    children: ({ close }) => (
+      <div>
+        <p>This modal is rendered in the custom element container below</p>
+        <button className="btn btn--secondary mt16" onClick={close}>
+          Close Modal
+        </button>
+      </div>
     )
   });
 
