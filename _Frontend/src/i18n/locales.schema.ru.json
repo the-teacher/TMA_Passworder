@@ -1,4 +1,9 @@
 {
+  "AppModal": {
+    "actions": {
+      "close": "Закрыть окно"
+    }
+  },
   "CreatePasswordForm": {
     "title": "Новая запись пароля",
     "fields": {

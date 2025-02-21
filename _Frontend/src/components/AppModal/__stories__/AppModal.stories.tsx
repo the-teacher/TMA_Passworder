@@ -6,6 +6,7 @@ import "@ui-kit/form-groups.scss";
 import "@ui-kit/info-blocks.scss";
 import "@ui-kit/spaces.scss";
 import React, { useState } from "react";
+import i18n from "@story/i18next";
 
 const meta: Meta = {
   title: "3-Components/6-AppModal",
@@ -17,7 +18,7 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-// Basic Modal Example
+// Basic Modal Example with English locale
 const BasicExample = () => {
   const { open, modal } = useAppModal({
     title: "Basic Modal",
@@ -39,8 +40,40 @@ const BasicExample = () => {
   );
 };
 
-export const BasicAppModal: Story = {
-  render: () => <BasicExample />
+export const English: Story = {
+  render: () => <BasicExample />,
+  play: async () => {
+    await i18n.changeLanguage("en");
+  }
+};
+
+// Basic Modal Example with Russian locale
+const RussianExample = () => {
+  const { open, modal } = useAppModal({
+    title: "Базовое модальное окно",
+    children: (
+      <div>
+        <p>Это базовое модальное окно с контентом.</p>
+        <p>Нажмите снаружи, нажмите ESC или нажмите X, чтобы закрыть.</p>
+      </div>
+    )
+  });
+
+  return (
+    <div>
+      <button className="btn btn--primary" onClick={open}>
+        Открыть модальное окно
+      </button>
+      {modal}
+    </div>
+  );
+};
+
+export const Russian: Story = {
+  render: () => <RussianExample />,
+  play: async () => {
+    await i18n.changeLanguage("ru");
+  }
 };
 
 // Different Sizes Example

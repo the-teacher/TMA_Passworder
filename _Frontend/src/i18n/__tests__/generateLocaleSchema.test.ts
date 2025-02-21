@@ -88,13 +88,21 @@ describe("generateLocaleSchema", () => {
       "utf-8"
     );
 
-    // Verify console messages
-    expect(mockConsoleLog).toHaveBeenCalledTimes(2);
+    // Verify specific console messages
     expect(mockConsoleLog).toHaveBeenCalledWith(
-      "Generated locale schema for en at /test/dist/locales/locales.schema.en.json"
+      "Starting locale schema generation..."
+    );
+    expect(mockConsoleLog).toHaveBeenCalledWith("Source path: ./src");
+    expect(mockConsoleLog).toHaveBeenCalledWith("Output path: ./dist/locales");
+    expect(mockConsoleLog).toHaveBeenCalledWith("Base directory: /test");
+    expect(mockConsoleLog).toHaveBeenCalledWith(
+      "Successfully generated locale schema for en"
     );
     expect(mockConsoleLog).toHaveBeenCalledWith(
-      "Generated locale schema for ru at /test/dist/locales/locales.schema.ru.json"
+      "Successfully generated locale schema for ru"
+    );
+    expect(mockConsoleLog).toHaveBeenCalledWith(
+      "Locale schema generation completed!"
     );
   });
 
@@ -103,7 +111,9 @@ describe("generateLocaleSchema", () => {
 
     await expect(generateLocaleSchemaTyped()).rejects.toThrow(error);
     expect(mockConsoleError).toHaveBeenCalledWith(error);
-    expect(mockConsoleLog).not.toHaveBeenCalled();
+
+    expect(mockConsoleLog).toHaveBeenCalledWith("Source path: undefined");
+    expect(mockConsoleLog).toHaveBeenCalledWith("Output path: undefined");
   });
 
   it("should handle empty locale files", async () => {

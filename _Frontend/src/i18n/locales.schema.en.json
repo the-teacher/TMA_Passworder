@@ -1,4 +1,9 @@
 {
+  "AppModal": {
+    "actions": {
+      "close": "Close modal"
+    }
+  },
   "CreatePasswordForm": {
     "title": "Create Password Entry",
     "fields": {
