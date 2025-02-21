@@ -5,7 +5,7 @@ import "@ui-kit/buttons.scss";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/info-blocks.scss";
 import "@ui-kit/spaces.scss";
-import React from "react";
+import React, { useState } from "react";
 
 const meta: Meta = {
   title: "3-Components/6-AppModal",
@@ -402,4 +402,221 @@ const MultipleContainersExample = () => {
 
 export const MultipleContainers: Story = {
   render: () => <MultipleContainersExample />
+};
+
+// Alert Example
+const AlertExample = () => {
+  const { open, modal } = useAppModal({
+    title: "Alert",
+    size: "small",
+    children: ({ close }) => (
+      <div className="text-center">
+        <p>This is an alert message!</p>
+        <button className="btn btn--primary mt16" onClick={close}>
+          OK
+        </button>
+      </div>
+    )
+  });
+
+  return (
+    <div>
+      <button className="btn btn--primary" onClick={open}>
+        Show Alert
+      </button>
+      {modal}
+    </div>
+  );
+};
+
+export const Alert: Story = {
+  render: () => <AlertExample />
+};
+
+// Confirm Example
+const ConfirmExample = () => {
+  const { open, close, modal } = useAppModal({
+    title: "Confirm Action",
+    size: "small",
+    children: ({ close }) => (
+      <div>
+        <p>Are you sure you want to perform this action?</p>
+        <div className="form-group--actions mt16">
+          <button className="btn btn--secondary" onClick={close}>
+            Cancel
+          </button>
+          <button
+            className="btn btn--primary"
+            onClick={() => {
+              console.log("Action confirmed!");
+              close();
+            }}
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    )
+  });
+
+  return (
+    <div>
+      <button className="btn btn--primary" onClick={open}>
+        Show Confirm
+      </button>
+      {modal}
+    </div>
+  );
+};
+
+export const Confirm: Story = {
+  render: () => <ConfirmExample />
+};
+
+// Reusable Alert/Confirm Hooks Example
+const useAlert = (message: string) => {
+  return useAppModal({
+    title: "Alert",
+    size: "small",
+    children: ({ close }) => (
+      <div className="text-center">
+        <p>{message}</p>
+        <button className="btn btn--primary mt16" onClick={close}>
+          OK
+        </button>
+      </div>
+    )
+  });
+};
+
+const useConfirm = (message: string, onConfirm: () => void) => {
+  return useAppModal({
+    title: "Confirm",
+    size: "small",
+    children: ({ close }) => (
+      <div>
+        <p>{message}</p>
+        <div className="form-group--actions mt16">
+          <button className="btn btn--secondary" onClick={close}>
+            Cancel
+          </button>
+          <button
+            className="btn btn--primary"
+            onClick={() => {
+              onConfirm();
+              close();
+            }}
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    )
+  });
+};
+
+// Reusable Hooks Usage Example
+const ReusableDialogsExample = () => {
+  const alert = useAlert("This is a reusable alert message!");
+  const confirm = useConfirm("Are you sure?", () => {
+    console.log("Action confirmed!");
+    // Show alert after confirmation
+    alert.open();
+  });
+
+  return (
+    <div style={{ display: "flex", gap: "16px" }}>
+      <button className="btn btn--primary" onClick={alert.open}>
+        Show Alert
+      </button>
+      <button className="btn btn--primary" onClick={confirm.open}>
+        Show Confirm
+      </button>
+      {alert.modal}
+      {confirm.modal}
+    </div>
+  );
+};
+
+export const ReusableDialogs: Story = {
+  render: () => <ReusableDialogsExample />
+};
+
+// Async Confirm Example
+const AsyncConfirmModal = ({
+  onConfirm,
+  onCancel
+}: {
+  onConfirm: () => void;
+  onCancel: () => void;
+}) => {
+  const { open, modal } = useAppModal({
+    title: "Confirm Action",
+    size: "small",
+    children: ({ close }) => (
+      <div>
+        <p>Are you sure you want to proceed?</p>
+        <div className="form-group--actions mt16">
+          <button
+            className="btn btn--secondary"
+            onClick={() => {
+              onCancel();
+              close();
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            className="btn btn--primary"
+            onClick={() => {
+              onConfirm();
+              close();
+            }}
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    )
+  });
+
+  React.useEffect(() => {
+    open();
+  }, [open]);
+
+  return modal;
+};
+
+const AsyncConfirmExample = () => {
+  const [result, setResult] = useState<string>("");
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  const handleConfirm = () => {
+    setResult("Action was confirmed!");
+    setIsConfirming(false);
+  };
+
+  const handleCancel = () => {
+    setResult("Action was cancelled.");
+    setIsConfirming(false);
+  };
+
+  return (
+    <div>
+      <button
+        className="btn btn--primary"
+        onClick={() => setIsConfirming(true)}
+      >
+        Show Async Confirm
+      </button>
+      {isConfirming && (
+        <AsyncConfirmModal onConfirm={handleConfirm} onCancel={handleCancel} />
+      )}
+      {result && <p className="info info--primary mt16">Result: {result}</p>}
+    </div>
+  );
+};
+
+export const AsyncConfirm: Story = {
+  render: () => <AsyncConfirmExample />
 };
