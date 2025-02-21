@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useAppModal } from "@components/AppModal/useAppModal";
+import { useAppModal } from "@components/AppModal/hooks/useAppModal";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/buttons.scss";
 import "@ui-kit/form-groups.scss";

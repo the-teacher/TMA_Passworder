@@ -47,10 +47,17 @@ const ModalBody = ({ children }: ModalBodyProps) => (
 );
 
 const ModalContent = ({ children, size, close }: ModalContentProps) => (
-  <div className="app-modal" onClick={close}>
+  <div
+    className="app-modal"
+    onClick={close}
+    data-testid="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+  >
     <div
       className={`app-modal--content app-modal--${size}`}
       onClick={(e) => e.stopPropagation()}
+      data-testid="modal-content"
     >
       {children}
     </div>

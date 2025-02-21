@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useEscapeKey } from "./useEscapeKey";
 import { useBodyScrollLock } from "./useBodyScrollLock";
 import { useAppModalRoot } from "./useAppModalRoot";
-import { AppModal } from "./AppModal";
+import { AppModal } from "../AppModal";
 
 type AppModalRenderProps = {
   close: () => void;
