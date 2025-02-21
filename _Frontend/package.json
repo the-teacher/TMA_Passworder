@@ -20,7 +20,11 @@
     "storybook": "yarn locales:generate && storybook dev -p 4000 --no-open",
     "story": "yarn storybook",
     "build-storybook": "storybook build",
-    "all-checks": "yarn format && yarn format:check && yarn lint && yarn lint:fix && yarn test"
+    "all-checks": "yarn format && yarn format:check && yarn lint && yarn lint:fix && yarn test",
+    "tests-example": "bash generators/createTestsExample.sh ./src .examples",
+    "stories-example": "bash generators/createStoriesExample.sh ./src .examples",
+    "structure-example": "bash generators/createProjectStructure.sh ./src .examples",
+    "examples": "yarn tests-example && yarn stories-example && yarn structure-example"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",

@@ -36,6 +36,7 @@ export const AllInfoBlocks: Story = {
   )
 };
 
+
 // ui-kit/__stories__/TextStyles.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/text-styles.scss";
@@ -163,6 +164,7 @@ export const AllTextStyles: Story = {
     </div>
   )
 };
+
 
 // ui-kit/__stories__/FormInputs.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -355,6 +357,7 @@ export const FormInputWithIcon: Story = {
   )
 };
 
+
 // ui-kit/__stories__/FormGroups.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/form-groups.scss";
@@ -442,6 +445,7 @@ export const FormGroupExample: Story = {
   )
 };
 
+
 // ui-kit/__stories__/Buttons.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/buttons.scss";
@@ -490,6 +494,7 @@ export const AllButtons: Story = {
     </div>
   )
 };
+
 
 // ui-kit/__stories__/ClosableInfoBlocks.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -576,6 +581,7 @@ export const ClosableInfoBlocks: Story = {
     </div>
   )
 };
+
 
 // components/HolyGrailLayout/__stories__/HolyGrailLayout.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -696,6 +702,7 @@ export const WithBothSidebars: Story = {
   )
 };
 
+
 // components/HolyGrailLayout/__stories__/HolyGrailLayoutWithParams.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { HolyGrailLayoutWithParams } from "@components/HolyGrailLayout";
@@ -804,6 +811,7 @@ export const WithBothSidebars: Story = {
   )
 };
 
+
 // components/PasswordEntryList/__stories__/PasswordEntryList.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -830,6 +838,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
 
 // components/LoadingFallback/__stories__/LoadingFallback.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -860,6 +869,7 @@ export const WithBackground: Story = {
   ]
 };
 
+
 // components/FooterNavigation/__stories__/FooterNavigation.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -885,61 +895,6 @@ type Story = StoryObj<typeof FooterNavigation>;
 
 export const Default: Story = {};
 
-// components/CreatePasswordForm/__stories__/CreatePasswordForm.stories.tsx
-import type { Meta, StoryObj } from "@storybook/react";
-import {
-  withRouter,
-  reactRouterParameters
-} from "storybook-addon-remix-react-router";
-import CreatePasswordForm from "@components/CreatePasswordForm";
-import i18n from "@story/i18next";
-
-const meta: Meta<typeof CreatePasswordForm> = {
-  title: "3-Components/3-CreatePasswordForm",
-  component: CreatePasswordForm,
-  decorators: [withRouter],
-  parameters: {
-    docs: { disable: true },
-    viewport: {
-      defaultViewport: "mobile"
-    },
-    reactRouter: reactRouterParameters({
-      location: {
-        path: "/password-entry"
-      },
-      routing: {
-        path: "/password-entry"
-      }
-    })
-  }
-};
-
-export default meta;
-type Story = StoryObj<typeof CreatePasswordForm>;
-
-// Basic version with default functionality
-export const Default: Story = {
-  args: {
-    onSubmit: (data) => {
-      console.log("Form submitted with data:", data);
-    }
-  },
-  play: async () => {
-    await i18n.changeLanguage("en");
-  }
-};
-
-// Russian version
-export const Russian: Story = {
-  args: {
-    onSubmit: (data) => {
-      console.log("Form submitted with data:", data);
-    }
-  },
-  play: async () => {
-    await i18n.changeLanguage("ru");
-  }
-};
 
 // components/AppIcon/__stories__/AppIcon.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -1001,6 +956,7 @@ export const Default: Story = {
   )
 };
 
+
 // components/PasswordEntry/__stories__/PasswordEntry.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -1040,6 +996,106 @@ export const LongName: Story = {
   }
 };
 
+
+// components/CreatePasswordForm/__stories__/CreatePasswordForm.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import {
+  withRouter,
+  reactRouterParameters
+} from "storybook-addon-remix-react-router";
+import CreatePasswordForm from "@components/CreatePasswordForm";
+import i18n from "@story/i18next";
+import { within } from "@storybook/testing-library";
+import userEvent from "@testing-library/user-event";
+import type { CreatePasswordFormData } from "../types";
+
+const meta: Meta<typeof CreatePasswordForm> = {
+  title: "3-Components/3-CreatePasswordForm",
+  component: CreatePasswordForm,
+  decorators: [withRouter],
+  parameters: {
+    docs: { disable: true },
+    viewport: {
+      defaultViewport: "mobile"
+    },
+    reactRouter: reactRouterParameters({
+      location: {
+        path: "/password-entry"
+      },
+      routing: {
+        path: "/password-entry"
+      }
+    })
+  }
+};
+
+export default meta;
+type Story = StoryObj<typeof CreatePasswordForm>;
+
+// Basic version with default functionality
+export const Default: Story = {
+  args: {
+    onSubmit: (data: CreatePasswordFormData) => {
+      console.log("Form submitted with data:", data);
+    }
+  },
+  play: async () => {
+    await i18n.changeLanguage("en");
+  }
+};
+
+// Pre-filled version
+export const PreFilled: Story = {
+  args: {
+    onSubmit: (data: CreatePasswordFormData) => {
+      console.log("Form submitted with data:", data);
+    }
+  },
+  play: async ({ canvasElement }) => {
+    await i18n.changeLanguage("en");
+    const canvas = within(canvasElement);
+
+    await userEvent.type(canvas.getByLabelText(/service name/i), "GitHub");
+    await userEvent.type(canvas.getByLabelText(/username/i), "johndoe");
+    await userEvent.type(canvas.getByLabelText(/password/i), "SecurePass123!");
+    await userEvent.type(
+      canvas.getByLabelText(/service url/i),
+      "https://github.com"
+    );
+    await userEvent.type(canvas.getByLabelText(/notes/i), "Work account");
+  }
+};
+
+// With validation errors
+export const WithValidationErrors: Story = {
+  args: {
+    onSubmit: (data: CreatePasswordFormData) => {
+      console.log("Form submitted with data:", data);
+    }
+  },
+  play: async ({ canvasElement }) => {
+    await i18n.changeLanguage("en");
+    const canvas = within(canvasElement);
+
+    // Try to submit empty form to trigger validation
+    const submitButton = canvas.getByRole("button", { name: /save/i });
+    await userEvent.click(submitButton);
+  }
+};
+
+// Russian version
+export const Russian: Story = {
+  args: {
+    onSubmit: (data: CreatePasswordFormData) => {
+      console.log("Form submitted with data:", data);
+    }
+  },
+  play: async () => {
+    await i18n.changeLanguage("ru");
+  }
+};
+
+
 // components/Header/__stories__/Header.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
@@ -1078,6 +1134,7 @@ export const WithContent: Story = {
     )
   }
 };
+
 
 // lib/Toastr/__stories__/Toastr.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -1203,3 +1260,5 @@ export const Default: Story = {
     </div>
   )
 };
+
+

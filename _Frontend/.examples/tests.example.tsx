@@ -56,6 +56,7 @@ describe("HolyGrailLayout", () => {
   });
 });
 
+
 // components/HolyGrailLayout/__tests__/HolyGrailLayoutWithParams.test.tsx
 import { render, screen } from "@testing-library/react";
 import HolyGrailLayoutWithParams from "@components/HolyGrailLayout/HolyGrailLayoutWithParams";
@@ -127,6 +128,7 @@ describe("HolyGrailLayoutWithParams", () => {
   });
 });
 
+
 // components/PasswordEntryList/__tests__/PasswordEntryList.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -163,6 +165,7 @@ describe("PasswordEntryList", () => {
   });
 });
 
+
 // components/LoadingFallback/__tests__/LoadingFallback.test.tsx
 import { render, screen } from "@testing-library/react";
 import LoadingFallback from "@components/LoadingFallback";
@@ -183,6 +186,7 @@ describe("LoadingFallback", () => {
     expect(textDiv).toHaveClass("loading-fallback--text");
   });
 });
+
 
 // components/FooterNavigation/__tests__/FooterNavigation.test.tsx
 import "@testing-library/jest-dom";
@@ -253,6 +257,7 @@ describe("FooterNavigation", () => {
   });
 });
 
+
 // components/AppIcon/__tests__/AppIcon.test.tsx
 import { render, screen } from "@testing-library/react";
 import AppIcon, { IconType, IconSize } from "@components/AppIcon";
@@ -293,6 +298,7 @@ describe("AppIcon", () => {
   });
 });
 
+
 // components/PasswordEntry/__tests__/PasswordEntry.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -327,9 +333,11 @@ describe("PasswordEntry", () => {
   });
 });
 
+
 // components/CreatePasswordForm/__tests__/CreatePasswordForm.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
 import CreatePasswordForm from "@components/CreatePasswordForm";
+import { TestWrapper } from "@test/testUtils";
 
 describe("CreatePasswordForm", () => {
   const mockOnSubmit = jest.fn();
@@ -350,7 +358,9 @@ describe("CreatePasswordForm", () => {
   });
 
   const setup = () => {
-    render(<CreatePasswordForm onSubmit={mockOnSubmit} />);
+    render(<CreatePasswordForm onSubmit={mockOnSubmit} />, {
+      wrapper: TestWrapper
+    });
   };
 
   it("renders all form fields", () => {
@@ -418,15 +428,16 @@ describe("CreatePasswordForm", () => {
   });
 
   it("validates required fields", () => {
-    setup();
-    const submitButton = screen.getByRole("button", { name: /save/i });
+    render(<CreatePasswordForm onSubmit={mockOnSubmit} />, {
+      wrapper: TestWrapper
+    });
 
-    fireEvent.click(submitButton);
+    fireEvent.submit(screen.getByRole("create-password-form"));
 
     // Check that required fields are marked as invalid
-    expect(screen.getByLabelText(/service name/i)).toBeInvalid();
-    expect(screen.getByLabelText(/username/i)).toBeInvalid();
-    expect(screen.getByLabelText(/password/i)).toBeInvalid();
+    expect(screen.getByLabelText("Service Name")).toBeInvalid();
+    expect(screen.getByLabelText("Username")).toBeInvalid();
+    expect(screen.getByLabelText("Password")).toBeInvalid();
 
     // Service URL and notes are optional
     expect(screen.getByLabelText(/^url$/i)).not.toBeInvalid();
@@ -488,6 +499,7 @@ describe("CreatePasswordForm", () => {
   });
 });
 
+
 // components/Header/__tests__/Header.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
@@ -540,6 +552,7 @@ describe("Header", () => {
   });
 });
 
+
 // components/AppLayout/__tests__/AppLayout.test.tsx
 import { render, screen } from "@testing-library/react";
 import AppLayout from "@components/AppLayout";
@@ -576,6 +589,7 @@ describe("AppLayout", () => {
     expect(screen.getByText("Mock Footer")).toBeInTheDocument();
   });
 });
+
 
 // __tests__/App.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -624,6 +638,7 @@ describe("App", () => {
   });
 });
 
+
 // __tests__/index.test.tsx
 import { createRoot } from "react-dom/client";
 
@@ -639,7 +654,7 @@ jest.mock("../App", () => ({
   default: () => null
 }));
 
-jest.mock("@i18n", () => ({
+jest.mock("@i18n/index", () => ({
   __esModule: true,
   default: {}
 }));
@@ -690,6 +705,7 @@ describe("Index", () => {
     expect(createRoot).not.toHaveBeenCalled();
   });
 });
+
 
 // pages/ShowPage/__tests__/ShowPage.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -788,6 +804,7 @@ describe("ShowPage", () => {
   });
 });
 
+
 // pages/LogoutPage/__tests__/LogoutPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import LogoutPage from "@pages/LogoutPage";
@@ -810,6 +827,7 @@ describe("LogoutPage", () => {
   });
 });
 
+
 // pages/SearchPage/__tests__/SearchPage.test.tsx
 import { render, screen } from "@testing-library/react";
 import SearchPage from "@pages/SearchPage";
@@ -829,6 +847,7 @@ describe("SearchPage", () => {
     expect(screen.getByText("Search for content here.")).toBeInTheDocument();
   });
 });
+
 
 // pages/SettingsPage/__tests__/SettingsPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -851,6 +870,7 @@ describe("SettingsPage", () => {
     ).toBeInTheDocument();
   });
 });
+
 
 // pages/IndexPage/__tests__/IndexPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -879,6 +899,7 @@ describe("IndexPage", () => {
     ).toBeInTheDocument();
   });
 });
+
 
 // pages/FavoritesPage/__tests__/FavoritesPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -909,6 +930,7 @@ describe("FavoritesPage", () => {
     expect(layoutContent).toHaveTextContent("View your favorite items here.");
   });
 });
+
 
 // pages/AboutPage/__tests__/AboutPage.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -942,16 +964,31 @@ describe("AboutPage", () => {
   });
 });
 
+
 // pages/CreatePasswordPage/__tests__/CreatePasswordPage.test.tsx
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import CreatePasswordPage from "@pages/CreatePasswordPage";
 import { TestWrapper } from "@test/testUtils";
 import "@test/setupFilesAfterEnv";
+import type { PasswordEntryData } from "@pages/CreatePasswordPage/types";
 
 // Mock AppLayout
 jest.mock("@components/AppLayout", () => ({
   __esModule: true,
-  default: ({ children }: { children: React.ReactNode }) => <>{children}</>
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="app-layout">{children}</div>
+  )
+}));
+
+// Mock CreatePasswordForm using a more type-safe approach
+let mockSubmitHandler: ((data: PasswordEntryData) => void) | null = null;
+
+jest.mock("@components/CreatePasswordForm", () => ({
+  __esModule: true,
+  default: ({ onSubmit }: { onSubmit: (data: PasswordEntryData) => void }) => {
+    mockSubmitHandler = onSubmit;
+    return <div data-testid="create-password-form" />;
+  }
 }));
 
 describe("CreatePasswordPage", () => {
@@ -959,46 +996,35 @@ describe("CreatePasswordPage", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockSubmitHandler = null;
   });
 
-  it("renders create page content", () => {
+  it("renders within AppLayout with CreatePasswordForm", () => {
     render(<CreatePasswordPage />, { wrapper: TestWrapper });
-    expect(screen.getByText("Create Password Entry")).toBeInTheDocument();
+
+    expect(screen.getByTestId("app-layout")).toBeInTheDocument();
+    expect(screen.getByTestId("create-password-form")).toBeInTheDocument();
   });
 
-  it("handles form submission correctly", () => {
-    render(<CreatePasswordPage />);
+  it("handles form submission from CreatePasswordForm", () => {
+    render(<CreatePasswordPage />, { wrapper: TestWrapper });
 
-    // Fill in form fields
-    fireEvent.change(screen.getByLabelText(/service name/i), {
-      target: { value: "Test Service" }
-    });
-    fireEvent.change(screen.getByLabelText(/username/i), {
-      target: { value: "testuser" }
-    });
-    fireEvent.change(screen.getByLabelText(/password/i), {
-      target: { value: "TestPassword123" }
-    });
-    fireEvent.change(screen.getByLabelText(/^url$/i), {
-      target: { value: "https://test.com" }
-    });
-    fireEvent.change(screen.getByLabelText(/notes/i), {
-      target: { value: "Test Notes" }
-    });
-
-    // Submit form
-    fireEvent.click(screen.getByRole("button", { name: /save/i }));
-
-    // Verify console.log was called with correct data
-    expect(mockConsoleLog).toHaveBeenCalledWith("Form submitted:", {
+    const testData: PasswordEntryData = {
       serviceName: "Test Service",
       username: "testuser",
       password: "TestPassword123",
       serviceUrl: "https://test.com",
       notes: "Test Notes"
-    });
+    };
+
+    // Trigger mock form submission using the mockSubmitHandler
+    expect(mockSubmitHandler).toBeTruthy();
+    mockSubmitHandler?.(testData);
+
+    expect(mockConsoleLog).toHaveBeenCalledWith("Form submitted:", testData);
   });
 });
+
 
 // routes/__tests__/routes.test.tsx
 import { render, screen } from "@testing-library/react";
@@ -1133,6 +1159,7 @@ describe("AppRoutes", () => {
   });
 });
 
+
 // routes/__tests__/index.test.tsx
 import AppRoutes from "../routes";
 import RoutesExport from "../index";
@@ -1151,3 +1178,5 @@ describe("Routes index", () => {
     expect(RoutesExport).toBe("mocked-routes");
   });
 });
+
+

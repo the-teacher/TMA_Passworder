@@ -1,4 +1,4 @@
-_Frontend/src//
+./src/
 ├── App.tsx
 ├── __tests__
     ├── App.test.tsx
@@ -20,6 +20,18 @@ _Frontend/src//
         ├── __tests__
             └── AppLayout.test.tsx
         └── index.ts
+    ├── CreatePasswordForm
+        ├── CreatePasswordForm.tsx
+        ├── __locales__
+            ├── en.json
+            └── ru.json
+        ├── __stories__
+            └── CreatePasswordForm.stories.tsx
+        ├── __tests__
+            └── CreatePasswordForm.test.tsx
+        ├── index.ts
+        ├── styles.scss
+        └── types.ts
     ├── FooterNavigation
         ├── FooterNavigation.tsx
         ├── __stories__
@@ -94,15 +106,6 @@ _Frontend/src//
             └── PasswordEntry.test.tsx
         ├── index.ts
         └── styles.scss
-    ├── CreatePasswordForm
-        ├── CreatePasswordForm.tsx
-        ├── __stories__
-            ├── CreatePasswordForm.stor_ies.tsx
-            └── CreatePasswordForm.stories.tsx
-        ├── __tests__
-            └── CreatePasswordForm.test.tsx
-        ├── index.ts
-        └── styles.scss
     └── PasswordEntryList
         ├── PasswordEntryList.tsx
         ├── __stories__
@@ -114,12 +117,24 @@ _Frontend/src//
         └── styles.scss
 ├── globalStyles.scss
 ├── i18n
-    ├── index.ts
-    └── locales
+    ├── __locales__
         ├── en.json
         └── ru.json
+    ├── __tests__
+        ├── generateLocaleSchema.test.ts
+        ├── index.test.ts
+        └── utils.test.ts
+    ├── generateLocaleSchema.js
+    ├── index.ts
+    ├── locales.schema.en.json
+    ├── locales.schema.ru.json
+    └── utils.js
 ├── index.tsx
 ├── lib
+    ├── ENV
+        ├── ENV.test.ts
+        ├── ENV.ts
+        └── index.ts
     ├── EventEmitter
         ├── EventEmitter.ts
         ├── __tests__
@@ -131,6 +146,8 @@ _Frontend/src//
         ├── __stories__
             ├── Toastr.stories.tsx
             └── toastr.stories.scss
+        ├── __tests__
+            └── Toastr.test.ts
         ├── index.ts
         └── toastr.scss
 ├── mocks
@@ -150,7 +167,7 @@ _Frontend/src//
         ├── __tests__
             └── CreatePasswordPage.test.tsx
         ├── index.ts
-        └── styles.scss
+        └── types.ts
     ├── FavoritesPage
         ├── FavoritesPage.test.tsx
         ├── FavoritesPage.tsx
@@ -212,8 +229,6 @@ _Frontend/src//
     ├── helpers.ts
     ├── index.ts
     └── routes.tsx
-├── types
-    └── scss.d.ts
 ├── ui-kit
     ├── __stories__
         ├── Buttons.stories.tsx
@@ -224,6 +239,7 @@ _Frontend/src//
         └── TextStyles.stories.tsx
     ├── buttons.scss
     ├── colors.scss
+    ├── common.scss
     ├── form-groups.scss
     ├── form-inputs.scss
     ├── info-blocks.scss
