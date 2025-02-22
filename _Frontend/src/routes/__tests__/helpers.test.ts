@@ -1,31 +1,44 @@
 import {
+  // RESTful route helpers
+  passwordEntriesPath,
+  newPasswordEntryPath,
+  editPasswordEntryPath,
+  passwordEntryPath,
+  // Page paths
   indexPath,
-  createPath,
-  searchPath,
   favoritesPath,
   logoutPath,
   settingsPath,
   aboutPath,
-  passwordEntryPath,
-  editPasswordEntryPath,
-  showPasswordEntryPath,
+  // API paths
   apiPasswordEntriesPath,
   apiPasswordEntryPath
 } from "../helpers";
 
 describe("Route Helpers", () => {
+  // RESTful routes
+  describe("RESTful routes for PasswordEntries", () => {
+    it("should return correct password entries index path", () => {
+      expect(passwordEntriesPath()).toBe("/password_entries");
+    });
+
+    it("should return correct new password entry path", () => {
+      expect(newPasswordEntryPath()).toBe("/password_entries/new");
+    });
+
+    it("should return correct edit password entry path", () => {
+      expect(editPasswordEntryPath("123")).toBe("/password_entries/123/edit");
+    });
+
+    it("should return correct show password entry path", () => {
+      expect(passwordEntryPath("123")).toBe("/password_entries/123");
+    });
+  });
+
   // Static paths
   describe("Static paths", () => {
     it("should return correct index path", () => {
       expect(indexPath()).toBe("/");
-    });
-
-    it("should return correct create path", () => {
-      expect(createPath()).toBe("/create");
-    });
-
-    it("should return correct search path", () => {
-      expect(searchPath()).toBe("/search");
     });
 
     it("should return correct favorites path", () => {
@@ -45,23 +58,6 @@ describe("Route Helpers", () => {
     });
   });
 
-  // Dynamic paths
-  describe("Dynamic paths", () => {
-    const testId = "123";
-
-    it("should return correct password entry path", () => {
-      expect(passwordEntryPath(testId)).toBe("/passwords/123");
-    });
-
-    it("should return correct edit password entry path", () => {
-      expect(editPasswordEntryPath(testId)).toBe("/passwords/123/edit");
-    });
-
-    it("should return correct show password entry path", () => {
-      expect(showPasswordEntryPath(testId)).toBe("/passwords/123");
-    });
-  });
-
   // API paths
   describe("API paths", () => {
     it("should return correct API password entries path", () => {
@@ -69,8 +65,7 @@ describe("Route Helpers", () => {
     });
 
     it("should return correct API password entry path", () => {
-      const testId = "456";
-      expect(apiPasswordEntryPath(testId)).toBe("/api/v1/password_entries/456");
+      expect(apiPasswordEntryPath("123")).toBe("/api/v1/password_entries/123");
     });
   });
 });
