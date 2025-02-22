@@ -120,6 +120,39 @@ export const AllFormInputs: Story = {
           />
         </div>
       </div>
+
+      <div className="mb32">
+        <h3>Search Input</h3>
+        <div className="mb16">
+          <h4>Default Search</h4>
+          <input
+            className="form-input form-input__search"
+            placeholder="Search..."
+          />
+        </div>
+        <div className="mb16">
+          <h4>Error Search</h4>
+          <input
+            className="form-input form-input__search form-input--error"
+            placeholder="Error Search Input"
+          />
+        </div>
+        <div className="mb16">
+          <h4>Success Search</h4>
+          <input
+            className="form-input form-input__search form-input--success"
+            placeholder="Success Search Input"
+          />
+        </div>
+        <div className="mb16">
+          <h4>Disabled Search</h4>
+          <input
+            className="form-input form-input__search"
+            placeholder="Disabled Search Input"
+            disabled
+          />
+        </div>
+      </div>
     </div>
   )
 };

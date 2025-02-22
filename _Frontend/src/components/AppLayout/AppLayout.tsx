@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Header from "@components/Header";
 import FooterNavigation from "@components/FooterNavigation";
 import { HolyGrailLayoutWithParams } from "@components/HolyGrailLayout";
+import "./styles.scss";
 
 interface AppLayoutProps {
   children: ReactNode;

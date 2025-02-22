@@ -37,10 +37,6 @@ const FooterNavigation = () => {
         <Image src="/icons/circle-plus.svg" alt={t("create")} />
         <ImageTitle>{t("create")}</ImageTitle>
       </NavLink>
-      <NavLink to="/search" className="footer-navigation__item">
-        <Image src="/icons/search.svg" alt={t("search")} />
-        <ImageTitle>{t("search")}</ImageTitle>
-      </NavLink>
       <NavLink to="/favorites" className="footer-navigation__item">
         <Image src="/icons/star.svg" alt={t("favorites")} />
         <ImageTitle>{t("favorites")}</ImageTitle>

@@ -20,6 +20,11 @@
       "generatePassword": "Generate password"
     }
   },
+  "SearchField": {
+    "search": "Search",
+    "clear": "Clear search",
+    "placeholder": "Search passwords..."
+  },
   "translations": {
     "app": {
       "name": "HamsterPass",
