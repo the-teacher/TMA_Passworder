@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import CreatePasswordPage from "@pages/CreatePasswordPage";
+import CreatePasswordPage from "@pages/PasswordEntries/NewPage";
 import { TestWrapper } from "@test/testUtils";
 import "@test/setupFilesAfterEnv";
-import type { PasswordEntryData } from "@pages/CreatePasswordPage/types";
+import type { PasswordEntryData } from "@pages/PasswordEntries/NewPage/types";
 
 // Mock AppLayout
 jest.mock("@components/AppLayout", () => ({

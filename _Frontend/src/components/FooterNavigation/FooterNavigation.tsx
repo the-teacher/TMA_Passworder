@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { useTranslation } from "react-i18next";
+import { newPasswordEntryPath } from "@routes/helpers";
 import "./styles.scss";
 
 interface ImageProps {
@@ -33,7 +34,7 @@ const FooterNavigation = () => {
         <Image src="/icons/home.svg" alt={t("home")} />
         <ImageTitle>{t("home")}</ImageTitle>
       </NavLink>
-      <NavLink to="/create" className="footer-navigation__item">
+      <NavLink to={newPasswordEntryPath()} className="footer-navigation__item">
         <Image src="/icons/circle-plus.svg" alt={t("create")} />
         <ImageTitle>{t("create")}</ImageTitle>
       </NavLink>

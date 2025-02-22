@@ -3,7 +3,7 @@ import AppLayout from "@components/AppLayout";
 import type { PasswordEntryData } from "./types";
 import "@ui-kit/common.scss";
 
-const CreatePasswordPage = () => {
+const NewPage = () => {
   const handleSubmit = (data: PasswordEntryData) => {
     // Handle form submission
     console.log("Form submitted:", data);
@@ -16,4 +16,4 @@ const CreatePasswordPage = () => {
   );
 };
 
-export default CreatePasswordPage;
+export default NewPage;
