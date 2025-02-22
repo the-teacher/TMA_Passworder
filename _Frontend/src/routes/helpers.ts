@@ -1,7 +1,6 @@
 // Page paths
 export const indexPath = () => "/";
 export const createPath = () => "/create";
-export const searchPath = () => "/search";
 export const favoritesPath = () => "/favorites";
 export const logoutPath = () => "/logout";
 export const settingsPath = () => "/settings";

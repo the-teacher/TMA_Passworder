@@ -4,7 +4,6 @@ import LoadingFallback from "@components/LoadingFallback";
 
 const IndexPage = lazy(() => import("@pages/IndexPage"));
 const CreatePasswordPage = lazy(() => import("@pages/CreatePasswordPage"));
-const SearchPage = lazy(() => import("@pages/SearchPage"));
 const FavoritesPage = lazy(() => import("@pages/FavoritesPage"));
 const LogoutPage = lazy(() => import("@pages/LogoutPage"));
 const SettingsPage = lazy(() => import("@pages/SettingsPage"));
@@ -19,7 +18,6 @@ const SuspenseWrapper = ({ children }: { children: ReactNode }) => (
 export const routesConfig = [
   { index: true, element: <IndexPage /> },
   { path: "create", element: <CreatePasswordPage /> },
-  { path: "search", element: <SearchPage /> },
   { path: "favorites", element: <FavoritesPage /> },
   { path: "logout", element: <LogoutPage /> },
   { path: "settings", element: <SettingsPage /> },
