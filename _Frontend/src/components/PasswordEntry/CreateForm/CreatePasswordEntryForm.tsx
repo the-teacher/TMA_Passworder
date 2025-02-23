@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/buttons.scss";
 import "@ui-kit/form-groups.scss";
+import "@ui-kit/text-styles.scss";
 import "@ui-kit/common.scss";
 import "./styles.scss";
 import AppIcon from "@components/AppIcon";
@@ -97,6 +98,9 @@ const CreatePasswordEntryForm = ({
             onChange={handleInputChange("serviceName")}
             required
           />
+          <div className="form-group--info text--warning text--small">
+            {t("fields.hint")}
+          </div>
         </div>
 
         <div className="form-group">
@@ -111,6 +115,9 @@ const CreatePasswordEntryForm = ({
             onChange={handleInputChange("username")}
             required
           />
+          <div className="form-group--info text--warning text--small">
+            {t("fields.hint")}
+          </div>
         </div>
 
         <div className="form-group">
@@ -125,6 +132,9 @@ const CreatePasswordEntryForm = ({
             onChange={handleInputChange("serviceUrl")}
             placeholder="https://"
           />
+          <div className="form-group--info text--warning text--small">
+            {t("fields.hint")}
+          </div>
         </div>
 
         <div className="form-group">
@@ -176,6 +186,9 @@ const CreatePasswordEntryForm = ({
                 alt={t("actions.generatePassword")}
               />
             </button>
+          </div>
+          <div className="form-group--info text--warning text--small">
+            {t("fields.hint")}
           </div>
         </div>
 

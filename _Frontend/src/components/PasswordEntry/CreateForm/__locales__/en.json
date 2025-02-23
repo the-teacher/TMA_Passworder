@@ -7,7 +7,8 @@
       "username": "Username",
       "password": "Password",
       "url": "URL",
-      "notes": "Notes"
+      "notes": "Notes",
+      "hint": "Please fill in this field"
     },
     "actions": {
       "showPassword": "Show password",
