@@ -4,7 +4,7 @@
       "close": "Закрыть окно"
     }
   },
-  "CreatePasswordForm": {
+  "CreatePasswordEntryForm": {
     "title": "Новая запись пароля",
     "fields": {
       "serviceName": "Название сервиса",

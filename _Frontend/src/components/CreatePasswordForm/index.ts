@@ -1,1 +1,1 @@
-export { default } from "./CreatePasswordForm";
+export { default } from "./CreatePasswordEntryForm";

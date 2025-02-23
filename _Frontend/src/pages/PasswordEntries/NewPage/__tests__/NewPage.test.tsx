@@ -12,10 +12,10 @@ jest.mock("@components/AppLayout", () => ({
   )
 }));
 
-// Mock CreatePasswordForm using a more type-safe approach
+// Mock CreatePasswordEntryForm using a more type-safe approach
 let mockSubmitHandler: ((data: PasswordEntryData) => void) | null = null;
 
-jest.mock("@components/CreatePasswordForm", () => ({
+jest.mock("@components/CreatePasswordEntryForm", () => ({
   __esModule: true,
   default: ({ onSubmit }: { onSubmit: (data: PasswordEntryData) => void }) => {
     mockSubmitHandler = onSubmit;
@@ -31,14 +31,14 @@ describe("CreatePasswordPage", () => {
     mockSubmitHandler = null;
   });
 
-  it("renders within AppLayout with CreatePasswordForm", () => {
+  it("renders within AppLayout with CreatePasswordEntryForm", () => {
     render(<CreatePasswordPage />, { wrapper: TestWrapper });
 
     expect(screen.getByTestId("app-layout")).toBeInTheDocument();
     expect(screen.getByTestId("create-password-form")).toBeInTheDocument();
   });
 
-  it("handles form submission from CreatePasswordForm", () => {
+  it("handles form submission from CreatePasswordEntryForm", () => {
     render(<CreatePasswordPage />, { wrapper: TestWrapper });
 
     const testData: PasswordEntryData = {

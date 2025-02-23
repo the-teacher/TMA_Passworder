@@ -3,15 +3,15 @@ import {
   withRouter,
   reactRouterParameters
 } from "storybook-addon-remix-react-router";
-import CreatePasswordForm from "@components/CreatePasswordForm";
+import CreatePasswordEntryForm from "@components/CreatePasswordEntryForm";
 import i18n from "@story/i18next";
 import { within } from "@storybook/testing-library";
 import userEvent from "@testing-library/user-event";
-import type { CreatePasswordFormData } from "../types";
+import type { CreatePasswordEntryFormData } from "../types";
 
-const meta: Meta<typeof CreatePasswordForm> = {
-  title: "3-Components/3-CreatePasswordForm",
-  component: CreatePasswordForm,
+const meta: Meta<typeof CreatePasswordEntryForm> = {
+  title: "3-Components/3-CreatePasswordEntryForm",
+  component: CreatePasswordEntryForm,
   decorators: [withRouter],
   parameters: {
     docs: { disable: true },
@@ -30,12 +30,12 @@ const meta: Meta<typeof CreatePasswordForm> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof CreatePasswordForm>;
+type Story = StoryObj<typeof CreatePasswordEntryForm>;
 
 // Basic version with default functionality
 export const Default: Story = {
   args: {
-    onSubmit: (data: CreatePasswordFormData) => {
+    onSubmit: (data: CreatePasswordEntryFormData) => {
       console.log("Form submitted with data:", data);
     }
   },
@@ -47,7 +47,7 @@ export const Default: Story = {
 // Pre-filled version
 export const PreFilled: Story = {
   args: {
-    onSubmit: (data: CreatePasswordFormData) => {
+    onSubmit: (data: CreatePasswordEntryFormData) => {
       console.log("Form submitted with data:", data);
     }
   },
@@ -69,7 +69,7 @@ export const PreFilled: Story = {
 // With validation errors
 export const WithValidationErrors: Story = {
   args: {
-    onSubmit: (data: CreatePasswordFormData) => {
+    onSubmit: (data: CreatePasswordEntryFormData) => {
       console.log("Form submitted with data:", data);
     }
   },
@@ -86,7 +86,7 @@ export const WithValidationErrors: Story = {
 // Russian version
 export const Russian: Story = {
   args: {
-    onSubmit: (data: CreatePasswordFormData) => {
+    onSubmit: (data: CreatePasswordEntryFormData) => {
       console.log("Form submitted with data:", data);
     }
   },

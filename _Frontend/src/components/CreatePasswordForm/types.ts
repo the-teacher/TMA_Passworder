@@ -1,4 +1,4 @@
-export type CreatePasswordFormData = {
+export type CreatePasswordEntryFormData = {
   serviceName: string;
   username: string;
   password: string;

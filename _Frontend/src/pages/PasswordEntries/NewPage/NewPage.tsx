@@ -1,4 +1,4 @@
-import CreatePasswordForm from "@components/CreatePasswordForm";
+import CreatePasswordEntryForm from "@components/CreatePasswordEntryForm";
 import AppLayout from "@components/AppLayout";
 import type { PasswordEntryData } from "./types";
 import "@ui-kit/common.scss";
@@ -11,7 +11,7 @@ const NewPage = () => {
 
   return (
     <AppLayout>
-      <CreatePasswordForm onSubmit={handleSubmit} />
+      <CreatePasswordEntryForm onSubmit={handleSubmit} />
     </AppLayout>
   );
 };

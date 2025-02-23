@@ -1,5 +1,5 @@
 {
-  "CreatePasswordForm": {
+  "CreatePasswordEntryForm": {
     "title": "Create Password Entry",
 
     "fields": {

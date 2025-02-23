@@ -11,7 +11,7 @@ const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
-type CreatePasswordFormData = {
+type CreatePasswordEntryFormData = {
   serviceName: string;
   username: string;
   password: string;
@@ -19,15 +19,17 @@ type CreatePasswordFormData = {
   notes: string;
 };
 
-type CreatePasswordFormProps = {
-  onSubmit: (data: CreatePasswordFormData) => void;
+type CreatePasswordEntryFormProps = {
+  onSubmit: (data: CreatePasswordEntryFormData) => void;
 };
 
-const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
-  const { t } = useTranslation("CreatePasswordForm");
+const CreatePasswordEntryForm = ({
+  onSubmit
+}: CreatePasswordEntryFormProps) => {
+  const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: c } = useTranslation("common");
 
-  const [formData, setFormData] = useState<CreatePasswordFormData>({
+  const [formData, setFormData] = useState<CreatePasswordEntryFormData>({
     serviceName: "",
     username: "",
     password: "",
@@ -61,7 +63,7 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
   };
 
   const handleInputChange =
-    (field: keyof CreatePasswordFormData) =>
+    (field: keyof CreatePasswordEntryFormData) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }));
     };
@@ -207,4 +209,4 @@ const CreatePasswordForm = ({ onSubmit }: CreatePasswordFormProps) => {
   );
 };
 
-export default CreatePasswordForm;
+export default CreatePasswordEntryForm;

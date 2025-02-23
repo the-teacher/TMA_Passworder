@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import CreatePasswordForm from "@components/CreatePasswordForm";
+import CreatePasswordEntryForm from "@components/CreatePasswordEntryForm";
 import { TestWrapper } from "@test/testUtils";
 
-describe("CreatePasswordForm", () => {
+describe("CreatePasswordEntryForm", () => {
   const mockOnSubmit = jest.fn();
   const mockClipboard = {
     writeText: jest.fn()
@@ -21,7 +21,7 @@ describe("CreatePasswordForm", () => {
   });
 
   const setup = () => {
-    render(<CreatePasswordForm onSubmit={mockOnSubmit} />, {
+    render(<CreatePasswordEntryForm onSubmit={mockOnSubmit} />, {
       wrapper: TestWrapper
     });
   };
@@ -91,7 +91,7 @@ describe("CreatePasswordForm", () => {
   });
 
   it("validates required fields", () => {
-    render(<CreatePasswordForm onSubmit={mockOnSubmit} />, {
+    render(<CreatePasswordEntryForm onSubmit={mockOnSubmit} />, {
       wrapper: TestWrapper
     });
 
