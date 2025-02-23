@@ -27,6 +27,25 @@ type CreatePasswordEntryFormProps = {
   onSubmit: (data: FormData) => void;
 };
 
+type EyeIconProps = {
+  showPassword: boolean;
+  onClick: () => void;
+};
+
+const EyeIcon = ({ showPassword, onClick }: EyeIconProps) => {
+  const { t } = useTranslation("CreatePasswordEntryForm");
+
+  return (
+    <AppIcon
+      size={16}
+      type={showPassword ? "eye-off" : "eye"}
+      onClick={onClick}
+      title={t(showPassword ? "actions.hidePassword" : "actions.showPassword")}
+      alt={t(showPassword ? "actions.hidePassword" : "actions.showPassword")}
+    />
+  );
+};
+
 const CreatePasswordEntryForm = ({
   onSubmit
 }: CreatePasswordEntryFormProps) => {
@@ -163,16 +182,9 @@ const CreatePasswordEntryForm = ({
         <div className="form-group">
           <label className="form-group--label" htmlFor="password">
             {t("fields.password")}
-            <AppIcon
-              size={16}
-              type={showPassword ? "eye-off" : "eye"}
+            <EyeIcon
+              showPassword={showPassword}
               onClick={() => setShowPassword(!showPassword)}
-              title={t(
-                showPassword ? "actions.hidePassword" : "actions.showPassword"
-              )}
-              alt={t(
-                showPassword ? "actions.hidePassword" : "actions.showPassword"
-              )}
             />
           </label>
           <div className="form-group--input form-group--with-icon">
