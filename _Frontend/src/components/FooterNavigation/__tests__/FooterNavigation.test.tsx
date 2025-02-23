@@ -16,7 +16,6 @@ describe("FooterNavigation", () => {
 
     expect(screen.getByAltText("Home")).toBeInTheDocument();
     expect(screen.getByAltText("Create")).toBeInTheDocument();
-    expect(screen.getByAltText("Search")).toBeInTheDocument();
     expect(screen.getByAltText("Favorites")).toBeInTheDocument();
     expect(screen.getByAltText("Logout")).toBeInTheDocument();
   });
@@ -27,11 +26,7 @@ describe("FooterNavigation", () => {
     expect(screen.getByText("Home").closest("a")).toHaveAttribute("href", "/");
     expect(screen.getByText("Create").closest("a")).toHaveAttribute(
       "href",
-      "/create"
-    );
-    expect(screen.getByText("Search").closest("a")).toHaveAttribute(
-      "href",
-      "/search"
+      "/password_entries/new"
     );
     expect(screen.getByText("Favorites").closest("a")).toHaveAttribute(
       "href",
