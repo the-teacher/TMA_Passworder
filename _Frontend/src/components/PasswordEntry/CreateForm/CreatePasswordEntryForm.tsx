@@ -46,6 +46,48 @@ const EyeIcon = ({ showPassword, onClick }: EyeIconProps) => {
   );
 };
 
+type CopyButtonProps = {
+  onClick: () => void;
+};
+
+const CopyButton = ({ onClick }: CopyButtonProps) => {
+  const { t } = useTranslation("CreatePasswordEntryForm");
+
+  return (
+    <button
+      type="button"
+      className="btn btn--icon"
+      onClick={onClick}
+      title={t("actions.copyPassword")}
+    >
+      <img src="/icons/clipboard-check.svg" alt={t("actions.copyPassword")} />
+    </button>
+  );
+};
+
+type GenerateButtonProps = {
+  onClick: () => void;
+};
+
+const GenerateButton = ({ onClick }: GenerateButtonProps) => {
+  const { t } = useTranslation("CreatePasswordEntryForm");
+
+  return (
+    <button
+      type="button"
+      className="btn btn--icon"
+      onClick={onClick}
+      title={t("actions.generatePassword")}
+    >
+      <img src="/icons/refresh.svg" alt={t("actions.generatePassword")} />
+    </button>
+  );
+};
+
+const FormError = ({ children }: { children: string | React.ReactNode }) => (
+  <div className="info info--danger mb20">{children}</div>
+);
+
 const CreatePasswordEntryForm = ({
   onSubmit
 }: CreatePasswordEntryFormProps) => {
@@ -126,7 +168,7 @@ const CreatePasswordEntryForm = ({
     <>
       <h2 className="text-center">{t("title")}</h2>
 
-      {formError && <div className="info info--danger mb20">{formError}</div>}
+      {formError && <FormError>{formError}</FormError>}
 
       <form
         className="create-password-form"
@@ -194,28 +236,8 @@ const CreatePasswordEntryForm = ({
               type={showPassword ? "text" : "password"}
               {...register("password")}
             />
-            <button
-              type="button"
-              className="btn btn--icon"
-              onClick={copyPassword}
-              title={t("actions.copyPassword")}
-            >
-              <img
-                src="/icons/clipboard-check.svg"
-                alt={t("actions.copyPassword")}
-              />
-            </button>
-            <button
-              type="button"
-              className="btn btn--icon"
-              onClick={generatePassword}
-              title={t("actions.generatePassword")}
-            >
-              <img
-                src="/icons/refresh.svg"
-                alt={t("actions.generatePassword")}
-              />
-            </button>
+            <CopyButton onClick={copyPassword} />
+            <GenerateButton onClick={generatePassword} />
           </div>
           <div className={`form-group--info ${passwordStatus.className}`}>
             {passwordStatus.message}
