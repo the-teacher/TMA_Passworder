@@ -29,6 +29,7 @@
     "examples": "yarn tests-example && yarn stories-example && yarn structure-example"
   },
   "dependencies": {
+    "@hookform/resolvers": "^4.1.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "i18next": "^24.2.2",
@@ -38,10 +39,12 @@
     "jest-environment-jsdom": "^29.7.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-hook-form": "^7.54.2",
     "react-i18next": "^15.4.0",
     "react-router": "^7.1.5",
     "sass": "^1.84.0",
-    "storybook-addon-remix-react-router": "^4.0.1"
+    "storybook-addon-remix-react-router": "^4.0.1",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

@@ -1,27 +1,30 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useSubmitForm } from "./hooks/useSubmitForm";
+import { formSchema, type FormData } from "./validationSchema";
+import { getFieldStatus } from "./utils/getFieldStatus";
+
+import AppIcon from "@components/AppIcon";
+
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/buttons.scss";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/text-styles.scss";
+import "@ui-kit/info-blocks.scss";
 import "@ui-kit/common.scss";
+import "@ui-kit/spaces.scss";
+
 import "./styles.scss";
-import AppIcon from "@components/AppIcon";
 
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
-type CreatePasswordEntryFormData = {
-  serviceName: string;
-  username: string;
-  password: string;
-  serviceUrl: string;
-  notes: string;
-};
-
 type CreatePasswordEntryFormProps = {
-  onSubmit: (data: CreatePasswordEntryFormData) => void;
+  onSubmit: (data: FormData) => void;
 };
 
 const CreatePasswordEntryForm = ({
@@ -29,61 +32,86 @@ const CreatePasswordEntryForm = ({
 }: CreatePasswordEntryFormProps) => {
   const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: c } = useTranslation("common");
-
-  const [formData, setFormData] = useState<CreatePasswordEntryFormData>({
-    serviceName: "",
-    username: "",
-    password: "",
-    serviceUrl: "",
-    notes: ""
-  });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    setError,
+    clearErrors,
+    formState: { errors, touchedFields }
+  } = useForm<FormData>({
+    mode: "onChange",
+    resolver: zodResolver(formSchema)
+  });
 
-  const handleReset = () => {
-    setFormData({
-      serviceName: "",
-      username: "",
-      password: "",
-      serviceUrl: "",
-      notes: ""
-    });
-  };
+  const { submitForm, formError, isSubmitting } = useSubmitForm();
+
+  // Watch form fields
+  const serviceNameValue = watch("serviceName");
+  const usernameValue = watch("username");
+  const passwordValue = watch("password");
+  const serviceUrlValue = watch("serviceUrl");
+
+  // Get field statuses
+  const serviceNameStatus = getFieldStatus(
+    "serviceName",
+    serviceNameValue,
+    errors,
+    touchedFields
+  );
+  const usernameStatus = getFieldStatus(
+    "username",
+    usernameValue,
+    errors,
+    touchedFields
+  );
+  const passwordStatus = getFieldStatus(
+    "password",
+    passwordValue,
+    errors,
+    touchedFields
+  );
+  const serviceUrlStatus = getFieldStatus(
+    "serviceUrl",
+    serviceUrlValue,
+    errors,
+    touchedFields
+  );
 
   const generatePassword = () => {
     const password = Array.from(
       { length: PASSWORD_LENGTH },
       () => PASSWORD_CHARS[Math.floor(Math.random() * PASSWORD_CHARS.length)]
     ).join("");
-
-    setFormData((prev) => ({ ...prev, password }));
+    setValue("password", password, { shouldValidate: true });
   };
-
-  const handleInputChange =
-    (field: keyof CreatePasswordEntryFormData) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFormData((prev) => ({ ...prev, [field]: e.target.value }));
-    };
 
   const copyPassword = async () => {
     try {
-      await navigator.clipboard.writeText(formData.password);
+      await navigator.clipboard.writeText(passwordValue || "");
     } catch (err) {
       console.error("Failed to copy password:", err);
     }
   };
 
+  const handleFormSubmit = handleSubmit((data) => {
+    submitForm(data, setError, clearErrors);
+    onSubmit(data);
+  });
+
   return (
     <>
       <h2 className="text-center">{t("title")}</h2>
 
+      {formError && <div className="info info--danger mb20">{formError}</div>}
+
       <form
         className="create-password-form"
-        onSubmit={handleSubmit}
+        onSubmit={handleFormSubmit}
         role="create-password-form"
       >
         <div className="form-group">
@@ -94,12 +122,10 @@ const CreatePasswordEntryForm = ({
             className="form-input"
             id="serviceName"
             type="text"
-            value={formData.serviceName}
-            onChange={handleInputChange("serviceName")}
-            required
+            {...register("serviceName")}
           />
-          <div className="form-group--info text--warning text--small">
-            {t("fields.hint")}
+          <div className={`form-group--info ${serviceNameStatus.className}`}>
+            {serviceNameStatus.message}
           </div>
         </div>
 
@@ -111,12 +137,10 @@ const CreatePasswordEntryForm = ({
             className="form-input"
             id="username"
             type="text"
-            value={formData.username}
-            onChange={handleInputChange("username")}
-            required
+            {...register("username")}
           />
-          <div className="form-group--info text--warning text--small">
-            {t("fields.hint")}
+          <div className={`form-group--info ${usernameStatus.className}`}>
+            {usernameStatus.message}
           </div>
         </div>
 
@@ -128,19 +152,17 @@ const CreatePasswordEntryForm = ({
             className="form-input"
             id="serviceUrl"
             type="url"
-            value={formData.serviceUrl}
-            onChange={handleInputChange("serviceUrl")}
             placeholder="https://"
+            {...register("serviceUrl")}
           />
-          <div className="form-group--info text--warning text--small">
-            {t("fields.hint")}
+          <div className={`form-group--info ${serviceUrlStatus.className}`}>
+            {serviceUrlStatus.message}
           </div>
         </div>
 
         <div className="form-group">
           <label className="form-group--label" htmlFor="password">
             {t("fields.password")}
-
             <AppIcon
               size={16}
               type={showPassword ? "eye-off" : "eye"}
@@ -158,11 +180,8 @@ const CreatePasswordEntryForm = ({
               className="form-input"
               id="password"
               type={showPassword ? "text" : "password"}
-              value={formData.password}
-              onChange={handleInputChange("password")}
-              required
+              {...register("password")}
             />
-
             <button
               type="button"
               className="btn btn--icon"
@@ -174,7 +193,6 @@ const CreatePasswordEntryForm = ({
                 alt={t("actions.copyPassword")}
               />
             </button>
-
             <button
               type="button"
               className="btn btn--icon"
@@ -187,8 +205,8 @@ const CreatePasswordEntryForm = ({
               />
             </button>
           </div>
-          <div className="form-group--info text--warning text--small">
-            {t("fields.hint")}
+          <div className={`form-group--info ${passwordStatus.className}`}>
+            {passwordStatus.message}
           </div>
         </div>
 
@@ -199,20 +217,23 @@ const CreatePasswordEntryForm = ({
           <textarea
             className="form-input"
             id="notes"
-            value={formData.notes}
-            onChange={handleInputChange("notes")}
             rows={4}
+            {...register("notes")}
           />
         </div>
 
         <div className="form-group--actions">
-          <button type="submit" className="btn btn--primary">
-            {c("save")}
+          <button
+            type="submit"
+            className="btn btn--primary"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Saving..." : c("save")}
           </button>
           <button
             type="button"
             className="btn btn--secondary"
-            onClick={handleReset}
+            onClick={() => reset()}
           >
             {c("reset")}
           </button>
