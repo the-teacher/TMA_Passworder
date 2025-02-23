@@ -9,7 +9,7 @@ jest.mock("@components/AppLayout", () => ({
 }));
 
 // Mock the PasswordEntryList component
-jest.mock("@components/PasswordEntryList", () => ({
+jest.mock("@components/PasswordEntry/List", () => ({
   __esModule: true,
   default: () => (
     <div data-testid="mocked-password-entry-list">Mocked Password List</div>

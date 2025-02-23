@@ -1,4 +1,4 @@
-import PasswordEntry from "@components/PasswordEntry";
+import PasswordEntry from "@components/PasswordEntry/Item";
 import popularServices from "@mocks/popularServices"; // Import the mock data
 import "./styles.scss";
 

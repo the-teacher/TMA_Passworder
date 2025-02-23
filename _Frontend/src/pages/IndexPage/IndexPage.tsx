@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import AppLayout from "@components/AppLayout";
-import PasswordEntryList from "@components/PasswordEntryList";
+import PasswordEntryList from "@components/PasswordEntry/List";
 import SearchField from "@components/SearchField";
 
 const IndexPage = () => {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BrowserRouter } from "react-router";
-import PasswordEntryList from "@components/PasswordEntryList";
+import PasswordEntryList from "@components/PasswordEntry/List";
 
 const meta = {
   title: "3-Components/1-PasswordEntryList",

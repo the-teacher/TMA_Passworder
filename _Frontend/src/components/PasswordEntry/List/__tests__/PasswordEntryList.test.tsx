@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
-import PasswordEntryList from "@components/PasswordEntryList";
+import PasswordEntryList from "@components/PasswordEntry/List";
 import popularServices from "@mocks/popularServices";
 
 describe("PasswordEntryList", () => {
