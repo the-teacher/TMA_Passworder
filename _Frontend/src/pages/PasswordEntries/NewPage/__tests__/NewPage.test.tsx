@@ -15,7 +15,7 @@ jest.mock("@components/AppLayout", () => ({
 // Mock CreatePasswordEntryForm using a more type-safe approach
 let mockSubmitHandler: ((data: PasswordEntryData) => void) | null = null;
 
-jest.mock("@components/CreatePasswordEntryForm", () => ({
+jest.mock("@components/PasswordEntry/CreateForm", () => ({
   __esModule: true,
   default: ({ onSubmit }: { onSubmit: (data: PasswordEntryData) => void }) => {
     mockSubmitHandler = onSubmit;
