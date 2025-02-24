@@ -24,33 +24,33 @@ describe("EventEmitter", () => {
 
   test("should emit and receive notification events", () => {
     const mockListener = jest.fn();
-    const payload = { message: "Test notification" };
+    const message = "Test notification";
 
     EventEmitter.on("NOTIFICATION", mockListener);
-    EventEmitter.emit("NOTIFICATION", payload);
+    EventEmitter.emit("NOTIFICATION", message);
 
-    expect(mockListener).toHaveBeenCalledWith(payload);
+    expect(mockListener).toHaveBeenCalledWith(message);
     expect(mockListener).toHaveBeenCalledTimes(1);
   });
 
   test("should emit and receive warning events", () => {
     const mockListener = jest.fn();
-    const payload = { message: "Test warning" };
+    const message = "Test warning";
 
     EventEmitter.on("WARNING", mockListener);
-    EventEmitter.emit("WARNING", payload);
+    EventEmitter.emit("WARNING", message);
 
-    expect(mockListener).toHaveBeenCalledWith(payload);
+    expect(mockListener).toHaveBeenCalledWith(message);
     expect(mockListener).toHaveBeenCalledTimes(1);
   });
 
   test("should remove event listener when off is called", () => {
     const mockListener = jest.fn();
-    const payload = { message: "Test message" };
+    const message = "Test message";
 
     EventEmitter.on("NOTIFICATION", mockListener);
     EventEmitter.off("NOTIFICATION", mockListener);
-    EventEmitter.emit("NOTIFICATION", payload);
+    EventEmitter.emit("NOTIFICATION", message);
 
     expect(mockListener).not.toHaveBeenCalled();
   });
@@ -58,21 +58,21 @@ describe("EventEmitter", () => {
   test("should handle multiple listeners for same event", () => {
     const mockListener1 = jest.fn();
     const mockListener2 = jest.fn();
-    const payload = { message: "Test message" };
+    const message = "Test message";
 
     EventEmitter.on("NOTIFICATION", mockListener1);
     EventEmitter.on("NOTIFICATION", mockListener2);
-    EventEmitter.emit("NOTIFICATION", payload);
+    EventEmitter.emit("NOTIFICATION", message);
 
-    expect(mockListener1).toHaveBeenCalledWith(payload);
-    expect(mockListener2).toHaveBeenCalledWith(payload);
+    expect(mockListener1).toHaveBeenCalledWith(message);
+    expect(mockListener2).toHaveBeenCalledWith(message);
   });
 
   test("should not call listeners of different event types", () => {
     const notificationListener = jest.fn();
 
     EventEmitter.on("NOTIFICATION", notificationListener);
-    EventEmitter.emit("WARNING", { message: "Test warning" });
+    EventEmitter.emit("WARNING", "Test warning");
 
     expect(notificationListener).not.toHaveBeenCalled();
   });
