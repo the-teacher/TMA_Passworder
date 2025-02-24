@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import EventEmitter from "@lib/EventEmitter";
 
 export const useSubmitForm = () => {
+  const { t } = useTranslation("CreatePasswordEntryForm");
   const [formError, setFormError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -38,11 +40,11 @@ export const useSubmitForm = () => {
         return;
       }
 
-      // console.log("Форма успешно отправлена:", result);
-      EventEmitter.emit("NOTIFICATION", "Форма успешно отправлена");
+      EventEmitter.emit("NOTIFICATION", t("messages.formSubmitted"));
     } catch (error) {
-      setFormError(`Ошибка сети. Попробуйте позже. ${error}`);
-      EventEmitter.emit("ERROR", `Ошибка сети. Попробуйте позже. ${error}`);
+      const errorMessage = t("messages.networkError", { error });
+      setFormError(errorMessage);
+      EventEmitter.emit("ERROR", errorMessage);
     } finally {
       setIsSubmitting(false);
     }

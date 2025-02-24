@@ -1,7 +1,10 @@
 {
   "CreatePasswordEntryForm": {
     "title": "Create Password Entry",
-
+    "messages": {
+      "formSubmitted": "Form submitted successfully",
+      "networkError": "Network error. Please try again later. {{error}}"
+    },
     "fields": {
       "serviceName": "Service Name",
       "username": "Username",

@@ -262,7 +262,7 @@ const CreatePasswordEntryForm = ({
             className="btn btn--primary"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Saving..." : c("save")}
+            {isSubmitting ? c("saving") : c("save")}
           </button>
           <button
             type="button"

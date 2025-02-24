@@ -24,7 +24,8 @@
     "edit": "Edit",
     "copy": "Copy",
     "show": "Show",
-    "hide": "Hide"
+    "hide": "Hide",
+    "saving": "Saving..."
   },
   "footerNavigation": {
     "home": "Home",
