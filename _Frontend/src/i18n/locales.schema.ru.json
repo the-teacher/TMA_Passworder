@@ -6,6 +6,10 @@
   },
   "CreatePasswordEntryForm": {
     "title": "Новая запись пароля",
+    "messages": {
+      "formSubmitted": "Форма успешно отправлена",
+      "networkError": "Ошибка сети. Попробуйте позже. {{error}}"
+    },
     "fields": {
       "serviceName": "Название сервиса",
       "username": "Имя пользователя",
@@ -51,7 +55,8 @@
     "edit": "Редактировать",
     "copy": "Копировать",
     "show": "Показать",
-    "hide": "Скрыть"
+    "hide": "Скрыть",
+    "saving": "Сохранение..."
   },
   "footerNavigation": {
     "home": "Главная",

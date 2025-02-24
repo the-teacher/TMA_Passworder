@@ -21,7 +21,7 @@ describe("CreatePasswordEntryForm", () => {
   });
 
   const setup = () => {
-    render(<CreatePasswordEntryForm onSubmit={mockOnSubmit} />, {
+    render(<CreatePasswordEntryForm />, {
       wrapper: TestWrapper
     });
   };
@@ -90,14 +90,14 @@ describe("CreatePasswordEntryForm", () => {
     expect(notesInput).toHaveValue("");
   });
 
-  it("validates required fields", () => {
-    render(<CreatePasswordEntryForm onSubmit={mockOnSubmit} />, {
-      wrapper: TestWrapper
-    });
+  it("validates required fields", async () => {
+    setup();
+    const form = screen.getByRole("create-password-form");
 
-    fireEvent.submit(screen.getByRole("create-password-form"));
+    // Trigger validation
+    await fireEvent.submit(form);
 
-    // Check that required fields are marked as invalid
+    // Now check invalid states
     expect(screen.getByLabelText("Service Name")).toBeInvalid();
     expect(screen.getByLabelText("Username")).toBeInvalid();
     expect(screen.getByLabelText("Password")).toBeInvalid();
@@ -121,28 +121,32 @@ describe("CreatePasswordEntryForm", () => {
 
   it("generates password with correct length and characters", () => {
     setup();
-    const passwordInput = screen.getByLabelText(/password/i);
+    const passwordInput = screen.getByLabelText(
+      /password/i
+    ) as HTMLInputElement;
     const generateButton = screen.getByTitle(/generate password/i);
 
     fireEvent.click(generateButton);
 
-    const generatedPassword = passwordInput.getAttribute("value");
-    expect(generatedPassword).toHaveLength(10);
-    expect(generatedPassword).toMatch(/^[a-zA-Z0-9!@#$%^&*]+$/);
+    const passwordValue = passwordInput.value;
+    expect(passwordValue).toHaveLength(10);
+    expect(passwordValue).toMatch(/^[a-zA-Z0-9!@#$%^&*]+$/);
   });
 
   it("copies password to clipboard", async () => {
     setup();
-    const passwordInput = screen.getByLabelText(/password/i);
+    const passwordInput = screen.getByLabelText(
+      /password/i
+    ) as HTMLInputElement;
     const generateButton = screen.getByTitle(/generate password/i);
     const copyButton = screen.getByTitle(/copy password/i);
 
     fireEvent.click(generateButton);
-    const generatedPassword = passwordInput.getAttribute("value");
+    const password = passwordInput.value;
 
     fireEvent.click(copyButton);
 
-    expect(mockClipboard.writeText).toHaveBeenCalledWith(generatedPassword);
+    expect(mockClipboard.writeText).toHaveBeenCalledWith(password);
   });
 
   it("handles clipboard error gracefully", async () => {

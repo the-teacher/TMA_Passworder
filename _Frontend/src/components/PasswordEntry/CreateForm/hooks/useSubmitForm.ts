@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import EventEmitter from "@lib/EventEmitter";
+import { type UseFormSetError } from "react-hook-form";
+import { type FormData } from "../validationSchema";
 
 export const useSubmitForm = () => {
   const { t } = useTranslation("CreatePasswordEntryForm");
@@ -9,7 +11,7 @@ export const useSubmitForm = () => {
 
   const submitForm = async (
     data: Record<string, unknown>,
-    setError: (field: string, error: { type: string; message: string }) => void,
+    setError: UseFormSetError<FormData>,
     clearErrors: () => void
   ) => {
     clearErrors();
@@ -28,7 +30,12 @@ export const useSubmitForm = () => {
       if (!response.ok) {
         if (result.errors) {
           Object.keys(result.errors).forEach((field) => {
-            setError(field, { type: "server", message: result.errors[field] });
+            if (field in data) {
+              setError(field as keyof FormData, {
+                type: "server",
+                message: result.errors[field]
+              });
+            }
           });
         }
 

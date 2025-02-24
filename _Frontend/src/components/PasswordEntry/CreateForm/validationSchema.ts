@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const validationSchema = z.object({
   serviceName: z
     .string()
     .min(3, "Service name must be at least 3 characters")
@@ -29,4 +29,4 @@ export const formSchema = z.object({
     .or(z.literal(""))
 });
 
-export type FormData = z.infer<typeof formSchema>;
+export type FormData = z.infer<typeof validationSchema>;

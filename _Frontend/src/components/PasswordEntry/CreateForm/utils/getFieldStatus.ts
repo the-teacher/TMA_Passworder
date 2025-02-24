@@ -1,4 +1,5 @@
 import type { FieldErrors } from "react-hook-form";
+import type { FormData } from "../validationSchema";
 
 // errors: { form_error: string, errors: { fieldName: { message: string } } }
 export type ServerErrors = {
@@ -7,9 +8,9 @@ export type ServerErrors = {
 };
 
 export const getFieldStatus = (
-  fieldName: string,
+  fieldName: keyof FormData,
   value: string | undefined,
-  errors: FieldErrors | ServerErrors | undefined,
+  errors: FieldErrors<FormData> | ServerErrors | undefined,
   touchedFields: Record<string, boolean>
 ): { message: string; className: string } => {
   if (!touchedFields[fieldName]) {
@@ -28,7 +29,7 @@ export const getFieldStatus = (
   }
 
   // Handle server errors
-  if (errors && "errors" in errors && errors.errors[fieldName]) {
+  if (errors && "errors" in errors && errors.errors?.[fieldName]?.message) {
     return {
       message: errors.errors[fieldName].message,
       className: "text--danger text--small"

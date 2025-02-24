@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useSubmitForm } from "./hooks/useSubmitForm";
-import { formSchema, type FormData } from "./validationSchema";
+import { validationSchema, type FormData } from "./validationSchema";
 import { getFieldStatus } from "./utils/getFieldStatus";
 
 import AppIcon from "@components/AppIcon";
@@ -84,7 +84,13 @@ const FormError = ({ children }: { children: string | React.ReactNode }) => (
   <div className="info info--danger mb20">{children}</div>
 );
 
-const CreatePasswordEntryForm = () => {
+type CreatePasswordEntryFormProps = {
+  onSubmit?: (data: FormData) => void;
+};
+
+const CreatePasswordEntryForm = ({
+  onSubmit
+}: CreatePasswordEntryFormProps = {}) => {
   const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: c } = useTranslation("common");
   const [showPassword, setShowPassword] = useState(false);
@@ -100,7 +106,7 @@ const CreatePasswordEntryForm = () => {
     formState: { errors, touchedFields }
   } = useForm<FormData>({
     mode: "onChange",
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(validationSchema)
   });
 
   const { submitForm, formError, isSubmitting } = useSubmitForm();
@@ -155,6 +161,7 @@ const CreatePasswordEntryForm = () => {
 
   const handleFormSubmit = handleSubmit((data) => {
     submitForm(data, setError, clearErrors);
+    onSubmit?.(data);
   });
 
   return (
@@ -176,6 +183,7 @@ const CreatePasswordEntryForm = () => {
             className="form-input"
             id="serviceName"
             type="text"
+            aria-invalid={!!errors.serviceName}
             {...register("serviceName")}
           />
           <div className={`form-group--info ${serviceNameStatus.className}`}>
@@ -191,6 +199,7 @@ const CreatePasswordEntryForm = () => {
             className="form-input"
             id="username"
             type="text"
+            aria-invalid={!!errors.username}
             {...register("username")}
           />
           <div className={`form-group--info ${usernameStatus.className}`}>
@@ -227,6 +236,7 @@ const CreatePasswordEntryForm = () => {
               className="form-input"
               id="password"
               type={showPassword ? "text" : "password"}
+              aria-invalid={!!errors.password}
               {...register("password")}
             />
             <CopyButton onClick={copyPassword} />
