@@ -4,14 +4,9 @@ import type { PasswordEntryData } from "./types";
 import "@ui-kit/common.scss";
 
 const NewPage = () => {
-  const handleSubmit = (data: PasswordEntryData) => {
-    // Handle form submission
-    console.log("Form submitted:", data);
-  };
-
   return (
     <AppLayout>
-      <CreatePasswordEntryForm onSubmit={handleSubmit} />
+      <CreatePasswordEntryForm />
     </AppLayout>
   );
 };

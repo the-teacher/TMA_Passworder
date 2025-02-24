@@ -23,10 +23,6 @@ const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
-type CreatePasswordEntryFormProps = {
-  onSubmit: (data: FormData) => void;
-};
-
 type EyeIconProps = {
   showPassword: boolean;
   onClick: () => void;
@@ -88,9 +84,7 @@ const FormError = ({ children }: { children: string | React.ReactNode }) => (
   <div className="info info--danger mb20">{children}</div>
 );
 
-const CreatePasswordEntryForm = ({
-  onSubmit
-}: CreatePasswordEntryFormProps) => {
+const CreatePasswordEntryForm = () => {
   const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: c } = useTranslation("common");
   const [showPassword, setShowPassword] = useState(false);
@@ -161,7 +155,6 @@ const CreatePasswordEntryForm = ({
 
   const handleFormSubmit = handleSubmit((data) => {
     submitForm(data, setError, clearErrors);
-    onSubmit(data);
   });
 
   return (
