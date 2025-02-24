@@ -1,6 +1,6 @@
 import "./toastr.scss";
 
-const DEFAULT_DURATION = 3000;
+const DEFAULT_DURATION = 15000;
 const CONTAINER_CLASS = "toastr-container";
 const TOAST_BASE_CLASS = "info";
 const TOAST_ANIMATION_CLASS = "toastr-toast";
