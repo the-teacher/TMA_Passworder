@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EventEmitter from "@lib/EventEmitter";
 
 export const useSubmitForm = () => {
   const [formError, setFormError] = useState<string>("");
@@ -37,9 +38,11 @@ export const useSubmitForm = () => {
         return;
       }
 
-      console.log("Форма успешно отправлена:", result);
+      // console.log("Форма успешно отправлена:", result);
+      EventEmitter.emit("NOTIFICATION", "Форма успешно отправлена");
     } catch (error) {
       setFormError(`Ошибка сети. Попробуйте позже. ${error}`);
+      EventEmitter.emit("ERROR", `Ошибка сети. Попробуйте позже. ${error}`);
     } finally {
       setIsSubmitting(false);
     }
