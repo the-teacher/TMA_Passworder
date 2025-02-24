@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import EventEmitter from "@lib/EventEmitter";
-import { type UseFormSetError } from "react-hook-form";
 import { type FormData } from "../validationSchema";
+import { type ServerErrors } from "../utils/getFieldStatus";
+import { submitPasswordEntry } from "../api/submitPasswordEntry";
 
 export const useSubmitForm = () => {
   const { t } = useTranslation("CreatePasswordEntryForm");
@@ -10,44 +11,22 @@ export const useSubmitForm = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const submitForm = async (
-    data: Record<string, unknown>,
-    setError: UseFormSetError<FormData>,
-    clearErrors: () => void
+    data: FormData,
+    onSuccess: () => void,
+    onError: (errors: ServerErrors) => void
   ) => {
-    clearErrors();
-    setFormError("");
-    setIsSubmitting(true);
-
     try {
-      const response = await fetch("https://api.example.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+      setIsSubmitting(true);
+      setFormError("");
 
-      const result = await response.json();
+      const result = await submitPasswordEntry(data);
 
-      if (!response.ok) {
-        if (result.errors) {
-          Object.keys(result.errors).forEach((field) => {
-            if (field in data) {
-              setError(field as keyof FormData, {
-                type: "server",
-                message: result.errors[field]
-              });
-            }
-          });
-        }
-
-        if (result.form_error) {
-          setFormError(result.form_error);
-        }
-
-        setIsSubmitting(false);
+      if (!result.success) {
+        onError(result.errors);
         return;
       }
 
-      EventEmitter.emit("NOTIFICATION", t("messages.formSubmitted"));
+      onSuccess();
     } catch (error) {
       const errorMessage = t("messages.networkError", { error });
       setFormError(errorMessage);

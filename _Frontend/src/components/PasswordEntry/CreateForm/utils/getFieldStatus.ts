@@ -1,21 +1,23 @@
+import type { TFunction } from "i18next";
 import type { FieldErrors } from "react-hook-form";
 import type { FormData } from "../validationSchema";
 
 // errors: { form_error: string, errors: { fieldName: { message: string } } }
 export type ServerErrors = {
-  form_error: string;
-  errors: Record<string, { message: string }>;
+  form_error?: string;
+  errors?: Record<string, { message: string }>;
 };
 
 export const getFieldStatus = (
   fieldName: keyof FormData,
   value: string | undefined,
   errors: FieldErrors<FormData> | ServerErrors | undefined,
-  touchedFields: Record<string, boolean>
+  touchedFields: Record<string, boolean>,
+  t: TFunction
 ): { message: string; className: string } => {
   if (!touchedFields[fieldName]) {
     return {
-      message: "Заполните поле",
+      message: t("validation.pleaseEnterField"),
       className: "text--warning text--small"
     };
   }
@@ -38,7 +40,7 @@ export const getFieldStatus = (
 
   if (value) {
     return {
-      message: "Заполнено корректно",
+      message: t("validation.filledCorrectly"),
       className: "text--success text--small"
     };
   }

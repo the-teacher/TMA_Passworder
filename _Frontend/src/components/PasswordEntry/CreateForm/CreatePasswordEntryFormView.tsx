@@ -65,25 +65,29 @@ const CreatePasswordEntryFormView = ({
     "serviceName",
     serviceNameValue,
     errors,
-    touchedFields
+    touchedFields,
+    t
   );
   const usernameStatus = getFieldStatus(
     "username",
     usernameValue,
     errors,
-    touchedFields
+    touchedFields,
+    t
   );
   const passwordStatus = getFieldStatus(
     "password",
     passwordValue,
     errors,
-    touchedFields
+    touchedFields,
+    t
   );
   const serviceUrlStatus = getFieldStatus(
     "serviceUrl",
     serviceUrlValue,
     errors,
-    touchedFields
+    touchedFields,
+    t
   );
 
   return (

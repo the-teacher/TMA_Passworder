@@ -3,7 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema, type FormData } from "./validationSchema";
 import { useSubmitForm } from "./hooks/useSubmitForm";
+import type { ServerErrors } from "./utils/getFieldStatus";
 import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
+import EventEmitter from "@lib/EventEmitter";
+import { useTranslation } from "react-i18next";
 
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
@@ -11,6 +14,8 @@ const PASSWORD_CHARS =
 
 const CreatePasswordEntryForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [formError, setFormError] = useState("");
+  const { t } = useTranslation();
 
   const {
     register,
@@ -19,14 +24,14 @@ const CreatePasswordEntryForm = () => {
     watch,
     reset,
     setError,
-    clearErrors,
+    // clearErrors,
     formState: { errors, touchedFields }
   } = useForm<FormData>({
     mode: "onChange",
     resolver: zodResolver(validationSchema)
   });
 
-  const { submitForm, formError, isSubmitting } = useSubmitForm();
+  const { submitForm, isSubmitting } = useSubmitForm();
 
   const generatePassword = () => {
     const password = Array.from(
@@ -44,8 +49,27 @@ const CreatePasswordEntryForm = () => {
     }
   };
 
+  const handleSubmitSuccess = () => {
+    EventEmitter.emit("NOTIFICATION", t("messages.formSubmitted"));
+    reset();
+  };
+
+  const handleSubmitError = (errors: ServerErrors) => {
+    if (errors.form_error) {
+      setFormError(errors.form_error);
+    }
+    if (errors.errors) {
+      Object.entries(errors.errors).forEach(([field, error]) => {
+        setError(field as keyof FormData, {
+          type: "server",
+          message: error.message
+        });
+      });
+    }
+  };
+
   const handleFormSubmit = handleSubmit((data) => {
-    submitForm(data, setError, clearErrors);
+    submitForm(data, handleSubmitSuccess, handleSubmitError);
   });
 
   return (

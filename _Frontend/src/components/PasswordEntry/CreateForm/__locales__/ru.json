@@ -18,6 +18,11 @@
       "hidePassword": "Скрыть пароль",
       "copyPassword": "Копировать пароль",
       "generatePassword": "Сгенерировать пароль"
+    },
+    "validation": {
+      "pleaseEnterField": "Пожалуйста, заполните это поле",
+      "filledCorrectly": "Заполнено корректно",
+      "hasError": "Ошибка в поле"
     }
   }
 }

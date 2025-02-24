@@ -23,6 +23,11 @@
       "hidePassword": "Hide password",
       "copyPassword": "Copy password",
       "generatePassword": "Generate password"
+    },
+    "validation": {
+      "pleaseEnterField": "Please fill in this field",
+      "filledCorrectly": "Filled correctly",
+      "hasError": "Error in field"
     }
   },
   "SearchField": {
