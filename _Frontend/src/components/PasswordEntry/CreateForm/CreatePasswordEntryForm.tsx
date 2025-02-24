@@ -1,92 +1,15 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useSubmitForm } from "./hooks/useSubmitForm";
 import { validationSchema, type FormData } from "./validationSchema";
-import { getFieldStatus } from "./utils/getFieldStatus";
-
-import AppIcon from "@components/AppIcon";
-
-import "@ui-kit/form-inputs.scss";
-import "@ui-kit/buttons.scss";
-import "@ui-kit/form-groups.scss";
-import "@ui-kit/text-styles.scss";
-import "@ui-kit/info-blocks.scss";
-import "@ui-kit/common.scss";
-import "@ui-kit/spaces.scss";
-
-import "./styles.scss";
+import { useSubmitForm } from "./hooks/useSubmitForm";
+import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 
 const PASSWORD_LENGTH = 10;
 const PASSWORD_CHARS =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
-type EyeIconProps = {
-  showPassword: boolean;
-  onClick: () => void;
-};
-
-const EyeIcon = ({ showPassword, onClick }: EyeIconProps) => {
-  const { t } = useTranslation("CreatePasswordEntryForm");
-
-  return (
-    <AppIcon
-      size={16}
-      type={showPassword ? "eye-off" : "eye"}
-      onClick={onClick}
-      title={t(showPassword ? "actions.hidePassword" : "actions.showPassword")}
-      alt={t(showPassword ? "actions.hidePassword" : "actions.showPassword")}
-    />
-  );
-};
-
-type CopyButtonProps = {
-  onClick: () => void;
-};
-
-const CopyButton = ({ onClick }: CopyButtonProps) => {
-  const { t } = useTranslation("CreatePasswordEntryForm");
-
-  return (
-    <button
-      type="button"
-      className="btn btn--icon"
-      onClick={onClick}
-      title={t("actions.copyPassword")}
-    >
-      <img src="/icons/clipboard-check.svg" alt={t("actions.copyPassword")} />
-    </button>
-  );
-};
-
-type GenerateButtonProps = {
-  onClick: () => void;
-};
-
-const GenerateButton = ({ onClick }: GenerateButtonProps) => {
-  const { t } = useTranslation("CreatePasswordEntryForm");
-
-  return (
-    <button
-      type="button"
-      className="btn btn--icon"
-      onClick={onClick}
-      title={t("actions.generatePassword")}
-    >
-      <img src="/icons/refresh.svg" alt={t("actions.generatePassword")} />
-    </button>
-  );
-};
-
-const FormError = ({ children }: { children: string | React.ReactNode }) => (
-  <div className="info info--danger mb20">{children}</div>
-);
-
 const CreatePasswordEntryForm = () => {
-  const { t } = useTranslation("CreatePasswordEntryForm");
-  const { t: c } = useTranslation("common");
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -105,38 +28,6 @@ const CreatePasswordEntryForm = () => {
 
   const { submitForm, formError, isSubmitting } = useSubmitForm();
 
-  // Watch form fields
-  const serviceNameValue = watch("serviceName");
-  const usernameValue = watch("username");
-  const passwordValue = watch("password");
-  const serviceUrlValue = watch("serviceUrl");
-
-  // Get field statuses
-  const serviceNameStatus = getFieldStatus(
-    "serviceName",
-    serviceNameValue,
-    errors,
-    touchedFields
-  );
-  const usernameStatus = getFieldStatus(
-    "username",
-    usernameValue,
-    errors,
-    touchedFields
-  );
-  const passwordStatus = getFieldStatus(
-    "password",
-    passwordValue,
-    errors,
-    touchedFields
-  );
-  const serviceUrlStatus = getFieldStatus(
-    "serviceUrl",
-    serviceUrlValue,
-    errors,
-    touchedFields
-  );
-
   const generatePassword = () => {
     const password = Array.from(
       { length: PASSWORD_LENGTH },
@@ -147,7 +38,7 @@ const CreatePasswordEntryForm = () => {
 
   const copyPassword = async () => {
     try {
-      await navigator.clipboard.writeText(passwordValue || "");
+      await navigator.clipboard.writeText(watch("password") || "");
     } catch (err) {
       console.error("Failed to copy password:", err);
     }
@@ -158,118 +49,20 @@ const CreatePasswordEntryForm = () => {
   });
 
   return (
-    <>
-      <h2 className="text-center">{t("title")}</h2>
-
-      {formError && <FormError>{formError}</FormError>}
-
-      <form
-        className="create-password-form"
-        onSubmit={handleFormSubmit}
-        role="create-password-form"
-      >
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="serviceName">
-            {t("fields.serviceName")}
-          </label>
-          <input
-            className="form-input"
-            id="serviceName"
-            type="text"
-            aria-invalid={!!errors.serviceName}
-            {...register("serviceName")}
-          />
-          <div className={`form-group--info ${serviceNameStatus.className}`}>
-            {serviceNameStatus.message}
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="username">
-            {t("fields.username")}
-          </label>
-          <input
-            className="form-input"
-            id="username"
-            type="text"
-            aria-invalid={!!errors.username}
-            {...register("username")}
-          />
-          <div className={`form-group--info ${usernameStatus.className}`}>
-            {usernameStatus.message}
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="serviceUrl">
-            {t("fields.url")}
-          </label>
-          <input
-            className="form-input"
-            id="serviceUrl"
-            type="url"
-            placeholder="https://"
-            {...register("serviceUrl")}
-          />
-          <div className={`form-group--info ${serviceUrlStatus.className}`}>
-            {serviceUrlStatus.message}
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="password">
-            {t("fields.password")}
-            <EyeIcon
-              showPassword={showPassword}
-              onClick={() => setShowPassword(!showPassword)}
-            />
-          </label>
-          <div className="form-group--input form-group--with-icon">
-            <input
-              className="form-input"
-              id="password"
-              type={showPassword ? "text" : "password"}
-              aria-invalid={!!errors.password}
-              {...register("password")}
-            />
-            <CopyButton onClick={copyPassword} />
-            <GenerateButton onClick={generatePassword} />
-          </div>
-          <div className={`form-group--info ${passwordStatus.className}`}>
-            {passwordStatus.message}
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label className="form-group--label" htmlFor="notes">
-            {t("fields.notes")}
-          </label>
-          <textarea
-            className="form-input"
-            id="notes"
-            rows={4}
-            {...register("notes")}
-          />
-        </div>
-
-        <div className="form-group--actions">
-          <button
-            type="submit"
-            className="btn btn--primary"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? c("saving") : c("save")}
-          </button>
-          <button
-            type="button"
-            className="btn btn--secondary"
-            onClick={() => reset()}
-          >
-            {c("reset")}
-          </button>
-        </div>
-      </form>
-    </>
+    <CreatePasswordEntryFormView
+      register={register}
+      errors={errors}
+      watch={watch}
+      touchedFields={touchedFields}
+      isSubmitting={isSubmitting}
+      showPassword={showPassword}
+      formError={formError}
+      onTogglePassword={() => setShowPassword(!showPassword)}
+      onGeneratePassword={generatePassword}
+      onCopyPassword={copyPassword}
+      onSubmit={handleFormSubmit}
+      onReset={() => reset()}
+    />
   );
 };
 
