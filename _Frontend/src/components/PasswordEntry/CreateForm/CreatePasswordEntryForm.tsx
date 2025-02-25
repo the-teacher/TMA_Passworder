@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 const CreatePasswordEntryForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState("");
-  const { t } = useTranslation();
+  const { t } = useTranslation("CreatePasswordEntryForm");
 
   const {
     register,

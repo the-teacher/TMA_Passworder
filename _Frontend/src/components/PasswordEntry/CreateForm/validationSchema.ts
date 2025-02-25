@@ -1,4 +1,5 @@
 import { z } from "zod";
+import i18n from "@i18n/index";
 
 const VALIDATION = {
   SERVICE_NAME: {
@@ -6,8 +7,8 @@ const VALIDATION = {
     MAX: 10
   },
   USERNAME: {
-    MIN: 3,
-    MAX: 30
+    MIN: 5,
+    MAX: 15
   },
   PASSWORD: {
     MIN: 8,
@@ -18,52 +19,52 @@ const VALIDATION = {
   }
 } as const;
 
+const t = (key: string, params?: Record<string, unknown>) =>
+  i18n.t(`CreatePasswordEntryForm:validation.${key}`, params);
+
 export const validationSchema = z.object({
   serviceName: z
     .string()
     .min(
       VALIDATION.SERVICE_NAME.MIN,
-      `Service name must be at least ${VALIDATION.SERVICE_NAME.MIN} characters`
+      t("serviceName.min", { min: VALIDATION.SERVICE_NAME.MIN })
     )
     .max(
       VALIDATION.SERVICE_NAME.MAX,
-      `Service name must not exceed ${VALIDATION.SERVICE_NAME.MAX} characters`
+      t("serviceName.max", { max: VALIDATION.SERVICE_NAME.MAX })
     ),
 
   username: z
     .string()
     .min(
       VALIDATION.USERNAME.MIN,
-      `Username must be at least ${VALIDATION.USERNAME.MIN} characters`
+      t("username.min", { min: VALIDATION.USERNAME.MIN })
     )
     .max(
       VALIDATION.USERNAME.MAX,
-      `Username must not exceed ${VALIDATION.USERNAME.MAX} characters`
+      t("username.max", { max: VALIDATION.USERNAME.MAX })
     ),
 
   password: z
     .string()
     .min(
       VALIDATION.PASSWORD.MIN,
-      `Password must be at least ${VALIDATION.PASSWORD.MIN} characters`
+      t("password.min", { min: VALIDATION.PASSWORD.MIN })
     )
     .max(
       VALIDATION.PASSWORD.MAX,
-      `Password must not exceed ${VALIDATION.PASSWORD.MAX} characters`
+      t("password.max", { max: VALIDATION.PASSWORD.MAX })
     ),
 
   serviceUrl: z
     .string()
-    .url("Please enter a valid URL")
+    .url(t("serviceUrl.invalid"))
     .optional()
     .or(z.literal("")),
 
   notes: z
     .string()
-    .max(
-      VALIDATION.NOTES.MAX,
-      `Notes must not exceed ${VALIDATION.NOTES.MAX} characters`
-    )
+    .max(VALIDATION.NOTES.MAX, t("notes.max", { max: VALIDATION.NOTES.MAX }))
     .optional()
     .or(z.literal(""))
 });

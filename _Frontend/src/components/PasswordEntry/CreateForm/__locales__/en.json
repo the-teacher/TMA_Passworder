@@ -22,7 +22,25 @@
     "validation": {
       "pleaseEnterField": "Please fill in this field",
       "filledCorrectly": "Filled correctly",
-      "hasError": "Error in field"
+      "hasError": "Error in field",
+      "serviceName": {
+        "min": "Service name must be at least {{min}} characters",
+        "max": "Service name must not exceed {{max}} characters"
+      },
+      "username": {
+        "min": "Username must be at least {{min}} characters",
+        "max": "Username must not exceed {{max}} characters"
+      },
+      "password": {
+        "min": "Password must be at least {{min}} characters",
+        "max": "Password must not exceed {{max}} characters"
+      },
+      "serviceUrl": {
+        "invalid": "Please enter a valid URL"
+      },
+      "notes": {
+        "max": "Notes must not exceed {{max}} characters"
+      }
     }
   }
 }
