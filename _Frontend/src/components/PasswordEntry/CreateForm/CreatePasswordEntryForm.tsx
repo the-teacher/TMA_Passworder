@@ -15,15 +15,7 @@ const CreatePasswordEntryForm = () => {
   const [formError, setFormError] = useState("");
   const { t } = useTranslation("CreatePasswordEntryForm");
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    setError,
-    formState: { errors, dirtyFields, isValid }
-  } = useForm<FormData>({
+  const methods = useForm<FormData>({
     mode: "onChange",
     reValidateMode: "onChange",
     criteriaMode: "all",
@@ -37,20 +29,20 @@ const CreatePasswordEntryForm = () => {
     }
   });
 
-  const { submitForm, isSubmitting } = useSubmitForm();
+  const { submitForm } = useSubmitForm();
 
   const handleGeneratePassword = () => {
     const password = generatePassword();
-    setValue("password", password, { shouldValidate: true });
+    methods.setValue("password", password, { shouldValidate: true });
   };
 
   const copyPassword = async () => {
-    await copyToClipboard(watch("password") || "");
+    await copyToClipboard(methods.watch("password") || "");
   };
 
   const handleSubmitSuccess = () => {
     EventEmitter.emit("NOTIFICATION", t("messages.formSubmitted"));
-    reset();
+    methods.reset();
   };
 
   const handleSubmitError = (errors: ServerErrors) => {
@@ -59,7 +51,7 @@ const CreatePasswordEntryForm = () => {
     }
     if (errors.errors) {
       Object.entries(errors.errors).forEach(([field, error]) => {
-        setError(field as keyof FormData, {
+        methods.setError(field as keyof FormData, {
           type: "server",
           message: error.message
         });
@@ -67,26 +59,20 @@ const CreatePasswordEntryForm = () => {
     }
   };
 
-  const handleFormSubmit = handleSubmit((data) => {
+  const handleFormSubmit = methods.handleSubmit((data) => {
     submitForm(data, handleSubmitSuccess, handleSubmitError);
   });
 
   return (
     <CreatePasswordEntryFormView
-      register={register}
-      setValue={setValue}
-      errors={errors}
-      watch={watch}
-      dirtyFields={dirtyFields}
-      isSubmitting={isSubmitting}
-      isValid={isValid}
+      methods={methods}
       showPassword={showPassword}
       formError={formError}
       onTogglePassword={() => setShowPassword(!showPassword)}
       onGeneratePassword={handleGeneratePassword}
       onCopyPassword={copyPassword}
       onSubmit={handleFormSubmit}
-      onReset={() => reset()}
+      onReset={() => methods.reset()}
     />
   );
 };
