@@ -1,11 +1,17 @@
 import {
   type UseFormRegister,
   type FieldErrors,
-  type UseFormWatch
+  type UseFormWatch,
+  type UseFormSetValue
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { type FormData } from "./validationSchema";
 import { getFieldStatus } from "./utils/getFieldStatus";
+import {
+  createHandleSpaces,
+  createHandleTrim,
+  createHandleNoSpaces
+} from "./utils/handleSpacesUtils";
 
 import EyeIcon from "./components/EyeIcon";
 import CopyButton from "./components/CopyButton";
@@ -24,6 +30,7 @@ import "./styles.scss";
 
 export type Props = {
   register: UseFormRegister<FormData>;
+  setValue: UseFormSetValue<FormData>;
   errors: FieldErrors<FormData>;
   watch: UseFormWatch<FormData>;
   dirtyFields: Record<string, boolean>;
@@ -36,19 +43,11 @@ export type Props = {
   onSubmit: (e: React.FormEvent) => void;
   onReset: () => void;
   isValid: boolean;
-  handleSpaces: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-  handleTrim: (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-  handleNoSpaces: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
 };
 
 const CreatePasswordEntryFormView = ({
   register,
+  setValue,
   errors,
   watch,
   dirtyFields,
@@ -60,13 +59,14 @@ const CreatePasswordEntryFormView = ({
   onCopyPassword,
   onSubmit,
   onReset,
-  isValid,
-  handleSpaces,
-  handleTrim,
-  handleNoSpaces
+  isValid
 }: Props) => {
   const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: c } = useTranslation("common");
+
+  const handleSpaces = createHandleSpaces(setValue);
+  const handleTrim = createHandleTrim(setValue);
+  const handleNoSpaces = createHandleNoSpaces(setValue);
 
   // Watch form fields
   const serviceNameValue = watch("serviceName");

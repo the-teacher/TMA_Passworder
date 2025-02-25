@@ -4,7 +4,8 @@ import type { Props } from "../CreatePasswordEntryFormView";
 import type {
   UseFormRegister,
   UseFormRegisterReturn,
-  ChangeHandler
+  ChangeHandler,
+  UseFormSetValue
 } from "react-hook-form";
 import type { FormData } from "../validationSchema";
 
@@ -115,6 +116,7 @@ describe("CreatePasswordEntryFormView", () => {
 
   const defaultProps: Props = {
     register: jest.fn() as UseFormRegister<FormData>,
+    setValue: jest.fn() as UseFormSetValue<FormData>,
     errors: {},
     watch: jest.fn(),
     dirtyFields: {},
@@ -222,23 +224,18 @@ describe("CreatePasswordEntryFormView", () => {
     expect(onReset).toHaveBeenCalled();
   });
 
-  it("calls handleSpaces on serviceName input change", () => {
-    const handleSpaces = jest.fn();
-    renderComponent({ handleSpaces });
+  it("calls setValue with normalized spaces on serviceName input change", () => {
+    const setValue = jest.fn();
+    renderComponent({ setValue });
 
     const input = screen.getByLabelText(/fields.serviceName/);
     fireEvent.change(input, {
       target: { value: "test  spaces", name: "serviceName" }
     });
 
-    expect(handleSpaces).toHaveBeenCalledWith(
-      expect.objectContaining({
-        target: expect.objectContaining({
-          value: "test  spaces",
-          name: "serviceName"
-        })
-      })
-    );
+    expect(setValue).toHaveBeenCalledWith("serviceName", "test spaces", {
+      shouldValidate: true
+    });
   });
 
   it("calls handleTrim on serviceName input blur", () => {

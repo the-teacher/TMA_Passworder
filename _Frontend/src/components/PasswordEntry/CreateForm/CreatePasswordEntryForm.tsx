@@ -10,12 +10,6 @@ import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import EventEmitter from "@lib/EventEmitter";
 import { useTranslation } from "react-i18next";
 
-import {
-  createHandleSpaces,
-  createHandleTrim,
-  createHandleNoSpaces
-} from "./utils/handleSpacesUtils";
-
 const CreatePasswordEntryForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState("");
@@ -77,13 +71,10 @@ const CreatePasswordEntryForm = () => {
     submitForm(data, handleSubmitSuccess, handleSubmitError);
   });
 
-  const handleSpaces = createHandleSpaces(setValue);
-  const handleTrim = createHandleTrim(setValue);
-  const handleNoSpaces = createHandleNoSpaces(setValue);
-
   return (
     <CreatePasswordEntryFormView
       register={register}
+      setValue={setValue}
       errors={errors}
       watch={watch}
       dirtyFields={dirtyFields}
@@ -91,9 +82,6 @@ const CreatePasswordEntryForm = () => {
       isValid={isValid}
       showPassword={showPassword}
       formError={formError}
-      handleSpaces={handleSpaces}
-      handleTrim={handleTrim}
-      handleNoSpaces={handleNoSpaces}
       onTogglePassword={() => setShowPassword(!showPassword)}
       onGeneratePassword={handleGeneratePassword}
       onCopyPassword={copyPassword}
