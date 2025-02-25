@@ -22,7 +22,7 @@ const CreatePasswordEntryForm = () => {
     watch,
     reset,
     setError,
-    formState: { errors, touchedFields, dirtyFields }
+    formState: { errors, touchedFields, dirtyFields, isValid }
   } = useForm<FormData>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -79,6 +79,7 @@ const CreatePasswordEntryForm = () => {
       touchedFields={touchedFields}
       dirtyFields={dirtyFields}
       isSubmitting={isSubmitting}
+      isValid={isValid}
       showPassword={showPassword}
       formError={formError}
       onTogglePassword={() => setShowPassword(!showPassword)}

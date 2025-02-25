@@ -36,6 +36,7 @@ type Props = {
   onCopyPassword: () => void;
   onSubmit: (e: React.FormEvent) => void;
   onReset: () => void;
+  isValid: boolean;
 };
 
 const CreatePasswordEntryFormView = ({
@@ -51,7 +52,8 @@ const CreatePasswordEntryFormView = ({
   onGeneratePassword,
   onCopyPassword,
   onSubmit,
-  onReset
+  onReset,
+  isValid
 }: Props) => {
   const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: c } = useTranslation("common");
@@ -188,7 +190,7 @@ const CreatePasswordEntryFormView = ({
           <button
             type="submit"
             className="btn btn--primary"
-            disabled={isSubmitting}
+            disabled={!isValid || isSubmitting}
           >
             {isSubmitting ? c("saving") : c("save")}
           </button>

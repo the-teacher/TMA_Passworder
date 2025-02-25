@@ -4,11 +4,11 @@ import i18n from "@i18n/index";
 const VALIDATION = {
   SERVICE_NAME: {
     MIN: 3,
-    MAX: 10
+    MAX: 20
   },
   USERNAME: {
-    MIN: 5,
-    MAX: 15
+    MIN: 3,
+    MAX: 30
   },
   PASSWORD: {
     MIN: 8,
