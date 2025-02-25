@@ -11,16 +11,8 @@ $header-hover: var(--color-background-hover, #f3f4f6);
   background-color: $header-background;
   border-bottom: 1px solid $header-border;
 
-  min-height: 60px;
   margin: auto;
   max-width: 1440px;
-
-  // Add fixed positioning
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
 
   &__title {
     margin: 0;
@@ -48,4 +40,14 @@ $header-hover: var(--color-background-hover, #f3f4f6);
       height: 35px;
     }
   }
+}
+
+// Position
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  min-height: 60px;
 }

@@ -6,6 +6,7 @@ import AppIcon from "@components/AppIcon";
 import "@ui-kit/buttons.scss";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/form-inputs.scss";
+import "./styles.scss";
 
 const MIN_SEARCH_LENGTH = 3;
 

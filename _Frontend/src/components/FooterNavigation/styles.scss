@@ -6,15 +6,6 @@
   padding: 8px 32px;
   background-color: #fff;
   border-top: 1px solid #eee;
-
-  min-height: 60px;
-  margin: auto;
-  max-width: 1440px;
-
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .footer-navigation__item {
@@ -47,4 +38,16 @@
   .footer-navigation__text {
     font-size: 10px;
   }
+}
+
+.footer-navigation {
+  margin: auto;
+
+  min-height: 60px;
+  max-width: 1440px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
