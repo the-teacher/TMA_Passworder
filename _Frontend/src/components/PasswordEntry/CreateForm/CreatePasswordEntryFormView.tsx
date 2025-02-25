@@ -22,7 +22,7 @@ import "@ui-kit/spaces.scss";
 
 import "./styles.scss";
 
-type Props = {
+export type Props = {
   register: UseFormRegister<FormData>;
   errors: FieldErrors<FormData>;
   watch: UseFormWatch<FormData>;

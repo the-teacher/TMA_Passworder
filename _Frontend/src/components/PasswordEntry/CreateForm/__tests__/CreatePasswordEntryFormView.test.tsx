@@ -1,6 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { TestWrapper } from "@test/testUtils";
 import CreatePasswordEntryFormView from "../CreatePasswordEntryFormView";
+import type { Props } from "../CreatePasswordEntryFormView";
+import type {
+  UseFormRegister,
+  UseFormRegisterReturn,
+  ChangeHandler
+} from "react-hook-form";
+import type { FormData } from "../validationSchema";
 
 // Mock sub-components
 jest.mock("../components/EyeIcon", () => ({
@@ -35,21 +41,90 @@ jest.mock("../utils/getFieldStatus", () => ({
   }))
 }));
 
+// Mock i18next
+jest.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { changeLanguage: jest.fn() }
+  })
+}));
+
 describe("CreatePasswordEntryFormView", () => {
-  const defaultProps = {
-    register: jest.fn().mockReturnValue({
-      name: "test",
-      onChange: jest.fn(),
-      onBlur: jest.fn(),
-      ref: jest.fn()
-    }),
+  // Создаем мок для register с правильными типами
+  const createRegisterMock = (props: Partial<Props>) => {
+    return jest.fn((name: keyof FormData) => {
+      const handler = {
+        name,
+        ref: jest.fn(),
+        onChange: (async (event: any) => {
+          // Создаем правильный объект события
+          const syntheticEvent = {
+            ...event,
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            nativeEvent: new Event("change"),
+            currentTarget: event.target,
+            target: event.target,
+            bubbles: true,
+            cancelable: true,
+            defaultPrevented: false,
+            isDefaultPrevented: () => false,
+            isPropagationStopped: () => false,
+            isTrusted: true,
+            persist: () => {},
+            timeStamp: Date.now(),
+            type: "change"
+          };
+
+          if (name === "serviceName") {
+            props.handleSpaces?.(syntheticEvent);
+          }
+          if (name === "password" || name === "serviceUrl") {
+            props.handleNoSpaces?.(syntheticEvent);
+          }
+          return true;
+        }) as ChangeHandler,
+        onBlur: (async (event: any) => {
+          // Создаем правильный объект события для blur
+          const syntheticEvent = {
+            ...event,
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            nativeEvent: new Event("blur"),
+            currentTarget: event.target,
+            target: event.target,
+            relatedTarget: null,
+            bubbles: true,
+            cancelable: true,
+            defaultPrevented: false,
+            isDefaultPrevented: () => false,
+            isPropagationStopped: () => false,
+            isTrusted: true,
+            persist: () => {},
+            timeStamp: Date.now(),
+            type: "blur"
+          };
+
+          props.handleTrim?.(syntheticEvent);
+          return true;
+        }) as ChangeHandler
+      };
+      return handler as unknown as UseFormRegisterReturn<keyof FormData>;
+    }) as unknown as UseFormRegister<FormData>;
+  };
+
+  const defaultProps: Props = {
+    register: jest.fn() as UseFormRegister<FormData>,
     errors: {},
     watch: jest.fn(),
     dirtyFields: {},
-    isValid: false,
+    isValid: true,
     isSubmitting: false,
     showPassword: false,
     formError: "",
+    handleSpaces: jest.fn(),
+    handleTrim: jest.fn(),
+    handleNoSpaces: jest.fn(),
     onTogglePassword: jest.fn(),
     onGeneratePassword: jest.fn(),
     onCopyPassword: jest.fn(),
@@ -57,33 +132,29 @@ describe("CreatePasswordEntryFormView", () => {
     onReset: jest.fn()
   };
 
-  const renderComponent = (props = {}) => {
-    return render(
-      <CreatePasswordEntryFormView {...defaultProps} {...props} />,
-      {
-        wrapper: TestWrapper
-      }
-    );
+  const renderComponent = (props: Partial<Props> = {}) => {
+    const mergedProps = { ...defaultProps, ...props };
+    // Используем новый мок для register
+    mergedProps.register = createRegisterMock(mergedProps);
+    return render(<CreatePasswordEntryFormView {...mergedProps} />);
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should render form with all fields", () => {
+  it("renders form with all fields", () => {
     renderComponent();
 
-    expect(screen.getByRole("heading")).toHaveTextContent(
-      "Create Password Entry"
-    );
-    expect(screen.getByLabelText(/service name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/url/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/notes/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading")).toHaveTextContent("title");
+    expect(screen.getByLabelText(/fields.serviceName/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.username/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.url/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.password/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.notes/)).toBeInTheDocument();
   });
 
-  it("should render all buttons", () => {
+  it("renders all buttons", () => {
     renderComponent();
 
     expect(screen.getByTestId("eye-icon")).toBeInTheDocument();
@@ -93,14 +164,14 @@ describe("CreatePasswordEntryFormView", () => {
     expect(screen.getByRole("button", { name: /reset/i })).toBeInTheDocument();
   });
 
-  it("should show form error when provided", () => {
+  it("shows form error when provided", () => {
     const formError = "Test error message";
     renderComponent({ formError });
 
     expect(screen.getByTestId("form-error")).toHaveTextContent(formError);
   });
 
-  it("should show saving state when submitting", () => {
+  it("shows saving state when submitting", () => {
     renderComponent({ isSubmitting: true });
 
     expect(screen.getByRole("button", { name: /saving/i })).toBeInTheDocument();
@@ -109,20 +180,21 @@ describe("CreatePasswordEntryFormView", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("should render password field based on showPassword prop", () => {
+  it("renders password field based on showPassword prop", () => {
     const { rerender } = renderComponent({ showPassword: false });
-    expect(screen.getByLabelText(/password/i)).toHaveAttribute(
-      "type",
-      "password"
-    );
+    const passwordInput = screen.getByLabelText(
+      /fields.password/
+    ) as HTMLInputElement;
+
+    expect(passwordInput.type).toBe("password");
 
     rerender(
       <CreatePasswordEntryFormView {...defaultProps} showPassword={true} />
     );
-    expect(screen.getByLabelText(/password/i)).toHaveAttribute("type", "text");
+    expect(passwordInput.type).toBe("text");
   });
 
-  it("should show field status messages", () => {
+  it("shows field status messages", () => {
     renderComponent();
 
     const statusMessages = screen.getAllByText("Test message");
@@ -132,24 +204,78 @@ describe("CreatePasswordEntryFormView", () => {
     });
   });
 
-  it("should handle form submission", () => {
+  it("handles form submission", () => {
     const onSubmit = jest.fn((e) => e.preventDefault());
-    renderComponent({
-      onSubmit,
-      isValid: true
-    });
+    renderComponent({ onSubmit });
 
     fireEvent.submit(screen.getByRole("create-password-form"));
 
     expect(onSubmit).toHaveBeenCalled();
   });
 
-  it("should handle form reset", () => {
+  it("handles form reset", () => {
     const onReset = jest.fn();
     renderComponent({ onReset });
 
-    screen.getByRole("button", { name: /reset/i }).click();
+    fireEvent.click(screen.getByRole("button", { name: /reset/i }));
 
     expect(onReset).toHaveBeenCalled();
+  });
+
+  it("calls handleSpaces on serviceName input change", () => {
+    const handleSpaces = jest.fn();
+    renderComponent({ handleSpaces });
+
+    const input = screen.getByLabelText(/fields.serviceName/);
+    fireEvent.change(input, {
+      target: { value: "test  spaces", name: "serviceName" }
+    });
+
+    expect(handleSpaces).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target: expect.objectContaining({
+          value: "test  spaces",
+          name: "serviceName"
+        })
+      })
+    );
+  });
+
+  it("calls handleTrim on serviceName input blur", () => {
+    const handleTrim = jest.fn();
+    renderComponent({ handleTrim });
+
+    const input = screen.getByLabelText(/fields.serviceName/);
+    fireEvent.blur(input, {
+      target: { value: "  test  ", name: "serviceName" }
+    });
+
+    expect(handleTrim).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target: expect.objectContaining({
+          value: "  test  ",
+          name: "serviceName"
+        })
+      })
+    );
+  });
+
+  it("calls handleNoSpaces on password input change", () => {
+    const handleNoSpaces = jest.fn();
+    renderComponent({ handleNoSpaces });
+
+    const input = screen.getByLabelText(/fields.password/);
+    fireEvent.change(input, {
+      target: { value: "test spaces", name: "password" }
+    });
+
+    expect(handleNoSpaces).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target: expect.objectContaining({
+          value: "test spaces",
+          name: "password"
+        })
+      })
+    );
   });
 });

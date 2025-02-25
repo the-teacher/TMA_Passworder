@@ -9,7 +9,12 @@ import { generatePassword } from "./utils/generatePassword";
 import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import EventEmitter from "@lib/EventEmitter";
 import { useTranslation } from "react-i18next";
-import { normalizeSpaces, trimValue } from "./utils/stringUtils";
+
+import {
+  createHandleSpaces,
+  createHandleTrim,
+  createHandleNoSpaces
+} from "./utils/handleSpacesUtils";
 
 const CreatePasswordEntryForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -72,29 +77,9 @@ const CreatePasswordEntryForm = () => {
     submitForm(data, handleSubmitSuccess, handleSubmitError);
   });
 
-  const handleSpaces = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const value = event.target.value;
-    const fieldName = event.target.name as keyof FormData;
-    setValue(fieldName, normalizeSpaces(value), { shouldValidate: true });
-  };
-
-  const handleTrim = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const value = event.target.value;
-    const fieldName = event.target.name as keyof FormData;
-    setValue(fieldName, trimValue(value), { shouldValidate: true });
-  };
-
-  const handleNoSpaces = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const value = event.target.value;
-    const fieldName = event.target.name as keyof FormData;
-    setValue(fieldName, value.replace(/\s/g, ""), { shouldValidate: true });
-  };
+  const handleSpaces = createHandleSpaces(setValue);
+  const handleTrim = createHandleTrim(setValue);
+  const handleNoSpaces = createHandleNoSpaces(setValue);
 
   return (
     <CreatePasswordEntryFormView
