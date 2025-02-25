@@ -4,13 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema, type FormData } from "./validationSchema";
 import { useSubmitForm } from "./hooks/useSubmitForm";
 import type { ServerErrors } from "./utils/getFieldStatus";
+import { copyToClipboard } from "./utils/copyToClipboard";
+import { generatePassword } from "./utils/generatePassword";
 import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import EventEmitter from "@lib/EventEmitter";
 import { useTranslation } from "react-i18next";
-
-const PASSWORD_LENGTH = 10;
-const PASSWORD_CHARS =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
 const CreatePasswordEntryForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,20 +31,13 @@ const CreatePasswordEntryForm = () => {
 
   const { submitForm, isSubmitting } = useSubmitForm();
 
-  const generatePassword = () => {
-    const password = Array.from(
-      { length: PASSWORD_LENGTH },
-      () => PASSWORD_CHARS[Math.floor(Math.random() * PASSWORD_CHARS.length)]
-    ).join("");
+  const handleGeneratePassword = () => {
+    const password = generatePassword();
     setValue("password", password, { shouldValidate: true });
   };
 
   const copyPassword = async () => {
-    try {
-      await navigator.clipboard.writeText(watch("password") || "");
-    } catch (err) {
-      console.error("Failed to copy password:", err);
-    }
+    await copyToClipboard(watch("password") || "");
   };
 
   const handleSubmitSuccess = () => {
@@ -82,7 +73,7 @@ const CreatePasswordEntryForm = () => {
       showPassword={showPassword}
       formError={formError}
       onTogglePassword={() => setShowPassword(!showPassword)}
-      onGeneratePassword={generatePassword}
+      onGeneratePassword={handleGeneratePassword}
       onCopyPassword={copyPassword}
       onSubmit={handleFormSubmit}
       onReset={() => reset()}

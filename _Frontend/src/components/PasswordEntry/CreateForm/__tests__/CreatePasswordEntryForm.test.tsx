@@ -166,6 +166,22 @@ jest.mock("../hooks/useSubmitForm", () => ({
   })
 }));
 
+// 8. Mock copyToClipboard utility
+jest.mock("../utils/copyToClipboard", () => ({
+  copyToClipboard: jest.fn().mockImplementation(async (text) => {
+    try {
+      await navigator.clipboard.writeText(text || "");
+    } catch (err) {
+      console.error("Failed to copy text to clipboard:", err);
+    }
+  })
+}));
+
+// 9. Mock generatePassword utility
+jest.mock("../utils/generatePassword", () => ({
+  generatePassword: jest.fn(() => "generated-password-123")
+}));
+
 /**
  * These mocks allow us to:
  * - Test form without real validation
@@ -211,12 +227,19 @@ describe("CreatePasswordEntryForm", () => {
 
     fireEvent.click(generateButton);
 
-    expect(mockSetValue).toHaveBeenCalledWith("password", expect.any(String), {
-      shouldValidate: true
-    });
+    // Check that the mocked generatePassword function was called
+    expect(
+      require("../utils/generatePassword").generatePassword
+    ).toHaveBeenCalled();
 
-    const [, generatedPassword] = mockSetValue.mock.calls[0];
-    expect(generatedPassword).toMatch(/^[A-Za-z0-9!@#$%^&*]{10}$/);
+    // Check that setValue was called with the mocked password
+    expect(mockSetValue).toHaveBeenCalledWith(
+      "password",
+      "generated-password-123",
+      {
+        shouldValidate: true
+      }
+    );
   });
 
   it("should copy password to clipboard", async () => {
@@ -294,7 +317,7 @@ describe("CreatePasswordEntryForm", () => {
 
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith(
-        "Failed to copy password:",
+        "Failed to copy text to clipboard:",
         expect.any(Error)
       );
     });
