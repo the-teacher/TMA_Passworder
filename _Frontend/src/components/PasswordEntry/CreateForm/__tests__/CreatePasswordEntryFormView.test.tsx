@@ -37,15 +37,16 @@ jest.mock("../utils/getFieldStatus", () => ({
 
 describe("CreatePasswordEntryFormView", () => {
   const defaultProps = {
-    register: jest.fn((name) => ({
-      name,
+    register: jest.fn().mockReturnValue({
+      name: "test",
       onChange: jest.fn(),
       onBlur: jest.fn(),
       ref: jest.fn()
-    })),
+    }),
     errors: {},
     watch: jest.fn(),
-    touchedFields: {},
+    dirtyFields: {},
+    isValid: false,
     isSubmitting: false,
     showPassword: false,
     formError: "",
@@ -132,12 +133,13 @@ describe("CreatePasswordEntryFormView", () => {
   });
 
   it("should handle form submission", () => {
-    const onSubmit = jest.fn((e) => {
-      e.preventDefault();
+    const onSubmit = jest.fn((e) => e.preventDefault());
+    renderComponent({
+      onSubmit,
+      isValid: true
     });
-    renderComponent({ onSubmit });
 
-    fireEvent.click(screen.getByRole("button", { name: /save/i }));
+    fireEvent.submit(screen.getByRole("create-password-form"));
 
     expect(onSubmit).toHaveBeenCalled();
   });

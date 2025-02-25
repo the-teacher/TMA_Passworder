@@ -9,6 +9,7 @@ import { generatePassword } from "./utils/generatePassword";
 import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import EventEmitter from "@lib/EventEmitter";
 import { useTranslation } from "react-i18next";
+import { normalizeSpaces, trimValue } from "./utils/stringUtils";
 
 const CreatePasswordEntryForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +23,7 @@ const CreatePasswordEntryForm = () => {
     watch,
     reset,
     setError,
-    formState: { errors, touchedFields, dirtyFields, isValid }
+    formState: { errors, dirtyFields, isValid }
   } = useForm<FormData>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -71,17 +72,43 @@ const CreatePasswordEntryForm = () => {
     submitForm(data, handleSubmitSuccess, handleSubmitError);
   });
 
+  const handleSpaces = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    const fieldName = event.target.name as keyof FormData;
+    setValue(fieldName, normalizeSpaces(value), { shouldValidate: true });
+  };
+
+  const handleTrim = (
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    const fieldName = event.target.name as keyof FormData;
+    setValue(fieldName, trimValue(value), { shouldValidate: true });
+  };
+
+  const handleNoSpaces = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    const fieldName = event.target.name as keyof FormData;
+    setValue(fieldName, value.replace(/\s/g, ""), { shouldValidate: true });
+  };
+
   return (
     <CreatePasswordEntryFormView
       register={register}
       errors={errors}
       watch={watch}
-      touchedFields={touchedFields}
       dirtyFields={dirtyFields}
       isSubmitting={isSubmitting}
       isValid={isValid}
       showPassword={showPassword}
       formError={formError}
+      handleSpaces={handleSpaces}
+      handleTrim={handleTrim}
+      handleNoSpaces={handleNoSpaces}
       onTogglePassword={() => setShowPassword(!showPassword)}
       onGeneratePassword={handleGeneratePassword}
       onCopyPassword={copyPassword}

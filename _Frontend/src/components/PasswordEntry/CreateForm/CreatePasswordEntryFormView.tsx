@@ -26,7 +26,6 @@ type Props = {
   register: UseFormRegister<FormData>;
   errors: FieldErrors<FormData>;
   watch: UseFormWatch<FormData>;
-  touchedFields: Record<string, boolean>;
   dirtyFields: Record<string, boolean>;
   isSubmitting: boolean;
   showPassword: boolean;
@@ -37,13 +36,21 @@ type Props = {
   onSubmit: (e: React.FormEvent) => void;
   onReset: () => void;
   isValid: boolean;
+  handleSpaces: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  handleTrim: (
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  handleNoSpaces: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 };
 
 const CreatePasswordEntryFormView = ({
   register,
   errors,
   watch,
-  touchedFields,
   dirtyFields,
   isSubmitting,
   showPassword,
@@ -53,7 +60,10 @@ const CreatePasswordEntryFormView = ({
   onCopyPassword,
   onSubmit,
   onReset,
-  isValid
+  isValid,
+  handleSpaces,
+  handleTrim,
+  handleNoSpaces
 }: Props) => {
   const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: c } = useTranslation("common");
@@ -88,7 +98,7 @@ const CreatePasswordEntryFormView = ({
   );
   const serviceUrlStatus = getFieldStatus(
     "serviceUrl",
-    serviceUrlValue,
+    serviceUrlValue || "",
     errors,
     dirtyFields,
     t
@@ -114,7 +124,10 @@ const CreatePasswordEntryFormView = ({
             id="serviceName"
             type="text"
             aria-invalid={!!errors.serviceName}
-            {...register("serviceName")}
+            {...register("serviceName", {
+              onChange: handleSpaces,
+              onBlur: handleTrim
+            })}
           />
           <div className={`form-group--info ${serviceNameStatus.className}`}>
             {serviceNameStatus.message}
@@ -130,7 +143,9 @@ const CreatePasswordEntryFormView = ({
             id="username"
             type="text"
             aria-invalid={!!errors.username}
-            {...register("username")}
+            {...register("username", {
+              onBlur: handleTrim
+            })}
           />
           <div className={`form-group--info ${usernameStatus.className}`}>
             {usernameStatus.message}
@@ -146,7 +161,10 @@ const CreatePasswordEntryFormView = ({
             id="serviceUrl"
             type="url"
             placeholder="https://"
-            {...register("serviceUrl")}
+            {...register("serviceUrl", {
+              onChange: handleNoSpaces,
+              onBlur: handleTrim
+            })}
           />
           <div className={`form-group--info ${serviceUrlStatus.className}`}>
             {serviceUrlStatus.message}
@@ -164,7 +182,10 @@ const CreatePasswordEntryFormView = ({
               id="password"
               type={showPassword ? "text" : "password"}
               aria-invalid={!!errors.password}
-              {...register("password")}
+              {...register("password", {
+                onChange: handleNoSpaces,
+                onBlur: handleTrim
+              })}
             />
             <CopyButton onClick={onCopyPassword} />
             <GenerateButton onClick={onGeneratePassword} />
@@ -182,7 +203,9 @@ const CreatePasswordEntryFormView = ({
             className="form-input"
             id="notes"
             rows={4}
-            {...register("notes")}
+            {...register("notes", {
+              onBlur: handleTrim
+            })}
           />
         </div>
 

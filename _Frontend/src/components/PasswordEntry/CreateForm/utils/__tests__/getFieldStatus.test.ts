@@ -1,5 +1,6 @@
 import { getFieldStatus } from "../getFieldStatus";
 import type { TFunction } from "i18next";
+import type { FieldError } from "react-hook-form";
 
 describe("getFieldStatus", () => {
   const mockT = ((key: string) => {
@@ -9,6 +10,28 @@ describe("getFieldStatus", () => {
     };
     return translations[key] || key;
   }) as TFunction;
+
+  const createFieldError = (message: string): FieldError => ({
+    type: "validation",
+    message
+  });
+
+  it("should handle field errors", () => {
+    const errors = {
+      serviceName: createFieldError("Error message")
+    };
+
+    const result = getFieldStatus(
+      "serviceName",
+      "value",
+      errors,
+      { serviceName: true },
+      mockT
+    );
+
+    expect(result.message).toBe("Error message");
+    expect(result.className).toBe("text--danger text--small");
+  });
 
   it("should return warning status for untouched field", () => {
     const result = getFieldStatus(
