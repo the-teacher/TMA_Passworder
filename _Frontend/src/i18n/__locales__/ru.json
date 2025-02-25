@@ -5,19 +5,6 @@
       "settings": "Настройки"
     }
   },
-  "passwordEntry": {
-    "serviceName": "Название сервиса",
-    "username": "Имя пользователя",
-    "password": "Пароль",
-    "url": "URL",
-    "notes": "Заметки",
-    "actions": {
-      "showPassword": "Показать пароль",
-      "hidePassword": "Скрыть пароль",
-      "copyPassword": "Копировать пароль",
-      "generatePassword": "Сгенерировать пароль"
-    }
-  },
   "common": {
     "save": "Сохранить",
     "reset": "Сбросить",
@@ -26,12 +13,5 @@
     "show": "Показать",
     "hide": "Скрыть",
     "saving": "Сохранение..."
-  },
-  "footerNavigation": {
-    "home": "Главная",
-    "create": "Создать",
-    "search": "Поиск",
-    "favorites": "Избранное",
-    "logout": "Выход"
   }
 }

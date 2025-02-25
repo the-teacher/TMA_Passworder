@@ -1,0 +1,9 @@
+{
+  "footerNavigation": {
+    "home": "Home",
+    "create": "Create",
+    "search": "Search",
+    "favorites": "Favorites",
+    "logout": "Logout"
+  }
+}

@@ -4,6 +4,13 @@
       "close": "Close modal"
     }
   },
+  "footerNavigation": {
+    "home": "Home",
+    "create": "Create",
+    "search": "Search",
+    "favorites": "Favorites",
+    "logout": "Logout"
+  },
   "CreatePasswordEntryForm": {
     "title": "Create Password Entry",
     "messages": {
@@ -41,19 +48,6 @@
       "settings": "Settings"
     }
   },
-  "passwordEntry": {
-    "serviceName": "Service Name",
-    "username": "Username",
-    "password": "Password",
-    "url": "URL",
-    "notes": "Notes",
-    "actions": {
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "copyPassword": "Copy password",
-      "generatePassword": "Generate password"
-    }
-  },
   "common": {
     "save": "Save",
     "reset": "Reset",
@@ -62,12 +56,5 @@
     "show": "Show",
     "hide": "Hide",
     "saving": "Saving..."
-  },
-  "footerNavigation": {
-    "home": "Home",
-    "create": "Create",
-    "search": "Search",
-    "favorites": "Favorites",
-    "logout": "Logout"
   }
 }
