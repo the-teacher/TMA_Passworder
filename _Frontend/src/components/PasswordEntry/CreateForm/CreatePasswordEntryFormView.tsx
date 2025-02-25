@@ -27,6 +27,7 @@ type Props = {
   errors: FieldErrors<FormData>;
   watch: UseFormWatch<FormData>;
   touchedFields: Record<string, boolean>;
+  dirtyFields: Record<string, boolean>;
   isSubmitting: boolean;
   showPassword: boolean;
   formError?: string;
@@ -42,6 +43,7 @@ const CreatePasswordEntryFormView = ({
   errors,
   watch,
   touchedFields,
+  dirtyFields,
   isSubmitting,
   showPassword,
   formError,
@@ -65,28 +67,28 @@ const CreatePasswordEntryFormView = ({
     "serviceName",
     serviceNameValue,
     errors,
-    touchedFields,
+    dirtyFields,
     t
   );
   const usernameStatus = getFieldStatus(
     "username",
     usernameValue,
     errors,
-    touchedFields,
+    dirtyFields,
     t
   );
   const passwordStatus = getFieldStatus(
     "password",
     passwordValue,
     errors,
-    touchedFields,
+    dirtyFields,
     t
   );
   const serviceUrlStatus = getFieldStatus(
     "serviceUrl",
     serviceUrlValue,
     errors,
-    touchedFields,
+    dirtyFields,
     t
   );
 

@@ -9,41 +9,39 @@ export type ServerErrors = {
 };
 
 export const getFieldStatus = (
-  fieldName: keyof FormData,
-  value: string | undefined,
-  errors: FieldErrors<FormData> | ServerErrors | undefined,
-  touchedFields: Record<string, boolean>,
+  fieldName: string,
+  value: string,
+  errors: FieldErrors,
+  dirtyFields: Record<string, boolean>,
   t: TFunction
-): { message: string; className: string } => {
-  if (!touchedFields[fieldName]) {
+) => {
+  // Show validation message as soon as field is dirty (changed)
+  if (dirtyFields[fieldName]) {
+    if (errors[fieldName]) {
+      return {
+        message: errors[fieldName]?.message as string,
+        className: "text--danger text--small"
+      };
+    }
+
+    if (value) {
+      return {
+        message: t("validation.filledCorrectly"),
+        className: "text--success text--small"
+      };
+    }
+  }
+
+  // Show hint for empty untouched fields
+  if (!value) {
     return {
       message: t("validation.pleaseEnterField"),
       className: "text--warning text--small"
     };
   }
 
-  // Handle react-hook-form errors
-  if (errors && "root" in errors && errors[fieldName]?.message) {
-    return {
-      message: errors[fieldName]?.message as string,
-      className: "text--danger text--small"
-    };
-  }
-
-  // Handle server errors
-  if (errors && "errors" in errors && errors.errors?.[fieldName]?.message) {
-    return {
-      message: errors.errors[fieldName].message,
-      className: "text--danger text--small"
-    };
-  }
-
-  if (value) {
-    return {
-      message: t("validation.filledCorrectly"),
-      className: "text--success text--small"
-    };
-  }
-
-  return { message: "", className: "" };
+  return {
+    message: "",
+    className: ""
+  };
 };

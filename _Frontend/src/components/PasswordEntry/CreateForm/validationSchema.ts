@@ -1,20 +1,56 @@
 import { z } from "zod";
 
+const VALIDATION = {
+  SERVICE_NAME: {
+    MIN: 3,
+    MAX: 10
+  },
+  USERNAME: {
+    MIN: 3,
+    MAX: 30
+  },
+  PASSWORD: {
+    MIN: 8,
+    MAX: 50
+  },
+  NOTES: {
+    MAX: 500
+  }
+} as const;
+
 export const validationSchema = z.object({
   serviceName: z
     .string()
-    .min(3, "Service name must be at least 3 characters")
-    .max(50, "Service name must not exceed 50 characters"),
+    .min(
+      VALIDATION.SERVICE_NAME.MIN,
+      `Service name must be at least ${VALIDATION.SERVICE_NAME.MIN} characters`
+    )
+    .max(
+      VALIDATION.SERVICE_NAME.MAX,
+      `Service name must not exceed ${VALIDATION.SERVICE_NAME.MAX} characters`
+    ),
 
   username: z
     .string()
-    .min(3, "Username must be at least 3 characters")
-    .max(30, "Username must not exceed 30 characters"),
+    .min(
+      VALIDATION.USERNAME.MIN,
+      `Username must be at least ${VALIDATION.USERNAME.MIN} characters`
+    )
+    .max(
+      VALIDATION.USERNAME.MAX,
+      `Username must not exceed ${VALIDATION.USERNAME.MAX} characters`
+    ),
 
   password: z
     .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(50, "Password must not exceed 50 characters"),
+    .min(
+      VALIDATION.PASSWORD.MIN,
+      `Password must be at least ${VALIDATION.PASSWORD.MIN} characters`
+    )
+    .max(
+      VALIDATION.PASSWORD.MAX,
+      `Password must not exceed ${VALIDATION.PASSWORD.MAX} characters`
+    ),
 
   serviceUrl: z
     .string()
@@ -24,7 +60,10 @@ export const validationSchema = z.object({
 
   notes: z
     .string()
-    .max(500, "Notes must not exceed 500 characters")
+    .max(
+      VALIDATION.NOTES.MAX,
+      `Notes must not exceed ${VALIDATION.NOTES.MAX} characters`
+    )
     .optional()
     .or(z.literal(""))
 });

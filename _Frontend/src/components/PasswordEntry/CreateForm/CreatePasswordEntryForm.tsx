@@ -22,11 +22,19 @@ const CreatePasswordEntryForm = () => {
     watch,
     reset,
     setError,
-    // clearErrors,
-    formState: { errors, touchedFields }
+    formState: { errors, touchedFields, dirtyFields }
   } = useForm<FormData>({
     mode: "onChange",
-    resolver: zodResolver(validationSchema)
+    reValidateMode: "onChange",
+    criteriaMode: "all",
+    resolver: zodResolver(validationSchema),
+    defaultValues: {
+      serviceName: "",
+      username: "",
+      password: "",
+      serviceUrl: "",
+      notes: ""
+    }
   });
 
   const { submitForm, isSubmitting } = useSubmitForm();
@@ -69,6 +77,7 @@ const CreatePasswordEntryForm = () => {
       errors={errors}
       watch={watch}
       touchedFields={touchedFields}
+      dirtyFields={dirtyFields}
       isSubmitting={isSubmitting}
       showPassword={showPassword}
       formError={formError}
