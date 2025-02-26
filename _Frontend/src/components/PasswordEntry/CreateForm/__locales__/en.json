@@ -46,6 +46,14 @@
       "notes": {
         "max": "Notes must not exceed {{max}} characters"
       }
+    },
+    "modals": {
+      "resetForm": {
+        "title": "Reset Form",
+        "message": "Are you sure you want to reset the form? All entered data will be lost.",
+        "confirm": "Reset",
+        "cancel": "Cancel"
+      }
     }
   }
 }
