@@ -4,14 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema, type FormData } from "./validationSchema";
 import { useSubmitForm } from "./hooks/useSubmitForm";
 import type { ServerErrors } from "./utils/getFieldStatus";
-import { copyToClipboard } from "./utils/copyToClipboard";
-import { generatePassword } from "./utils/generatePassword";
 import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import EventEmitter from "@lib/EventEmitter";
 import { useTranslation } from "react-i18next";
 
 const CreatePasswordEntryForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState("");
   const { t } = useTranslation("CreatePasswordEntryForm");
 
@@ -30,15 +27,6 @@ const CreatePasswordEntryForm = () => {
   });
 
   const { submitForm } = useSubmitForm();
-
-  const handleGeneratePassword = () => {
-    const password = generatePassword();
-    methods.setValue("password", password, { shouldValidate: true });
-  };
-
-  const copyPassword = async () => {
-    await copyToClipboard(methods.watch("password") || "");
-  };
 
   const handleSubmitSuccess = () => {
     EventEmitter.emit("NOTIFICATION", t("messages.formSubmitted"));
@@ -66,11 +54,7 @@ const CreatePasswordEntryForm = () => {
   return (
     <CreatePasswordEntryFormView
       methods={methods}
-      showPassword={showPassword}
       formError={formError}
-      onTogglePassword={() => setShowPassword(!showPassword)}
-      onGeneratePassword={handleGeneratePassword}
-      onCopyPassword={copyPassword}
       onSubmit={handleFormSubmit}
       onReset={() => methods.reset()}
     />

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import type { FormData } from "../../validationSchema";
@@ -6,23 +7,14 @@ import {
   createHandleNoSpaces
 } from "../../utils/handleSpacesUtils";
 import { getFieldStatus } from "../../utils/getFieldStatus";
+import { generatePassword } from "../../utils/generatePassword";
+import { copyToClipboard } from "../../utils/copyToClipboard";
 import EyeIcon from "../EyeIcon";
 import CopyButton from "../CopyButton";
 import GenerateButton from "../GenerateButton";
 
-type Props = {
-  showPassword: boolean;
-  onTogglePassword: () => void;
-  onGeneratePassword: () => void;
-  onCopyPassword: () => void;
-};
-
-const PasswordInput = ({
-  showPassword,
-  onTogglePassword,
-  onGeneratePassword,
-  onCopyPassword
-}: Props) => {
+const PasswordInput = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation("CreatePasswordEntryForm");
   const {
     register,
@@ -37,11 +29,23 @@ const PasswordInput = ({
   const value = watch("password");
   const status = getFieldStatus("password", value, errors, dirtyFields, t);
 
+  const handleGeneratePassword = () => {
+    const password = generatePassword();
+    setValue("password", password, { shouldValidate: true });
+  };
+
+  const handleCopyPassword = async () => {
+    await copyToClipboard(value || "");
+  };
+
   return (
     <div className="form-group">
       <label className="form-group--label" htmlFor="password">
         {t("fields.password")}
-        <EyeIcon showPassword={showPassword} onClick={onTogglePassword} />
+        <EyeIcon
+          showPassword={showPassword}
+          onClick={() => setShowPassword(!showPassword)}
+        />
       </label>
       <div className="form-group--input form-group--with-icon">
         <input
@@ -54,8 +58,8 @@ const PasswordInput = ({
             onBlur: handleTrim
           })}
         />
-        <CopyButton onClick={onCopyPassword} />
-        <GenerateButton onClick={onGeneratePassword} />
+        <CopyButton onClick={handleCopyPassword} />
+        <GenerateButton onClick={handleGeneratePassword} />
       </div>
       <div className={`form-group--info ${status.className}`}>
         {status.message}

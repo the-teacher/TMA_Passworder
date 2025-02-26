@@ -1,6 +1,7 @@
-import { FormProvider } from "react-hook-form";
+import { FormProvider, UseFormReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import FormError from "./components/FormError";
+import type { FormData } from "./validationSchema";
 
 import ServiceNameInput from "./components/ServiceNameInput";
 import UsernameInput from "./components/UsernameInput";
@@ -20,23 +21,15 @@ import "@ui-kit/spaces.scss";
 import "./styles.scss";
 
 export type Props = {
-  methods: any;
-  showPassword: boolean;
+  methods: UseFormReturn<FormData>;
   formError?: string;
-  onTogglePassword: () => void;
-  onGeneratePassword: () => void;
-  onCopyPassword: () => void;
   onSubmit: (e: React.FormEvent) => void;
   onReset: () => void;
 };
 
 const CreatePasswordEntryFormView = ({
   methods,
-  showPassword,
   formError,
-  onTogglePassword,
-  onGeneratePassword,
-  onCopyPassword,
   onSubmit,
   onReset
 }: Props) => {
@@ -56,12 +49,7 @@ const CreatePasswordEntryFormView = ({
         <ServiceNameInput />
         <UsernameInput />
         <ServiceUrlInput />
-        <PasswordInput
-          showPassword={showPassword}
-          onTogglePassword={onTogglePassword}
-          onGeneratePassword={onGeneratePassword}
-          onCopyPassword={onCopyPassword}
-        />
+        <PasswordInput />
         <NotesInput />
         <FormActions onReset={onReset} />
       </form>
