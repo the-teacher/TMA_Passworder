@@ -9,9 +9,9 @@ import {
 import { getFieldStatus } from "../../utils/getFieldStatus";
 import { generatePassword } from "../../utils/generatePassword";
 import { copyToClipboard } from "../../utils/copyToClipboard";
-import EyeIcon from "../EyeIcon";
-import CopyButton from "../CopyButton";
-import GenerateButton from "../GenerateButton";
+import EyeIcon from "../../components/EyeIcon";
+import CopyButton from "../../components/CopyButton";
+import GenerateButton from "../../components/GenerateButton/GenerateButton";
 
 const PasswordInput = () => {
   const [showPassword, setShowPassword] = useState(false);

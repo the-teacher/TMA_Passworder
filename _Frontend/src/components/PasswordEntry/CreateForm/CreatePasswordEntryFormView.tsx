@@ -1,9 +1,9 @@
-import ServiceNameInput from "./components/ServiceNameInput";
-import UsernameInput from "./components/UsernameInput";
-import ServiceUrlInput from "./components/ServiceUrlInput";
-import PasswordInput from "./components/PasswordInput";
-import NotesInput from "./components/NotesInput";
-import FormActions from "./components/FormActions";
+import ServiceNameInput from "./inputs/ServiceNameInput";
+import UsernameInput from "./inputs/UsernameInput";
+import ServiceUrlInput from "./inputs/ServiceUrlInput";
+import PasswordInput from "./inputs/PasswordInput";
+import NotesInput from "./inputs/NotesInput";
+import FormActions from "./inputs/FormActions";
 
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/buttons.scss";

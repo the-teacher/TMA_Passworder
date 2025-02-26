@@ -7,9 +7,10 @@ import { useTranslation } from "react-i18next";
 import { FormProvider } from "react-hook-form";
 import type { ServerErrors } from "./utils/getFieldStatus";
 
-import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import EventEmitter from "@lib/EventEmitter";
-import FormError from "./components/FormError";
+
+import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
+import FormError from "./components/FormError/FormError";
 
 const CreatePasswordEntryForm = () => {
   const [formError, setFormError] = useState("");
