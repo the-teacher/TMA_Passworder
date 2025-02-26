@@ -1,0 +1,29 @@
+// spaces.scss
+// This file provides utility classes for consistent spacing throughout the project.
+// It includes margin classes for top, bottom, left, right, and all sides.
+// The classes are generated using SCSS loops for the following spacing values: 0, 8px, 16px, 20px, 24px, 32px.
+//
+// Usage:
+// - Margin classes: .m0, .m8, .m16, .m20, .m24, .m32, etc.
+
+@use "sass:map";
+
+$spacing-values: (0, 8, 16, 20, 24, 32);
+
+@each $value in $spacing-values {
+  .m#{$value} {
+    margin: #{$value}px;
+  }
+  .mt#{$value} {
+    margin-top: #{$value}px;
+  }
+  .mb#{$value} {
+    margin-bottom: #{$value}px;
+  }
+  .ml#{$value} {
+    margin-left: #{$value}px;
+  }
+  .mr#{$value} {
+    margin-right: #{$value}px;
+  }
+}
