@@ -468,7 +468,7 @@ export const Alert: Story = {
 
 // Confirm Example
 const ConfirmExample = () => {
-  const { open, close, modal } = useAppModal({
+  const { open, modal } = useAppModal({
     title: "Confirm Action",
     size: "small",
     children: ({ close }) => (

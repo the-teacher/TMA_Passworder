@@ -5,7 +5,7 @@ import type { FormData } from "../../validationSchema";
 import "./styles.scss";
 
 type Props = {
-  formType: "Create" | "Edit";
+  formType?: "Create" | "Edit";
 };
 
 const ResetButton = () => {
