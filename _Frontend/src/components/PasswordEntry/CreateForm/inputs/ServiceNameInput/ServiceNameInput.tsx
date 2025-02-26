@@ -28,7 +28,7 @@ const ServiceNameInput = () => {
         {t("fields.serviceName")}
       </label>
       <input
-        className="form-input"
+        className={`form-input ${status.inputClassName}`}
         id="serviceName"
         data-testid="service-name-input"
         type="text"

@@ -53,7 +53,7 @@ const PasswordInput = () => {
       </label>
       <div className="form-group--input form-group--with-icon">
         <input
-          className="form-input"
+          className={`form-input ${status.inputClassName}`}
           id="password"
           data-testid="password-input"
           type={showPassword ? "text" : "password"}

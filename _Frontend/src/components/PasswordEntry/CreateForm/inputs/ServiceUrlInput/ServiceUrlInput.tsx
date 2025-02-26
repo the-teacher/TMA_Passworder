@@ -34,7 +34,7 @@ const ServiceUrlInput = () => {
         {t("fields.url")}
       </label>
       <input
-        className="form-input"
+        className={`form-input ${status.inputClassName}`}
         id="serviceUrl"
         data-testid="service-url-input"
         type="url"

@@ -10,6 +10,7 @@ export type ServerErrors = {
 type FieldStatus = {
   message: string;
   className: string;
+  inputClassName: string;
 };
 
 const isServerError = (
@@ -29,7 +30,8 @@ const getServerErrorStatus = (
   fieldName: string
 ): FieldStatus => ({
   message: errors.errors![fieldName].message,
-  className: "text--danger text--small"
+  className: "text--danger text--small",
+  inputClassName: "form-input--error"
 });
 
 const getFormErrorStatus = (
@@ -37,22 +39,26 @@ const getFormErrorStatus = (
   fieldName: string
 ): FieldStatus => ({
   message: errors[fieldName]?.message as string,
-  className: "text--danger text--small"
+  className: "text--danger text--small",
+  inputClassName: "form-input--error"
 });
 
 const getSuccessStatus = (t: TFunction): FieldStatus => ({
   message: t("validation.filledCorrectly"),
-  className: "text--success text--small"
+  className: "text--success text--small",
+  inputClassName: "form-input--success"
 });
 
 const getWarningStatus = (t: TFunction): FieldStatus => ({
   message: t("validation.pleaseEnterField"),
-  className: "text--warning text--small"
+  className: "text--warning text--small",
+  inputClassName: "form-input--warning"
 });
 
 const getEmptyStatus = (): FieldStatus => ({
   message: "",
-  className: ""
+  className: "",
+  inputClassName: ""
 });
 
 export const getFieldStatus = (

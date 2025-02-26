@@ -24,7 +24,7 @@ const UsernameInput = () => {
         {t("fields.username")}
       </label>
       <input
-        className="form-input"
+        className={`form-input ${status.inputClassName}`}
         id="username"
         data-testid="username-input"
         type="text"

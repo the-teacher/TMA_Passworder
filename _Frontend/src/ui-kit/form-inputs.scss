@@ -20,14 +20,22 @@
     box-shadow: 0 0 0 3px color.scale($color-primary, $alpha: -70%);
   }
 
-  &--error {
+  &--error,
+  &--error:focus {
     border-color: $color-danger;
     box-shadow: 0 0 0 3px color.scale($color-danger, $alpha: -70%);
   }
 
-  &--success {
+  &--success,
+  &--success:focus {
     border-color: $color-success;
     box-shadow: 0 0 0 3px color.scale($color-success, $alpha: -70%);
+  }
+
+  &--warning,
+  &--warning:focus {
+    border-color: $color-warning;
+    box-shadow: 0 0 0 3px color.scale($color-warning, $alpha: -70%);
   }
 
   &:disabled {
