@@ -28,11 +28,11 @@ const EditPasswordEntryForm = () => {
     criteriaMode: "all",
     resolver: zodResolver(validationSchema),
     defaultValues: {
-      serviceName: "",
-      username: "",
-      password: "",
-      serviceUrl: "",
-      notes: ""
+      serviceName: "Github",
+      username: "John Doe",
+      password: "1234567890",
+      serviceUrl: "https://github.com",
+      notes: "This is a note"
     }
   });
 

@@ -9,7 +9,7 @@ type PasswordEntryType = {
 
 const mockEntries: PasswordEntryType[] = popularServices.map(
   (service, index) => ({
-    id: `entry-${index + 1}`,
+    id: `${index + 1}`,
     name: service
   })
 );
