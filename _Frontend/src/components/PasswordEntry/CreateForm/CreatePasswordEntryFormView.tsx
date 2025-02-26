@@ -1,8 +1,3 @@
-import { FormProvider, UseFormReturn } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import FormError from "./components/FormError";
-import type { FormData } from "./validationSchema";
-
 import ServiceNameInput from "./components/ServiceNameInput";
 import UsernameInput from "./components/UsernameInput";
 import ServiceUrlInput from "./components/ServiceUrlInput";
@@ -21,29 +16,15 @@ import "@ui-kit/spaces.scss";
 import "./styles.scss";
 
 export type Props = {
-  methods: UseFormReturn<FormData>;
-  formError?: string;
   onSubmit: (e: React.FormEvent) => void;
-  onReset: () => void;
 };
 
-const CreatePasswordEntryFormView = ({
-  methods,
-  formError,
-  onSubmit,
-  onReset
-}: Props) => {
-  const { t } = useTranslation("CreatePasswordEntryForm");
-
+const CreatePasswordEntryFormView = ({ onSubmit }: Props) => {
   return (
-    <FormProvider {...methods}>
-      <h2 className="text-center">{t("title")}</h2>
-
-      {formError && <FormError>{formError}</FormError>}
-
+    <>
       <form
-        className="create-password-form"
         onSubmit={onSubmit}
+        className="create-password-form"
         role="create-password-form"
       >
         <ServiceNameInput />
@@ -51,9 +32,9 @@ const CreatePasswordEntryFormView = ({
         <ServiceUrlInput />
         <PasswordInput />
         <NotesInput />
-        <FormActions onReset={onReset} />
+        <FormActions />
       </form>
-    </FormProvider>
+    </>
   );
 };
 

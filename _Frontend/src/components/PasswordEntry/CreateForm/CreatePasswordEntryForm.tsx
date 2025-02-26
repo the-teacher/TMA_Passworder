@@ -3,10 +3,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema, type FormData } from "./validationSchema";
 import { useSubmitForm } from "./hooks/useSubmitForm";
+import { useTranslation } from "react-i18next";
+import { FormProvider } from "react-hook-form";
 import type { ServerErrors } from "./utils/getFieldStatus";
+
 import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import EventEmitter from "@lib/EventEmitter";
-import { useTranslation } from "react-i18next";
+import FormError from "./components/FormError";
 
 const CreatePasswordEntryForm = () => {
   const [formError, setFormError] = useState("");
@@ -52,12 +55,13 @@ const CreatePasswordEntryForm = () => {
   });
 
   return (
-    <CreatePasswordEntryFormView
-      methods={methods}
-      formError={formError}
-      onSubmit={handleFormSubmit}
-      onReset={() => methods.reset()}
-    />
+    <FormProvider {...methods}>
+      <h2 className="text-center">{t("title")}</h2>
+
+      {formError && <FormError>{formError}</FormError>}
+
+      <CreatePasswordEntryFormView onSubmit={handleFormSubmit} />
+    </FormProvider>
   );
 };
 
