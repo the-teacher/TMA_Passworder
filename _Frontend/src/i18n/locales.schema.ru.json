@@ -15,7 +15,9 @@
     "title": "Новая запись пароля",
     "messages": {
       "formSubmitted": "Форма успешно отправлена",
-      "networkError": "Ошибка сети. Попробуйте позже. {{error}}"
+      "networkError": "Ошибка сети. Попробуйте позже. {{error}}",
+      "passwordCopied": "Пароль успешно скопирован",
+      "passwordGenerated": "Пароль успешно сгенерирован"
     },
     "fields": {
       "serviceName": "Название сервиса",

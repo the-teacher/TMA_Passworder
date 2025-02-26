@@ -3,6 +3,10 @@ import toastr from "@lib/Toastr";
 import EventEmitter from "@lib/EventEmitter";
 
 const showToastr = (message: string) => {
+  toastr.show(message);
+};
+
+const showSuccess = (message: string) => {
   toastr.success(message);
 };
 
@@ -19,11 +23,13 @@ export const useNotifications = () => {
     toastr.initialize(".app-header");
 
     EventEmitter.on("NOTIFICATION", showToastr);
+    EventEmitter.on("SUCCESS", showSuccess);
     EventEmitter.on("WARNING", showWarning);
     EventEmitter.on("ERROR", showError);
 
     return () => {
       EventEmitter.off("NOTIFICATION", showToastr);
+      EventEmitter.off("SUCCESS", showSuccess);
       EventEmitter.off("WARNING", showWarning);
       EventEmitter.off("ERROR", showError);
     };

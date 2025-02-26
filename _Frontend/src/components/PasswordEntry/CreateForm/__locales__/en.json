@@ -3,7 +3,9 @@
     "title": "Create Password Entry",
     "messages": {
       "formSubmitted": "Form submitted successfully",
-      "networkError": "Network error. Please try again later. {{error}}"
+      "networkError": "Network error. Please try again later. {{error}}",
+      "passwordCopied": "Password copied successfully",
+      "passwordGenerated": "Password generated successfully"
     },
     "fields": {
       "serviceName": "Service Name",

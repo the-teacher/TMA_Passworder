@@ -12,6 +12,7 @@ import { copyToClipboard } from "../../utils/copyToClipboard";
 import EyeIcon from "../../components/EyeIcon";
 import CopyButton from "../../components/CopyButton";
 import GenerateButton from "../../components/GenerateButton/GenerateButton";
+import EventEmitter from "@lib/EventEmitter";
 
 const PasswordInput = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,10 +33,12 @@ const PasswordInput = () => {
   const handleGeneratePassword = () => {
     const password = generatePassword();
     setValue("password", password, { shouldValidate: true });
+    EventEmitter.emit("SUCCESS", t("messages.passwordGenerated"));
   };
 
   const handleCopyPassword = async () => {
     await copyToClipboard(value || "");
+    EventEmitter.emit("NOTIFICATION", t("messages.passwordCopied"));
   };
 
   return (
