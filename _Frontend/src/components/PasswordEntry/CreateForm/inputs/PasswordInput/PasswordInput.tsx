@@ -7,12 +7,14 @@ import {
   createHandleNoSpaces
 } from "../../utils/handleSpacesUtils";
 import { getFieldStatus } from "../../utils/getFieldStatus";
-import { generatePassword } from "../../utils/generatePassword";
-import { copyToClipboard } from "../../utils/copyToClipboard";
+import {
+  createHandleGeneratePassword,
+  createHandleCopyPassword,
+  createHandleTogglePassword
+} from "../../utils/passwordUtils";
 import EyeIcon from "../../components/EyeIcon";
 import CopyButton from "../../components/CopyButton";
 import GenerateButton from "../../components/GenerateButton/GenerateButton";
-import EventEmitter from "@lib/EventEmitter";
 
 const PasswordInput = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,16 +32,14 @@ const PasswordInput = () => {
   const value = watch("password");
   const status = getFieldStatus("password", value, errors, dirtyFields, t);
 
-  const handleGeneratePassword = () => {
-    const password = generatePassword();
-    setValue("password", password, { shouldValidate: true });
-    EventEmitter.emit("SUCCESS", t("messages.passwordGenerated"));
-  };
-
-  const handleCopyPassword = async () => {
-    await copyToClipboard(value || "");
-    EventEmitter.emit("NOTIFICATION", t("messages.passwordCopied"));
-  };
+  const handleGeneratePassword = createHandleGeneratePassword(setValue, t);
+  const handleCopyPassword = createHandleCopyPassword(value, t);
+  const handleTogglePassword = createHandleTogglePassword(
+    showPassword,
+    setShowPassword,
+    value,
+    t
+  );
 
   return (
     <div className="form-group">
@@ -48,7 +48,7 @@ const PasswordInput = () => {
         <EyeIcon
           data-testid="toggle-password"
           showPassword={showPassword}
-          onClick={() => setShowPassword(!showPassword)}
+          onClick={handleTogglePassword}
         />
       </label>
       <div className="form-group--input form-group--with-icon">

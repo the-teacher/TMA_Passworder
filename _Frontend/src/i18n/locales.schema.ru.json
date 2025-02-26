@@ -17,7 +17,10 @@
       "formSubmitted": "Форма успешно отправлена",
       "networkError": "Ошибка сети. Попробуйте позже. {{error}}",
       "passwordCopied": "Пароль успешно скопирован",
-      "passwordGenerated": "Пароль успешно сгенерирован"
+      "passwordGenerated": "Пароль успешно сгенерирован",
+      "passwordShown": "Пароль теперь виден",
+      "passwordHidden": "Пароль теперь скрыт",
+      "setPasswordFirst": "Пожалуйста, сначала введите пароль"
     },
     "fields": {
       "serviceName": "Название сервиса",

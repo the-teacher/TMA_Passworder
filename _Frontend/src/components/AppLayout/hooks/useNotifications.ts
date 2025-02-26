@@ -20,7 +20,7 @@ const showError = (message: string) => {
 
 export const useNotifications = () => {
   useEffect(() => {
-    toastr.initialize(".app-header");
+    toastr.initialize("main.holy-grail--content");
 
     EventEmitter.on("NOTIFICATION", showToastr);
     EventEmitter.on("SUCCESS", showSuccess);

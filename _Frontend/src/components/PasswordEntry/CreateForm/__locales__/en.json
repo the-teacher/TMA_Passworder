@@ -5,7 +5,10 @@
       "formSubmitted": "Form submitted successfully",
       "networkError": "Network error. Please try again later. {{error}}",
       "passwordCopied": "Password copied successfully",
-      "passwordGenerated": "Password generated successfully"
+      "passwordGenerated": "Password generated successfully",
+      "passwordShown": "Password is now visible",
+      "passwordHidden": "Password is now hidden",
+      "setPasswordFirst": "Please enter a password first"
     },
     "fields": {
       "serviceName": "Service Name",

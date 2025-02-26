@@ -8,7 +8,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 const EyeIcon = ({ showPassword, onClick, ...props }: Props) => (
   <button
     type="button"
-    className="btn btn--icon"
+    className="btn btn--icon btn--ghost"
     onClick={onClick}
     title={showPassword ? "Hide password" : "Show password"}
     {...props}

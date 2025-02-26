@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import type { FormData } from "../../validationSchema";
+import "./styles.scss";
 
 const FormActions = () => {
   const { t: c } = useTranslation("common");
@@ -10,10 +11,10 @@ const FormActions = () => {
   } = useFormContext<FormData>();
 
   return (
-    <div className="form-group--actions">
+    <div className="form-group--actions form-group--actions__with-jumbo">
       <button
         type="submit"
-        className="btn btn--primary"
+        className="btn btn--primary btn--jumbo"
         disabled={!isValid || isSubmitting}
       >
         {isSubmitting ? c("saving") : c("save")}

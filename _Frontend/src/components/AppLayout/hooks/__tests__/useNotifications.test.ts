@@ -6,6 +6,7 @@ import EventEmitter from "@lib/EventEmitter";
 // Mock dependencies
 jest.mock("@lib/Toastr", () => ({
   initialize: jest.fn(),
+  show: jest.fn(),
   success: jest.fn(),
   warning: jest.fn(),
   danger: jest.fn()
@@ -28,9 +29,13 @@ describe("useNotifications", () => {
     expect(toastr.initialize).toHaveBeenCalledWith(".app-header");
 
     // Check event listeners setup
-    expect(EventEmitter.on).toHaveBeenCalledTimes(3);
+    expect(EventEmitter.on).toHaveBeenCalledTimes(4);
     expect(EventEmitter.on).toHaveBeenCalledWith(
       "NOTIFICATION",
+      expect.any(Function)
+    );
+    expect(EventEmitter.on).toHaveBeenCalledWith(
+      "SUCCESS",
       expect.any(Function)
     );
     expect(EventEmitter.on).toHaveBeenCalledWith(
@@ -46,9 +51,13 @@ describe("useNotifications", () => {
     unmount();
 
     // Check event listeners cleanup
-    expect(EventEmitter.off).toHaveBeenCalledTimes(3);
+    expect(EventEmitter.off).toHaveBeenCalledTimes(4);
     expect(EventEmitter.off).toHaveBeenCalledWith(
       "NOTIFICATION",
+      expect.any(Function)
+    );
+    expect(EventEmitter.off).toHaveBeenCalledWith(
+      "SUCCESS",
       expect.any(Function)
     );
     expect(EventEmitter.off).toHaveBeenCalledWith(
@@ -65,16 +74,21 @@ describe("useNotifications", () => {
     renderHook(() => useNotifications());
 
     // Get event handlers
-    const [[, notificationHandler], [, warningHandler], [, errorHandler]] = (
-      EventEmitter.on as jest.Mock
-    ).mock.calls;
+    const [
+      [, notificationHandler],
+      [, successHandler],
+      [, warningHandler],
+      [, errorHandler]
+    ] = (EventEmitter.on as jest.Mock).mock.calls;
 
     // Simulate events
-    notificationHandler("Success message");
+    notificationHandler("Notification message");
+    successHandler("Success message");
     warningHandler("Warning message");
     errorHandler("Error message");
 
     // Check toastr calls
+    expect(toastr.show).toHaveBeenCalledWith("Notification message");
     expect(toastr.success).toHaveBeenCalledWith("Success message");
     expect(toastr.warning).toHaveBeenCalledWith("Warning message");
     expect(toastr.danger).toHaveBeenCalledWith("Error message");

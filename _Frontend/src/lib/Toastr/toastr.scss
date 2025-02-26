@@ -1,8 +1,9 @@
 .toastr {
   &-container {
-    position: fixed;
-    top: 16px;
-    right: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -16,7 +17,7 @@
 
 @keyframes toastr-slide-in {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%);
     opacity: 0;
   }
   to {
