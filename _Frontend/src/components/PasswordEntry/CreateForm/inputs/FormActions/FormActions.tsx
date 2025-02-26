@@ -4,9 +4,15 @@ import { useAppModal } from "@components/AppModal";
 import type { FormData } from "../../validationSchema";
 import "./styles.scss";
 
-const FormActions = () => {
+type Props = {
+  formType: "Create" | "Edit";
+};
+
+const FormActions = ({ formType = "Create" }: Props) => {
   const { t: c } = useTranslation("common");
   const { t } = useTranslation("CreatePasswordEntryForm");
+  const { t: formTypeT } = useTranslation(`${formType}PasswordEntryForm`);
+
   const {
     formState: { isValid, isSubmitting },
     reset
@@ -43,15 +49,18 @@ const FormActions = () => {
         className="btn btn--primary btn--jumbo"
         disabled={!isValid || isSubmitting}
       >
-        {isSubmitting ? c("saving") : c("save")}
+        {isSubmitting ? c("saving") : formTypeT("actions.save")}
       </button>
-      <button
-        type="button"
-        className="btn btn--secondary"
-        onClick={confirmReset.open}
-      >
-        {c("reset")}
-      </button>
+
+      {formType === "Create" && (
+        <button
+          type="button"
+          className="btn btn--secondary"
+          onClick={confirmReset.open}
+        >
+          {c("reset")}
+        </button>
+      )}
       {confirmReset.modal}
     </div>
   );

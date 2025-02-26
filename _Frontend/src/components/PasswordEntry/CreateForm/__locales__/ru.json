@@ -19,6 +19,7 @@
       "hint": "Пожалуйста, заполните это поле"
     },
     "actions": {
+      "save": "Сохранить",
       "showPassword": "Показать пароль",
       "hidePassword": "Скрыть пароль",
       "copyPassword": "Копировать пароль",
@@ -54,6 +55,12 @@
         "confirm": "Сбросить",
         "cancel": "Отмена"
       }
+    }
+  },
+  "EditPasswordEntryForm": {
+    "title": "Обновить запись пароля",
+    "actions": {
+      "save": "Обновить"
     }
   }
 }

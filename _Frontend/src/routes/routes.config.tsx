@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { newPasswordEntryPath } from "./helpers";
+import { newPasswordEntryPath, editPasswordEntryPath } from "./helpers";
 
 // Main pages
 const IndexPage = lazy(() => import("@pages/IndexPage"));
@@ -12,10 +12,13 @@ const PasswordEntriesNewPage = lazy(
   () => import("@pages/PasswordEntries/NewPage")
 );
 
+const PasswordEntriesEditPage = lazy(
+  () => import("@pages/PasswordEntries/EditPage")
+);
+
 // RESTful routes for PasswordEntries
 // { path: "password_entries", element: <PasswordEntriesIndexPage /> },
 // { path: "password_entries/:id", element: <PasswordEntriesShowPage /> },
-// { path: "password_entries/:id/edit", element: <PasswordEntriesEditPage /> },
 
 export const routesConfig = [
   // Main routes
@@ -27,6 +30,7 @@ export const routesConfig = [
 
   // RESTful routes for PasswordEntries
   { path: newPasswordEntryPath(), element: <PasswordEntriesNewPage /> },
+  { path: editPasswordEntryPath(), element: <PasswordEntriesEditPage /> },
 
   // 404 route
   { path: "*", element: <NotFoundPage /> }

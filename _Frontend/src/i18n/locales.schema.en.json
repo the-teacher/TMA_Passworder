@@ -31,6 +31,7 @@
       "hint": "Please fill in this field"
     },
     "actions": {
+      "save": "Create",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
       "copyPassword": "Copy password",
@@ -66,6 +67,12 @@
         "confirm": "Reset",
         "cancel": "Cancel"
       }
+    }
+  },
+  "EditPasswordEntryForm": {
+    "title": "Update Password Entry",
+    "actions": {
+      "save": "Update"
     }
   },
   "SearchField": {
