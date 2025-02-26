@@ -8,15 +8,10 @@ type Props = {
   formType: "Create" | "Edit";
 };
 
-const FormActions = ({ formType = "Create" }: Props) => {
+const ResetButton = () => {
   const { t: c } = useTranslation("common");
   const { t } = useTranslation("CreatePasswordEntryForm");
-  const { t: formTypeT } = useTranslation(`${formType}PasswordEntryForm`);
-
-  const {
-    formState: { isValid, isSubmitting },
-    reset
-  } = useFormContext<FormData>();
+  const { reset } = useFormContext<FormData>();
 
   const confirmReset = useAppModal({
     title: t("modals.resetForm.title"),
@@ -43,6 +38,28 @@ const FormActions = ({ formType = "Create" }: Props) => {
   });
 
   return (
+    <>
+      <button
+        type="button"
+        className="btn btn--secondary"
+        onClick={confirmReset.open}
+      >
+        {c("reset")}
+      </button>
+      {confirmReset.modal}
+    </>
+  );
+};
+
+const FormActions = ({ formType = "Create" }: Props) => {
+  const { t: c } = useTranslation("common");
+  const { t: formTypeT } = useTranslation(`${formType}PasswordEntryForm`);
+
+  const {
+    formState: { isValid, isSubmitting }
+  } = useFormContext<FormData>();
+
+  return (
     <div className="form-group--actions form-group--actions__with-jumbo">
       <button
         type="submit"
@@ -52,16 +69,7 @@ const FormActions = ({ formType = "Create" }: Props) => {
         {isSubmitting ? c("saving") : formTypeT("actions.save")}
       </button>
 
-      {formType === "Create" && (
-        <button
-          type="button"
-          className="btn btn--secondary"
-          onClick={confirmReset.open}
-        >
-          {c("reset")}
-        </button>
-      )}
-      {confirmReset.modal}
+      {formType === "Create" && <ResetButton />}
     </div>
   );
 };
