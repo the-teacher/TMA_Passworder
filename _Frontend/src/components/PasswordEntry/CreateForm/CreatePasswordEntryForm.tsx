@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { FormProvider } from "react-hook-form";
 import type { ServerErrors } from "./utils/getFieldStatus";
 
+import "@ui-kit/text-styles.scss";
 import EventEmitter from "@lib/EventEmitter";
 
 import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
@@ -57,7 +58,7 @@ const CreatePasswordEntryForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <h2 className="text-center">{t("title")}</h2>
+      <h2 className="text--center">{t("title")}</h2>
 
       {formError && <FormError>{formError}</FormError>}
 

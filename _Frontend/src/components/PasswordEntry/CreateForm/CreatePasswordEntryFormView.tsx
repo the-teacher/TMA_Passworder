@@ -10,7 +10,6 @@ import "@ui-kit/buttons.scss";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/text-styles.scss";
 import "@ui-kit/info-blocks.scss";
-import "@ui-kit/common.scss";
 import "@ui-kit/spaces.scss";
 
 import "./styles.scss";

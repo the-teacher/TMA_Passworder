@@ -5,6 +5,10 @@
   font-size: 16px;
   line-height: 1.5;
 
+  &--center {
+    text-align: center;
+  }
+
   &--primary {
     color: $color-primary;
   }

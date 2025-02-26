@@ -443,7 +443,7 @@ const AlertExample = () => {
     title: "Alert",
     size: "small",
     children: ({ close }) => (
-      <div className="text-center">
+      <div className="text--center">
         <p>This is an alert message!</p>
         <button className="btn btn--primary mt16" onClick={close}>
           OK
@@ -512,7 +512,7 @@ const useAlert = (message: string) => {
     title: "Alert",
     size: "small",
     children: ({ close }) => (
-      <div className="text-center">
+      <div className="text--center">
         <p>{message}</p>
         <button className="btn btn--primary mt16" onClick={close}>
           OK
