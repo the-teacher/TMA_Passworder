@@ -30,6 +30,7 @@ const ServiceNameInput = () => {
       <input
         className="form-input"
         id="serviceName"
+        data-testid="service-name-input"
         type="text"
         aria-invalid={!!errors.serviceName}
         {...register("serviceName", {

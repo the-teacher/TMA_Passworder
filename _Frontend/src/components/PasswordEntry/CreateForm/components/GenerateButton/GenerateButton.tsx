@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
+import type { ButtonHTMLAttributes } from "react";
 
-type Props = {
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick: () => void;
 };
 
-const GenerateButton = ({ onClick }: Props) => {
+const GenerateButton = ({ onClick, ...props }: Props) => {
   const { t } = useTranslation("CreatePasswordEntryForm");
 
   return (
@@ -13,6 +14,7 @@ const GenerateButton = ({ onClick }: Props) => {
       className="btn btn--icon"
       onClick={onClick}
       title={t("actions.generatePassword")}
+      {...props}
     >
       <img src="/icons/refresh.svg" alt={t("actions.generatePassword")} />
     </button>

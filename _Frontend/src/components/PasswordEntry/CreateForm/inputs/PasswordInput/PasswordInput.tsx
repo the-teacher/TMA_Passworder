@@ -43,6 +43,7 @@ const PasswordInput = () => {
       <label className="form-group--label" htmlFor="password">
         {t("fields.password")}
         <EyeIcon
+          data-testid="toggle-password"
           showPassword={showPassword}
           onClick={() => setShowPassword(!showPassword)}
         />
@@ -51,6 +52,7 @@ const PasswordInput = () => {
         <input
           className="form-input"
           id="password"
+          data-testid="password-input"
           type={showPassword ? "text" : "password"}
           aria-invalid={!!errors.password}
           {...register("password", {
@@ -58,8 +60,11 @@ const PasswordInput = () => {
             onBlur: handleTrim
           })}
         />
-        <CopyButton onClick={handleCopyPassword} />
-        <GenerateButton onClick={handleGeneratePassword} />
+        <CopyButton data-testid="copy-password" onClick={handleCopyPassword} />
+        <GenerateButton
+          data-testid="generate-password"
+          onClick={handleGeneratePassword}
+        />
       </div>
       <div className={`form-group--info ${status.className}`}>
         {status.message}

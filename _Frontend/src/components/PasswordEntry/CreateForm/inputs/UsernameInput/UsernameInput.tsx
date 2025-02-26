@@ -26,6 +26,7 @@ const UsernameInput = () => {
       <input
         className="form-input"
         id="username"
+        data-testid="username-input"
         type="text"
         aria-invalid={!!errors.username}
         {...register("username", {

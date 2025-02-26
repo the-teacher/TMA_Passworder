@@ -1,23 +1,25 @@
-import { useTranslation } from "react-i18next";
-import AppIcon from "@components/AppIcon";
+import type { ButtonHTMLAttributes } from "react";
 
-type Props = {
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   showPassword: boolean;
   onClick: () => void;
 };
 
-const EyeIcon = ({ showPassword, onClick }: Props) => {
-  const { t } = useTranslation("CreatePasswordEntryForm");
-
-  return (
-    <AppIcon
-      size={16}
-      type={showPassword ? "eye-off" : "eye"}
-      onClick={onClick}
-      title={t(showPassword ? "actions.hidePassword" : "actions.showPassword")}
-      alt={t(showPassword ? "actions.hidePassword" : "actions.showPassword")}
+const EyeIcon = ({ showPassword, onClick, ...props }: Props) => (
+  <button
+    type="button"
+    className="btn btn--icon"
+    onClick={onClick}
+    title={showPassword ? "Hide password" : "Show password"}
+    {...props}
+  >
+    <img
+      src={`/icons/eye${showPassword ? "" : "-off"}.svg`}
+      alt={showPassword ? "Hide password" : "Show password"}
+      width={16}
+      height={16}
     />
-  );
-};
+  </button>
+);
 
 export default EyeIcon;

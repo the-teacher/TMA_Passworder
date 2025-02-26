@@ -36,6 +36,7 @@ const ServiceUrlInput = () => {
       <input
         className="form-input"
         id="serviceUrl"
+        data-testid="service-url-input"
         type="url"
         placeholder="https://"
         aria-invalid={!!errors.serviceUrl}
