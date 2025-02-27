@@ -2,6 +2,9 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { editPasswordEntryPath, indexPath } from "@routes/helpers";
 import { useParams } from "react-router";
+import CopyButton from "../CreateForm/components/CopyButton";
+import { copyToClipboard } from "../CreateForm/utils/copyToClipboard";
+import EventEmitter from "@lib/EventEmitter";
 import "@ui-kit/card.scss";
 import "@ui-kit/data-display.scss";
 import "@ui-kit/buttons.scss";
@@ -26,6 +29,14 @@ const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
 
   const { serviceName, username, password, serviceUrl, notes } = data;
 
+  const handleCopy = (text: string, fieldName: string) => async () => {
+    await copyToClipboard(text);
+    EventEmitter.emit(
+      "NOTIFICATION",
+      t("notifications.copied", { field: t(`fields.${fieldName}`) })
+    );
+  };
+
   return (
     <div className="card card__centered show-password-entry">
       <div className="card--container">
@@ -39,25 +50,34 @@ const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
               <div className="data-display--label">
                 {t("fields.serviceName")}
               </div>
-              <div className="data-display--value">{serviceName}</div>
+              <div className="data-display--value data-display__with-action">
+                <span>{serviceName}</span>
+                <CopyButton
+                  data-testid="copy-service-name"
+                  onClick={handleCopy(serviceName, "serviceName")}
+                />
+              </div>
             </div>
 
             <div className="data-display--field">
               <div className="data-display--label">{t("fields.username")}</div>
-              <div className="data-display--value">{username}</div>
+              <div className="data-display--value data-display__with-action">
+                <span>{username}</span>
+                <CopyButton
+                  data-testid="copy-username"
+                  onClick={handleCopy(username, "username")}
+                />
+              </div>
             </div>
 
             <div className="data-display--field">
               <div className="data-display--label">{t("fields.password")}</div>
               <div className="data-display--value data-display__with-action">
                 <span className="data-display__monospace">{password}</span>
-                <button
-                  className="btn btn--small btn--secondary"
-                  onClick={() => navigator.clipboard.writeText(password)}
-                  title={t("copyPassword")}
-                >
-                  {t("copy")}
-                </button>
+                <CopyButton
+                  data-testid="copy-password"
+                  onClick={handleCopy(password, "password")}
+                />
               </div>
             </div>
 
@@ -66,7 +86,7 @@ const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
                 <div className="data-display--label">
                   {t("fields.serviceUrl")}
                 </div>
-                <div className="data-display--value">
+                <div className="data-display--value data-display__with-action">
                   <a
                     href={serviceUrl}
                     target="_blank"
@@ -75,6 +95,10 @@ const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
                   >
                     {serviceUrl}
                   </a>
+                  <CopyButton
+                    data-testid="copy-service-url"
+                    onClick={handleCopy(serviceUrl, "serviceUrl")}
+                  />
                 </div>
               </div>
             )}
