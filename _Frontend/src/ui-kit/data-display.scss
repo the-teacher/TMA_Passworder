@@ -12,14 +12,8 @@
     border-bottom: 1px solid color.scale($color-light, $lightness: -10%);
   }
 
-  &--field:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
   &--label {
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-size: 14px;
     font-weight: 600;
     color: $color-secondary;

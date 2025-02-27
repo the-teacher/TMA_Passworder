@@ -12,8 +12,6 @@ import "@ui-kit/text-styles.scss";
 import "@ui-kit/info-blocks.scss";
 import "@ui-kit/spaces.scss";
 
-import "../CreateForm/styles.scss";
-
 export type Props = {
   onSubmit: (e: React.FormEvent) => void;
 };

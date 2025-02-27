@@ -1,14 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { useState } from "react";
 import { editPasswordEntryPath, indexPath } from "@routes/helpers";
 import { useParams } from "react-router";
 import CopyButton from "../CreateForm/components/CopyButton";
+import EyeIcon from "../CreateForm/components/EyeIcon";
 import { copyToClipboard } from "../CreateForm/utils/copyToClipboard";
+import { createHandleTogglePassword } from "../CreateForm/utils/passwordUtils";
 import EventEmitter from "@lib/EventEmitter";
 import "@ui-kit/card.scss";
 import "@ui-kit/data-display.scss";
 import "@ui-kit/buttons.scss";
 import "@ui-kit/text-styles.scss";
+import "@ui-kit/utils.scss";
+import "@ui-kit/margins.scss";
 
 export type PasswordEntryData = {
   id: string;
@@ -26,6 +31,8 @@ type ShowPasswordEntryProps = {
 const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
   const { id } = useParams();
   const { t } = useTranslation("ShowPasswordEntry");
+  const { t: createT } = useTranslation("CreatePasswordEntryForm");
+  const [showPassword, setShowPassword] = useState(false);
 
   const { serviceName, username, password, serviceUrl, notes } = data;
 
@@ -33,9 +40,16 @@ const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
     await copyToClipboard(text);
     EventEmitter.emit(
       "NOTIFICATION",
-      t("notifications.copied", { field: t(`fields.${fieldName}`) })
+      createT("messages.passwordCopied", { field: t(`fields.${fieldName}`) })
     );
   };
+
+  const handleTogglePassword = createHandleTogglePassword(
+    showPassword,
+    setShowPassword,
+    password,
+    createT
+  );
 
   return (
     <div className="card card__centered show-password-entry">
@@ -71,9 +85,18 @@ const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
             </div>
 
             <div className="data-display--field">
-              <div className="data-display--label">{t("fields.password")}</div>
+              <div className="data-display--label align-center">
+                {t("fields.password")}
+                <EyeIcon
+                  data-testid="toggle-password"
+                  showPassword={showPassword}
+                  onClick={handleTogglePassword}
+                />
+              </div>
               <div className="data-display--value data-display__with-action">
-                <span className="data-display__monospace">{password}</span>
+                <span className="data-display__monospace">
+                  {showPassword ? password : "••••••••••••"}
+                </span>
                 <CopyButton
                   data-testid="copy-password"
                   onClick={handleCopy(password, "password")}
