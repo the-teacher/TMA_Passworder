@@ -1,0 +1,74 @@
+@use "sass:color";
+@use "./colors" as *;
+
+.data-display {
+  &--container {
+    margin-bottom: 16px;
+  }
+
+  &--field {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid color.scale($color-light, $lightness: -10%);
+  }
+
+  &--field:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  &--label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $color-secondary;
+  }
+
+  &--value {
+    font-size: 16px;
+    color: $color-text;
+    word-break: break-word;
+  }
+
+  &--actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 16px;
+  }
+
+  &__with-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &__monospace {
+    font-family: monospace;
+    letter-spacing: 1px;
+  }
+
+  &__multiline {
+    white-space: pre-wrap;
+    line-height: 1.5;
+  }
+
+  &__link {
+    color: $color-primary;
+    text-decoration: none;
+  }
+
+  &__link:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (0 < width < 520px) {
+  .data-display {
+    &--actions {
+      flex-direction: column;
+    }
+  }
+}
