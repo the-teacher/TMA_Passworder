@@ -1,9 +1,9 @@
 import {
   // RESTful route helpers
-  passwordEntriesPath,
+  listPasswordEntriesPath,
   newPasswordEntryPath,
   editPasswordEntryPath,
-  passwordEntryPath,
+  showPasswordEntryPath,
   // Page paths
   indexPath,
   favoritesPath,
@@ -19,7 +19,7 @@ describe("Route Helpers", () => {
   // RESTful routes
   describe("RESTful routes for PasswordEntries", () => {
     it("should return correct password entries index path", () => {
-      expect(passwordEntriesPath()).toBe("/password_entries");
+      expect(listPasswordEntriesPath()).toBe("/password_entries");
     });
 
     it("should return correct new password entry path", () => {
@@ -31,7 +31,7 @@ describe("Route Helpers", () => {
     });
 
     it("should return correct show password entry path", () => {
-      expect(passwordEntryPath("123")).toBe("/password_entries/123");
+      expect(showPasswordEntryPath("123")).toBe("/password_entries/123");
     });
   });
 

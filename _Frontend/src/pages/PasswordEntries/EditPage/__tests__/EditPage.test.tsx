@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import NewPage from "../EditPage";
+import EditPage from "../EditPage";
 import { TestWrapper } from "@test/testUtils";
 
 // Mock components
@@ -10,16 +10,16 @@ jest.mock("@components/AppLayout", () => ({
   )
 }));
 
-jest.mock("@components/PasswordEntry/CreateForm", () => ({
+jest.mock("@components/PasswordEntry/EditForm", () => ({
   __esModule: true,
-  default: () => <div data-testid="create-password-form" />
+  default: () => <div data-testid="edit-password-form" />
 }));
 
-describe("NewPage", () => {
+describe("EditPage", () => {
   it("should render page with layout and form", () => {
-    render(<NewPage />, { wrapper: TestWrapper });
+    render(<EditPage />, { wrapper: TestWrapper });
 
     expect(screen.getByTestId("app-layout")).toBeInTheDocument();
-    expect(screen.getByTestId("create-password-form")).toBeInTheDocument();
+    expect(screen.getByTestId("edit-password-form")).toBeInTheDocument();
   });
 });

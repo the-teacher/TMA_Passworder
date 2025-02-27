@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
 import PasswordEntry from "@components/PasswordEntry/Item";
+import { showPasswordEntryPath } from "@routes/helpers";
 
 describe("PasswordEntry", () => {
   const mockProps = {
@@ -26,7 +27,7 @@ describe("PasswordEntry", () => {
     const entryLink = screen.getByText(mockProps.name).closest("a");
     expect(entryLink).toHaveAttribute(
       "href",
-      `/password-entry/${mockProps.id}`
+      showPasswordEntryPath(mockProps.id)
     );
   });
 });

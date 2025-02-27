@@ -13,15 +13,27 @@ jest.mock("react-i18next", () => ({
   })
 }));
 
+// Mock useNavigate
+const mockNavigate = jest.fn();
+jest.mock("react-router", () => ({
+  useNavigate: () => mockNavigate
+}));
+
 describe("useSubmitForm", () => {
   const mockData = {
     serviceName: "test",
     username: "user",
     password: "pass123"
   };
+  const mockEntryId = "entry-123";
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   it("should handle successful submission", async () => {
@@ -32,7 +44,9 @@ describe("useSubmitForm", () => {
     const { result } = renderHook(() => useSubmitForm());
 
     await act(async () => {
-      await result.current.submitForm(mockData, onSuccess, onError);
+      result.current.submitForm(mockEntryId, mockData, onSuccess, onError);
+      // Resolve all promises
+      await Promise.resolve();
     });
 
     expect(submitPasswordEntry).toHaveBeenCalledWith(mockData);
@@ -57,7 +71,9 @@ describe("useSubmitForm", () => {
     const { result } = renderHook(() => useSubmitForm());
 
     await act(async () => {
-      await result.current.submitForm(mockData, onSuccess, onError);
+      result.current.submitForm(mockEntryId, mockData, onSuccess, onError);
+      // Resolve all promises
+      await Promise.resolve();
     });
 
     expect(onError).toHaveBeenCalledWith(errors);
@@ -74,7 +90,9 @@ describe("useSubmitForm", () => {
     const { result } = renderHook(() => useSubmitForm());
 
     await act(async () => {
-      await result.current.submitForm(mockData, onSuccess, onError);
+      result.current.submitForm(mockEntryId, mockData, onSuccess, onError);
+      // Resolve all promises
+      await Promise.resolve();
     });
 
     expect(EventEmitter.emit).toHaveBeenCalledWith("ERROR", `Error: ${error}`);
@@ -85,21 +103,54 @@ describe("useSubmitForm", () => {
   });
 
   it("should manage loading state correctly", async () => {
-    const { result } = renderHook(() => useSubmitForm());
+    // Mock submitPasswordEntry to return a promise that doesn't resolve immediately
     (submitPasswordEntry as jest.Mock).mockImplementation(
-      () => new Promise((resolve) => setTimeout(resolve, 100))
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve({ success: true }), 50);
+        })
     );
 
+    const { result } = renderHook(() => useSubmitForm());
+
+    // Start the submission
     act(() => {
-      result.current.submitForm(mockData, jest.fn(), jest.fn());
+      result.current.submitForm(mockEntryId, mockData, jest.fn(), jest.fn());
     });
 
+    // Check that isSubmitting is true immediately after starting
     expect(result.current.isSubmitting).toBe(true);
 
+    // Fast-forward time to resolve the promise
     await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 150));
+      jest.advanceTimersByTime(100);
+      // Allow any pending promises to resolve
+      await Promise.resolve();
     });
 
+    // Check that isSubmitting is false after the promise resolves
     expect(result.current.isSubmitting).toBe(false);
+  });
+
+  it("should navigate to show password entry page after submission", async () => {
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+    (submitPasswordEntry as jest.Mock).mockResolvedValue({ success: true });
+
+    const { result } = renderHook(() => useSubmitForm());
+
+    await act(async () => {
+      result.current.submitForm(mockEntryId, mockData, onSuccess, onError);
+      // Resolve all promises
+      await Promise.resolve();
+    });
+
+    // Fast-forward timer to trigger navigation
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    // Check if navigate was called with the correct path
+    expect(mockNavigate).toHaveBeenCalled();
   });
 });

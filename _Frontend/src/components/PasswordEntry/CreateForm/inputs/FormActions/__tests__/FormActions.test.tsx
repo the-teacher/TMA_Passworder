@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useAppModal } from "@components/AppModal";
 import FormActions from "../FormActions";
 
 jest.mock("react-hook-form", () => ({
@@ -11,20 +12,33 @@ jest.mock("react-i18next", () => ({
   useTranslation: jest.fn()
 }));
 
+jest.mock("@components/AppModal", () => ({
+  useAppModal: jest.fn()
+}));
+
 describe("FormActions", () => {
   const mockReset = jest.fn();
-  const mockTranslation = {
-    t: jest.fn((key: "save" | "saving" | "reset") => {
-      const translations = {
-        save: "Save",
-        saving: "Saving...",
-        reset: "Reset"
-      };
-      return translations[key];
-    })
+  const mockClose = jest.fn();
+  const mockOpen = jest.fn();
+
+  // Mock translations
+  const commonTranslations = {
+    reset: "Reset",
+    saving: "Saving..."
+  };
+
+  const formTranslations = {
+    "actions.save": "Save",
+    "modals.resetForm.title": "Reset Form",
+    "modals.resetForm.message": "Are you sure?",
+    "modals.resetForm.cancel": "Cancel",
+    "modals.resetForm.confirm": "Confirm"
   };
 
   beforeEach(() => {
+    jest.clearAllMocks();
+
+    // Mock form context
     (useFormContext as jest.Mock).mockReturnValue({
       formState: {
         isValid: true,
@@ -33,11 +47,26 @@ describe("FormActions", () => {
       reset: mockReset
     });
 
-    (useTranslation as jest.Mock).mockReturnValue(mockTranslation);
-  });
+    // Mock translations
+    (useTranslation as jest.Mock).mockImplementation((ns) => {
+      if (ns === "common") {
+        return {
+          t: (key: string) =>
+            commonTranslations[key as keyof typeof commonTranslations] || key
+        };
+      }
+      return {
+        t: (key: string) =>
+          formTranslations[key as keyof typeof formTranslations] || key
+      };
+    });
 
-  afterEach(() => {
-    jest.clearAllMocks();
+    // Mock modal
+    (useAppModal as jest.Mock).mockReturnValue({
+      open: mockOpen,
+      modal: <div data-testid="reset-modal">Modal Content</div>,
+      close: mockClose
+    });
   });
 
   it("renders submit and reset buttons", () => {
@@ -76,10 +105,20 @@ describe("FormActions", () => {
     expect(submitButton).toBeDisabled();
   });
 
-  it("calls reset when clicking reset button", () => {
+  it("opens confirmation modal when clicking reset button", () => {
     render(<FormActions />);
 
     fireEvent.click(screen.getByRole("button", { name: "Reset" }));
-    expect(mockReset).toHaveBeenCalledTimes(1);
+    expect(mockOpen).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("reset-modal")).toBeInTheDocument();
+  });
+
+  it("doesn't show reset button for Edit form type", () => {
+    render(<FormActions formType="Edit" />);
+
+    expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Reset" })
+    ).not.toBeInTheDocument();
   });
 });

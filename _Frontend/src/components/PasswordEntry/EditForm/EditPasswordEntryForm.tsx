@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "react-router";
 
 import EventEmitter from "@lib/EventEmitter";
 
@@ -18,6 +19,7 @@ import "@ui-kit/text-styles.scss";
 import CreatePasswordEntryFormView from "./EditPasswordEntryFormView";
 
 const EditPasswordEntryForm = () => {
+  const { id: entryId } = useParams();
   const [formError, setFormError] = useState("");
   const { t } = useTranslation("CreatePasswordEntryForm");
   const { t: e } = useTranslation("EditPasswordEntryForm");
@@ -58,7 +60,7 @@ const EditPasswordEntryForm = () => {
   };
 
   const handleFormSubmit = methods.handleSubmit((data) => {
-    submitForm(data, handleSubmitSuccess, handleSubmitError);
+    submitForm(entryId!, data, handleSubmitSuccess, handleSubmitError);
   });
 
   return (

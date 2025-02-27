@@ -27,7 +27,7 @@ describe("PasswordEntryList", () => {
       const entry = screen.getByText(service);
       expect(entry.closest("a")).toHaveAttribute(
         "href",
-        `/password-entry/entry-${index + 1}`
+        `/password_entries/${index + 1}`
       );
     });
   });

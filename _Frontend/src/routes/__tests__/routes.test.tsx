@@ -19,6 +19,12 @@ jest.mock("@pages/ShowPage", () => mockComponent("Show Page"));
 jest.mock("@pages/PasswordEntries/NewPage", () =>
   mockComponent("Password Entries Create Page")
 );
+jest.mock("@pages/PasswordEntries/ShowPage", () =>
+  mockComponent("Password Entries Show Page")
+);
+jest.mock("@pages/PasswordEntries/EditPage", () =>
+  mockComponent("Password Entries Edit Page")
+);
 
 jest.mock("react", () => {
   const originalModule = jest.requireActual("react");
@@ -81,6 +87,20 @@ describe("AppRoutes", () => {
     ).toBeInTheDocument();
   });
 
+  it("should render show entry page", async () => {
+    renderWithRouter("/password_entries/123");
+    expect(
+      await screen.findByText("Password Entries Show Page")
+    ).toBeInTheDocument();
+  });
+
+  it("should render edit entry page", async () => {
+    renderWithRouter("/password_entries/123/edit");
+    expect(
+      await screen.findByText("Password Entries Edit Page")
+    ).toBeInTheDocument();
+  });
+
   it("should render not found page for unknown routes", async () => {
     renderWithRouter("/unknown-route");
     expect(await screen.findByText("Not Found Page")).toBeInTheDocument();
@@ -95,6 +115,8 @@ describe("AppRoutes", () => {
         { path: "settings", element: expect.any(Object) },
         { path: "about", element: expect.any(Object) },
         { path: "/password_entries/new", element: expect.any(Object) },
+        { path: "/password_entries/:id", element: expect.any(Object) },
+        { path: "/password_entries/:id/edit", element: expect.any(Object) },
         { path: "*", element: expect.any(Object) }
       ]);
     });
@@ -109,6 +131,14 @@ describe("AppRoutes", () => {
         {
           path: "/password_entries/new",
           expectedText: "Password Entries Create Page"
+        },
+        {
+          path: "/password_entries/123",
+          expectedText: "Password Entries Show Page"
+        },
+        {
+          path: "/password_entries/123/edit",
+          expectedText: "Password Entries Edit Page"
         },
         { path: "/non-existent", expectedText: "Not Found Page" }
       ];

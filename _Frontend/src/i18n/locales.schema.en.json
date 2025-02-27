@@ -89,6 +89,21 @@
     "edit": "Edit",
     "back": "Home"
   },
+  "title": "Password Entry Details",
+  "fields": {
+    "serviceName": "Service Name",
+    "username": "Username",
+    "password": "Password",
+    "serviceUrl": "Service URL",
+    "notes": "Notes"
+  },
+  "copy": "Copy",
+  "copyPassword": "Copy password to clipboard",
+  "edit": "Edit",
+  "back": "Back",
+  "notifications": {
+    "copied": "{{field}} copied to clipboard"
+  },
   "SearchField": {
     "search": "Search",
     "clear": "Clear search",

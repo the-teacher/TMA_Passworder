@@ -37,6 +37,10 @@ jest.mock("../validationSchema", () => ({
   validationSchema: {}
 }));
 
+jest.mock("react-router", () => ({
+  useParams: () => ({ id: "test-id" })
+}));
+
 jest.mock("../CreatePasswordEntryFormView", () => ({
   __esModule: true,
   default: ({ onSubmit }: { onSubmit: () => void }) => (
@@ -59,6 +63,7 @@ describe("CreatePasswordEntryForm", () => {
   const mockHandleSubmit = jest.fn();
   const mockSubmitForm = jest.fn();
   const mockTranslate = jest.fn((key) => key);
+  const mockEntryId = "test-id";
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -126,6 +131,7 @@ describe("CreatePasswordEntryForm", () => {
 
     expect(mockHandleSubmit).toHaveBeenCalled();
     expect(mockSubmitForm).toHaveBeenCalledWith(
+      mockEntryId,
       { serviceName: "Test Service" },
       expect.any(Function),
       expect.any(Function)
@@ -134,7 +140,7 @@ describe("CreatePasswordEntryForm", () => {
 
   it("handles successful form submission", async () => {
     // Setup submitForm to call success callback
-    mockSubmitForm.mockImplementation((_data, onSuccess) => {
+    mockSubmitForm.mockImplementation((_id, _data, onSuccess) => {
       onSuccess();
     });
 
@@ -171,7 +177,7 @@ describe("CreatePasswordEntryForm", () => {
     };
 
     // Setup submitForm to call error callback
-    mockSubmitForm.mockImplementation((_data, _onSuccess, onError) => {
+    mockSubmitForm.mockImplementation((_id, _data, _onSuccess, onError) => {
       onError(serverErrors);
     });
 

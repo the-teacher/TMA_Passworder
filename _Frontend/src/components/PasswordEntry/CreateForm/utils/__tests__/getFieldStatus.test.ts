@@ -31,6 +31,7 @@ describe("getFieldStatus", () => {
 
     expect(result.message).toBe("Error message");
     expect(result.className).toBe("text--danger text--small");
+    expect(result.inputClassName).toBe("form-input--error");
   });
 
   it("should return warning status for untouched field", () => {
@@ -44,7 +45,8 @@ describe("getFieldStatus", () => {
 
     expect(result).toEqual({
       message: "Please fill in this field",
-      className: "text--warning text--small"
+      className: "text--warning text--small",
+      inputClassName: "form-input--warning"
     });
   });
 
@@ -59,7 +61,8 @@ describe("getFieldStatus", () => {
 
     expect(result).toEqual({
       message: "Filled correctly",
-      className: "text--success text--small"
+      className: "text--success text--small",
+      inputClassName: "form-input--success"
     });
   });
 
@@ -82,7 +85,8 @@ describe("getFieldStatus", () => {
 
     expect(result).toEqual({
       message: "Field is required",
-      className: "text--danger text--small"
+      className: "text--danger text--small",
+      inputClassName: "form-input--error"
     });
   });
 
@@ -103,7 +107,8 @@ describe("getFieldStatus", () => {
 
     expect(result).toEqual({
       message: "Server validation failed",
-      className: "text--danger text--small"
+      className: "text--danger text--small",
+      inputClassName: "form-input--error"
     });
   });
 
@@ -118,7 +123,8 @@ describe("getFieldStatus", () => {
 
     expect(result).toEqual({
       message: "",
-      className: ""
+      className: "",
+      inputClassName: ""
     });
   });
 });
