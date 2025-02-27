@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { editPasswordEntryPath } from "@routes/helpers";
+import { editPasswordEntryPath, indexPath } from "@routes/helpers";
+import { useParams } from "react-router";
 import "@ui-kit/card.scss";
 import "@ui-kit/data-display.scss";
 import "@ui-kit/buttons.scss";
 import "@ui-kit/text-styles.scss";
-import "./styles.scss";
 
 export type PasswordEntryData = {
   id: string;
@@ -18,13 +18,13 @@ export type PasswordEntryData = {
 
 type ShowPasswordEntryProps = {
   data: PasswordEntryData;
-  onBack?: () => void;
 };
 
-const ShowPasswordEntry = ({ data, onBack }: ShowPasswordEntryProps) => {
+const ShowPasswordEntry = ({ data }: ShowPasswordEntryProps) => {
+  const { id } = useParams();
   const { t } = useTranslation("ShowPasswordEntry");
 
-  const { id, serviceName, username, password, serviceUrl, notes } = data;
+  const { serviceName, username, password, serviceUrl, notes } = data;
 
   return (
     <div className="card card__centered show-password-entry">
@@ -95,11 +95,9 @@ const ShowPasswordEntry = ({ data, onBack }: ShowPasswordEntryProps) => {
             {t("edit")}
           </Link>
 
-          {onBack && (
-            <button className="btn btn--secondary" onClick={onBack}>
-              {t("back")}
-            </button>
-          )}
+          <Link className="btn btn--secondary" to={indexPath()}>
+            {t("back")}
+          </Link>
         </div>
       </div>
     </div>

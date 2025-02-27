@@ -62,5 +62,19 @@
     "actions": {
       "save": "Обновить"
     }
+  },
+  "ShowPasswordEntry": {
+    "title": "Детали записи пароля",
+    "fields": {
+      "serviceName": "Название сервиса",
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "serviceUrl": "URL сервиса",
+      "notes": "Заметки"
+    },
+    "copy": "Копировать",
+    "copyPassword": "Копировать пароль в буфер обмена",
+    "edit": "Редактировать",
+    "back": "Назад"
   }
 }

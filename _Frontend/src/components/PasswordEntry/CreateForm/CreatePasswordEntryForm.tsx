@@ -6,6 +6,7 @@ import { useSubmitForm } from "./hooks/useSubmitForm";
 import { useTranslation } from "react-i18next";
 import { FormProvider } from "react-hook-form";
 import type { ServerErrors } from "./utils/getFieldStatus";
+import { useParams } from "react-router";
 
 import "@ui-kit/text-styles.scss";
 import EventEmitter from "@lib/EventEmitter";
@@ -14,6 +15,7 @@ import CreatePasswordEntryFormView from "./CreatePasswordEntryFormView";
 import FormError from "./components/FormError/FormError";
 
 const CreatePasswordEntryForm = () => {
+  const { id: entryId } = useParams();
   const [formError, setFormError] = useState("");
   const { t } = useTranslation("CreatePasswordEntryForm");
 
@@ -53,7 +55,7 @@ const CreatePasswordEntryForm = () => {
   };
 
   const handleFormSubmit = methods.handleSubmit((data) => {
-    submitForm(data, handleSubmitSuccess, handleSubmitError);
+    submitForm(entryId, data, handleSubmitSuccess, handleSubmitError);
   });
 
   return (

@@ -75,18 +75,20 @@
       "save": "Обновить"
     }
   },
-  "title": "Детали записи пароля",
-  "fields": {
-    "serviceName": "Название сервиса",
-    "username": "Имя пользователя",
-    "password": "Пароль",
-    "serviceUrl": "URL сервиса",
-    "notes": "Заметки"
+  "ShowPasswordEntry": {
+    "title": "Детали записи пароля",
+    "fields": {
+      "serviceName": "Название сервиса",
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "serviceUrl": "URL сервиса",
+      "notes": "Заметки"
+    },
+    "copy": "Копировать",
+    "copyPassword": "Копировать пароль в буфер обмена",
+    "edit": "Редактировать",
+    "back": "Назад"
   },
-  "copy": "Копировать",
-  "copyPassword": "Копировать пароль в буфер обмена",
-  "edit": "Редактировать",
-  "back": "Назад",
   "SearchField": {
     "search": "Поиск",
     "clear": "Очистить поиск",
