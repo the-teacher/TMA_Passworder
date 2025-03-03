@@ -9,7 +9,7 @@
 /.examples
 
 # FOR NODE
-/node_modules
+node_modules
 
 # FOR YARN
 .yarn
