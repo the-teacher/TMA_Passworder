@@ -19,6 +19,10 @@
   white-space: nowrap;
   user-select: none;
 
+  &--default {
+    padding: 10px 16px;
+  }
+
   &--primary {
     background-color: $color-primary;
     color: $color-white;

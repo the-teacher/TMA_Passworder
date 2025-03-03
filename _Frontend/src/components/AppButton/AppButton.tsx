@@ -52,6 +52,7 @@ import "@ui-kit/buttons.scss";
  */
 
 export type ButtonVariant =
+  | "default"
   | "primary"
   | "secondary"
   | "success"
@@ -84,7 +85,7 @@ type AppButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const AppButton = ({
-  variant = "icon",
+  variant = "default",
   size = "medium",
   icon = "star",
   iconParams = {},
