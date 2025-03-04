@@ -6,7 +6,7 @@
 /coverage
 /logs
 /data
-/.examples
+.examples
 
 # FOR NODE
 node_modules
