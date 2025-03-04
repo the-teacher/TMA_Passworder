@@ -33,7 +33,9 @@
     "forceConsistentCasingInFileNames": true,
 
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+
+    "types": ["node", "jest"]
   },
   "include": ["src"]
 }
