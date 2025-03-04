@@ -1,7 +1,10 @@
-import { root, get, resources } from '@the-teacher/the-router'
+import { root, get, routeScope as scope } from '@the-teacher/the-router'
+
+import { buildRoutesSchema } from '@the-teacher/the-router'
 
 root('index/index')
 
 // User routes
 get('/users/exists/:login', 'users/exists')
-resources('users', { except: ['new'] })
+
+buildRoutesSchema()
