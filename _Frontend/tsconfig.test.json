@@ -1,36 +1,13 @@
 {
   "compilerOptions": {
-    // === BASE ===
-    // "target": "ES2020",
-    // "module": "ESNext",
-    // "moduleResolution": "bundler",
-    // "esModuleInterop": true,
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-
-    "skipLibCheck": true,
-
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-    /* React */
-    "jsx": "react-jsx",
-    "allowJs": true,
-
-    // === TEST ===
-    "module": "NodeNext",
+    // === Basic Options ===
     "target": "ESNext",
+    "module": "NodeNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+
+    // === Module Resolution ===
     "moduleResolution": "NodeNext",
-    "types": ["jest", "@testing-library/jest-dom", "node", "vite/client"],
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-    "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
       "@pages/*": ["src/pages/*"],
@@ -42,7 +19,30 @@
       "@i18n/*": ["src/i18n/*"],
       "@story/*": [".storybook/*"],
       "@lib/*": ["src/lib/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+
+    // === Type Checking ===
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    // === Emit ===
+    "noEmit": true,
+
+    // === Advanced ===
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
+    "allowJs": true,
+
+    // === Types ===
+    "types": ["jest", "@testing-library/jest-dom", "node", "vite/client"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": [
     "src/**/*.test.ts",
