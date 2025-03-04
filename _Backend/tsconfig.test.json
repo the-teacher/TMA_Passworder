@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    // === Basic Options ===
+    "target": "ESNext",
+    "module": "NodeNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+
+    // === Module Resolution ===
+    "moduleResolution": "NodeNext",
+    "baseUrl": ".",
+    "paths": {
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@test/*": ["test/*"],
+      "@routes/*": ["src/routes/*"],
+      "@ui-kit/*": ["src/ui-kit/*"],
+      "@mocks/*": ["src/mocks/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@story/*": [".storybook/*"],
+      "@lib/*": ["src/lib/*"]
+    },
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+
+    // === Type Checking ===
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    // === Emit ===
+    "noEmit": true,
+
+    // === Advanced ===
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
+    "allowJs": true,
+
+    // === Types ===
+    "types": ["jest", "@testing-library/jest-dom", "node", "vite/client"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
+  },
+  "include": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/setupTests.ts",
+    "src/test/types",
+    "test/**/*.ts",
+    "test/types/**/*.d.ts"
+  ]
+}
