@@ -1,6 +1,6 @@
 {
-  "name": "TMA Dev Container",
-  "dockerComposeFile": "../docker-compose.yml",
+  "name": "TMA Frontend Dev Container",
+  "dockerComposeFile": "../../docker-compose.yml",
   "service": "node",
   "remoteUser": "root",
   "workspaceFolder": "/app/_Frontend",
@@ -36,23 +36,8 @@
         "files.insertFinalNewline": true,
         "files.trimTrailingWhitespace": true
       }
-    },
-    "settings": {
-      "terminal.integrated.defaultProfile.linux": "/bin/sh",
-      "typescript.tsdk": "/app/_Frontend/node_modules/typescript/lib",
-      "eslint.workingDirectories": ["/app"],
-      "editor.formatOnSave": true,
-      "editor.tabSize": 2,
-      "editor.insertSpaces": true,
-      "typescript.updateImportsOnFileMove.enabled": "always",
-      "typescript.preferences.importModuleSpecifier": "relative",
-      "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-      },
-      "prettier.tabWidth": 2,
-      "prettier.singleQuote": true
     }
   },
   "shutdownAction": "stopCompose",
-  "postCreateCommand": "yarn install"
+  "postCreateCommand": "cd /app/_Frontend && yarn install"
 }
