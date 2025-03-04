@@ -4,15 +4,6 @@ This project uses multiple TypeScript configurations for different environments.
 
 ## Configuration Files Structure
 
-### tsconfig.base.json
-
-Base configuration with common settings for all environments:
-
-- Target: ES2020
-- Module: ESNext
-- Common linting rules
-- React JSX settings
-
 ### tsconfig.json
 
 Root configuration file:
@@ -25,32 +16,41 @@ Root configuration file:
 
 Main application source code configuration:
 
-- Extends: tsconfig.base.json
 - Environment: Browser
-- Target: ES2020
-- Module: ESNext
-- Types: React, ReactDOM, Jest
+- Organized in logical sections:
+  - Basic Options: ES2020, ESNext, React JSX
+  - Module Resolution: Path aliases, bundler
+  - Type Checking: Strict mode and linting rules
+  - Emit: No emit settings
+  - Advanced: Skip lib check, isolated modules
+  - Types: React, ReactDOM, Jest
 - Used for: Development and production builds
 
 ### tsconfig.node.json
 
 Node.js environment configuration:
 
-- Extends: tsconfig.base.json
 - Environment: Node.js
-- Target: ES2022
-- Module: ESNext
+- Organized in logical sections:
+  - Basic Options: ES2022, ESNext, React JSX
+  - Module Resolution: Bundler settings
+  - Type Checking: Strict mode and linting rules
+  - Emit: No emit settings
+  - Advanced: Skip lib check, isolated modules
 - Used for: Build tools and configuration files (vite.config.ts)
 
 ### tsconfig.test.json
 
 Testing environment configuration:
 
-- Extends: tsconfig.base.json
 - Environment: Jest
-- Target: ES2019
-- Module: CommonJS (required for Jest)
-- Types: Jest, Testing Library
+- Organized in logical sections:
+  - Basic Options: ESNext, NodeNext, React JSX
+  - Module Resolution: NodeNext, path aliases
+  - Type Checking: Strict mode and linting rules
+  - Emit: No emit settings
+  - Advanced: Skip lib check, isolated modules
+  - Types: Jest, Testing Library, Node, Vite
 - Used for: Unit and integration tests
 
 ## Environment Standards
@@ -61,6 +61,7 @@ Testing environment configuration:
 - ES Modules
 - Latest React features
 - Strict type checking
+- Bundler module resolution
 
 ### Node.js
 
@@ -68,25 +69,27 @@ Testing environment configuration:
 - ES Modules
 - Build tools compatibility
 - Configuration files
+- Bundler module resolution
 
 ### Testing
 
 - Jest compatibility
-- CommonJS modules
+- Node.js module system
 - Testing Library support
 - Test file patterns: _.test.ts, _.test.tsx
+- NodeNext module resolution
 
 ## Module Resolution
 
-- App: ESNext with Node resolution
-- Node: ESNext with Node resolution
-- Tests: CommonJS with Node resolution
+- App: ESNext with bundler resolution
+- Node: ESNext with bundler resolution
+- Tests: NodeNext with NodeNext resolution
 
 ## Type Definitions
 
 - App: React + ReactDOM + Jest
 - Node: Node.js types
-- Tests: Jest + Testing Library
+- Tests: Jest + Testing Library + Node + Vite/client
 
 ## Aliases
 
@@ -95,3 +98,7 @@ Testing environment configuration:
 - `@test`: `test`
 - `@routes`: `src/routes`
 - `@ui-kit`: `src/ui-kit`
+- `@mocks`: `src/mocks`
+- `@i18n`: `src/i18n`
+- `@story`: `.storybook`
+- `@lib`: `src/lib`
