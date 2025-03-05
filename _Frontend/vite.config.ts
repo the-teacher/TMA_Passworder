@@ -12,7 +12,8 @@ export default defineConfig({
     strictPort: true,
     watch: {
       usePolling: true
-    }
+    },
+    allowedHosts: ["miniapp.izykin.com"]
   },
   resolve: {
     alias: [

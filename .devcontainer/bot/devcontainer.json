@@ -1,0 +1,43 @@
+{
+  "name": "TMA Bot Dev Container",
+  "dockerComposeFile": "../../docker-compose.yml",
+  "service": "node",
+  "remoteUser": "root",
+  "workspaceFolder": "/app/_Bot",
+  "version": "1.0.0",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "ms-azuretools.vscode-docker",
+        "streetsidesoftware.code-spell-checker",
+        "christian-kohler.path-intellisense"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "/bin/sh",
+        "typescript.tsdk": "/app/_Bot/node_modules/typescript/lib",
+        "eslint.workingDirectories": ["/app/_Bot"],
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        },
+        "prettier.tabWidth": 2,
+        "prettier.singleQuote": true,
+        "javascript.preferences.importModuleSpecifier": "relative",
+        "typescript.preferences.useAliasesForRenames": true,
+        "typescript.preferences.preferTypeOnlyImports": true,
+        "files.eol": "\n",
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true
+      }
+    }
+  },
+  "shutdownAction": "stopCompose",
+  "postCreateCommand": "cd /app/_Bot && yarn install"
+}
