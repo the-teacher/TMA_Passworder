@@ -4041,6 +4041,118 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@telegram-apps/bridge@npm:^1.9.2":
+  version: 1.9.2
+  resolution: "@telegram-apps/bridge@npm:1.9.2"
+  dependencies:
+    "@telegram-apps/signals": "npm:^1.1.1"
+    "@telegram-apps/toolkit": "npm:^1.1.1"
+    "@telegram-apps/transformers": "npm:^1.2.2"
+    "@telegram-apps/types": "npm:^1.2.1"
+  checksum: 10c0/6025c30db7707fa60e292811bf5a6e5cb5b00dadea5d06de7533400b221bd2af5ed0ee09ef4c327f9296ca1ec391026179134b1a249e9c02d85a397030b7cd92
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/bridge@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@telegram-apps/bridge@npm:2.4.0"
+  dependencies:
+    "@telegram-apps/signals": "npm:^1.1.1"
+    "@telegram-apps/toolkit": "npm:^2.0.0"
+    "@telegram-apps/transformers": "npm:^2.2.0"
+    "@telegram-apps/types": "npm:^2.0.0"
+    better-promises: "npm:^0.4.0"
+    error-kid: "npm:^0.0.4"
+    mitt: "npm:^3.0.1"
+    valibot: "npm:1.0.0-beta.14"
+  checksum: 10c0/d3d3e9b734ddb6a88db11a3219a732d626f2c7ea6d108550acf320105897bd1fc347b0dcc7fb261dddf56874642981eca970c291558cf475f8c7e37028b29bdf
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/navigation@npm:^1.0.13":
+  version: 1.0.13
+  resolution: "@telegram-apps/navigation@npm:1.0.13"
+  dependencies:
+    "@telegram-apps/bridge": "npm:^1.9.2"
+    "@telegram-apps/signals": "npm:^1.1.1"
+    "@telegram-apps/toolkit": "npm:^1.1.1"
+  checksum: 10c0/3f91e4b7ed6d2dcc8b91daca688d32621ccd6d8ae2160ddf9691cbfe49f0b25b41e4bc2eaa03e55115f357c18df3f58ce2c5185748fbb83e576ad0661fb63cb3
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/sdk@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "@telegram-apps/sdk@npm:3.5.1"
+  dependencies:
+    "@telegram-apps/bridge": "npm:^2.4.0"
+    "@telegram-apps/navigation": "npm:^1.0.13"
+    "@telegram-apps/signals": "npm:^1.1.1"
+    "@telegram-apps/toolkit": "npm:^2.0.0"
+    "@telegram-apps/transformers": "npm:^2.2.0"
+    "@telegram-apps/types": "npm:^2.0.0"
+    better-promises: "npm:^0.4.0"
+    error-kid: "npm:^0.0.4"
+    valibot: "npm:1.0.0-beta.14"
+  checksum: 10c0/67214d95853f7acd7589f817fa33b2fe84997761634cfb1a75e077809abb5e397747d5f76ed84bf6b8b1aa7c8319c568dc0011035464869bbfa51e0508b7ec30
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/signals@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@telegram-apps/signals@npm:1.1.1"
+  checksum: 10c0/2a9061390c76a0158913e19f74ad262e9695cb8b0913ebc1696c6fc65722f6e2e8a5cf07a9e6dc5b2297b5f0532b5e530b16fafb630bd1ad83fed062908860d2
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/toolkit@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@telegram-apps/toolkit@npm:1.1.1"
+  checksum: 10c0/a5eab88e45c1dd59f6aee87acf2276a7994ab201737beec5d3a9e0a09b2e4fe60314b7c9d61e241eb81d4e9f400229da25ee5b8e8eaa7de499027a61ea914b36
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/toolkit@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@telegram-apps/toolkit@npm:2.0.0"
+  checksum: 10c0/960e861487ad90e9557c4c71feba3e351e7fb9e2cee654caed54e46eaed539d68cf9ec05a0adbb5809afb0a78d1b7d76a6155a5f2d6727ee70ee8e95feb62dd7
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/transformers@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@telegram-apps/transformers@npm:1.2.2"
+  dependencies:
+    "@telegram-apps/toolkit": "npm:^1.1.1"
+    "@telegram-apps/types": "npm:^1.2.1"
+  checksum: 10c0/0df61d95a990fc1d42e949470188065820564bc4dafb3fe96b9730171f97e2c258c82ba354656104eb76356fbdc59a1767987b808064ccad0b9a0b93174bc2ee
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/transformers@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@telegram-apps/transformers@npm:2.2.0"
+  dependencies:
+    "@telegram-apps/toolkit": "npm:^2.0.0"
+    "@telegram-apps/types": "npm:^2.0.0"
+    valibot: "npm:1.0.0-beta.14"
+  checksum: 10c0/a8dc5219050c2e73eef2b4a6e835365ccd0c81da60ee65271cbd75ccdf6b0df6f380185291db4647185914235d6646a50870c2762afac58e4ddbee5f4d66871f
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/types@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@telegram-apps/types@npm:1.2.1"
+  checksum: 10c0/75027584e6e458bba9ad1596bcede6d5b43b0b08285842511d2237ffd85f1dee623fc8bcd4dce064bd57e6338cffc4bd89d10f6763e038d8a3f4145cb351bb89
+  languageName: node
+  linkType: hard
+
+"@telegram-apps/types@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@telegram-apps/types@npm:2.0.0"
+  checksum: 10c0/dc564575055af7e90dd2d0013e00143cd847cff2fbb78d824caa76ebafff8931d83f660e2051174c431a841892b8a6a5d08968f0c106605747de0aeac2787933
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:^10.4.0":
   version: 10.4.0
   resolution: "@testing-library/dom@npm:10.4.0"
@@ -5234,6 +5346,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"better-promises@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "better-promises@npm:0.4.0"
+  dependencies:
+    error-kid: "npm:^0.0.4"
+  checksum: 10c0/49c4ddc11cfeb2043a523ea80636fa266e6ae36bc93b1545307b02517f21ea5bff8088e8bd66950fd7e1c32d2b69ee21ffeec1e8cb496b3cf2e1388efb25d146
+  languageName: node
+  linkType: hard
+
 "big-integer@npm:^1.6.44":
   version: 1.6.52
   resolution: "big-integer@npm:1.6.52"
@@ -6340,6 +6461,13 @@ __metadata:
   dependencies:
     is-arrayish: "npm:^0.2.1"
   checksum: 10c0/ba827f89369b4c93382cfca5a264d059dfefdaa56ecc5e338ffa58a6471f5ed93b71a20add1d52290a4873d92381174382658c885ac1a2305f7baca363ce9cce
+  languageName: node
+  linkType: hard
+
+"error-kid@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "error-kid@npm:0.0.4"
+  checksum: 10c0/f8ce10b4a6fad1b3f2fc10e19eb266430a219173449524312503c990cd447dbd887e9cdd48de56fb2085f720feabe87b872ce15fa91aa353ada2d3d6753ac9c7
   languageName: node
   linkType: hard
 
@@ -9408,6 +9536,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mitt@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "mitt@npm:3.0.1"
+  checksum: 10c0/3ab4fdecf3be8c5255536faa07064d05caa3dd332bd318ff02e04621f7b3069ca1de9106cfe8e7ced675abfc2bec2ce4c4ef321c4a1bb1fb29df8ae090741913
+  languageName: node
+  linkType: hard
+
 "mkdirp-classic@npm:^0.5.2":
   version: 0.5.3
   resolution: "mkdirp-classic@npm:0.5.3"
@@ -11719,6 +11854,7 @@ __metadata:
     "@storybook/react": "npm:7.6.19"
     "@storybook/react-vite": "npm:7.6.19"
     "@storybook/testing-library": "npm:^0.2.2"
+    "@telegram-apps/sdk": "npm:^3.5.1"
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
     "@testing-library/react": "npm:^16.2.0"
@@ -12287,6 +12423,18 @@ __metadata:
     "@types/istanbul-lib-coverage": "npm:^2.0.1"
     convert-source-map: "npm:^2.0.0"
   checksum: 10c0/968bcf1c7c88c04df1ffb463c179558a2ec17aa49e49376120504958239d9e9dad5281aa05f2a78542b8557f2be0b0b4c325710262f3b838b40d703d5ed30c23
+  languageName: node
+  linkType: hard
+
+"valibot@npm:1.0.0-beta.14":
+  version: 1.0.0-beta.14
+  resolution: "valibot@npm:1.0.0-beta.14"
+  peerDependencies:
+    typescript: ">=5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/04e7c6f188fca78aabe043b28e08934786cdcb905e9aec8a3efcd6bcf2ce8e14162aa4cf172a5f058b807ab51a55d0f594848a346c4bfba20fa61f412cdcd768
   languageName: node
   linkType: hard
 

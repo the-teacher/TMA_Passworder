@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.1",
+    "@telegram-apps/sdk": "^3.5.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "i18next": "^24.2.2",

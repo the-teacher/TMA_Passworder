@@ -3,9 +3,13 @@ import AppLayout from "@components/AppLayout";
 import PasswordEntryList from "@components/PasswordEntry/List";
 import SearchField from "@components/SearchField";
 
-const IndexPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+import { useLaunchParams } from "../../hooks/useLaunchParams";
 
+const IndexPage = () => {
+  const launchParams = useLaunchParams();
+  console.log("Launch Parameters:", launchParams);
+
+  const [searchQuery, setSearchQuery] = useState("");
   const handleSearch = useCallback(
     (query: string) => {
       setSearchQuery(query);
@@ -16,6 +20,7 @@ const IndexPage = () => {
 
   return (
     <AppLayout>
+      <h1>Hello, {launchParams.tgWebAppData?.user?.first_name || "User"}!</h1>
       <SearchField onSearch={handleSearch} />
       <PasswordEntryList />
     </AppLayout>
