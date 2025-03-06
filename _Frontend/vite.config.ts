@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-const FRONTEND_PORT = parseInt(process.env.VITE_FRONTEND_PORT || "4000", 10);
+import { FRONTEND_PORT, ALLOWED_HOSTS } from "./src/config/env";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +13,7 @@ export default defineConfig({
     watch: {
       usePolling: true
     },
-    allowedHosts: ["miniapp.izykin.com"]
+    allowedHosts: ALLOWED_HOSTS
   },
   resolve: {
     alias: [
