@@ -1,19 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import WelcomeMessage from "../WelcomeMessage";
+import WelcomeMessageView from "../WelcomeMessageView";
 import i18n from "@story/i18next";
 
-const meta: Meta<typeof WelcomeMessage> = {
-  title: "3-Components/WelcomeMessage",
-  component: WelcomeMessage,
+const meta: Meta<typeof WelcomeMessageView> = {
+  title: "3-Components/WelcomeMessage/WelcomeMessageView",
+  component: WelcomeMessageView,
   parameters: {
     viewport: {
       defaultViewport: "tablet"
     }
+  },
+  argTypes: {
+    onAccept: { action: "accepted" },
+    onDecline: { action: "declined" }
   }
 };
 
 export default meta;
-type Story = StoryObj<typeof WelcomeMessage>;
+type Story = StoryObj<typeof WelcomeMessageView>;
 
 export const English: Story = {
   args: {

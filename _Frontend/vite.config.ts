@@ -52,6 +52,10 @@ export default defineConfig({
       {
         find: "@i18n",
         replacement: path.resolve(__dirname, "src/i18n")
+      },
+      {
+        find: "@hooks",
+        replacement: path.resolve(__dirname, "src/hooks")
       }
     ]
   }

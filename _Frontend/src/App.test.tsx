@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import App from "../App";
-import { useUserExists } from "../hooks/useUserExists";
+import App from "./App";
+import { useUserExists } from "@hooks/useUserExists";
 import { I18nextProvider } from "react-i18next";
 import i18n from "@i18n/index";
 
@@ -10,7 +10,7 @@ const CustomWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 // Mock dependencies
-jest.mock("../hooks/useUserExists");
+jest.mock("@hooks/useUserExists");
 jest.mock("@pages/RegistrationPage", () => ({
   __esModule: true,
   default: () => <div data-testid="registration-page">Registration Page</div>
@@ -34,20 +34,29 @@ describe("App", () => {
     jest.clearAllMocks();
   });
 
-  it("renders without crashing", () => {
-    // Mock user exists to show main app
+  it("should show loading state while checking user existence", () => {
     (useUserExists as jest.Mock).mockReturnValue({
-      isLoading: false,
-      userExists: true,
+      isLoading: true,
+      userExists: false,
       error: null
     });
 
     render(<App />, { wrapper: CustomWrapper });
-    expect(screen.getByTestId("browser-router")).toBeInTheDocument();
+    expect(screen.getByTestId("loading-fallback")).toBeInTheDocument();
   });
 
-  it("has correct component structure", () => {
-    // Mock user exists to show main app
+  it("should show registration page if user doesn't exist", () => {
+    (useUserExists as jest.Mock).mockReturnValue({
+      isLoading: false,
+      userExists: false,
+      error: null
+    });
+
+    render(<App />, { wrapper: CustomWrapper });
+    expect(screen.getByTestId("registration-page")).toBeInTheDocument();
+  });
+
+  it("should show main app if user exists", () => {
     (useUserExists as jest.Mock).mockReturnValue({
       isLoading: false,
       userExists: true,
@@ -55,10 +64,10 @@ describe("App", () => {
     });
 
     render(<App />, { wrapper: CustomWrapper });
-
-    // Check that router contains routes
-    const router = screen.getByTestId("browser-router");
-    const routes = screen.getByTestId("app-routes");
-    expect(router).toContainElement(routes);
+    expect(screen.getByTestId("app-routes")).toBeInTheDocument();
+    expect(screen.getByTestId("browser-router")).toBeInTheDocument();
+    expect(screen.getByTestId("browser-router")).toContainElement(
+      screen.getByTestId("app-routes")
+    );
   });
 });

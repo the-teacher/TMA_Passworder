@@ -3,7 +3,7 @@ import AppLayout from "@components/AppLayout";
 import PasswordEntryList from "@components/PasswordEntry/List";
 import SearchField from "@components/SearchField";
 
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "@hooks/useUser";
 
 const IndexPage = () => {
   const user = useUser();

@@ -18,7 +18,8 @@
       "@mocks/*": ["src/mocks/*"],
       "@i18n/*": ["src/i18n/*"],
       "@story/*": [".storybook/*"],
-      "@lib/*": ["src/lib/*"]
+      "@lib/*": ["src/lib/*"],
+      "@hooks/*": ["src/hooks/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
