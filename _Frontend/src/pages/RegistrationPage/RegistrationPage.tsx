@@ -1,4 +1,5 @@
 import WelcomeMessage from "@components/WelcomeMessage";
+import SorryAboutDecline from "@components/SorryAboutDecline";
 import { useState } from "react";
 import "@ui-kit/margins.scss";
 
@@ -11,7 +12,7 @@ const RegistrationPage = () => {
   }
 
   if (userDeclined) {
-    return <div>See you next time!</div>;
+    return <SorryAboutDecline setUserDeclined={setUserDeclined} />;
   }
 
   return (

@@ -21,7 +21,7 @@ const WelcomeMessageView = ({
   const { t } = useTranslation("WelcomeMessage");
 
   return (
-    <div className="card card__centered">
+    <div className="card__centered">
       <div className="card--container">
         <div className="card--header">
           <h2 className="card--title">{t("title")}</h2>
