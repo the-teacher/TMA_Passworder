@@ -1,0 +1,17 @@
+{
+  "UserRegistrationData": {
+    "title": "Account Creation",
+    "subtitle": "We will create a new account for you using the following data.",
+    "fields": {
+      "userId": "Unique User ID",
+      "username": "Username",
+      "firstName": "First Name",
+      "lastName": "Last Name"
+    },
+    "disclaimer": "By continuing, you confirm your agreement with the <RulesLink>project rules</RulesLink> and <PolicyLink>data processing policy</PolicyLink>.",
+    "actions": {
+      "confirm": "Yes, create account",
+      "decline": "No, I don't want to"
+    }
+  }
+}

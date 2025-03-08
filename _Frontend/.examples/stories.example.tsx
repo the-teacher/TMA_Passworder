@@ -1,3 +1,159 @@
+// ui-kit/__stories__/DataDisplay.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import "@ui-kit/data-display.scss";
+import "@ui-kit/card.scss";
+import "@ui-kit/buttons.scss";
+import "@ui-kit/utils.scss";
+
+const meta: Meta = {
+  title: "4-UI-Kit/DataDisplay",
+  parameters: {
+    docs: { disable: true }
+  }
+};
+
+export default meta;
+type Story = StoryObj;
+
+export const DataDisplayExample: Story = {
+  render: () => (
+    <div style={{ padding: "16px" }}>
+      <div className="card card__centered">
+        <div className="card--container">
+          <div className="card--header">
+            <h2 className="card--title">Password Entry Details</h2>
+          </div>
+
+          <div className="card--content">
+            <div className="data-display--container">
+              <div className="data-display--field">
+                <div className="data-display--label">Service Name</div>
+                <div className="data-display--value">GitHub</div>
+              </div>
+
+              <div className="data-display--field">
+                <div className="data-display--label">Username</div>
+                <div className="data-display--value">johndoe123</div>
+              </div>
+
+              <div className="data-display--field">
+                <div className="data-display--label">Password</div>
+                <div className="data-display--value data-display__with-action">
+                  <span className="data-display__monospace get-space">
+                    P@ssw0rd123!
+                  </span>
+                  <button className="btn btn--small btn--secondary">
+                    Copy
+                  </button>
+                  <button className="btn btn--small btn--secondary">
+                    Renew
+                  </button>
+                </div>
+              </div>
+
+              <div className="data-display--field">
+                <div className="data-display--label">Service URL</div>
+                <div className="data-display--value">
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="data-display__link"
+                  >
+                    https://github.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="data-display--field">
+                <div className="data-display--label">Notes</div>
+                <div className="data-display--value data-display__multiline">
+                  This is my GitHub account for work projects. Remember to
+                  rotate this password every 90 days.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="data-display--actions">
+            <button className="btn btn--primary">Edit</button>
+            <button className="btn btn--secondary">Back</button>
+          </div>
+
+          <div className="card--footer">
+            <button className="btn btn--primary">Edit</button>
+            <button className="btn btn--secondary">Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+};
+
+
+// ui-kit/__stories__/Card.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import "@ui-kit/card.scss";
+import "@ui-kit/buttons.scss";
+import "@ui-kit/text-styles.scss";
+import "@ui-kit/margins.scss";
+
+const meta: Meta = {
+  title: "4-UI-Kit/Card",
+  parameters: {
+    docs: { disable: true }
+  }
+};
+
+export default meta;
+type Story = StoryObj;
+
+export const CardExample: Story = {
+  render: () => (
+    <div style={{ padding: "16px" }}>
+      <div className="card card__centered">
+        <div className="card--container">
+          <div className="card--header">
+            <h2 className="card--title">Card Title</h2>
+            <p className="card--subtitle">Card subtitle or description</p>
+          </div>
+
+          <div className="card--content">
+            <p className="text">
+              This is the main content of the card. You can put any content
+              here. The card component provides a consistent container with
+              proper spacing and styling for various types of content.
+            </p>
+          </div>
+
+          <div className="card--footer">
+            <button className="btn btn--primary">Primary Action</button>
+            <button className="btn btn--secondary">Secondary Action</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+};
+
+export const SimpleCard: Story = {
+  render: () => (
+    <div style={{ padding: "16px" }}>
+      <div className="card" style={{ maxWidth: "400px" }}>
+        <div className="card--container">
+          <h3 className="text text--large mb16">Simple Card</h3>
+          <p className="text mb16">
+            A simple card without header and footer sections. Just container
+            with some content.
+          </p>
+          <button className="btn btn--primary">Action</button>
+        </div>
+      </div>
+    </div>
+  )
+};
+
+
 // ui-kit/__stories__/InfoBlocks.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import "@ui-kit/info-blocks.scss";
@@ -845,6 +1001,49 @@ export const WithBothSidebars: Story = {
 };
 
 
+// components/WelcomeMessage/__stories__/WelcomeMessageView.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import WelcomeMessageView from "../WelcomeMessageView";
+import i18n from "@story/i18next";
+
+const meta: Meta<typeof WelcomeMessageView> = {
+  title: "3-Components/WelcomeMessage/WelcomeMessageView",
+  component: WelcomeMessageView,
+  parameters: {
+    viewport: {
+      defaultViewport: "tablet"
+    }
+  },
+  argTypes: {
+    onAccept: { action: "accepted" },
+    onDecline: { action: "declined" }
+  }
+};
+
+export default meta;
+type Story = StoryObj<typeof WelcomeMessageView>;
+
+export const English: Story = {
+  args: {
+    onAccept: () => console.log("User accepted"),
+    onDecline: () => console.log("User declined")
+  },
+  play: async () => {
+    await i18n.changeLanguage("en");
+  }
+};
+
+export const Russian: Story = {
+  args: {
+    onAccept: () => console.log("User accepted"),
+    onDecline: () => console.log("User declined")
+  },
+  play: async () => {
+    await i18n.changeLanguage("ru");
+  }
+};
+
+
 // components/AppModal/__stories__/AppModal.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { useAppModal } from "@components/AppModal/hooks/useAppModal";
@@ -1291,7 +1490,7 @@ const AlertExample = () => {
     title: "Alert",
     size: "small",
     children: ({ close }) => (
-      <div className="text-center">
+      <div className="text--center">
         <p>This is an alert message!</p>
         <button className="btn btn--primary mt16" onClick={close}>
           OK
@@ -1316,7 +1515,7 @@ export const Alert: Story = {
 
 // Confirm Example
 const ConfirmExample = () => {
-  const { open, close, modal } = useAppModal({
+  const { open, modal } = useAppModal({
     title: "Confirm Action",
     size: "small",
     children: ({ close }) => (
@@ -1360,7 +1559,7 @@ const useAlert = (message: string) => {
     title: "Alert",
     size: "small",
     children: ({ close }) => (
-      <div className="text-center">
+      <div className="text--center">
         <p>{message}</p>
         <button className="btn btn--primary mt16" onClick={close}>
           OK
@@ -1500,6 +1699,242 @@ const AsyncConfirmExample = () => {
 
 export const AsyncConfirm: Story = {
   render: () => <AsyncConfirmExample />
+};
+
+
+// components/AppButton/__stories__/AppButton.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import AppButton from "../AppButton";
+import { IconType, IconSize } from "@components/AppIcon";
+import "@ui-kit/margins.scss";
+import "@ui-kit/colors.scss";
+
+const meta: Meta<typeof AppButton> = {
+  title: "3-Components/5-AppButton",
+  component: AppButton,
+  parameters: {
+    viewport: {
+      defaultViewport: "tablet"
+    }
+  }
+};
+
+export default meta;
+type Story = StoryObj<typeof AppButton>;
+
+export const Default: Story = {
+  args: {
+    icon: "home",
+    variant: "default",
+    size: "medium",
+    title: "Home Button",
+    alt: "Home",
+    disabled: false
+  }
+};
+
+export const IconVariations: Story = {
+  render: () => {
+    const icons: IconType[] = [
+      "circle-plus",
+      "clipboard-check",
+      "eye-off",
+      "eye",
+      "home",
+      "refresh",
+      "search",
+      "settings",
+      "square-x",
+      "star"
+    ];
+
+    const iconSizes = [12, 16, 20, 24, 32];
+
+    const variants = [
+      "primary",
+      "secondary",
+      "success",
+      "warning",
+      "danger",
+      "info"
+    ] as const;
+
+    return (
+      <div>
+        <h3 className="mb16">Icons of Different Types</h3>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "16px",
+            marginBottom: "32px"
+          }}
+        >
+          {icons.map((iconType) => (
+            <AppButton
+              key={iconType}
+              icon={iconType}
+              variant="icon"
+              title={iconType}
+              alt={iconType}
+            />
+          ))}
+        </div>
+
+        <h3 className="mb16">Icons of Different Sizes</h3>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "16px",
+            marginBottom: "32px"
+          }}
+        >
+          {iconSizes.map((size) => (
+            <AppButton
+              key={`size-${size}`}
+              icon="home"
+              variant="icon"
+              iconParams={{ iconSize: size as IconSize }}
+              title={`Size ${size}px`}
+              alt={`Icon size ${size}px`}
+            />
+          ))}
+        </div>
+
+        <h3 className="mb16">Icons with Different Colors (Button Variants)</h3>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "16px",
+            marginBottom: "32px"
+          }}
+        >
+          {variants.map((variant) => (
+            <AppButton
+              key={`variant-${variant}`}
+              icon="home"
+              variant={variant}
+              title={variant}
+              alt={`${variant} variant`}
+            />
+          ))}
+        </div>
+
+        <h3 className="mb16">Icons with Custom Colors</h3>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "16px",
+            marginBottom: "32px"
+          }}
+        >
+          <AppButton
+            icon="home"
+            variant="icon"
+            iconParams={{
+              style: {
+                filter:
+                  "invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%)"
+              }
+            }}
+            title="Custom Red"
+            alt="Custom red color"
+          />
+          <AppButton
+            icon="home"
+            variant="icon"
+            iconParams={{
+              style: {
+                filter:
+                  "invert(73%) sepia(61%) saturate(5752%) hue-rotate(122deg) brightness(95%) contrast(101%)"
+              }
+            }}
+            title="Custom Green"
+            alt="Custom green color"
+          />
+          <AppButton
+            icon="home"
+            variant="icon"
+            iconParams={{
+              style: {
+                filter:
+                  "invert(8%) sepia(100%) saturate(6481%) hue-rotate(246deg) brightness(102%) contrast(143%)"
+              }
+            }}
+            title="Custom Blue"
+            alt="Custom blue color"
+          />
+          <AppButton
+            icon="home"
+            variant="icon"
+            iconParams={{
+              style: {
+                filter:
+                  "invert(77%) sepia(72%) saturate(878%) hue-rotate(359deg) brightness(103%) contrast(104%)"
+              }
+            }}
+            title="Custom Yellow"
+            alt="Custom yellow color"
+          />
+          <AppButton
+            icon="home"
+            variant="icon"
+            iconParams={{
+              style: {
+                filter:
+                  "invert(10%) sepia(100%) saturate(5268%) hue-rotate(297deg) brightness(89%) contrast(112%)"
+              }
+            }}
+            title="Custom Purple"
+            alt="Custom purple color"
+          />
+        </div>
+
+        <h3 className="mb16">Buttons of Different Sizes</h3>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "16px",
+            marginBottom: "32px"
+          }}
+        >
+          <AppButton
+            size="small"
+            variant="default"
+            title="Small Button"
+            alt="Small button"
+            icon="home"
+          />
+          <AppButton
+            size="medium"
+            variant="default"
+            title="Medium Button"
+            alt="Medium button"
+            icon="eye"
+          />
+          <AppButton
+            size="large"
+            variant="default"
+            title="Large Button"
+            alt="Large button"
+            icon="star"
+          />
+          <AppButton
+            size="jumbo"
+            variant="default"
+            title="Large Button"
+            alt="Large button"
+            icon="circle-plus"
+            iconParams={{ iconSize: 32 }}
+          />
+        </div>
+      </div>
+    );
+  }
 };
 
 
@@ -1863,6 +2298,46 @@ export const WithContent: Story = {
 };
 
 
+// components/SorryAboutDecline/__stories__/SorryAboutDecline.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import SorryAboutDecline from "../SorryAboutDecline";
+import i18n from "@story/i18next";
+
+const meta: Meta<typeof SorryAboutDecline> = {
+  title: "3-Components/SorryAboutDecline",
+  component: SorryAboutDecline,
+  parameters: {
+    viewport: {
+      defaultViewport: "tablet"
+    }
+  },
+  argTypes: {
+    setUserDeclined: { action: "setUserDeclined" }
+  }
+};
+
+export default meta;
+type Story = StoryObj<typeof SorryAboutDecline>;
+
+export const English: Story = {
+  args: {
+    setUserDeclined: () => console.log("User wants to try again")
+  },
+  play: async () => {
+    await i18n.changeLanguage("en");
+  }
+};
+
+export const Russian: Story = {
+  args: {
+    setUserDeclined: () => console.log("User wants to try again")
+  },
+  play: async () => {
+    await i18n.changeLanguage("ru");
+  }
+};
+
+
 // lib/Toastr/__stories__/Toastr.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import toastr from "@lib/Toastr";
@@ -1987,5 +2462,23 @@ export const Default: Story = {
     </div>
   )
 };
+
+
+// pages/RegistrationPage/__stories__/RegistrationPage.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import RegistrationPage from "../RegistrationPage";
+
+const meta: Meta<typeof RegistrationPage> = {
+  title: "4-Pages/RegistrationPage",
+  component: RegistrationPage,
+  parameters: {
+    layout: "fullscreen"
+  }
+};
+
+export default meta;
+type Story = StoryObj<typeof RegistrationPage>;
+
+export const Default: Story = {};
 
 

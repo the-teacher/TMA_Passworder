@@ -1,25 +1,50 @@
+import { useState } from "react";
 import WelcomeMessage from "@components/WelcomeMessage";
 import SorryAboutDecline from "@components/SorryAboutDecline";
-import { useState } from "react";
+import UserRegistrationData from "@components/UserRegistrationData";
 import "@ui-kit/margins.scss";
 
-const RegistrationPage = () => {
-  const [userAccepted, setUserAccepted] = useState(false);
-  const [userDeclined, setUserDeclined] = useState(false);
+type RegistrationState =
+  | "welcomeMessage"
+  | "sorryAboutDecline"
+  | "userRegistrationData"
+  | "registrationConfirmed";
 
-  if (userAccepted) {
-    return <div>We are going to register you</div>;
+const mockUserData = {
+  id: 1232344123345,
+  username: "the-teacher",
+  first_name: "Ilya",
+  last_name: "Nikolaevich"
+};
+
+const RegistrationPage = () => {
+  const [regState, setRegState] = useState<RegistrationState>("welcomeMessage");
+
+  if (regState === "registrationConfirmed") {
+    return <div>Registration confirmed! Redirecting...</div>;
   }
 
-  if (userDeclined) {
-    return <SorryAboutDecline setUserDeclined={setUserDeclined} />;
+  if (regState === "userRegistrationData") {
+    return (
+      <UserRegistrationData
+        userData={mockUserData}
+        onConfirm={() => setRegState("registrationConfirmed")}
+        onDecline={() => setRegState("welcomeMessage")}
+      />
+    );
+  }
+
+  if (regState === "sorryAboutDecline") {
+    return (
+      <SorryAboutDecline buttonHandler={() => setRegState("welcomeMessage")} />
+    );
   }
 
   return (
     <div className="m20">
       <WelcomeMessage
-        setUserAccepted={setUserAccepted}
-        setUserDeclined={setUserDeclined}
+        onConfirm={() => setRegState("userRegistrationData")}
+        onDecline={() => setRegState("sorryAboutDecline")}
       />
     </div>
   );

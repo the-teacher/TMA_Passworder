@@ -26,7 +26,7 @@
     "stories-example": "bash generators/createStoriesExample.sh ./src .examples",
     "structure-example": "bash generators/createProjectStructure.sh ./src .examples",
     "component-example": "bash generators/createComponentsExample.sh ./src .examples",
-    "examples": "yarn tests-example && yarn stories-example && yarn structure-example"
+    "examples": "yarn tests-example && yarn stories-example && yarn structure-example && yarn component-example"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.1",

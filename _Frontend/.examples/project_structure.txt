@@ -1,4 +1,5 @@
 ./src/
+├── App.test.tsx
 ├── App.tsx
 ├── __tests__
     ├── App.test.tsx
@@ -6,6 +7,13 @@
 ├── assets
     └── react.svg
 ├── components
+    ├── AppButton
+        ├── AppButton.tsx
+        ├── __stories__
+            └── AppButton.stories.tsx
+        ├── __tests__
+            └── AppButton.test.tsx
+        └── index.ts
     ├── AppIcon
         ├── AppIcon.tsx
         ├── __stories__
@@ -19,10 +27,15 @@
             └── *
         ├── __tests__
             └── AppLayout.test.tsx
+        ├── hooks
+            ├── __tests__
+                └── useNotifications.test.ts
+            └── useNotifications.ts
         ├── index.ts
         └── styles.scss
     ├── AppModal
         ├── AppModal.tsx
+        ├── README.md
         ├── __locales__
             ├── en.json
             └── ru.json
@@ -43,6 +56,9 @@
         └── styles.scss
     ├── FooterNavigation
         ├── FooterNavigation.tsx
+        ├── __locales__
+            ├── en.json
+            └── ru.json
         ├── __stories__
             └── FooterNavigation.stories.tsx
         ├── __tests__
@@ -110,21 +126,90 @@
     ├── PasswordEntry
         ├── CreateForm
             ├── CreatePasswordEntryForm.tsx
-            ├── __locales__
-                ├── en.json
-                └── ru.json
+            ├── CreatePasswordEntryFormView.tsx
+            ├── README.md
             ├── __stories__
                 └── CreatePasswordEntryForm.stories.tsx
             ├── __tests__
-                └── CreatePasswordEntryForm.test.tsx
+                ├── CreatePasswordEntryForm.test.tsx
+                ├── CreatePasswordEntryFormView.test.tsx
+                └── validationSchema.test.ts
+            ├── api
+                ├── __tests__
+                    └── submitPasswordEntry.test.ts
+                └── submitPasswordEntry.ts
+            ├── components
+                ├── CopyButton
+                    ├── CopyButton.test.tsx
+                    └── index.tsx
+                ├── EyeIcon
+                    ├── EyeIcon.test.tsx
+                    └── index.tsx
+                ├── FormError
+                    ├── FormError.test.tsx
+                    ├── FormError.tsx
+                    └── index.ts
+                └── GenerateButton
+                    ├── GenerateButton.test.tsx
+                    ├── GenerateButton.tsx
+                    └── index.ts
             ├── hooks
+                ├── __tests__
+                    └── useSubmitForm.test.ts
                 └── useSubmitForm.ts
             ├── index.ts
-            ├── styles.scss
+            ├── inputs
+                ├── FormActions
+                    ├── FormActions.tsx
+                    ├── __tests__
+                        └── FormActions.test.tsx
+                    ├── index.ts
+                    └── styles.scss
+                ├── NotesInput
+                    ├── NotesInput.tsx
+                    ├── __tests__
+                        └── NotesInput.test.tsx
+                    └── index.ts
+                ├── PasswordInput
+                    ├── PasswordInput.tsx
+                    ├── __tests__
+                        └── PasswordInput.test.tsx
+                    └── index.ts
+                ├── ServiceNameInput
+                    ├── ServiceNameInput.tsx
+                    ├── __tests__
+                        └── ServiceNameInput.test.tsx
+                    └── index.ts
+                ├── ServiceUrlInput
+                    ├── ServiceUrlInput.tsx
+                    ├── __tests__
+                        └── ServiceUrlInput.test.tsx
+                    └── index.ts
+                └── UsernameInput
+                    ├── UsernameInput.tsx
+                    ├── __tests__
+                        └── UsernameInput.test.tsx
+                    └── index.ts
             ├── types.ts
             ├── utils
-                └── getFieldStatus.ts
+                ├── __tests__
+                    ├── copyToClipboard.test.ts
+                    ├── generatePassword.test.ts
+                    ├── getFieldStatus.test.ts
+                    ├── handleSpacesUtils.test.ts
+                    ├── passwordUtils.test.ts
+                    └── stringUtils.test.ts
+                ├── copyToClipboard.ts
+                ├── generatePassword.ts
+                ├── getFieldStatus.ts
+                ├── handleSpacesUtils.ts
+                ├── passwordUtils.ts
+                └── stringUtils.ts
             └── validationSchema.ts
+        ├── EditForm
+            ├── EditPasswordEntryForm.tsx
+            ├── EditPasswordEntryFormView.tsx
+            └── index.ts
         ├── Item
             ├── PasswordEntry.tsx
             ├── __stories__
@@ -133,7 +218,7 @@
                 └── PasswordEntry.test.tsx
             ├── index.ts
             └── styles.scss
-        └── List
+        ├── List
             ├── PasswordEntryList.tsx
             ├── __stories__
                 ├── PasswordEntryList.stories.tsx
@@ -142,7 +227,20 @@
                 └── PasswordEntryList.test.tsx
             ├── index.ts
             └── styles.scss
-    └── SearchField
+        ├── ShowEntry
+            ├── ShowPasswordEntry.tsx
+            ├── __locales__
+                ├── en.json
+                └── ru.json
+            └── index.ts
+        └── __locales__
+            ├── CreatePasswordEntryForm.en.json
+            ├── CreatePasswordEntryForm.ru.json
+            ├── EditPasswordEntryForm.en.json
+            ├── EditPasswordEntryForm.ru.json
+            ├── ShowPasswordEntry.en.json
+            └── ShowPasswordEntry.ru.json
+    ├── SearchField
         ├── SearchField.tsx
         ├── __locales__
             ├── en.json
@@ -152,10 +250,48 @@
         ├── __tests__
             └── SearchField.test.tsx
         ├── hooks
+            ├── __tests__
+                └── useDebounce.test.ts
             └── useDebounce.ts
-        └── index.ts
+        ├── index.ts
+        └── styles.scss
+    ├── SorryAboutDecline
+        ├── SorryAboutDecline.tsx
+        ├── __locales__
+            ├── en.json
+            └── ru.json
+        ├── __stories__
+            └── SorryAboutDecline.stories.tsx
+        ├── __tests__
+            └── SorryAboutDecline.test.tsx
+        ├── index.ts
+        └── styles.scss
+    └── WelcomeMessage
+        ├── WelcomeMessage.tsx
+        ├── WelcomeMessageView.tsx
+        ├── __locales__
+            ├── en.json
+            └── ru.json
+        ├── __stories__
+            └── WelcomeMessageView.stories.tsx
+        ├── __tests__
+            ├── WelcomeMessage.test.tsx
+            └── WelcomeMessageView.test.tsx
+        ├── index.ts
+        └── styles.scss
+├── config
+    └── env.ts
 ├── globalStyles.scss
+├── hooks
+    ├── __tests__
+        ├── useLaunchParams.test.ts
+        ├── useUser.test.ts
+        └── useUserExists.test.ts
+    ├── useLaunchParams.ts
+    ├── useUser.ts
+    └── useUserExists.ts
 ├── i18n
+    ├── README.md
     ├── __locales__
         ├── en.json
         └── ru.json
@@ -231,7 +367,15 @@
         ├── index.ts
         └── styles.scss
     ├── PasswordEntries
-        └── NewPage
+        ├── EditPage
+            ├── EditPage.tsx
+            ├── __stories__
+                └── *
+            ├── __tests__
+                └── EditPage.test.tsx
+            ├── index.ts
+            └── types.ts
+        ├── NewPage
             ├── NewPage.tsx
             ├── __stories__
                 └── *
@@ -239,6 +383,21 @@
                 └── NewPage.test.tsx
             ├── index.ts
             └── types.ts
+        └── ShowPage
+            ├── ShowPage.tsx
+            ├── __stories__
+                └── *
+            ├── __tests__
+                └── *
+            ├── index.ts
+            └── types.ts
+    ├── RegistrationPage
+        ├── RegistrationPage.tsx
+        ├── __stories__
+            └── RegistrationPage.stories.tsx
+        ├── __tests__
+            └── RegistrationPage.test.tsx
+        └── index.ts
     ├── SettingsPage
         ├── SettingsPage.tsx
         ├── __stories__
@@ -263,20 +422,33 @@
     ├── index.ts
     ├── routes.config.tsx
     └── routes.tsx
+├── tests
+    └── *
+├── types
+    ├── launchParams.en.md
+    ├── launchParams.ru.md
+    └── launchParams.ts
 ├── ui-kit
+    ├── README.md
     ├── __stories__
         ├── Buttons.stories.tsx
+        ├── Card.stories.tsx
         ├── ClosableInfoBlocks.stories.tsx
+        ├── DataDisplay.stories.tsx
         ├── FormGroups.stories.tsx
         ├── FormInputs.stories.tsx
         ├── InfoBlocks.stories.tsx
         └── TextStyles.stories.tsx
     ├── buttons.scss
+    ├── card.scss
     ├── colors.scss
-    ├── common.scss
+    ├── data-display.scss
     ├── form-groups.scss
     ├── form-inputs.scss
     ├── info-blocks.scss
+    ├── margins.scss
+    ├── paddings.scss
     ├── spaces.scss
-    └── text-styles.scss
+    ├── text-styles.scss
+    └── utils.scss
 └── vite-env.d.ts

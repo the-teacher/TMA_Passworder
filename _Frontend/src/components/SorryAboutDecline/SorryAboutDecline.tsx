@@ -7,15 +7,11 @@ import "@ui-kit/utils.scss";
 import "./styles.scss";
 
 type SorryAboutDeclineProps = {
-  setUserDeclined: (declined: boolean) => void;
+  buttonHandler: () => void;
 };
 
-const SorryAboutDecline = ({ setUserDeclined }: SorryAboutDeclineProps) => {
+const SorryAboutDecline = ({ buttonHandler }: SorryAboutDeclineProps) => {
   const { t } = useTranslation("SorryAboutDecline");
-
-  const handleTryAgain = () => {
-    setUserDeclined(false);
-  };
 
   return (
     <div className="card__centered">
@@ -34,7 +30,7 @@ const SorryAboutDecline = ({ setUserDeclined }: SorryAboutDeclineProps) => {
           <button
             type="button"
             className="btn btn--primary btn--large"
-            onClick={handleTryAgain}
+            onClick={buttonHandler}
           >
             {t("tryAgainButton")}
           </button>

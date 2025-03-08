@@ -129,6 +129,171 @@ describe("HolyGrailLayoutWithParams", () => {
 });
 
 
+// components/WelcomeMessage/__tests__/WelcomeMessage.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import WelcomeMessage from "../WelcomeMessage";
+import { TestWrapper } from "@test/testUtils";
+
+// Mock WelcomeMessageView component
+jest.mock("../WelcomeMessageView", () => ({
+  __esModule: true,
+  default: ({
+    onAccept,
+    onDecline
+  }: {
+    onAccept: () => void;
+    onDecline: () => void;
+  }) => (
+    <div data-testid="welcome-message-view">
+      <button onClick={onAccept} data-testid="accept-button">
+        Accept
+      </button>
+      <button onClick={onDecline} data-testid="decline-button">
+        Decline
+      </button>
+    </div>
+  )
+}));
+
+describe("WelcomeMessage", () => {
+  const setUserAccepted = jest.fn();
+  const setUserDeclined = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders WelcomeMessageView component", () => {
+    render(
+      <WelcomeMessage
+        setUserAccepted={setUserAccepted}
+        setUserDeclined={setUserDeclined}
+      />,
+      { wrapper: TestWrapper }
+    );
+
+    expect(screen.getByTestId("welcome-message-view")).toBeInTheDocument();
+  });
+
+  it("calls setUserAccepted when accept button is clicked", () => {
+    render(
+      <WelcomeMessage
+        setUserAccepted={setUserAccepted}
+        setUserDeclined={setUserDeclined}
+      />,
+      { wrapper: TestWrapper }
+    );
+
+    const acceptButton = screen.getByTestId("accept-button");
+    fireEvent.click(acceptButton);
+
+    expect(setUserAccepted).toHaveBeenCalledWith(true);
+    expect(setUserDeclined).not.toHaveBeenCalled();
+  });
+
+  it("calls setUserDeclined when decline button is clicked", () => {
+    render(
+      <WelcomeMessage
+        setUserAccepted={setUserAccepted}
+        setUserDeclined={setUserDeclined}
+      />,
+      { wrapper: TestWrapper }
+    );
+
+    const declineButton = screen.getByTestId("decline-button");
+    fireEvent.click(declineButton);
+
+    expect(setUserDeclined).toHaveBeenCalledWith(true);
+    expect(setUserAccepted).not.toHaveBeenCalled();
+  });
+});
+
+
+// components/WelcomeMessage/__tests__/WelcomeMessageView.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import WelcomeMessageView from "../WelcomeMessageView";
+import { TestWrapper } from "@test/testUtils";
+import i18n from "@i18n/index";
+
+describe("WelcomeMessageView", () => {
+  const mockAccept = jest.fn();
+  const mockDecline = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    i18n.changeLanguage("en");
+  });
+
+  it("renders welcome message with all content", () => {
+    render(
+      <WelcomeMessageView onAccept={mockAccept} onDecline={mockDecline} />,
+      { wrapper: TestWrapper }
+    );
+
+    // Check title and subtitle
+    expect(screen.getByText("Hello!")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "This application is a convenient and reliable password manager."
+      )
+    ).toBeInTheDocument();
+
+    // Check features
+    expect(
+      screen.getByText("Store passwords from all services in one place.")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Add important ones to favorites.")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Group for quick access.")).toBeInTheDocument();
+    expect(screen.getByText("Use search.")).toBeInTheDocument();
+
+    // Check security section
+    expect(screen.getByText("Your data is secure")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Each user gets a separate database, and all passwords are stored in encrypted form."
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("You can download all your passwords at any time.")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Once a month, you receive a backup reminder.")
+    ).toBeInTheDocument();
+
+    // Check call to action
+    expect(screen.getByText("Try for free")).toBeInTheDocument();
+  });
+
+  it("calls onAccept when accept button is clicked", () => {
+    render(
+      <WelcomeMessageView onAccept={mockAccept} onDecline={mockDecline} />,
+      { wrapper: TestWrapper }
+    );
+
+    const acceptButton = screen.getByText("Yes, I want to try");
+    fireEvent.click(acceptButton);
+
+    expect(mockAccept).toHaveBeenCalledTimes(1);
+    expect(mockDecline).not.toHaveBeenCalled();
+  });
+
+  it("calls onDecline when decline button is clicked", () => {
+    render(
+      <WelcomeMessageView onAccept={mockAccept} onDecline={mockDecline} />,
+      { wrapper: TestWrapper }
+    );
+
+    const declineButton = screen.getByText("No, thanks");
+    fireEvent.click(declineButton);
+
+    expect(mockDecline).toHaveBeenCalledTimes(1);
+    expect(mockAccept).not.toHaveBeenCalled();
+  });
+});
+
+
 // components/AppModal/__tests__/useAppModal.test.tsx
 import { renderHook, act } from "@testing-library/react";
 import { useAppModal } from "../hooks/useAppModal";
@@ -557,6 +722,150 @@ describe("useEscapeKey", () => {
 });
 
 
+// components/AppButton/__tests__/AppButton.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import AppButton from "../AppButton";
+
+describe("AppButton", () => {
+  it("renders button with icon", () => {
+    render(<AppButton icon="home" aria-label="Home" />);
+    const icon = screen.getByAltText("Home");
+    expect(icon).toBeInTheDocument();
+  });
+
+  it("applies variant class correctly", () => {
+    render(<AppButton icon="home" variant="secondary" aria-label="Home" />);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("btn--secondary");
+  });
+
+  it("applies size class correctly", () => {
+    render(<AppButton icon="home" size="small" aria-label="Home" />);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("btn--small");
+  });
+
+  it("uses correct icon size", () => {
+    render(
+      <AppButton icon="home" iconParams={{ iconSize: 24 }} aria-label="Home" />
+    );
+    const icon = screen.getByAltText("Home");
+    expect(icon).toHaveAttribute("width", "24");
+    expect(icon).toHaveAttribute("height", "24");
+  });
+
+  it("uses alt text from props when provided", () => {
+    render(<AppButton icon="home" alt="Custom Alt Text" />);
+    expect(screen.getByAltText("Custom Alt Text")).toBeInTheDocument();
+  });
+
+  it("uses alt text from iconParams when provided", () => {
+    render(
+      <AppButton
+        icon="home"
+        iconParams={{ alt: "Icon Alt Text" }}
+        alt="Button Alt Text"
+      />
+    );
+    // iconParams.alt should take precedence
+    expect(screen.getByAltText("Icon Alt Text")).toBeInTheDocument();
+  });
+
+  it("sets title attribute on button", () => {
+    render(<AppButton icon="home" title="Button Title" />);
+    expect(screen.getByRole("button")).toHaveAttribute("title", "Button Title");
+  });
+
+  it("uses aria-label as title when title not provided", () => {
+    render(<AppButton icon="home" aria-label="Home Button" />);
+    expect(screen.getByRole("button")).toHaveAttribute("title", "Home Button");
+  });
+
+  it("uses alt as title when title and aria-label not provided", () => {
+    render(<AppButton icon="home" alt="Home Button Alt" />);
+    expect(screen.getByRole("button")).toHaveAttribute(
+      "title",
+      "Home Button Alt"
+    );
+  });
+
+  it("passes additional icon props to AppIcon", () => {
+    render(
+      <AppButton
+        icon="home"
+        iconParams={{
+          className: "custom-icon-class",
+          "data-testid": "icon-element"
+        }}
+        aria-label="Home"
+      />
+    );
+    const icon = screen.getByTestId("icon-element");
+    expect(icon).toHaveClass("custom-icon-class");
+  });
+
+  it("calls onClick handler when clicked", () => {
+    const handleClick = jest.fn();
+    render(<AppButton icon="home" onClick={handleClick} aria-label="Home" />);
+
+    fireEvent.click(screen.getByRole("button"));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("can be disabled", () => {
+    render(<AppButton icon="home" disabled aria-label="Home" />);
+    expect(screen.getByRole("button")).toBeDisabled();
+  });
+
+  it("does not call onClick when disabled", () => {
+    const handleClick = jest.fn();
+    render(
+      <AppButton icon="home" onClick={handleClick} disabled aria-label="Home" />
+    );
+
+    fireEvent.click(screen.getByRole("button"));
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it("passes additional props to button element", () => {
+    render(
+      <AppButton icon="home" data-testid="custom-button" aria-label="Home" />
+    );
+    expect(screen.getByTestId("custom-button")).toBeInTheDocument();
+  });
+
+  it("applies custom className to button", () => {
+    render(
+      <AppButton
+        icon="home"
+        className="custom-button-class"
+        aria-label="Home"
+      />
+    );
+    expect(screen.getByRole("button")).toHaveClass("custom-button-class");
+  });
+
+  it("uses default icon when none provided", () => {
+    // @ts-ignore - Testing default value
+    render(<AppButton aria-label="Default Icon" />);
+    const icon = screen.getByAltText("Default Icon");
+    expect(icon).toHaveAttribute("src", "/icons/star.svg");
+  });
+
+  it("overrides icon with iconParams.iconType", () => {
+    render(
+      <AppButton
+        icon="home"
+        iconParams={{ iconType: "search" }}
+        aria-label="Search"
+      />
+    );
+    const icon = screen.getByAltText("Search");
+    expect(icon).toHaveAttribute("src", "/icons/search.svg");
+  });
+});
+
+
 // components/LoadingFallback/__tests__/LoadingFallback.test.tsx
 import { render, screen } from "@testing-library/react";
 import LoadingFallback from "@components/LoadingFallback";
@@ -761,12 +1070,986 @@ describe("SearchField", () => {
 
 
 // components/PasswordEntry/CreateForm/__tests__/CreatePasswordEntryForm.test.tsx
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslation } from "react-i18next";
+import CreatePasswordEntryForm from "../CreatePasswordEntryForm";
+import { useSubmitForm } from "../hooks/useSubmitForm";
+import EventEmitter from "@lib/EventEmitter";
+import { validationSchema } from "../validationSchema";
+import type { ServerErrors } from "../utils/getFieldStatus";
+
+// Mock dependencies
+jest.mock("react-hook-form", () => ({
+  useForm: jest.fn(),
+  FormProvider: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  )
+}));
+
+jest.mock("@hookform/resolvers/zod", () => ({
+  zodResolver: jest.fn()
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: jest.fn()
+}));
+
+jest.mock("../hooks/useSubmitForm", () => ({
+  useSubmitForm: jest.fn()
+}));
+
+jest.mock("@lib/EventEmitter", () => ({
+  emit: jest.fn()
+}));
+
+jest.mock("../validationSchema", () => ({
+  validationSchema: {}
+}));
+
+jest.mock("react-router", () => ({
+  useParams: () => ({ id: "test-id" })
+}));
+
+jest.mock("../CreatePasswordEntryFormView", () => ({
+  __esModule: true,
+  default: ({ onSubmit }: { onSubmit: () => void }) => (
+    <form data-testid="password-entry-form" onSubmit={onSubmit}>
+      <button type="submit">Submit</button>
+    </form>
+  )
+}));
+
+jest.mock("../components/FormError/FormError", () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="form-error">{children}</div>
+  )
+}));
+
+describe("CreatePasswordEntryForm", () => {
+  const mockReset = jest.fn();
+  const mockSetError = jest.fn();
+  const mockHandleSubmit = jest.fn();
+  const mockSubmitForm = jest.fn();
+  const mockTranslate = jest.fn((key) => key);
+  const mockEntryId = "test-id";
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    // Setup useForm mock
+    (useForm as jest.Mock).mockReturnValue({
+      handleSubmit: mockHandleSubmit.mockImplementation((callback) => {
+        return (e: React.FormEvent) => {
+          e?.preventDefault?.();
+          return callback({ serviceName: "Test Service" });
+        };
+      }),
+      reset: mockReset,
+      setError: mockSetError,
+      formState: { errors: {} }
+    });
+
+    // Setup useTranslation mock
+    (useTranslation as jest.Mock).mockReturnValue({
+      t: mockTranslate
+    });
+
+    // Setup useSubmitForm mock
+    (useSubmitForm as jest.Mock).mockReturnValue({
+      submitForm: mockSubmitForm,
+      formError: "",
+      isSubmitting: false
+    });
+
+    // Setup zodResolver mock
+    (zodResolver as jest.Mock).mockReturnValue(() => ({ values: {} }));
+  });
+
+  it("renders the form with title", () => {
+    render(<CreatePasswordEntryForm />);
+
+    expect(screen.getByText("title")).toBeInTheDocument();
+    expect(screen.getByTestId("password-entry-form")).toBeInTheDocument();
+  });
+
+  it("initializes form with correct configuration", () => {
+    render(<CreatePasswordEntryForm />);
+
+    expect(useForm).toHaveBeenCalledWith({
+      mode: "onChange",
+      reValidateMode: "onChange",
+      criteriaMode: "all",
+      resolver: expect.any(Function),
+      defaultValues: {
+        serviceName: "",
+        username: "",
+        password: "",
+        serviceUrl: "",
+        notes: ""
+      }
+    });
+
+    expect(zodResolver).toHaveBeenCalledWith(validationSchema);
+  });
+
+  it("submits the form with correct data", async () => {
+    render(<CreatePasswordEntryForm />);
+
+    fireEvent.submit(screen.getByTestId("password-entry-form"));
+
+    expect(mockHandleSubmit).toHaveBeenCalled();
+    expect(mockSubmitForm).toHaveBeenCalledWith(
+      mockEntryId,
+      { serviceName: "Test Service" },
+      expect.any(Function),
+      expect.any(Function)
+    );
+  });
+
+  it("handles successful form submission", async () => {
+    // Setup submitForm to call success callback
+    mockSubmitForm.mockImplementation((_id, _data, onSuccess) => {
+      onSuccess();
+    });
+
+    render(<CreatePasswordEntryForm />);
+
+    fireEvent.submit(screen.getByTestId("password-entry-form"));
+
+    await waitFor(() => {
+      expect(EventEmitter.emit).toHaveBeenCalledWith(
+        "NOTIFICATION",
+        "messages.formSubmitted"
+      );
+      expect(mockReset).toHaveBeenCalled();
+    });
+  });
+
+  it("displays form error when present", async () => {
+    // Setup useState to return form error
+    jest
+      .spyOn(React, "useState")
+      .mockImplementationOnce(() => ["Server error", jest.fn()]);
+
+    render(<CreatePasswordEntryForm />);
+
+    expect(screen.getByTestId("form-error")).toHaveTextContent("Server error");
+  });
+
+  it("handles server validation errors", async () => {
+    const serverErrors: ServerErrors = {
+      form_error: "Form has errors",
+      errors: {
+        serviceName: { message: "Service name is required" }
+      }
+    };
+
+    // Setup submitForm to call error callback
+    mockSubmitForm.mockImplementation((_id, _data, _onSuccess, onError) => {
+      onError(serverErrors);
+    });
+
+    render(<CreatePasswordEntryForm />);
+
+    fireEvent.submit(screen.getByTestId("password-entry-form"));
+
+    await waitFor(() => {
+      expect(mockSetError).toHaveBeenCalledWith("serviceName", {
+        type: "server",
+        message: "Service name is required"
+      });
+    });
+  });
+});
+
+
+// components/PasswordEntry/CreateForm/__tests__/CreatePasswordEntryFormView.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import CreatePasswordEntryFormView, {
+  Props
+} from "../CreatePasswordEntryFormView";
+
+// Mock all input components
+jest.mock("../inputs/ServiceNameInput", () => () => (
+  <div data-testid="service-name-input">ServiceNameInput</div>
+));
+jest.mock("../inputs/UsernameInput", () => () => (
+  <div data-testid="username-input">UsernameInput</div>
+));
+jest.mock("../inputs/ServiceUrlInput", () => () => (
+  <div data-testid="service-url-input">ServiceUrlInput</div>
+));
+jest.mock("../inputs/PasswordInput", () => () => (
+  <div data-testid="password-input">PasswordInput</div>
+));
+jest.mock("../inputs/NotesInput", () => () => (
+  <div data-testid="notes-input">NotesInput</div>
+));
+jest.mock("../inputs/FormActions", () => () => (
+  <div data-testid="form-actions">FormActions</div>
+));
+
+describe("CreatePasswordEntryFormView", () => {
+  const defaultProps: Props = {
+    onSubmit: jest.fn()
+  };
+
+  const renderComponent = (props: Partial<Props> = {}) => {
+    return render(<CreatePasswordEntryFormView {...defaultProps} {...props} />);
+  };
+
+  it("renders the form with all input components", () => {
+    renderComponent();
+
+    // Check if the form is rendered
+    const form = screen.getByRole("create-password-form");
+    expect(form).toBeInTheDocument();
+
+    // Check if all input components are rendered
+    expect(screen.getByTestId("service-name-input")).toBeInTheDocument();
+    expect(screen.getByTestId("username-input")).toBeInTheDocument();
+    expect(screen.getByTestId("service-url-input")).toBeInTheDocument();
+    expect(screen.getByTestId("password-input")).toBeInTheDocument();
+    expect(screen.getByTestId("notes-input")).toBeInTheDocument();
+    expect(screen.getByTestId("form-actions")).toBeInTheDocument();
+  });
+
+  it("calls onSubmit when form is submitted", () => {
+    const onSubmitMock = jest.fn();
+    renderComponent({ onSubmit: onSubmitMock });
+
+    const form = screen.getByRole("create-password-form");
+    fireEvent.submit(form);
+
+    expect(onSubmitMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("applies the correct CSS class to the form", () => {
+    renderComponent();
+
+    const form = screen.getByRole("create-password-form");
+    expect(form).toHaveClass("create-password-form");
+  });
+});
+
+
+// components/PasswordEntry/CreateForm/inputs/ServiceNameInput/__tests__/ServiceNameInput.test.tsx
+import { render, screen } from "@testing-library/react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import ServiceNameInput from "../ServiceNameInput";
+import { getFieldStatus } from "../../../utils/getFieldStatus";
+
+jest.mock("react-hook-form", () => ({
+  useFormContext: jest.fn()
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: jest.fn()
+}));
+
+// Mock getFieldStatus at file level
+jest.mock("../../../utils/getFieldStatus", () => ({
+  getFieldStatus: jest.fn().mockReturnValue({
+    className: "info--success",
+    message: "Valid service name"
+  })
+}));
+
+describe("ServiceNameInput", () => {
+  const mockSetValue = jest.fn();
+  const mockRegister = jest.fn().mockReturnValue({});
+  const mockWatch = jest.fn().mockReturnValue("test-service");
+
+  const mockTranslation = {
+    t: jest.fn((key: "fields.serviceName") => {
+      const translations = {
+        "fields.serviceName": "Service Name"
+      };
+      return translations[key] || key;
+    })
+  };
+
+  beforeEach(() => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {},
+        dirtyFields: {}
+      }
+    });
+
+    (useTranslation as jest.Mock).mockReturnValue(mockTranslation);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders service name input with label", () => {
+    render(<ServiceNameInput />);
+
+    const input = screen.getByTestId("service-name-input");
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute("type", "text");
+  });
+
+  it("registers service name field with form context", () => {
+    render(<ServiceNameInput />);
+
+    expect(mockRegister).toHaveBeenCalledWith("serviceName", {
+      onChange: expect.any(Function),
+      onBlur: expect.any(Function)
+    });
+  });
+
+  it("marks input as invalid when there are errors", () => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {
+          serviceName: { type: "required", message: "Service name is required" }
+        },
+        dirtyFields: {}
+      }
+    });
+
+    render(<ServiceNameInput />);
+
+    const input = screen.getByTestId("service-name-input");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("applies correct CSS classes", () => {
+    render(<ServiceNameInput />);
+
+    const input = screen.getByTestId("service-name-input");
+    expect(input).toHaveClass("form-input");
+    expect(screen.getByText("Service Name").closest("label")).toHaveClass(
+      "form-group--label"
+    );
+  });
+
+  it("displays field status message", () => {
+    render(<ServiceNameInput />);
+
+    // Check that getFieldStatus was called
+    expect(getFieldStatus).toHaveBeenCalled();
+
+    // Check that status message is displayed
+    expect(screen.getByText("Valid service name")).toBeInTheDocument();
+
+    // Check that status container has the correct classes
+    const statusContainer = screen
+      .getByText("Valid service name")
+      .closest("div");
+    expect(statusContainer).toHaveClass("form-group--info", "info--success");
+  });
+});
+
+
+// components/PasswordEntry/CreateForm/inputs/UsernameInput/__tests__/UsernameInput.test.tsx
+import { render, screen } from "@testing-library/react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import UsernameInput from "../UsernameInput";
+import { getFieldStatus } from "../../../utils/getFieldStatus";
+
+jest.mock("react-hook-form", () => ({
+  useFormContext: jest.fn()
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: jest.fn()
+}));
+
+// Mock getFieldStatus at file level
+jest.mock("../../../utils/getFieldStatus", () => ({
+  getFieldStatus: jest.fn().mockReturnValue({
+    className: "info--success",
+    message: "Valid username"
+  })
+}));
+
+describe("UsernameInput", () => {
+  const mockSetValue = jest.fn();
+  const mockRegister = jest.fn().mockReturnValue({});
+  const mockWatch = jest.fn().mockReturnValue("testuser");
+
+  const mockTranslation = {
+    t: jest.fn((key: "fields.username") => {
+      const translations = {
+        "fields.username": "Username"
+      };
+      return translations[key] || key;
+    })
+  };
+
+  beforeEach(() => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {},
+        dirtyFields: {}
+      }
+    });
+
+    (useTranslation as jest.Mock).mockReturnValue(mockTranslation);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders username input with label", () => {
+    render(<UsernameInput />);
+
+    const input = screen.getByLabelText("Username");
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute("type", "text");
+  });
+
+  it("registers username field with form context", () => {
+    render(<UsernameInput />);
+
+    expect(mockRegister).toHaveBeenCalledWith("username", {
+      onBlur: expect.any(Function)
+    });
+  });
+
+  it("marks input as invalid when there are errors", () => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {
+          username: { type: "required", message: "Username is required" }
+        },
+        dirtyFields: {}
+      }
+    });
+
+    render(<UsernameInput />);
+
+    const input = screen.getByLabelText("Username");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("applies correct CSS classes", () => {
+    render(<UsernameInput />);
+
+    const input = screen.getByLabelText("Username");
+    expect(input).toHaveClass("form-input");
+    expect(screen.getByText("Username").closest("label")).toHaveClass(
+      "form-group--label"
+    );
+  });
+
+  it("displays field status message", () => {
+    render(<UsernameInput />);
+
+    // Check that getFieldStatus was called
+    expect(getFieldStatus).toHaveBeenCalled();
+
+    // Check that status message is displayed
+    expect(screen.getByText("Valid username")).toBeInTheDocument();
+
+    // Check that status container has the correct classes
+    const statusContainer = screen.getByText("Valid username").closest("div");
+    expect(statusContainer).toHaveClass("form-group--info", "info--success");
+  });
+});
+
+
+// components/PasswordEntry/CreateForm/inputs/NotesInput/__tests__/NotesInput.test.tsx
+import { render, screen } from "@testing-library/react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import NotesInput from "../NotesInput";
+
+jest.mock("react-hook-form", () => ({
+  useFormContext: jest.fn()
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: jest.fn()
+}));
+
+describe("NotesInput", () => {
+  const mockSetValue = jest.fn();
+  const mockRegister = jest.fn().mockReturnValue({});
+  const mockTranslation = {
+    t: jest.fn((key: "fields.notes") => {
+      const translations = {
+        "fields.notes": "Notes"
+      };
+      return translations[key];
+    })
+  };
+
+  beforeEach(() => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      formState: {
+        errors: {}
+      }
+    });
+
+    (useTranslation as jest.Mock).mockReturnValue(mockTranslation);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders notes textarea with label", () => {
+    render(<NotesInput />);
+
+    expect(screen.getByLabelText("Notes")).toBeInTheDocument();
+    expect(screen.getByRole("textbox")).toHaveAttribute("rows", "4");
+  });
+
+  it("registers notes field with form context", () => {
+    render(<NotesInput />);
+
+    expect(mockRegister).toHaveBeenCalledWith("notes", {
+      onBlur: expect.any(Function)
+    });
+  });
+
+  it("marks textarea as invalid when there are errors", () => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      formState: {
+        errors: {
+          notes: { type: "required", message: "Notes is required" }
+        }
+      }
+    });
+
+    render(<NotesInput />);
+
+    expect(screen.getByRole("textbox")).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("applies correct CSS classes", () => {
+    render(<NotesInput />);
+
+    expect(screen.getByRole("textbox")).toHaveClass("form-input");
+    expect(screen.getByText("Notes").closest("label")).toHaveClass(
+      "form-group--label"
+    );
+  });
+});
+
+
+// components/PasswordEntry/CreateForm/inputs/PasswordInput/__tests__/PasswordInput.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { generatePassword } from "../../../utils/generatePassword";
+import { copyToClipboard } from "../../../utils/copyToClipboard";
+import PasswordInput from "../PasswordInput";
+
+jest.mock("react-hook-form", () => ({
+  useFormContext: jest.fn()
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: jest.fn()
+}));
+
+jest.mock("../../../utils/generatePassword", () => ({
+  generatePassword: jest.fn().mockReturnValue("generated-password")
+}));
+
+jest.mock("../../../utils/copyToClipboard", () => ({
+  copyToClipboard: jest.fn()
+}));
+
+describe("PasswordInput", () => {
+  const mockSetValue = jest.fn();
+  const mockRegister = jest.fn().mockReturnValue({});
+  const mockWatch = jest.fn().mockReturnValue("test-password");
+
+  const mockTranslation = {
+    t: jest.fn(
+      (
+        key:
+          | "fields.password"
+          | "actions.generatePassword"
+          | "actions.copyPassword"
+      ) => {
+        const translations = {
+          "fields.password": "Password",
+          "actions.generatePassword": "Generate Password",
+          "actions.copyPassword": "Copy Password"
+        };
+        return translations[key] || key;
+      }
+    )
+  };
+
+  beforeEach(() => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {},
+        dirtyFields: {}
+      }
+    });
+
+    (useTranslation as jest.Mock).mockReturnValue(mockTranslation);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders password input with label", () => {
+    render(<PasswordInput />);
+
+    const input = screen.getByTestId("password-input");
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute("type", "password");
+  });
+
+  it("toggles password visibility", () => {
+    render(<PasswordInput />);
+
+    const input = screen.getByTestId("password-input");
+    const toggleButton = screen.getByTestId("toggle-password");
+
+    expect(input).toHaveAttribute("type", "password");
+    fireEvent.click(toggleButton);
+    expect(input).toHaveAttribute("type", "text");
+  });
+
+  it("generates new password", () => {
+    render(<PasswordInput />);
+
+    const generateButton = screen.getByTestId("generate-password");
+    fireEvent.click(generateButton);
+
+    expect(generatePassword).toHaveBeenCalled();
+    expect(mockSetValue).toHaveBeenCalledWith(
+      "password",
+      "generated-password",
+      { shouldValidate: true }
+    );
+  });
+
+  it("copies password to clipboard", async () => {
+    render(<PasswordInput />);
+
+    const copyButton = screen.getByTestId("copy-password");
+    await fireEvent.click(copyButton);
+
+    expect(copyToClipboard).toHaveBeenCalledWith("test-password");
+  });
+
+  it("marks input as invalid when there are errors", () => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {
+          password: { type: "required", message: "Password is required" }
+        },
+        dirtyFields: {}
+      }
+    });
+
+    render(<PasswordInput />);
+
+    const input = screen.getByTestId("password-input");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+  });
+});
+
+
+// components/PasswordEntry/CreateForm/inputs/ServiceUrlInput/__tests__/ServiceUrlInput.test.tsx
+import { render, screen } from "@testing-library/react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import ServiceUrlInput from "../ServiceUrlInput";
+import { getFieldStatus } from "../../../utils/getFieldStatus";
+
+jest.mock("react-hook-form", () => ({
+  useFormContext: jest.fn()
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: jest.fn()
+}));
+
+// Mock getFieldStatus at file level
+jest.mock("../../../utils/getFieldStatus", () => ({
+  getFieldStatus: jest.fn().mockReturnValue({
+    className: "info--success",
+    message: "Valid URL"
+  })
+}));
+
+describe("ServiceUrlInput", () => {
+  const mockSetValue = jest.fn();
+  const mockRegister = jest.fn().mockReturnValue({});
+  const mockWatch = jest.fn().mockReturnValue("https://example.com");
+
+  const mockTranslation = {
+    t: jest.fn((key: "fields.url") => {
+      const translations = {
+        "fields.url": "URL"
+      };
+      return translations[key] || key;
+    })
+  };
+
+  beforeEach(() => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {},
+        dirtyFields: {}
+      }
+    });
+
+    (useTranslation as jest.Mock).mockReturnValue(mockTranslation);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders service URL input with label", () => {
+    render(<ServiceUrlInput />);
+
+    const input = screen.getByLabelText("URL");
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute("type", "url");
+    expect(input).toHaveAttribute("placeholder", "https://");
+  });
+
+  it("registers serviceUrl field with form context", () => {
+    render(<ServiceUrlInput />);
+
+    expect(mockRegister).toHaveBeenCalledWith("serviceUrl", {
+      onChange: expect.any(Function),
+      onBlur: expect.any(Function)
+    });
+  });
+
+  it("marks input as invalid when there are errors", () => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      register: mockRegister,
+      setValue: mockSetValue,
+      watch: mockWatch,
+      formState: {
+        errors: {
+          serviceUrl: { type: "pattern", message: "Invalid URL format" }
+        },
+        dirtyFields: {}
+      }
+    });
+
+    render(<ServiceUrlInput />);
+
+    const input = screen.getByLabelText("URL");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("applies correct CSS classes", () => {
+    render(<ServiceUrlInput />);
+
+    const input = screen.getByLabelText("URL");
+    expect(input).toHaveClass("form-input");
+    expect(screen.getByText("URL").closest("label")).toHaveClass(
+      "form-group--label"
+    );
+  });
+
+  it("displays field status message", () => {
+    render(<ServiceUrlInput />);
+
+    // Check that getFieldStatus was called
+    expect(getFieldStatus).toHaveBeenCalled();
+
+    // Check that status message is displayed
+    expect(screen.getByText("Valid URL")).toBeInTheDocument();
+
+    // Check that status container has the correct classes
+    const statusContainer = screen.getByText("Valid URL").closest("div");
+    expect(statusContainer).toHaveClass("form-group--info", "info--success");
+  });
+
+  it("handles null value in watch", () => {
+    // Test with null value from watch
+    (mockWatch as jest.Mock).mockReturnValueOnce(null);
+
+    render(<ServiceUrlInput />);
+
+    // Should still call getFieldStatus with empty string
+    expect(getFieldStatus).toHaveBeenCalledWith(
+      "serviceUrl",
+      "",
+      expect.anything(),
+      expect.anything(),
+      expect.anything()
+    );
+  });
+});
+
+
+// components/PasswordEntry/CreateForm/inputs/FormActions/__tests__/FormActions.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useAppModal } from "@components/AppModal";
+import FormActions from "../FormActions";
+
+jest.mock("react-hook-form", () => ({
+  useFormContext: jest.fn()
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: jest.fn()
+}));
+
+jest.mock("@components/AppModal", () => ({
+  useAppModal: jest.fn()
+}));
+
+describe("FormActions", () => {
+  const mockReset = jest.fn();
+  const mockClose = jest.fn();
+  const mockOpen = jest.fn();
+
+  // Mock translations
+  const commonTranslations = {
+    reset: "Reset",
+    saving: "Saving..."
+  };
+
+  const formTranslations = {
+    "actions.save": "Save",
+    "modals.resetForm.title": "Reset Form",
+    "modals.resetForm.message": "Are you sure?",
+    "modals.resetForm.cancel": "Cancel",
+    "modals.resetForm.confirm": "Confirm"
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    // Mock form context
+    (useFormContext as jest.Mock).mockReturnValue({
+      formState: {
+        isValid: true,
+        isSubmitting: false
+      },
+      reset: mockReset
+    });
+
+    // Mock translations
+    (useTranslation as jest.Mock).mockImplementation((ns) => {
+      if (ns === "common") {
+        return {
+          t: (key: string) =>
+            commonTranslations[key as keyof typeof commonTranslations] || key
+        };
+      }
+      return {
+        t: (key: string) =>
+          formTranslations[key as keyof typeof formTranslations] || key
+      };
+    });
+
+    // Mock modal
+    (useAppModal as jest.Mock).mockReturnValue({
+      open: mockOpen,
+      modal: <div data-testid="reset-modal">Modal Content</div>,
+      close: mockClose
+    });
+  });
+
+  it("renders submit and reset buttons", () => {
+    render(<FormActions />);
+
+    expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Reset" })).toBeInTheDocument();
+  });
+
+  it("disables submit button when form is invalid", () => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      formState: {
+        isValid: false,
+        isSubmitting: false
+      },
+      reset: mockReset
+    });
+
+    render(<FormActions />);
+
+    expect(screen.getByRole("button", { name: "Save" })).toBeDisabled();
+  });
+
+  it("disables submit button and shows loading state when submitting", () => {
+    (useFormContext as jest.Mock).mockReturnValue({
+      formState: {
+        isValid: true,
+        isSubmitting: true
+      },
+      reset: mockReset
+    });
+
+    render(<FormActions />);
+
+    const submitButton = screen.getByRole("button", { name: "Saving..." });
+    expect(submitButton).toBeDisabled();
+  });
+
+  it("opens confirmation modal when clicking reset button", () => {
+    render(<FormActions />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Reset" }));
+    expect(mockOpen).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("reset-modal")).toBeInTheDocument();
+  });
+
+  it("doesn't show reset button for Edit form type", () => {
+    render(<FormActions formType="Edit" />);
+
+    expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Reset" })
+    ).not.toBeInTheDocument();
+  });
+});
 
 
 // components/PasswordEntry/Item/__tests__/PasswordEntry.test.tsx
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router";
 import PasswordEntry from "@components/PasswordEntry/Item";
+import { showPasswordEntryPath } from "@routes/helpers";
 
 describe("PasswordEntry", () => {
   const mockProps = {
@@ -792,7 +2075,7 @@ describe("PasswordEntry", () => {
     const entryLink = screen.getByText(mockProps.name).closest("a");
     expect(entryLink).toHaveAttribute(
       "href",
-      `/password-entry/${mockProps.id}`
+      showPasswordEntryPath(mockProps.id)
     );
   });
 });
@@ -828,7 +2111,7 @@ describe("PasswordEntryList", () => {
       const entry = screen.getByText(service);
       expect(entry.closest("a")).toHaveAttribute(
         "href",
-        `/password-entry/entry-${index + 1}`
+        `/password_entries/${index + 1}`
       );
     });
   });
@@ -892,12 +2175,24 @@ describe("Header", () => {
 import { render, screen } from "@testing-library/react";
 import AppLayout from "@components/AppLayout";
 import { BrowserRouter } from "react-router";
+import { useNotifications } from "../hooks/useNotifications";
 
-// Mock Header, FooterNavigation, and HolyGrailLayoutWithParams components
+// Mock hooks
+jest.mock("../hooks/useNotifications");
+
+// Mock components
 jest.mock("@components/Header", () => () => <div>Mock Header</div>);
 jest.mock("@components/FooterNavigation", () => () => <div>Mock Footer</div>);
 jest.mock("@components/HolyGrailLayout", () => ({
-  HolyGrailLayoutWithParams: ({ header, content, footer }: any) => (
+  HolyGrailLayoutWithParams: ({
+    header,
+    content,
+    footer
+  }: {
+    header: React.ReactNode;
+    content: React.ReactNode;
+    footer: React.ReactNode;
+  }) => (
     <div>
       {header}
       {content}
@@ -907,6 +2202,10 @@ jest.mock("@components/HolyGrailLayout", () => ({
 }));
 
 describe("AppLayout", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const renderWithRouter = (children: React.ReactNode) => {
     return render(
       <BrowserRouter>
@@ -923,53 +2222,126 @@ describe("AppLayout", () => {
     expect(screen.getByText(content)).toBeInTheDocument();
     expect(screen.getByText("Mock Footer")).toBeInTheDocument();
   });
+
+  it("initializes notifications", () => {
+    renderWithRouter(<div>Content</div>);
+
+    expect(useNotifications).toHaveBeenCalledTimes(1);
+  });
+});
+
+
+// components/SorryAboutDecline/__tests__/SorryAboutDecline.test.tsx
+import { render, screen, fireEvent } from "@testing-library/react";
+import SorryAboutDecline from "../SorryAboutDecline";
+import { TestWrapper } from "@test/testUtils";
+import i18n from "@i18n/index";
+
+describe("SorryAboutDecline", () => {
+  const setUserDeclined = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    i18n.changeLanguage("en");
+  });
+
+  it("renders the component with correct content", () => {
+    render(<SorryAboutDecline setUserDeclined={setUserDeclined} />, {
+      wrapper: TestWrapper
+    });
+
+    expect(screen.getByText("We're Sorry to See You Go")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "We're sorry that you've decided not to use our application at this time."
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "However, if you change your mind, you can always come back and give it a try — we're always happy to welcome new users!"
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("I'd like to try it after all")
+    ).toBeInTheDocument();
+  });
+
+  it("calls setUserDeclined(false) when try again button is clicked", () => {
+    render(<SorryAboutDecline setUserDeclined={setUserDeclined} />, {
+      wrapper: TestWrapper
+    });
+
+    const tryAgainButton = screen.getByText("I'd like to try it after all");
+    fireEvent.click(tryAgainButton);
+
+    expect(setUserDeclined).toHaveBeenCalledWith(false);
+  });
 });
 
 
 // __tests__/App.test.tsx
 import { render, screen } from "@testing-library/react";
 import App from "../App";
+import { useUserExists } from "../hooks/useUserExists";
+import { I18nextProvider } from "react-i18next";
+import i18n from "@i18n/index";
 
-// Mock the router component
+// Create a custom wrapper without BrowserRouter
+const CustomWrapper = ({ children }: { children: React.ReactNode }) => (
+  <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+);
+
+// Mock dependencies
+jest.mock("../hooks/useUserExists");
+jest.mock("@pages/RegistrationPage", () => ({
+  __esModule: true,
+  default: () => <div data-testid="registration-page">Registration Page</div>
+}));
+jest.mock("@components/LoadingFallback", () => ({
+  __esModule: true,
+  default: () => <div data-testid="loading-fallback">Loading...</div>
+}));
 jest.mock("react-router", () => ({
   BrowserRouter: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="browser-router">{children}</div>
   )
 }));
-
-// Mock the routes component
-jest.mock("@routes/index", () => {
-  const MockRoutes = () => <div data-testid="app-routes">Routes Content</div>;
-  return MockRoutes;
-});
-
-// Mock the global styles import
-jest.mock("./globalStyles.scss", () => ({}));
+jest.mock("@routes/index", () => ({
+  __esModule: true,
+  default: () => <div data-testid="app-routes">App Routes</div>
+}));
 
 describe("App", () => {
-  it("renders with router and routes", () => {
-    render(<App />);
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    // Should find the router wrapper
+  it("renders without crashing", () => {
+    // Mock user exists to show main app
+    (useUserExists as jest.Mock).mockReturnValue({
+      isLoading: false,
+      userExists: true,
+      error: null
+    });
+
+    render(<App />, { wrapper: CustomWrapper });
     expect(screen.getByTestId("browser-router")).toBeInTheDocument();
-
-    // Should find the routes content
-    expect(screen.getByTestId("app-routes")).toBeInTheDocument();
-
-    // Should contain the routes content text
-    expect(screen.getByText("Routes Content")).toBeInTheDocument();
   });
 
   it("has correct component structure", () => {
-    const { container } = render(<App />);
+    // Mock user exists to show main app
+    (useUserExists as jest.Mock).mockReturnValue({
+      isLoading: false,
+      userExists: true,
+      error: null
+    });
+
+    render(<App />, { wrapper: CustomWrapper });
 
     // Check that router contains routes
     const router = screen.getByTestId("browser-router");
     const routes = screen.getByTestId("app-routes");
     expect(router).toContainElement(routes);
-
-    // Verify there's only one root element in the container
-    expect(container.childNodes).toHaveLength(1);
   });
 });
 
@@ -1323,14 +2695,35 @@ describe("AboutPage", () => {
 });
 
 
-// pages/PasswordEntries/NewPage/__tests__/NewPage.test.tsx
+// pages/RegistrationPage/__tests__/RegistrationPage.test.tsx
 import { render, screen } from "@testing-library/react";
-import CreatePasswordPage from "@pages/PasswordEntries/NewPage";
+import RegistrationPage from "@pages/RegistrationPage";
 import { TestWrapper } from "@test/testUtils";
-import "@test/setupFilesAfterEnv";
-import type { PasswordEntryData } from "@pages/PasswordEntries/NewPage/types";
 
-// Mock AppLayout
+// Mock WelcomeMessage component
+jest.mock("@components/WelcomeMessage", () => ({
+  __esModule: true,
+  default: () => (
+    <div data-testid="welcome-message">Welcome Message Component</div>
+  )
+}));
+
+describe("RegistrationPage", () => {
+  it("renders the WelcomeMessage component", () => {
+    render(<RegistrationPage />, { wrapper: TestWrapper });
+
+    expect(screen.getByTestId("welcome-message")).toBeInTheDocument();
+    expect(screen.getByText("Welcome Message Component")).toBeInTheDocument();
+  });
+});
+
+
+// pages/PasswordEntries/EditPage/__tests__/EditPage.test.tsx
+import { render, screen } from "@testing-library/react";
+import EditPage from "../EditPage";
+import { TestWrapper } from "@test/testUtils";
+
+// Mock components
 jest.mock("@components/AppLayout", () => ({
   __esModule: true,
   default: ({ children }: { children: React.ReactNode }) => (
@@ -1338,48 +2731,45 @@ jest.mock("@components/AppLayout", () => ({
   )
 }));
 
-// Mock CreatePasswordEntryForm using a more type-safe approach
-let mockSubmitHandler: ((data: PasswordEntryData) => void) | null = null;
+jest.mock("@components/PasswordEntry/EditForm", () => ({
+  __esModule: true,
+  default: () => <div data-testid="edit-password-form" />
+}));
+
+describe("EditPage", () => {
+  it("should render page with layout and form", () => {
+    render(<EditPage />, { wrapper: TestWrapper });
+
+    expect(screen.getByTestId("app-layout")).toBeInTheDocument();
+    expect(screen.getByTestId("edit-password-form")).toBeInTheDocument();
+  });
+});
+
+
+// pages/PasswordEntries/NewPage/__tests__/NewPage.test.tsx
+import { render, screen } from "@testing-library/react";
+import NewPage from "../NewPage";
+import { TestWrapper } from "@test/testUtils";
+
+// Mock components
+jest.mock("@components/AppLayout", () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="app-layout">{children}</div>
+  )
+}));
 
 jest.mock("@components/PasswordEntry/CreateForm", () => ({
   __esModule: true,
-  default: ({ onSubmit }: { onSubmit: (data: PasswordEntryData) => void }) => {
-    mockSubmitHandler = onSubmit;
-    return <div data-testid="create-password-form" />;
-  }
+  default: () => <div data-testid="create-password-form" />
 }));
 
-describe("CreatePasswordPage", () => {
-  const mockConsoleLog = jest.spyOn(console, "log").mockImplementation();
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-    mockSubmitHandler = null;
-  });
-
-  it("renders within AppLayout with CreatePasswordEntryForm", () => {
-    render(<CreatePasswordPage />, { wrapper: TestWrapper });
+describe("NewPage", () => {
+  it("should render page with layout and form", () => {
+    render(<NewPage />, { wrapper: TestWrapper });
 
     expect(screen.getByTestId("app-layout")).toBeInTheDocument();
     expect(screen.getByTestId("create-password-form")).toBeInTheDocument();
-  });
-
-  it("handles form submission from CreatePasswordEntryForm", () => {
-    render(<CreatePasswordPage />, { wrapper: TestWrapper });
-
-    const testData: PasswordEntryData = {
-      serviceName: "Test Service",
-      username: "testuser",
-      password: "TestPassword123",
-      serviceUrl: "https://test.com",
-      notes: "Test Notes"
-    };
-
-    // Trigger mock form submission using the mockSubmitHandler
-    expect(mockSubmitHandler).toBeTruthy();
-    mockSubmitHandler?.(testData);
-
-    expect(mockConsoleLog).toHaveBeenCalledWith("Form submitted:", testData);
   });
 });
 
@@ -1405,6 +2795,12 @@ jest.mock("@pages/ShowPage", () => mockComponent("Show Page"));
 
 jest.mock("@pages/PasswordEntries/NewPage", () =>
   mockComponent("Password Entries Create Page")
+);
+jest.mock("@pages/PasswordEntries/ShowPage", () =>
+  mockComponent("Password Entries Show Page")
+);
+jest.mock("@pages/PasswordEntries/EditPage", () =>
+  mockComponent("Password Entries Edit Page")
 );
 
 jest.mock("react", () => {
@@ -1468,6 +2864,20 @@ describe("AppRoutes", () => {
     ).toBeInTheDocument();
   });
 
+  it("should render show entry page", async () => {
+    renderWithRouter("/password_entries/123");
+    expect(
+      await screen.findByText("Password Entries Show Page")
+    ).toBeInTheDocument();
+  });
+
+  it("should render edit entry page", async () => {
+    renderWithRouter("/password_entries/123/edit");
+    expect(
+      await screen.findByText("Password Entries Edit Page")
+    ).toBeInTheDocument();
+  });
+
   it("should render not found page for unknown routes", async () => {
     renderWithRouter("/unknown-route");
     expect(await screen.findByText("Not Found Page")).toBeInTheDocument();
@@ -1482,6 +2892,8 @@ describe("AppRoutes", () => {
         { path: "settings", element: expect.any(Object) },
         { path: "about", element: expect.any(Object) },
         { path: "/password_entries/new", element: expect.any(Object) },
+        { path: "/password_entries/:id", element: expect.any(Object) },
+        { path: "/password_entries/:id/edit", element: expect.any(Object) },
         { path: "*", element: expect.any(Object) }
       ]);
     });
@@ -1496,6 +2908,14 @@ describe("AppRoutes", () => {
         {
           path: "/password_entries/new",
           expectedText: "Password Entries Create Page"
+        },
+        {
+          path: "/password_entries/123",
+          expectedText: "Password Entries Show Page"
+        },
+        {
+          path: "/password_entries/123/edit",
+          expectedText: "Password Entries Edit Page"
         },
         { path: "/non-existent", expectedText: "Not Found Page" }
       ];

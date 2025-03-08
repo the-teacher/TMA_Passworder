@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "sass:math";
+@use "./ui-kit/colors" as *;
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 * {
@@ -50,4 +54,35 @@ ul {
 
 ol {
   list-style: decimal;
+}
+
+a {
+  color: color.scale($color-primary, $lightness: 0%);
+  text-decoration: none;
+
+  &:hover {
+    color: color.scale($color-primary, $lightness: -20%);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: color.scale($color-primary, $lightness: 20%);
+  }
+
+  &:active {
+    color: color.scale($color-primary, $lightness: -40%);
+  }
+
+  &:focus {
+    color: color.scale($color-primary, $lightness: -50%);
+    outline: 1px dashed color.scale($color-primary, $lightness: -30%);
+    outline-offset: 2px;
+  }
+
+  &.disabled,
+  &[disabled] {
+    color: $color-disabled;
+    pointer-events: none;
+    text-decoration: none;
+  }
 }

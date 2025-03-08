@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { BrowserRouter } from "react-router";
 import WelcomeMessageView from "../WelcomeMessageView";
 import i18n from "@story/i18next";
 
@@ -13,7 +14,14 @@ const meta: Meta<typeof WelcomeMessageView> = {
   argTypes: {
     onAccept: { action: "accepted" },
     onDecline: { action: "declined" }
-  }
+  },
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    )
+  ]
 };
 
 export default meta;

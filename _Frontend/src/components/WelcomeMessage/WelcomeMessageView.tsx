@@ -1,4 +1,5 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
+import { Link } from "react-router";
 
 import "@ui-kit/card.scss";
 import "@ui-kit/text-styles.scss";
@@ -10,12 +11,12 @@ import "@ui-kit/buttons.scss";
 import "./styles.scss";
 
 type WelcomeMessageViewProps = {
-  onAccept: () => void;
+  onConfirm: () => void;
   onDecline: () => void;
 };
 
 const WelcomeMessageView = ({
-  onAccept,
+  onConfirm,
   onDecline
 }: WelcomeMessageViewProps) => {
   const { t } = useTranslation("WelcomeMessage");
@@ -62,7 +63,15 @@ const WelcomeMessageView = ({
             </p>
           </div>
 
-          <p className="text mb16">{t("disclaimer")}</p>
+          <p className="text mb16">
+            <Trans
+              i18nKey="WelcomeMessage:disclaimer"
+              components={{
+                RulesLink: <Link to="/rules" />,
+                PolicyLink: <Link to="/privacy-policy" />
+              }}
+            />
+          </p>
         </div>
         <p className="text mb16 text--center">{t("tryFree")}</p>
 
@@ -78,7 +87,7 @@ const WelcomeMessageView = ({
           <button
             type="button"
             className="btn btn--primary btn--large"
-            onClick={onAccept}
+            onClick={onConfirm}
           >
             {t("actions.accept")}
           </button>

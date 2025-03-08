@@ -16,7 +16,13 @@ const App = () => {
 
   // Show registration page if user doesn't exist
   if (!userExists) {
-    return <RegistrationPage />;
+    return (
+      <Suspense fallback={<LoadingFallback />}>
+        <BrowserRouter>
+          <RegistrationPage />
+        </BrowserRouter>
+      </Suspense>
+    );
   }
 
   // Show main application if user exists

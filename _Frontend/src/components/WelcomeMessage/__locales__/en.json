@@ -15,7 +15,7 @@
       "downloadPasswords": "You can download all your passwords at any time.",
       "backupReminder": "Once a month, you receive a backup reminder."
     },
-    "disclaimer": "Before you start, please review the rules and data processing policy.",
+    "disclaimer": "Before you start, please review the <RulesLink>rules</RulesLink> and data processing <PolicyLink>policy</PolicyLink>.",
     "tryFree": "Try for free",
     "actions": {
       "accept": "Yes, I want to try",

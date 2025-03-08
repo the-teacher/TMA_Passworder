@@ -4,7 +4,7 @@ import { TestWrapper } from "@test/testUtils";
 import i18n from "@i18n/index";
 
 describe("SorryAboutDecline", () => {
-  const setUserDeclined = jest.fn();
+  const mockButtonHandler = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -12,7 +12,7 @@ describe("SorryAboutDecline", () => {
   });
 
   it("renders the component with correct content", () => {
-    render(<SorryAboutDecline setUserDeclined={setUserDeclined} />, {
+    render(<SorryAboutDecline buttonHandler={mockButtonHandler} />, {
       wrapper: TestWrapper
     });
 
@@ -28,18 +28,23 @@ describe("SorryAboutDecline", () => {
       )
     ).toBeInTheDocument();
     expect(
+      screen.getByText(
+        "Remember, our password manager offers secure storage, easy organization, and peace of mind knowing your digital life is protected."
+      )
+    ).toBeInTheDocument();
+    expect(
       screen.getByText("I'd like to try it after all")
     ).toBeInTheDocument();
   });
 
-  it("calls setUserDeclined(false) when try again button is clicked", () => {
-    render(<SorryAboutDecline setUserDeclined={setUserDeclined} />, {
+  it("calls buttonHandler when the button is clicked", () => {
+    render(<SorryAboutDecline buttonHandler={mockButtonHandler} />, {
       wrapper: TestWrapper
     });
 
-    const tryAgainButton = screen.getByText("I'd like to try it after all");
-    fireEvent.click(tryAgainButton);
+    const button = screen.getByText("I'd like to try it after all");
+    fireEvent.click(button);
 
-    expect(setUserDeclined).toHaveBeenCalledWith(false);
+    expect(mockButtonHandler).toHaveBeenCalledTimes(1);
   });
 });

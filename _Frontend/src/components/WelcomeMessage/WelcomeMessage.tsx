@@ -1,18 +1,13 @@
 import WelcomeMessageView from "./WelcomeMessageView";
 
 const WelcomeMessage = ({
-  setUserAccepted,
-  setUserDeclined
+  onConfirm,
+  onDecline
 }: {
-  setUserAccepted: (accepted: boolean) => void;
-  setUserDeclined: (declined: boolean) => void;
+  onConfirm: () => void;
+  onDecline: () => void;
 }) => {
-  return (
-    <WelcomeMessageView
-      onAccept={() => setUserAccepted(true)}
-      onDecline={() => setUserDeclined(true)}
-    />
-  );
+  return <WelcomeMessageView onConfirm={onConfirm} onDecline={onDecline} />;
 };
 
 export default WelcomeMessage;
