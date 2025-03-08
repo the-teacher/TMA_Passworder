@@ -1,29 +1,28 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { BrowserRouter } from "react-router";
 import { I18nextProvider } from "react-i18next";
 import i18n from "@i18n/index";
-import RegistrationPage from "../RegistrationPage";
+import RulesPage from "../RulesPage";
 
-const meta: Meta<typeof RegistrationPage> = {
-  title: "Pages/RegistrationPage",
-  component: RegistrationPage,
+// Метаданные для Storybook
+const meta: Meta<typeof RulesPage> = {
+  title: "Pages/RulesPage",
+  component: RulesPage,
   parameters: {
     layout: "fullscreen"
   },
   decorators: [
     (Story) => (
-      <BrowserRouter>
-        <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-          <Story />
-        </div>
-      </BrowserRouter>
+      <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
+        <Story />
+      </div>
     )
   ]
 };
 
 export default meta;
-type Story = StoryObj<typeof RegistrationPage>;
+type Story = StoryObj<typeof RulesPage>;
 
+// История для английской версии
 export const English: Story = {
   decorators: [
     (Story) => {
@@ -37,6 +36,7 @@ export const English: Story = {
   ]
 };
 
+// История для русской версии
 export const Russian: Story = {
   decorators: [
     (Story) => {

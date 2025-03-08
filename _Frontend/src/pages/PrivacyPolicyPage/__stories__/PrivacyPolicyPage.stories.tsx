@@ -1,28 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { BrowserRouter } from "react-router";
 import { I18nextProvider } from "react-i18next";
 import i18n from "@i18n/index";
-import RegistrationPage from "../RegistrationPage";
+import PrivacyPolicyPage from "../PrivacyPolicyPage";
 
-const meta: Meta<typeof RegistrationPage> = {
-  title: "Pages/RegistrationPage",
-  component: RegistrationPage,
+const meta: Meta<typeof PrivacyPolicyPage> = {
+  title: "Pages/PrivacyPolicyPage",
+  component: PrivacyPolicyPage,
   parameters: {
     layout: "fullscreen"
   },
   decorators: [
     (Story) => (
-      <BrowserRouter>
-        <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-          <Story />
-        </div>
-      </BrowserRouter>
+      <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
+        <Story />
+      </div>
     )
   ]
 };
 
 export default meta;
-type Story = StoryObj<typeof RegistrationPage>;
+type Story = StoryObj<typeof PrivacyPolicyPage>;
 
 export const English: Story = {
   decorators: [
