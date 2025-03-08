@@ -2,3 +2,10 @@
   display: inline-block;
   margin-right: 8px;
 }
+
+@media (width < 520px) {
+  .card--footer {
+    flex-direction: column-reverse;
+    gap: 24px;
+  }
+}

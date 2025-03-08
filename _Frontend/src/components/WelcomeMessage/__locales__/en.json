@@ -18,8 +18,8 @@
     "disclaimer": "Before you start, please review the rules and data processing policy.",
     "tryFree": "Try for free",
     "actions": {
-      "accept": "Yes",
-      "decline": "No",
+      "accept": "Yes, I want to try",
+      "decline": "No, thanks",
       "acceptAlt": "Accept and start",
       "declineAlt": "Decline"
     }

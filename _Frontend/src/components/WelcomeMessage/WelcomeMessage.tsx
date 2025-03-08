@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
-import AppButton from "@components/AppButton";
+
 import "@ui-kit/card.scss";
 import "@ui-kit/text-styles.scss";
 import "@ui-kit/margins.scss";
 import "@ui-kit/info-blocks.scss";
 import "@ui-kit/data-display.scss";
+import "@ui-kit/form-groups.scss";
+import "@ui-kit/buttons.scss";
 import "./styles.scss";
 
 type WelcomeMessageProps = {
@@ -62,20 +64,21 @@ const WelcomeMessage = ({ onAccept, onDecline }: WelcomeMessageProps) => {
         <p className="text mb16 text--center">{t("tryFree")}</p>
 
         <div className="card--footer">
-          <AppButton
-            icon="circle-plus"
-            variant="success"
-            title={t("actions.accept")}
-            alt={t("actions.acceptAlt")}
-            onClick={onAccept}
-          />
-          <AppButton
-            icon="square-x"
-            variant="danger"
-            title={t("actions.decline")}
-            alt={t("actions.declineAlt")}
+          <button
+            type="button"
+            className="btn btn--secondary btn--large"
             onClick={onDecline}
-          />
+          >
+            {t("actions.decline")}
+          </button>
+
+          <button
+            type="button"
+            className="btn btn--primary btn--large"
+            onClick={onAccept}
+          >
+            {t("actions.accept")}
+          </button>
         </div>
       </div>
     </div>
