@@ -109,6 +109,31 @@
     "clear": "Clear search",
     "placeholder": "Search passwords..."
   },
+  "WelcomeMessage": {
+    "title": "Hello!",
+    "subtitle": "This application is a convenient and reliable password manager.",
+    "features": {
+      "title": "Features",
+      "storePasswords": "Store passwords from all services in one place.",
+      "addFavorites": "Add important ones to favorites.",
+      "groupForAccess": "Group for quick access.",
+      "useSearch": "Use search."
+    },
+    "security": {
+      "title": "Your data is secure",
+      "separateDatabase": "Each user gets a separate database, and all passwords are stored in encrypted form.",
+      "downloadPasswords": "You can download all your passwords at any time.",
+      "backupReminder": "Once a month, you receive a backup reminder."
+    },
+    "disclaimer": "Before you start, please review the rules and data processing policy.",
+    "tryFree": "Try for free",
+    "actions": {
+      "accept": "Yes",
+      "decline": "No",
+      "acceptAlt": "Accept and start",
+      "declineAlt": "Decline"
+    }
+  },
   "translations": {
     "app": {
       "name": "HamsterPass",
