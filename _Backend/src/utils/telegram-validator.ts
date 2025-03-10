@@ -6,6 +6,7 @@
  * ├── verifyHash
  * ├── parseInitData
  * └── isAuthDateExpired
+ *
  */
 
 import crypto from 'crypto'
