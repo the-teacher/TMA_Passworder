@@ -22,3 +22,17 @@ bot_shell:
 postgres_shell:
 	docker compose exec postgres bash
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Broadcast
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# cat /etc/ssh/sshd_config | grep GatewayPorts
+# sed -i 's/#GatewayPorts no/GatewayPorts yes/' /etc/ssh/sshd_config
+# systemctl restart ssh
+# service nginx reload
+
+miniapp_share:
+	ssh -R 9876:localhost:4000 root@64.227.65.207
+
+# netstat -tulnp | grep 9876
+miniapp_check_tonnel:
+	ssh root@64.227.65.207 "netstat -tulnp | grep 9876"
