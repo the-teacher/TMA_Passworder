@@ -23,47 +23,60 @@ describe('User Exists Action', () => {
   })
 
   describe('successful scenarios', () => {
-    test('should return exists=true for valid login longer than 3 characters', () => {
-      req = mockRequest({ login: 'validuser' })
+    test('should return exists=true for valid id longer than 3 characters', () => {
+      req = mockRequest({ service: 'github', id: 'validuser' })
 
       perform(req, res)
 
       expect(res.json).toHaveBeenCalledWith({
         status: 'success',
         exists: true,
-        login: 'validuser',
+        data: { service: 'github', id: 'validuser' },
       })
     })
 
-    test('should return exists=false for login with special characters', () => {
-      req = mockRequest({ login: 'invalid@user' })
+    test('should return exists=false for id with special characters', () => {
+      req = mockRequest({ service: 'telegram', id: 'invalid@user' })
 
       perform(req, res)
 
       expect(res.json).toHaveBeenCalledWith({
         status: 'success',
         exists: false,
-        login: 'invalid@user',
+        data: { service: 'telegram', id: 'invalid@user' },
       })
     })
 
-    test('should return exists=false for login shorter than 4 characters', () => {
-      req = mockRequest({ login: 'abc' })
+    test('should return exists=false for id shorter than 4 characters', () => {
+      req = mockRequest({ service: 'gmail', id: 'abc' })
 
       perform(req, res)
 
       expect(res.json).toHaveBeenCalledWith({
         status: 'success',
         exists: false,
-        login: 'abc',
+        data: { service: 'gmail', id: 'abc' },
       })
     })
   })
 
   describe('error scenarios', () => {
+    test('should return 400 for invalid service type', () => {
+      req = mockRequest({ service: 'invalid-service', id: 'user123' })
+
+      perform(req, res)
+
+      expect(res.status).toHaveBeenCalledWith(400)
+      expect(res.json).toHaveBeenCalledWith({
+        status: 'error',
+        message: 'Invalid service type',
+        error: expect.stringContaining('Service must be one of:'),
+      })
+    })
+
     test('should handle errors and return 500 status', () => {
-      // Create a request that will cause an error
-      req = mockRequest({}) // Missing login parameter
+      // Create a request with valid service but missing id
+      req = mockRequest({ service: 'github' }) // Missing id parameter
 
       // Mock console.error to prevent test output pollution
       const originalConsoleError = console.error

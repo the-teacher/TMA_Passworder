@@ -1,10 +1,9 @@
-import { root, get } from '@the-teacher/the-router'
-
-import { buildRoutesSchema } from '@the-teacher/the-router'
+import { root, get, post, buildRoutesSchema } from '@libs/the-router'
 
 root('index/index')
 
 // User routes
-get('/users/exists/:login', 'users/exists')
+get('/users/exists/:service/:id', 'users/exists')
+post('/users/create', 'users/create')
 
 buildRoutesSchema()

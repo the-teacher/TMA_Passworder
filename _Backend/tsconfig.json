@@ -33,8 +33,12 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@test/*": ["test/*"],
+      "@routes/*": ["src/routes/*"],
+      "@mocks/*": ["src/mocks/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@libs/*": ["libs/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "outDir": "dist",
     "rootDir": "src",

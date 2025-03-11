@@ -14,7 +14,7 @@
       "@routes/*": ["src/routes/*"],
       "@mocks/*": ["src/mocks/*"],
       "@i18n/*": ["src/i18n/*"],
-      "@lib/*": ["src/lib/*"],
+      "@libs/*": ["libs/*"],
       "@utils/*": ["src/utils/*"]
     },
     "resolveJsonModule": true,

@@ -3,4 +3,5 @@
 | Method | Path | Action | Middlewares |
 |--------|------|--------|------------|
 | GET | / | index/index | none |
-| GET | /users/exists/:login | users/exists | none |
+| POST | /users/create | users/create | none |
+| GET | /users/exists/:service/:id | users/exists | none |

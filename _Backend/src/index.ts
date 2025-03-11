@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import { getRouter } from '@the-teacher/the-router'
+import { getRouter } from '@libs/the-router'
 
 import './routes'
 
