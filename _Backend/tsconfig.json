@@ -31,7 +31,11 @@
     "useDefineForClassFields": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@utils/*": ["./src/utils/*"]
+    },
     "outDir": "dist",
     "rootDir": "src",
 

@@ -4,11 +4,14 @@
  * generateMockTelegramData
  * ├── createDataCheckString
  * ├── generateMockBotToken
- * ├── generateMockTelegramData
- * └── validateTelegramWebAppData
+ * └── generateMockTelegramData
  */
 
 import crypto from 'crypto'
+import { createDataCheckString } from './telegram-validator'
+
+export const TELEGRAM_TEST_BOT_TOKEN = '123456789:ABCDefGhIJKlmNoPQRsTUVwxyZ'
+export const TELEGRAM_TEST_MAX_AGE = 10 * 365 * 24 * 60 * 60 * 1000 // 10 years in milliseconds
 
 type TelegramUser = {
   id: number
@@ -17,20 +20,11 @@ type TelegramUser = {
   username?: string
   language_code?: string
 }
-/**
- * Creates a data check string from URL parameters
- */
-const createDataCheckString = (urlParams: URLSearchParams): string => {
-  return Array.from(urlParams.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([key, value]) => `${key}=${value}`)
-    .join('\n')
-}
 
 /**
  * Generates a random bot token for testing
  */
-const generateMockBotToken = (): string => {
+export const generateMockBotToken = (): string => {
   // Format: 123456789:ABCDefGhIJKlmNoPQRsTUVwxyZ
   const botId = Math.floor(Math.random() * 1000000000)
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -59,7 +53,7 @@ export const generateMockTelegramData = (
   } = {},
 ): { botToken: string; initData: string } => {
   // Generate or use provided bot token
-  const botToken = options.botToken || generateMockBotToken()
+  const botToken = options.botToken || TELEGRAM_TEST_BOT_TOKEN
 
   // Create default user data
   const defaultUser: TelegramUser = {

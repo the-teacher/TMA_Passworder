@@ -6,10 +6,19 @@
  * ├── verifyHash
  * ├── parseInitData
  * └── isAuthDateExpired
- *
  */
 
 import crypto from 'crypto'
+
+// Constants
+const DEFAULT_MAX_AGE = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+
+// Error messages
+const ERROR_HASH_MISSING = 'Hash parameter is missing'
+const ERROR_INVALID_HASH = 'Invalid hash, data may have been tampered with'
+const ERROR_AUTH_EXPIRED = 'Authentication data has expired'
+const ERROR_PARSE_USER = 'Failed to parse user data:'
+const ERROR_VALIDATION = 'Validation error:'
 
 type TelegramUser = {
   id: number
@@ -32,7 +41,7 @@ type TelegramInitData = {
 /**
  * Creates a data check string from URL parameters
  */
-const createDataCheckString = (urlParams: URLSearchParams): string => {
+export const createDataCheckString = (urlParams: URLSearchParams): string => {
   return Array.from(urlParams.entries())
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, value]) => `${key}=${value}`)
@@ -72,7 +81,7 @@ const parseInitData = (urlParams: URLSearchParams, hash: string): TelegramInitDa
     try {
       data.user = JSON.parse(urlParams.get('user') || '{}')
     } catch (e) {
-      console.error('Failed to parse user data:', e)
+      console.error(ERROR_PARSE_USER, e)
     }
   }
 
@@ -80,24 +89,27 @@ const parseInitData = (urlParams: URLSearchParams, hash: string): TelegramInitDa
 }
 
 /**
- * Checks if the auth date is expired (older than 24 hours)
+ * Checks if the auth date is expired
+ * @param authDate - Authentication timestamp in seconds
+ * @param maxAge - Maximum age in milliseconds (default: 24 hours)
  */
-const isAuthDateExpired = (authDate: number): boolean => {
-  const MAX_AGE = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+const isAuthDateExpired = (authDate: number, maxAge: number = DEFAULT_MAX_AGE): boolean => {
   const authDateMs = authDate * 1000 // Convert to milliseconds
   const now = Date.now()
-  return now - authDateMs > MAX_AGE
+  return now - authDateMs > maxAge
 }
 
 /**
  * Validates Telegram Mini App init data
  * @param initDataString - The raw init data string from Telegram
  * @param botToken - Your Telegram bot token
+ * @param maxAge - Maximum age of auth data in milliseconds (default: 24 hours)
  * @returns Object with validation result, parsed data if valid, and error message if invalid
  */
 export const validateTelegramWebAppData = (
   initDataString: string,
   botToken: string,
+  maxAge: number = DEFAULT_MAX_AGE,
 ): { valid: boolean; data?: TelegramInitData; message?: string } => {
   try {
     // Parse the init data
@@ -106,7 +118,7 @@ export const validateTelegramWebAppData = (
 
     // Guard: Check if hash exists
     if (!hash) {
-      return { valid: false, message: 'Hash parameter is missing' }
+      return { valid: false, message: ERROR_HASH_MISSING }
     }
 
     // Remove the hash from the data before checking the signature
@@ -120,23 +132,23 @@ export const validateTelegramWebAppData = (
 
     // Guard: Check if hash is valid
     if (!isValid) {
-      return { valid: false, message: 'Invalid hash, data may have been tampered with' }
+      return { valid: false, message: ERROR_INVALID_HASH }
     }
 
     // Parse the data
     const data = parseInitData(urlParams, hash)
 
     // Guard: Check if auth date is not too old
-    if (isAuthDateExpired(data.auth_date)) {
-      return { valid: false, message: 'Authentication data has expired (older than 24 hours)' }
+    if (isAuthDateExpired(data.auth_date, maxAge)) {
+      return { valid: false, message: ERROR_AUTH_EXPIRED }
     }
 
     return { valid: true, data }
   } catch (error) {
-    console.error('Validation error:', error)
+    console.error(ERROR_VALIDATION, error)
     return {
       valid: false,
-      message: `Validation error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      message: `${ERROR_VALIDATION} ${error instanceof Error ? error.message : 'Unknown error'}`,
     }
   }
 }

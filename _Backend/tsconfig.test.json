@@ -10,15 +10,12 @@
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
-      "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"],
       "@test/*": ["test/*"],
       "@routes/*": ["src/routes/*"],
-      "@ui-kit/*": ["src/ui-kit/*"],
       "@mocks/*": ["src/mocks/*"],
       "@i18n/*": ["src/i18n/*"],
-      "@story/*": [".storybook/*"],
-      "@lib/*": ["src/lib/*"]
+      "@lib/*": ["src/lib/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
