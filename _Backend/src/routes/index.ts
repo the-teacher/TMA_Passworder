@@ -5,6 +5,8 @@ import { loggerMiddleware } from '@middlewares/common/loggerMiddleware';
 
 root('index/index');
 
+resources('password-entries');
+
 // USER ROUTES
 get('/users/exists/:service/:id', 'users/exists');
 

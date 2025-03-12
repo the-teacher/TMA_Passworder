@@ -3,6 +3,14 @@
 | Method | Path | Action | Middlewares |
 |--------|------|--------|------------|
 | GET | / | index/index | none |
+| GET | /password-entries | password-entries/index | none |
+| POST | /password-entries | password-entries/create | none |
+| GET | /password-entries/:id | password-entries/show | none |
+| PUT | /password-entries/:id | password-entries/update | none |
+| PATCH | /password-entries/:id | password-entries/update | none |
+| DELETE | /password-entries/:id | password-entries/destroy | none |
+| GET | /password-entries/:id/edit | password-entries/edit | none |
+| GET | /password-entries/new | password-entries/new | none |
 | GET | /users | users/index | 2 middleware(s) |
 | POST | /users | users/create | 2 middleware(s) |
 | GET | /users/:id | users/show | 2 middleware(s) |
