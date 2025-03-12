@@ -1,5 +1,5 @@
-import type { Request, Response } from "express";
+import type { Request, Response } from 'express';
 
 export const perform = (_req: Request, res: Response): void => {
-  res.send("API Status!");
+  res.send('API Status!');
 };

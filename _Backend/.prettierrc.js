@@ -1,5 +1,5 @@
-export default {
-  semi: false,
+module.exports = {
+  semi: true,
   trailingComma: 'all',
   singleQuote: true,
   printWidth: 100,
@@ -9,5 +9,5 @@ export default {
   bracketSpacing: true,
   jsxSingleQuote: false,
   quoteProps: 'as-needed',
-  useTabs: false,
-}
+  useTabs: false
+};

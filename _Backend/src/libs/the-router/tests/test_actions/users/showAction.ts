@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 export const perform = (req: Request, res: Response) => {
-  res.json({ message: "Showing user list" });
+  res.json({ message: 'Showing user list' });
 };

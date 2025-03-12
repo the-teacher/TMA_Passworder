@@ -2,6 +2,7 @@
 
 | Method | Path | Action | Middlewares |
 |--------|------|--------|------------|
-| GET | / | index/index | none |
-| POST | /users/create | users/create | none |
-| GET | /users/exists/:service/:id | users/exists | none |
+| GET | / | <anonymous> | none |
+| GET | /users | <anonymous> | none |
+| GET | /users/:id | <anonymous> | none |
+| GET | /users/:id/status | <anonymous> | none |

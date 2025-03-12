@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 type TestRequest = Request & {
   testData?: string;
@@ -7,6 +7,6 @@ type TestRequest = Request & {
 export const perform = (req: TestRequest, res: Response) => {
   return res.json({
     testData: req.testData,
-    message: "Protected resource accessed"
+    message: 'Protected resource accessed',
   });
 };

@@ -10,7 +10,7 @@ export function encodePathParam(value: string): string {
         (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
       ),
     )
-    .join('/')
+    .join('/');
 }
 
 /**
@@ -20,18 +20,18 @@ export function replacePathParams(
   pathTemplate: string,
   pathParams: Record<string, string>,
 ): string {
-  let path = pathTemplate
+  let path = pathTemplate;
 
   const replacements = Object.entries(pathParams).map(([key, value]) => [
     `:${key}`,
     encodePathParam(value),
-  ])
+  ]);
 
   replacements.forEach(([placeholder, encodedValue]) => {
-    path = path.replace(new RegExp(placeholder, 'g'), encodedValue)
-  })
+    path = path.replace(new RegExp(placeholder, 'g'), encodedValue);
+  });
 
-  return path
+  return path;
 }
 
 /**
@@ -41,22 +41,22 @@ export function buildQueryString(
   urlParams?: Record<string, string | number | boolean | undefined | null>,
   methodParam?: string,
 ): string {
-  const query: string[] = []
-  if (methodParam) query.push(methodParam)
+  const query: string[] = [];
+  if (methodParam) query.push(methodParam);
 
-  const params = new URLSearchParams()
+  const params = new URLSearchParams();
   if (urlParams) {
     Object.entries(urlParams).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        params.append(key, String(value))
+        params.append(key, String(value));
       }
-    })
+    });
   }
 
-  const paramsString = params.toString()
-  if (paramsString) query.push(paramsString)
+  const paramsString = params.toString();
+  if (paramsString) query.push(paramsString);
 
-  return query.length ? '?' + query.join('&') : ''
+  return query.length ? '?' + query.join('&') : '';
 }
 
 /**
@@ -68,7 +68,7 @@ export function buildUrlWithParams(
   urlParams?: Record<string, string | number | boolean | undefined | null>,
   methodParam?: string,
 ): string {
-  const path = pathParams ? replacePathParams(pathTemplate, pathParams) : pathTemplate
-  const queryString = buildQueryString(urlParams, methodParam)
-  return `${path}${queryString}`
+  const path = pathParams ? replacePathParams(pathTemplate, pathParams) : pathTemplate;
+  const queryString = buildQueryString(urlParams, methodParam);
+  return `${path}${queryString}`;
 }

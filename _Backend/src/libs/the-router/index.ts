@@ -1,4 +1,30 @@
-import { RequestHandler } from "express";
+/**
+ * Main router module
+ *
+ * This module provides the main interface for creating routes in the application.
+ *
+ * Functions:
+ * - root: Define the root route (/)
+ * - get: Create a GET route
+ * - post: Create a POST route
+ * - put: Create a PUT route
+ * - patch: Create a PATCH route
+ * - destroy: Create a DELETE route
+ * - options: Create an OPTIONS route
+ * - head: Create a HEAD route
+ * - all: Create a route for all HTTP methods
+ * - resources: Create RESTful resource routes
+ * - scope: Create a route scope (alias for routeScope)
+ * - getRouter: Get the router instance
+ * - getActionsPath: Get the current actions path
+ * - setActionsPath: Set the base path for action files
+ * - resetRouter: Reset router state
+ * - routeScope: Create a route scope
+ * - setRouterOptions: Configure Express Router options
+ * - buildRoutesSchema: Generate documentation for all routes
+ */
+
+import { RequestHandler } from 'express';
 
 import {
   getRouter,
@@ -8,22 +34,20 @@ import {
   routeScope,
   getScopeMiddlewares,
   setRouterOptions,
-  addRouteToMap
-} from "./base";
+} from './base';
 
-import { loadAction } from "./utils";
-import { buildRoutesSchema } from "./helpers/buildRoutesSchema";
+import { addRouteToMap } from './route-map';
 
-export const root = (
-  middlewares: RequestHandler[] | string,
-  actionPath?: string
-): void => {
+import { loadAction } from './utils';
+import { buildRoutesSchema } from './helpers/buildRoutesSchema';
+
+export const root = (middlewares: RequestHandler[] | string, actionPath?: string): void => {
   let handlers: RequestHandler[] = [...getScopeMiddlewares()];
   let finalActionPath: string;
 
   if (Array.isArray(middlewares)) {
     if (!actionPath) {
-      throw new Error("Action path is required when middlewares are provided");
+      throw new Error('Action path is required when middlewares are provided');
     }
     handlers = [...handlers, ...middlewares];
     finalActionPath = actionPath;
@@ -32,30 +56,28 @@ export const root = (
   }
 
   handlers.push(loadAction(finalActionPath));
-  addRouteToMap("GET", "/", finalActionPath, handlers);
-  getRouter().get("/", ...handlers);
+  addRouteToMap('GET', '/', finalActionPath, handlers);
+  getRouter().get('/', ...handlers);
 };
 
 const createRouteHandler = (
-  method: string
+  method: string,
 ): ((
   urlPath: string | RegExp,
   middlewares: RequestHandler[] | string,
-  actionPath?: string
+  actionPath?: string,
 ) => void) => {
   return (
     urlPath: string | RegExp,
     middlewares: RequestHandler[] | string,
-    actionPath?: string
+    actionPath?: string,
   ): void => {
     let handlers: RequestHandler[] = [...getScopeMiddlewares()];
     let finalActionPath: string;
 
     if (Array.isArray(middlewares)) {
       if (!actionPath) {
-        throw new Error(
-          "Action path is required when middlewares are provided"
-        );
+        throw new Error('Action path is required when middlewares are provided');
       }
       handlers = [...handlers, ...middlewares];
       finalActionPath = actionPath;
@@ -67,37 +89,33 @@ const createRouteHandler = (
 
     const router = getRouter();
     const path =
-      urlPath instanceof RegExp
-        ? urlPath
-        : urlPath.startsWith("/")
-          ? urlPath
-          : `/${urlPath}`;
+      urlPath instanceof RegExp ? urlPath : urlPath.startsWith('/') ? urlPath : `/${urlPath}`;
 
     addRouteToMap(method, urlPath, finalActionPath, handlers);
 
     switch (method) {
-      case "get":
+      case 'get':
         router.get(path, ...handlers);
         break;
-      case "post":
+      case 'post':
         router.post(path, ...handlers);
         break;
-      case "put":
+      case 'put':
         router.put(path, ...handlers);
         break;
-      case "patch":
+      case 'patch':
         router.patch(path, ...handlers);
         break;
-      case "delete":
+      case 'delete':
         router.delete(path, ...handlers);
         break;
-      case "options":
+      case 'options':
         router.options(path, ...handlers);
         break;
-      case "head":
+      case 'head':
         router.head(path, ...handlers);
         break;
-      case "all":
+      case 'all':
         router.all(path, ...handlers);
         break;
       default:
@@ -106,14 +124,14 @@ const createRouteHandler = (
   };
 };
 
-export const get = createRouteHandler("get");
-export const post = createRouteHandler("post");
-export const put = createRouteHandler("put");
-export const patch = createRouteHandler("patch");
-export const destroy = createRouteHandler("delete");
-export const options = createRouteHandler("options");
-export const head = createRouteHandler("head");
-export const all = createRouteHandler("all");
+export const get = createRouteHandler('get');
+export const post = createRouteHandler('post');
+export const put = createRouteHandler('put');
+export const patch = createRouteHandler('patch');
+export const destroy = createRouteHandler('delete');
+export const options = createRouteHandler('options');
+export const head = createRouteHandler('head');
+export const all = createRouteHandler('all');
 
 type ResourceOptions = {
   only?: string[];
@@ -123,7 +141,7 @@ type ResourceOptions = {
 export const resources = (
   resourceName: string,
   middlewaresOrOptions?: RequestHandler[] | ResourceOptions,
-  options?: ResourceOptions
+  options?: ResourceOptions,
 ): void => {
   let middlewares: RequestHandler[] = [];
   let resourceOptions: ResourceOptions = {};
@@ -137,15 +155,7 @@ export const resources = (
   }
 
   const { only, except } = resourceOptions;
-  const allActions = [
-    "index",
-    "new",
-    "create",
-    "show",
-    "edit",
-    "update",
-    "destroy"
-  ];
+  const allActions = ['index', 'new', 'create', 'show', 'edit', 'update', 'destroy'];
 
   // Determine which actions to create
   let actions = allActions;
@@ -163,57 +173,33 @@ export const resources = (
   const router = getRouter();
 
   // 1. Static routes first (no parameters)
-  if (actions.includes("new")) {
-    router.get(
-      basePath + "/new",
-      ...createHandlers(middlewares, normalizedName, "new")
-    );
+  if (actions.includes('new')) {
+    router.get(basePath + '/new', ...createHandlers(middlewares, normalizedName, 'new'));
   }
 
   // 2. Static nested routes
-  if (actions.includes("edit")) {
-    router.get(
-      basePath + "/:id/edit",
-      ...createHandlers(middlewares, normalizedName, "edit")
-    );
+  if (actions.includes('edit')) {
+    router.get(basePath + '/:id/edit', ...createHandlers(middlewares, normalizedName, 'edit'));
   }
 
   // 3. Root level routes (no parameters)
-  if (actions.includes("index")) {
-    router.get(
-      basePath,
-      ...createHandlers(middlewares, normalizedName, "index")
-    );
+  if (actions.includes('index')) {
+    router.get(basePath, ...createHandlers(middlewares, normalizedName, 'index'));
   }
-  if (actions.includes("create")) {
-    router.post(
-      basePath,
-      ...createHandlers(middlewares, normalizedName, "create")
-    );
+  if (actions.includes('create')) {
+    router.post(basePath, ...createHandlers(middlewares, normalizedName, 'create'));
   }
 
   // 4. Parameter routes last
-  if (actions.includes("show")) {
-    router.get(
-      basePath + "/:id",
-      ...createHandlers(middlewares, normalizedName, "show")
-    );
+  if (actions.includes('show')) {
+    router.get(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'show'));
   }
-  if (actions.includes("update")) {
-    router.put(
-      basePath + "/:id",
-      ...createHandlers(middlewares, normalizedName, "update")
-    );
-    router.patch(
-      basePath + "/:id",
-      ...createHandlers(middlewares, normalizedName, "update")
-    );
+  if (actions.includes('update')) {
+    router.put(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'update'));
+    router.patch(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'update'));
   }
-  if (actions.includes("destroy")) {
-    router.delete(
-      basePath + "/:id",
-      ...createHandlers(middlewares, normalizedName, "destroy")
-    );
+  if (actions.includes('destroy')) {
+    router.delete(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'destroy'));
   }
 };
 
@@ -221,7 +207,7 @@ export const resources = (
 const createHandlers = (
   middlewares: RequestHandler[],
   resourcePath: string,
-  action: string
+  action: string,
 ): RequestHandler[] => {
   const handlers = [...getScopeMiddlewares(), ...middlewares];
   const fullActionPath = `${resourcePath}/${action}`;
@@ -239,5 +225,5 @@ export {
   resetRouter,
   routeScope,
   setRouterOptions,
-  buildRoutesSchema
+  buildRoutesSchema,
 };

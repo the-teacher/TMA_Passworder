@@ -1,6 +1,20 @@
-import { Router, RequestHandler, RouterOptions } from "express";
+/**
+ * Router state management types and factory functions
+ *
+ * This module provides the state structure and factory functions for router state management.
+ *
+ * Functions:
+ * - createRouterState: Creates a new router state object with default values
+ * - resetRouterState: Resets the router state to default values
+ *
+ * Types:
+ * - RouteInfo: Information about a registered route
+ * - RouterState: Complete state of the router
+ */
 
-const DEFAULT_ACTIONS_PATH = "src/actions";
+import { Router, RequestHandler, RouterOptions } from 'express';
+
+const DEFAULT_ACTIONS_PATH = 'src/actions';
 
 export type RouteInfo = {
   method: string;
@@ -27,7 +41,7 @@ export const createRouterState = (): RouterState => {
     actionsPath: DEFAULT_ACTIONS_PATH,
     isCustomPath: false,
     routerOptions: {},
-    routesMap: new Map()
+    routesMap: new Map(),
   };
 };
 
