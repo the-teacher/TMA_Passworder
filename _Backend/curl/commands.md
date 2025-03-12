@@ -3,6 +3,12 @@
 - apt-get update
 - apt-get install jq -y
 
+### Get Index
+
+```bash
+curl -X GET http://localhost:3000
+```
+
 ### Check if User Exists
 
 ```bash

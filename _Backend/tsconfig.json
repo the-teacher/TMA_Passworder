@@ -38,7 +38,8 @@
       "@mocks/*": ["src/mocks/*"],
       "@i18n/*": ["src/i18n/*"],
       "@libs/*": ["src/libs/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@middlewares/*": ["src/middlewares/*"]
     },
     "outDir": "dist",
     "rootDir": "src",

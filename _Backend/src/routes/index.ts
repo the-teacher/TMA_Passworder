@@ -1,19 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
-import { root, get, resources, buildRoutesSchema, scope } from '@libs/the-router';
+import { root, get, resources, scope, buildRoutesSchema } from '@libs/the-router';
+
+import { authMiddleware } from '@middlewares/auth/authMiddleware';
+import { loggerMiddleware } from '@middlewares/common/loggerMiddleware';
 
 root('index/index');
-// User routes
+
+// USER ROUTES
 get('/users/exists/:service/:id', 'users/exists');
 
-const loggerMiddleware = (_req: Request, _res: Response, next: NextFunction) => {
-  console.log('loggerMiddleware');
-  next();
-};
-
-scope('/common', [loggerMiddleware], () => {
-  resources('users', [loggerMiddleware], {
-    except: ['index', 'show'],
-  });
+scope('/', [authMiddleware], () => {
+  resources('users', [loggerMiddleware]);
 });
 
 buildRoutesSchema('src/routes');
