@@ -4,24 +4,26 @@ services:
   # ================================
   # Postgres
   # ================================
-  postgres:
-    image: postgres:16
-    environment:
-      PSQL_HISTFILE: /root/log/.psql_history
-      PGPORT: 5432
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: initial_database
-    volumes:
-      - ./data/PSQL:/var/lib/postgresql/data
-      - ./tmp/.psql_history:/root/log/.psql_history
+  # postgres:
+  #   image: postgres:16
+  #   environment:
+  #     PSQL_HISTFILE: /root/log/.psql_history
+  #     PGPORT: 5432
+  #     POSTGRES_PORT: 5432
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: initial_database
+  #   volumes:
+  #     - ./data/PSQL:/var/lib/postgresql/data
+  #     - ./tmp/.psql_history:/root/log/.psql_history
 
   # ================================
   # Node
   # ================================
   node:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/Node.Dockerfile
     environment:
       HISTFILE: /root/log/.history
     ports:

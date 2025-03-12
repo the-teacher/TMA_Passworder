@@ -19,8 +19,18 @@ frontend_shell:
 bot_shell:
 	docker compose exec node sh -c "cd _Bot && sh"
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Postgres
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+postgres_up:
+	docker compose up -d postgres
+
 postgres_shell:
 	docker compose exec postgres bash
+
+postgres_down:
+	docker compose down postgres
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Broadcast
