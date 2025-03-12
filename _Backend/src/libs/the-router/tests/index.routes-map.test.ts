@@ -9,15 +9,7 @@
  */
 
 import path from 'path';
-import {
-  getRouter,
-  root,
-  get,
-  post,
-  setActionsPath,
-  resetRouter,
-  routeScope as scope,
-} from '../index';
+import { root, get, post, setActionsPath, resetRouter, routeScope as scope } from '../index';
 import { getRoutesMap } from '../route-map';
 
 describe('Routes Map', () => {
@@ -26,12 +18,10 @@ describe('Routes Map', () => {
     setActionsPath(path.join(__dirname, './test_actions'));
   });
 
-  test.only('should maintain basic routes map', () => {
+  test('should maintain basic routes map', () => {
     root('index/index');
     get('/get', 'test/get');
     post('/post', 'test/post');
-
-    console.log(getRouter());
 
     const routes = getRoutesMap();
 

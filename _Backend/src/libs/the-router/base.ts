@@ -150,7 +150,7 @@ const routeScope = (
   setScopeMiddlewares(originalScopeMiddlewares);
 
   // Apply scoped router with its middlewares
-  getRouter().use(`/${scope}`, scopedRouter);
+  getRouter().use(`/${scope}`.replace(/\/+/g, '/'), scopedRouter);
 };
 
 // Export all functions in a single export statement

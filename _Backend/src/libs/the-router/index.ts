@@ -28,6 +28,7 @@ import { RequestHandler } from 'express';
 
 import {
   getRouter,
+  getRouterState,
   getActionsPath,
   setActionsPath,
   resetRouter,
@@ -91,32 +92,35 @@ const createRouteHandler = (
     const path =
       urlPath instanceof RegExp ? urlPath : urlPath.startsWith('/') ? urlPath : `/${urlPath}`;
 
-    addRouteToMap(method, urlPath, finalActionPath, handlers);
+    // if not a RegExp, normalize the path to remove multiple slashes
+    const normalizedPath = path instanceof RegExp ? path : path.toString().replace(/\/+/g, '/');
+
+    addRouteToMap(method, normalizedPath, finalActionPath, handlers);
 
     switch (method) {
       case 'get':
-        router.get(path, ...handlers);
+        router.get(normalizedPath, ...handlers);
         break;
       case 'post':
-        router.post(path, ...handlers);
+        router.post(normalizedPath, ...handlers);
         break;
       case 'put':
-        router.put(path, ...handlers);
+        router.put(normalizedPath, ...handlers);
         break;
       case 'patch':
-        router.patch(path, ...handlers);
+        router.patch(normalizedPath, ...handlers);
         break;
       case 'delete':
-        router.delete(path, ...handlers);
+        router.delete(normalizedPath, ...handlers);
         break;
       case 'options':
-        router.options(path, ...handlers);
+        router.options(normalizedPath, ...handlers);
         break;
       case 'head':
-        router.head(path, ...handlers);
+        router.head(normalizedPath, ...handlers);
         break;
       case 'all':
-        router.all(path, ...handlers);
+        router.all(normalizedPath, ...handlers);
         break;
       default:
         throw new Error(`Unsupported HTTP method: ${method}`);
@@ -168,38 +172,51 @@ export const resources = (
   // Normalize resource name and create base path
   const normalizedName = resourceName.toLowerCase();
   const basePath = `/${normalizedName}`;
-
-  // Create routes in specific order to ensure proper matching
   const router = getRouter();
 
   // 1. Static routes first (no parameters)
   if (actions.includes('new')) {
-    router.get(basePath + '/new', ...createHandlers(middlewares, normalizedName, 'new'));
+    const handlers = createHandlers(middlewares, normalizedName, 'new');
+    router.get(basePath + '/new', ...handlers);
+    addRouteToMap('GET', basePath + '/new', normalizedName + '/new', handlers);
   }
 
   // 2. Static nested routes
   if (actions.includes('edit')) {
-    router.get(basePath + '/:id/edit', ...createHandlers(middlewares, normalizedName, 'edit'));
+    const handlers = createHandlers(middlewares, normalizedName, 'edit');
+    router.get(basePath + '/:id/edit', ...handlers);
+    addRouteToMap('GET', basePath + '/:id/edit', normalizedName + '/edit', handlers);
   }
 
   // 3. Root level routes (no parameters)
   if (actions.includes('index')) {
-    router.get(basePath, ...createHandlers(middlewares, normalizedName, 'index'));
+    const handlers = createHandlers(middlewares, normalizedName, 'index');
+    router.get(basePath, ...handlers);
+    addRouteToMap('GET', basePath, normalizedName + '/index', handlers);
   }
   if (actions.includes('create')) {
-    router.post(basePath, ...createHandlers(middlewares, normalizedName, 'create'));
+    const handlers = createHandlers(middlewares, normalizedName, 'create');
+    router.post(basePath, ...handlers);
+    addRouteToMap('POST', basePath, normalizedName + '/create', handlers);
   }
 
   // 4. Parameter routes last
   if (actions.includes('show')) {
-    router.get(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'show'));
+    const handlers = createHandlers(middlewares, normalizedName, 'show');
+    router.get(basePath + '/:id', ...handlers);
+    addRouteToMap('GET', basePath + '/:id', normalizedName + '/show', handlers);
   }
   if (actions.includes('update')) {
-    router.put(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'update'));
-    router.patch(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'update'));
+    const updateHandlers = createHandlers(middlewares, normalizedName, 'update');
+    router.put(basePath + '/:id', ...updateHandlers);
+    router.patch(basePath + '/:id', ...updateHandlers);
+    addRouteToMap('PUT', basePath + '/:id', normalizedName + '/update', updateHandlers);
+    addRouteToMap('PATCH', basePath + '/:id', normalizedName + '/update', updateHandlers);
   }
   if (actions.includes('destroy')) {
-    router.delete(basePath + '/:id', ...createHandlers(middlewares, normalizedName, 'destroy'));
+    const handlers = createHandlers(middlewares, normalizedName, 'destroy');
+    router.delete(basePath + '/:id', ...handlers);
+    addRouteToMap('DELETE', basePath + '/:id', normalizedName + '/destroy', handlers);
   }
 };
 
@@ -220,6 +237,7 @@ export const scope = routeScope;
 
 export {
   getRouter,
+  getRouterState,
   getActionsPath,
   setActionsPath,
   resetRouter,

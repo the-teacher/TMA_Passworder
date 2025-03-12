@@ -40,6 +40,9 @@ const addRouteToMap = (
     pathString = state.currentScope ? `/${state.currentScope}${normalizedPath}` : normalizedPath;
   }
 
+  // Normalize path to remove multiple consecutive slashes
+  pathString = pathString.replace(/\/+/g, '/');
+
   const routeKey = `${method.toUpperCase()}:${pathString}`;
   state.routesMap.set(routeKey, {
     method: method.toUpperCase(),
