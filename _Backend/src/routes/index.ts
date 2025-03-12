@@ -11,7 +11,13 @@ resources('password-entries');
 get('/users/exists/:service/:id', 'users/exists');
 
 scope('/', [authMiddleware], () => {
-  resources('users', [loggerMiddleware]);
+  resources('users', [
+    loggerMiddleware,
+    (_req, _res, next) => {
+      console.log('test Middleware');
+      next();
+    },
+  ]);
 });
 
 buildRoutesSchema('src/routes');

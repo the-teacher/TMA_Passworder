@@ -21,6 +21,7 @@ export type RouteInfo = {
   path: string;
   action: string;
   middlewares: RequestHandler[];
+  middlewaresNames: string[];
 };
 
 export type RouterState = {

@@ -14,6 +14,27 @@ import { getRouterState } from './base';
 // Route management functions
 
 /**
+ * Gets middleware names with proper formatting
+ * @param middlewares - Array of middleware functions
+ * @param action - Action path for the last middleware
+ * @returns Array of middleware names
+ */
+const getMiddlewareNames = (middlewares: RequestHandler[], action: string): string[] => {
+  if (!middlewares.length) return [];
+
+  // Create a copy to avoid modifying the original array
+  const names = middlewares.map((middleware, index) => {
+    // Last middleware is the action handler
+    if (index === middlewares.length - 1) {
+      return `actionHandler(${action})`;
+    }
+    return middleware.name || 'Anonymous';
+  });
+
+  return names;
+};
+
+/**
  * Adds a route to the routes map
  * @param method - HTTP method (GET, POST, etc.)
  * @param path - URL path or RegExp pattern
@@ -49,6 +70,7 @@ const addRouteToMap = (
     path: pathString,
     action,
     middlewares,
+    middlewaresNames: getMiddlewareNames(middlewares, action),
   });
 };
 

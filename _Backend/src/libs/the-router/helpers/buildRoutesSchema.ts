@@ -28,8 +28,8 @@ const generateMarkdownSchema = (routesMap: Map<string, RouteInfo>): string => {
   const lines: string[] = [
     '# API Routes Schema',
     '',
-    '| Method | Path | Action | Middlewares |',
-    '|--------|------|--------|------------|',
+    '| Method | Path | Action | Middlewares | Middlewares Names |',
+    '|--------|------|--------|------------|------------------|',
   ];
 
   // Sort routes by path for better readability
@@ -43,7 +43,9 @@ const generateMarkdownSchema = (routesMap: Map<string, RouteInfo>): string => {
 
     const middlewaresInfo = middlewaresCount > 0 ? `${middlewaresCount} middleware(s)` : 'none';
 
-    lines.push(`| ${route.method} | ${route.path} | ${route.action} | ${middlewaresInfo} |`);
+    lines.push(
+      `| ${route.method} | ${route.path} | ${route.action} | ${middlewaresInfo} | ${route.middlewaresNames.join(', ')} |`,
+    );
   }
 
   return lines.join('\n');
