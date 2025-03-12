@@ -37,13 +37,12 @@
       "@routes/*": ["src/routes/*"],
       "@mocks/*": ["src/mocks/*"],
       "@i18n/*": ["src/i18n/*"],
-      "@libs/*": ["libs/*"],
+      "@libs/*": ["src/libs/*"],
       "@utils/*": ["src/utils/*"]
     },
     "outDir": "dist",
     "rootDir": "src",
-
     "types": ["node", "jest"]
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }
