@@ -12,9 +12,7 @@ export const runQuery = async (dbPath: string, sql: string): Promise<void> => {
 
   try {
     await runSqlQuery(db, sql);
-    console.log('Database operation completed successfully');
   } catch (error) {
-    console.error('Database operation failed:', error);
     throw error;
   } finally {
     // Close the database connection
