@@ -13,4 +13,4 @@
 .pnp.*
 node_modules
 
-/db/sqlite
+/db/sqlite/*
