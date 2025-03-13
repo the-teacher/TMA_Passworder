@@ -6,8 +6,6 @@ globs: *.js, *.ts, *.jsx, *.tsx
 - If file has more then 3 exports, export functions at the end of the file.
 - Use `yarn` instead of `npm`.
 - Always use TypeScript by default.
-- Use SCSS by default.
-- Use BEM naming convention for CSS classes.
 - Use Yarn with Node Modules and `"moduleResolution": "node"` for TypeScript configuration.
 - Move static values into constants and move to the top of the file.
 - Where it is possible try to use `type`. Avoid using `interface` keyword.
