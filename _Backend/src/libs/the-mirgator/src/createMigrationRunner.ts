@@ -22,7 +22,7 @@ import path from 'path';
  */
 
 // Default values
-const DEFAULT_DIRECTORY = path.join(process.cwd(), 'src', 'db', 'migrations');
+const DEFAULT_DIRECTORY = path.join(process.cwd(), 'db', 'migrations');
 const DEFAULT_SCOPE = 'application';
 
 /**

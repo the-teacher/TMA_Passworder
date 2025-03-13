@@ -34,3 +34,4 @@ node_modules
 _Bot/src/mocks/local
 _Backend/src/mocks/local
 _Frontend/src/mocks/local
+db
