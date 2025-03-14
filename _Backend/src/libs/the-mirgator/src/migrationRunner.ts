@@ -3,7 +3,9 @@
 import path from 'path';
 import fs from 'fs';
 
-// TS Example: yarn tsx src/libs/the-mirgator/src/migrationRunner.ts up ./db/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts
+// TS Example: yarn tsx src/libs/the-mirgator/src/migrationRunner.ts up \
+// ./db/sqlite/application/application.sqlite \
+// ./db/migrations/application/20250313125223_create_users_table.ts
 
 /**
  * The Migrator - Migration Runner
