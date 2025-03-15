@@ -20,7 +20,8 @@
     "test:coverage": "jest --coverage --config jest.config.ts",
     "test:watch": "jest --watch --config jest.config.ts",
     "app-migrate": "tsx src/libs/the-mirgator/src/migrationRunner.ts up ./data/sqlite/application/application.sqlite",
-    "app-migrates": "tsx src/libs/the-mirgator/src/migrationsRunner.ts up ./data/sqlite/application/application.sqlite ./src/db/migrations/application"
+    "app-migrates": "tsx src/libs/the-mirgator/src/migrationsRunner.ts up ./data/sqlite/application/application.sqlite ./src/db/migrations/application",
+    "app-migrates-down": "tsx src/libs/the-mirgator/src/migrationsRunner.ts down ./data/sqlite/application/application.sqlite ./src/db/migrations/application"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
