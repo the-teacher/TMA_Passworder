@@ -3,7 +3,6 @@
 import fs from 'fs';
 import path from 'path';
 import { runMigration } from './migrationRunner';
-import { createDatabaseSchema } from './createDatabaseSchema';
 
 /**
  * The Migrator - Migrations Runner
@@ -65,21 +64,7 @@ export const runMigrations = async (
     // Run migrations in sequence
     for (const file of migrationFiles) {
       const migrationPath = path.join(migrationsDir, file);
-      console.log(`Running migration: ${file}`);
-
-      // Don't update schema after each migration, only after all
-      await runMigration(direction, dbPath, migrationPath, false);
-    }
-
-    // Update schema after all migrations if requested
-    if (updateSchema) {
-      try {
-        console.log('Updating database schema file...');
-        const schemaPath = await createDatabaseSchema(dbPath);
-        console.log(`Schema file updated: ${schemaPath}`);
-      } catch (schemaError) {
-        console.error('Failed to update schema file:', schemaError);
-      }
+      await runMigration(direction, dbPath, migrationPath, updateSchema);
     }
 
     console.log('All migrations completed successfully');

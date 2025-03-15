@@ -24,8 +24,6 @@ export const up = async (dbPath: string): Promise<void> => {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`,
   );
-
-  console.log('Migration up: Created users table');
 };
 
 export const down = async (dbPath: string): Promise<void> => {

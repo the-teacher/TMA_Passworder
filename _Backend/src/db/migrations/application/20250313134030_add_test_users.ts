@@ -90,8 +90,6 @@ const testUsers = [
 ];
 
 export const up = async (dbPath: string): Promise<void> => {
-  console.log('Migration up: Adding test users');
-
   // Insert each test user
   for (const user of testUsers) {
     await runQuery(
@@ -113,16 +111,10 @@ export const up = async (dbPath: string): Promise<void> => {
       )`,
     );
   }
-
-  console.log(`Migration up: Added ${testUsers.length} test users`);
 };
 
 export const down = async (dbPath: string): Promise<void> => {
-  console.log('Migration down: Removing test users');
-
   // Delete all test users by their telegram_uid values
   const telegram_uids = testUsers.map((user) => `'${user.telegram_uid}'`).join(', ');
   await runQuery(dbPath, `DELETE FROM users WHERE telegram_uid IN (${telegram_uids})`);
-
-  console.log('Migration down: Removed test users');
 };

@@ -59,9 +59,9 @@ export const runMigration = async (
     }
 
     // Run the migration
-    console.log(`Running migration ${direction}: ${path.basename(migrationPath)}`);
+    console.log(`Running migration ${direction.toUpperCase()}: ${path.basename(migrationPath)}`);
     await migration[direction](dbPath);
-    console.log(`Migration ${direction} completed successfully`);
+    console.log(`Migration completed successfully`);
 
     // Update schema file if requested
     if (updateSchema) {
