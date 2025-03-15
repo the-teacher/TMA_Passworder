@@ -20,6 +20,18 @@ import {
  *
  * This module provides functionality for running migrations against a database.
  *
+ * Functions:
+ * - runMigration: Executes a single migration file against a database
+ * - validateMigrationInputs: Validates database and migration file paths
+ * - validateAndImportMigration: Imports and validates a migration module
+ * - shouldSkipMigration: Determines if a migration should be skipped
+ * - updateMigrationRecords: Updates migration tracking records in database
+ * - updateDatabaseSchema: Updates the schema file after migration
+ * - parseArgs: Parses command line arguments
+ * - showHelp: Displays help information for command line usage
+ * - run: Main function that executes a single migration
+ * - log: Enhanced logging function with different message types
+ *
  * Usage:
  *   node migrationRunner.js <direction> <dbPath> <migrationPath>
  *
@@ -163,6 +175,9 @@ export const runMigration = async (
   migrationPath: string,
   updateSchema: boolean = true,
 ): Promise<void> => {
+  // Get migration timestamp
+  const migrationTimestamp = getMigrationTimestamp(migrationPath);
+
   try {
     // Validate inputs
     validateMigrationInputs(dbPath, migrationPath);
@@ -178,9 +193,6 @@ export const runMigration = async (
       return;
     }
 
-    // Get migration timestamp
-    const migrationTimestamp = getMigrationTimestamp(migrationPath);
-
     log(`🟡 Migration ${migrationTimestamp} (${direction.toUpperCase()}): is running...`, 'info');
     await migration[direction](dbPath);
     log(`Migration ${migrationTimestamp} completed successfully`, 'success');
@@ -193,7 +205,11 @@ export const runMigration = async (
       await updateDatabaseSchema(dbPath);
     }
   } catch (error) {
-    log(`Migration failed: ${error instanceof Error ? error.message : String(error)}`, 'error');
+    log(
+      `Migration ${migrationTimestamp} failed: ${error instanceof Error ? error.message : String(error)}`,
+      'error',
+    );
+    console.log(error);
     throw error;
   }
 };

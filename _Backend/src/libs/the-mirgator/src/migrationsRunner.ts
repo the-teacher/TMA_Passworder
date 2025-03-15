@@ -9,6 +9,13 @@ import { runMigration } from './migrationRunner';
  *
  * This module provides functionality for running all migrations in a directory.
  *
+ * Functions:
+ * - runMigrations: Runs all migrations in a directory in sequence
+ * - parseArgs: Parses command line arguments for migration runner
+ * - showHelp: Displays help information for command line usage
+ * - run: Main function that executes the migration process
+ * - log: Enhanced logging function with different message types
+ *
  * Usage:
  *   node migrationsRunner.js <direction> <dbPath> <migrationsDir>
  *
@@ -52,45 +59,39 @@ export const runMigrations = async (
   migrationsDir: string,
   updateSchema: boolean = true,
 ): Promise<void> => {
-  try {
-    // Validate inputs
-    if (!fs.existsSync(dbPath)) {
-      throw new Error(`Database file not found: ${dbPath}`);
-    }
-
-    if (!fs.existsSync(migrationsDir)) {
-      throw new Error(`Migrations directory not found: ${migrationsDir}`);
-    }
-
-    // Get and filter migration files
-    const migrationFiles = fs
-      .readdirSync(migrationsDir)
-      .filter((file) => file.endsWith('.ts') || file.endsWith('.js'))
-      .sort();
-
-    if (migrationFiles.length === 0) {
-      log('No migration files found', 'info');
-      return;
-    }
-
-    log(`Found ${migrationFiles.length} migration files`, 'info');
-
-    // Process files in the appropriate order
-    const filesToProcess = direction === 'down' ? [...migrationFiles].reverse() : migrationFiles;
-
-    // Run migrations in sequence
-    for (const file of filesToProcess) {
-      const migrationPath = path.join(migrationsDir, file);
-      log(`Running migration: ${file}`, 'info');
-      await runMigration(direction, dbPath, migrationPath, updateSchema);
-    }
-
-    log('All migrations completed successfully', 'success');
-  } catch (error) {
-    log(`Migration Error: ${error instanceof Error ? error.message : String(error)}`, 'error');
-    console.error(error);
-    throw error;
+  // Validate inputs
+  if (!fs.existsSync(dbPath)) {
+    throw new Error(`Database file not found: ${dbPath}`);
   }
+
+  if (!fs.existsSync(migrationsDir)) {
+    throw new Error(`Migrations directory not found: ${migrationsDir}`);
+  }
+
+  // Get and filter migration files
+  const migrationFiles = fs
+    .readdirSync(migrationsDir)
+    .filter((file) => file.endsWith('.ts') || file.endsWith('.js'))
+    .sort();
+
+  if (migrationFiles.length === 0) {
+    log('No migration files found', 'info');
+    return;
+  }
+
+  log(`Found ${migrationFiles.length} migration files`, 'info');
+
+  // Process files in the appropriate order
+  const filesToProcess = direction === 'down' ? [...migrationFiles].reverse() : migrationFiles;
+
+  // Run migrations in sequence
+  for (const file of filesToProcess) {
+    const migrationPath = path.join(migrationsDir, file);
+    log(`Running migration: ${file}`, 'info');
+    await runMigration(direction, dbPath, migrationPath, updateSchema);
+  }
+
+  log('All migrations completed successfully', 'success');
 };
 
 /**

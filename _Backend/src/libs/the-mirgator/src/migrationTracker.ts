@@ -8,6 +8,14 @@ import path from 'path';
  * This module provides functionality for tracking migrations in a SQLite database.
  * It creates and manages a migrations table to record which migrations have been applied.
  *
+ * Functions:
+ * - getMigrationTimestamp: Extracts timestamp from migration filename
+ * - ensureMigrationsTable: Creates migrations tracking table if it doesn't exist
+ * - recordMigration: Records a completed migration in the database
+ * - isMigrationApplied: Checks if a migration has already been applied
+ * - getAppliedMigrations: Retrieves all applied migrations from the database
+ * - removeMigrationRecord: Removes a migration record from the database
+ *
  * @module the-migrator/migrationTracker
  */
 
