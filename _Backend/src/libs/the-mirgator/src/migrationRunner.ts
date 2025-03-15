@@ -24,6 +24,26 @@ import { createDatabaseSchema } from './createDatabaseSchema';
  */
 
 /**
+ * Enhanced logging function
+ * @param message Message to log
+ * @param type Type of message ('info', 'error', 'success')
+ */
+const log = (message: string, type: 'info' | 'error' | 'success' = 'info'): void => {
+  const prefix = '[Migrator]';
+
+  switch (type) {
+    case 'error':
+      console.error(`${prefix} ❌ ${message}`);
+      break;
+    case 'success':
+      console.log(`${prefix} ✅ ${message}`);
+      break;
+    default:
+      console.log(`${prefix} ${message}`);
+  }
+};
+
+/**
  * Runs a migration against a specified database
  * @param direction Migration direction ('up' or 'down')
  * @param dbPath Path to the database file
@@ -37,46 +57,42 @@ export const runMigration = async (
   updateSchema: boolean = true,
 ): Promise<void> => {
   try {
-    // Check if database file exists
+    // Validate inputs
     if (!fs.existsSync(dbPath)) {
       throw new Error(`Database file not found: ${dbPath}`);
     }
 
-    // Check if migration file exists
     if (!fs.existsSync(migrationPath)) {
       throw new Error(`Migration file not found: ${migrationPath}`);
     }
 
-    // Get the absolute path to the migration file
+    // Import and run migration
     const absoluteMigrationPath = path.resolve(migrationPath);
-
-    // Import the migration file
     const migration = await import(absoluteMigrationPath);
 
-    // Check if the migration has the requested method
     if (typeof migration[direction] !== 'function') {
       throw new Error(`Migration does not have a ${direction} method`);
     }
 
-    // Run the migration
-    console.log(`Running migration ${direction.toUpperCase()}: ${path.basename(migrationPath)}`);
+    log(`Running migration ${direction.toUpperCase()}: ${path.basename(migrationPath)}`, 'info');
     await migration[direction](dbPath);
-    console.log(`Migration completed successfully`);
+    log(`Migration completed successfully`, 'success');
 
     // Update schema file if requested
     if (updateSchema) {
       try {
         const schemaPath = await createDatabaseSchema(dbPath);
-        console.log(`Schema file updated: ${schemaPath}`);
+        log(`Schema file updated: ${schemaPath}`, 'success');
       } catch (schemaError) {
-        console.error('Failed to update schema file:', schemaError);
+        log(
+          `Failed to update schema file: ${schemaError instanceof Error ? schemaError.message : String(schemaError)}`,
+          'error',
+        );
         // Don't fail the migration if schema update fails
       }
     }
-
-    return;
   } catch (error) {
-    console.error(`Migration failed: ${error instanceof Error ? error.message : String(error)}`);
+    log(`Migration failed: ${error instanceof Error ? error.message : String(error)}`, 'error');
     throw error;
   }
 };
@@ -94,12 +110,10 @@ const parseArgs = (): {
   const direction = (args[0] || 'up') as 'up' | 'down';
   const dbPath = args[1];
   const migrationPath = args[2];
-  // Fourth argument can be used to disable schema update
   const updateSchema = args[3] !== 'false';
 
-  // Validate direction
   if (direction !== 'up' && direction !== 'down') {
-    console.error(`Invalid direction: ${direction}. Must be 'up' or 'down'.`);
+    log(`Invalid direction: ${direction}. Must be 'up' or 'down'.`, 'error');
     return { direction: 'up', dbPath: undefined, migrationPath: undefined, updateSchema };
   }
 
@@ -132,18 +146,14 @@ Examples:
  * Main function to run the migration
  */
 const run = async (): Promise<void> => {
-  // Parse command line arguments
   const { direction, dbPath, migrationPath, updateSchema } = parseArgs();
 
-  // Show help if required arguments are missing
   if (!dbPath || !migrationPath) {
     showHelp();
     process.exit(1);
-    return;
   }
 
   try {
-    // Run the migration
     await runMigration(direction, dbPath, migrationPath, updateSchema);
     process.exit(0);
   } catch (error) {

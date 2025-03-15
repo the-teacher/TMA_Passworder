@@ -19,6 +19,11 @@ import { runMigration } from './migrationRunner';
  * @module the-migrator/migrationsRunner
  */
 
+// Simple logging function
+const log = (message: string): void => {
+  console.log(`[Migrator] ${message}`);
+};
+
 /**
  * Runs all migrations in a directory
  * @param direction Migration direction ('up' or 'down')
@@ -33,41 +38,39 @@ export const runMigrations = async (
   updateSchema: boolean = true,
 ): Promise<void> => {
   try {
-    // Check if database file exists
+    // Validate inputs
     if (!fs.existsSync(dbPath)) {
       throw new Error(`Database file not found: ${dbPath}`);
     }
 
-    // Check if migrations directory exists
     if (!fs.existsSync(migrationsDir)) {
       throw new Error(`Migrations directory not found: ${migrationsDir}`);
     }
 
-    // Get all migration files
+    // Get and filter migration files
     const migrationFiles = fs
       .readdirSync(migrationsDir)
       .filter((file) => file.endsWith('.ts') || file.endsWith('.js'))
       .sort();
 
     if (migrationFiles.length === 0) {
-      console.log('No migration files found');
+      log('No migration files found');
       return;
     }
 
-    console.log(`Found ${migrationFiles.length} migration files`);
+    log(`Found ${migrationFiles.length} migration files`);
 
-    // If direction is down, reverse the order
-    if (direction === 'down') {
-      migrationFiles.reverse();
-    }
+    // Process files in the appropriate order
+    const filesToProcess = direction === 'down' ? [...migrationFiles].reverse() : migrationFiles;
 
     // Run migrations in sequence
-    for (const file of migrationFiles) {
+    for (const file of filesToProcess) {
       const migrationPath = path.join(migrationsDir, file);
+      log(`Running migration: ${file}`);
       await runMigration(direction, dbPath, migrationPath, updateSchema);
     }
 
-    console.log('All migrations completed successfully');
+    log('All migrations completed successfully');
   } catch (error) {
     console.error('Error running migrations:', error);
     throw error;
