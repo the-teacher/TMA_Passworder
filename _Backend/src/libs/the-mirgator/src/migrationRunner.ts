@@ -3,7 +3,7 @@
 import path from 'path';
 import fs from 'fs';
 import { createDatabaseSchema } from './createDatabaseSchema';
-
+import { getMigrationTimestamp, recordMigration } from './migrationTracker';
 // TS Example: yarn tsx src/libs/the-mirgator/src/migrationRunner.ts up \
 // ./db/sqlite/application/application.sqlite \
 // ./db/migrations/application/20250313125223_create_users_table.ts
@@ -77,6 +77,10 @@ export const runMigration = async (
     log(`Running migration ${direction.toUpperCase()}: ${path.basename(migrationPath)}`, 'info');
     await migration[direction](dbPath);
     log(`Migration completed successfully`, 'success');
+
+    // Record migration in migrations table
+    const migrationTimestamp = getMigrationTimestamp(migrationPath);
+    await recordMigration(dbPath, migrationTimestamp);
 
     // Update schema file if requested
     if (updateSchema) {

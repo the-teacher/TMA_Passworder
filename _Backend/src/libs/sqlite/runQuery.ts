@@ -13,13 +13,14 @@ const log = (message: string, level: 'log' | 'error' | 'warn' = 'log'): void => 
 };
 
 /**
- * Execute a SQL command on a database connection
+ * Execute a SQL command on a database connection with parameters
  * @param db SQLite database connection
  * @param command SQL command to execute
+ * @param params Parameters for the SQL command
  */
-const runCommand = (db: sqlite3.Database, command: string): Promise<void> => {
+const runCommand = (db: sqlite3.Database, command: string, params: any[] = []): Promise<void> => {
   return new Promise((resolve, reject) => {
-    db.run(command, (err) => {
+    db.run(command, params, (err) => {
       if (err) reject(err);
       else resolve();
     });
@@ -30,15 +31,20 @@ const runCommand = (db: sqlite3.Database, command: string): Promise<void> => {
  * Execute a SQL query on a database connection within a transaction
  * @param db SQLite database connection
  * @param sql SQL query to execute
+ * @param params Parameters for the SQL query
  */
-export const runSqlQuery = async (db: sqlite3.Database, sql: string): Promise<void> => {
+export const runSqlQuery = async (
+  db: sqlite3.Database,
+  sql: string,
+  params: any[] = [],
+): Promise<void> => {
   try {
     // Begin transaction
     log('Begin transaction');
     await runCommand(db, 'BEGIN TRANSACTION');
 
-    // Execute the query
-    await runCommand(db, sql);
+    // Execute the query with parameters
+    await runCommand(db, sql, params);
 
     // Commit transaction
     await runCommand(db, 'COMMIT');
@@ -59,12 +65,13 @@ export const runSqlQuery = async (db: sqlite3.Database, sql: string): Promise<vo
  * Execute a SQL query with proper connection handling and error management
  * @param dbPath Path to the SQLite database file
  * @param sql SQL query to execute
+ * @param params Parameters for the SQL query (optional)
  */
-export const runQuery = async (dbPath: string, sql: string): Promise<void> => {
+export const runQuery = async (dbPath: string, sql: string, params: any[] = []): Promise<void> => {
   const db = getDatabase(dbPath);
 
   try {
-    await runSqlQuery(db, sql);
+    await runSqlQuery(db, sql, params);
   } finally {
     // Always close the database connection
     db.close();
