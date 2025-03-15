@@ -28,6 +28,6 @@ export default {
       statements: 80,
     },
   },
-  setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest/setupTests.ts'],
   testPathIgnorePatterns: ['/node_modules/', '/.examples/'],
-}
+};
