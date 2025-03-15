@@ -66,7 +66,6 @@ export const runMigration = async (
     // Update schema file if requested
     if (updateSchema) {
       try {
-        console.log('Updating database schema file...');
         const schemaPath = await createDatabaseSchema(dbPath);
         console.log(`Schema file updated: ${schemaPath}`);
       } catch (schemaError) {
