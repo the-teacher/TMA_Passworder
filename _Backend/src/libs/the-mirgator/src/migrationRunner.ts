@@ -3,7 +3,14 @@
 import path from 'path';
 import fs from 'fs';
 import { createDatabaseSchema } from './createDatabaseSchema';
-import { getMigrationTimestamp, recordMigration } from './migrationTracker';
+import {
+  getMigrationTimestamp,
+  recordMigration,
+  ensureMigrationsTable,
+  isMigrationApplied,
+  removeMigrationRecord,
+} from './migrationTracker';
+
 // TS Example: yarn tsx src/libs/the-mirgator/src/migrationRunner.ts up \
 // ./db/sqlite/application/application.sqlite \
 // ./db/migrations/application/20250313125223_create_users_table.ts
@@ -44,6 +51,106 @@ const log = (message: string, type: 'info' | 'error' | 'success' = 'info'): void
 };
 
 /**
+ * Validates migration inputs
+ * @param dbPath Path to the database file
+ * @param migrationPath Path to the migration file
+ * @throws Error if validation fails
+ */
+const validateMigrationInputs = (dbPath: string, migrationPath: string): void => {
+  if (!fs.existsSync(dbPath)) {
+    throw new Error(`Database file not found: ${dbPath}`);
+  }
+
+  if (!fs.existsSync(migrationPath)) {
+    throw new Error(`Migration file not found: ${migrationPath}`);
+  }
+};
+
+/**
+ * Validates and imports a migration file
+ * @param migrationPath Path to the migration file
+ * @param direction Migration direction ('up' or 'down')
+ * @returns Imported migration module
+ * @throws Error if validation fails
+ */
+const validateAndImportMigration = async (
+  migrationPath: string,
+  direction: 'up' | 'down',
+): Promise<any> => {
+  const absoluteMigrationPath = path.resolve(migrationPath);
+  const migration = await import(absoluteMigrationPath);
+
+  if (typeof migration[direction] !== 'function') {
+    throw new Error(`Migration does not have a ${direction} method`);
+  }
+
+  return migration;
+};
+
+/**
+ * Checks if a migration needs to be applied based on direction
+ * @param dbPath Path to the database file
+ * @param migrationPath Path to the migration file
+ * @param direction Migration direction ('up' or 'down')
+ * @returns Boolean indicating if migration should be skipped
+ */
+const shouldSkipMigration = async (
+  dbPath: string,
+  migrationPath: string,
+  direction: 'up' | 'down',
+): Promise<boolean> => {
+  // For 'up' migrations, check if already applied
+  if (direction === 'up') {
+    const migrationTimestamp = getMigrationTimestamp(migrationPath);
+    const alreadyApplied = await isMigrationApplied(dbPath, migrationTimestamp);
+
+    if (alreadyApplied) {
+      log(`Migration ${path.basename(migrationPath)} already applied`, 'info');
+      return true;
+    }
+  }
+
+  return false;
+};
+
+/**
+ * Updates migration records based on direction
+ * @param direction Migration direction ('up' or 'down')
+ * @param dbPath Path to the database file
+ * @param migrationTimestamp Timestamp of the migration
+ */
+const updateMigrationRecords = async (
+  direction: 'up' | 'down',
+  dbPath: string,
+  migrationTimestamp: string,
+): Promise<void> => {
+  if (direction === 'up') {
+    await recordMigration(dbPath, migrationTimestamp);
+    log(`Migration recorded in migrations table: ${migrationTimestamp}`, 'success');
+  } else {
+    await removeMigrationRecord(dbPath, migrationTimestamp);
+    log(`Migration record removed from migrations table: ${migrationTimestamp}`, 'success');
+  }
+};
+
+/**
+ * Updates database schema file
+ * @param dbPath Path to the database file
+ */
+const updateDatabaseSchema = async (dbPath: string): Promise<void> => {
+  try {
+    const schemaPath = await createDatabaseSchema(dbPath);
+    log(`Schema file updated: ${schemaPath}`, 'success');
+  } catch (schemaError) {
+    log(
+      `Failed to update schema file: ${schemaError instanceof Error ? schemaError.message : String(schemaError)}`,
+      'error',
+    );
+    // Don't fail the migration if schema update fails
+  }
+};
+
+/**
  * Runs a migration against a specified database
  * @param direction Migration direction ('up' or 'down')
  * @param dbPath Path to the database file
@@ -58,42 +165,32 @@ export const runMigration = async (
 ): Promise<void> => {
   try {
     // Validate inputs
-    if (!fs.existsSync(dbPath)) {
-      throw new Error(`Database file not found: ${dbPath}`);
+    validateMigrationInputs(dbPath, migrationPath);
+
+    // Import and validate migration
+    const migration = await validateAndImportMigration(migrationPath, direction);
+
+    // Ensure migrations table exists
+    await ensureMigrationsTable(dbPath);
+
+    // Check if migration should be skipped
+    if (await shouldSkipMigration(dbPath, migrationPath, direction)) {
+      return;
     }
 
-    if (!fs.existsSync(migrationPath)) {
-      throw new Error(`Migration file not found: ${migrationPath}`);
-    }
-
-    // Import and run migration
-    const absoluteMigrationPath = path.resolve(migrationPath);
-    const migration = await import(absoluteMigrationPath);
-
-    if (typeof migration[direction] !== 'function') {
-      throw new Error(`Migration does not have a ${direction} method`);
-    }
-
-    log(`Running migration ${direction.toUpperCase()}: ${path.basename(migrationPath)}`, 'info');
-    await migration[direction](dbPath);
-    log(`Migration completed successfully`, 'success');
-
-    // Record migration in migrations table
+    // Get migration timestamp
     const migrationTimestamp = getMigrationTimestamp(migrationPath);
-    await recordMigration(dbPath, migrationTimestamp);
+
+    log(`🟡 Migration ${migrationTimestamp} (${direction.toUpperCase()}): is running...`, 'info');
+    await migration[direction](dbPath);
+    log(`Migration ${migrationTimestamp} completed successfully`, 'success');
+
+    // Update migration records
+    await updateMigrationRecords(direction, dbPath, migrationTimestamp);
 
     // Update schema file if requested
     if (updateSchema) {
-      try {
-        const schemaPath = await createDatabaseSchema(dbPath);
-        log(`Schema file updated: ${schemaPath}`, 'success');
-      } catch (schemaError) {
-        log(
-          `Failed to update schema file: ${schemaError instanceof Error ? schemaError.message : String(schemaError)}`,
-          'error',
-        );
-        // Don't fail the migration if schema update fails
-      }
+      await updateDatabaseSchema(dbPath);
     }
   } catch (error) {
     log(`Migration failed: ${error instanceof Error ? error.message : String(error)}`, 'error');

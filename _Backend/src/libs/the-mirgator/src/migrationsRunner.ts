@@ -3,7 +3,6 @@
 import fs from 'fs';
 import path from 'path';
 import { runMigration } from './migrationRunner';
-import { ensureMigrationsTable } from './migrationTracker';
 
 /**
  * The Migrator - Migrations Runner
@@ -62,10 +61,6 @@ export const runMigrations = async (
     if (!fs.existsSync(migrationsDir)) {
       throw new Error(`Migrations directory not found: ${migrationsDir}`);
     }
-
-    // Ensure migrations table exists
-    console.log('Ensuring migrations table exists', 'info');
-    await ensureMigrationsTable(dbPath);
 
     // Get and filter migration files
     const migrationFiles = fs
