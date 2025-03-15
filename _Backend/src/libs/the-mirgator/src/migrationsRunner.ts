@@ -19,9 +19,24 @@ import { runMigration } from './migrationRunner';
  * @module the-migrator/migrationsRunner
  */
 
-// Simple logging function
-const log = (message: string): void => {
-  console.log(`[Migrator] ${message}`);
+/**
+ * Enhanced logging function
+ * @param message Message to log
+ * @param type Type of message ('info', 'error', 'success')
+ */
+const log = (message: string, type: 'info' | 'error' | 'success' = 'info'): void => {
+  const prefix = '[Migrator]';
+
+  switch (type) {
+    case 'error':
+      console.error(`${prefix} ❌ ${message}`);
+      break;
+    case 'success':
+      console.log(`${prefix} ✅ ${message}`);
+      break;
+    default:
+      console.log(`${prefix} ${message}`);
+  }
 };
 
 /**
@@ -54,11 +69,11 @@ export const runMigrations = async (
       .sort();
 
     if (migrationFiles.length === 0) {
-      log('No migration files found');
+      log('No migration files found', 'info');
       return;
     }
 
-    log(`Found ${migrationFiles.length} migration files`);
+    log(`Found ${migrationFiles.length} migration files`, 'info');
 
     // Process files in the appropriate order
     const filesToProcess = direction === 'down' ? [...migrationFiles].reverse() : migrationFiles;
@@ -66,13 +81,14 @@ export const runMigrations = async (
     // Run migrations in sequence
     for (const file of filesToProcess) {
       const migrationPath = path.join(migrationsDir, file);
-      log(`Running migration: ${file}`);
+      log(`Running migration: ${file}`, 'info');
       await runMigration(direction, dbPath, migrationPath, updateSchema);
     }
 
-    log('All migrations completed successfully');
+    log('All migrations completed successfully', 'success');
   } catch (error) {
-    console.error('Error running migrations:', error);
+    log(`Migration Error: ${error instanceof Error ? error.message : String(error)}`, 'error');
+    console.error(error);
     throw error;
   }
 };
@@ -95,7 +111,7 @@ export const parseArgs = (): {
 
   // Validate direction
   if (direction !== 'up' && direction !== 'down') {
-    console.error(`Invalid direction: ${direction}. Must be 'up' or 'down'.`);
+    log(`Invalid direction: ${direction}. Must be 'up' or 'down'.`, 'error');
     return { direction: 'up', dbPath: undefined, migrationsDir: undefined, updateSchema };
   }
 
