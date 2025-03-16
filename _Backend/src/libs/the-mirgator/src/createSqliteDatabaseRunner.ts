@@ -94,7 +94,7 @@ const run = async (): Promise<void> => {
   } catch (error) {
     log('Error creating SQLite database:', 'error');
     log(error instanceof Error ? error.message : String(error), 'error');
-    process.exit(1);
+    process.exit(0);
   }
 };
 

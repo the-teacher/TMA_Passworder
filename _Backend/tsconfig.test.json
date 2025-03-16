@@ -15,7 +15,8 @@
       "@i18n/*": ["src/i18n/*"],
       "@libs/*": ["src/libs/*"],
       "@utils/*": ["src/utils/*"],
-      "@middlewares/*": ["src/middlewares/*"]
+      "@middlewares/*": ["src/middlewares/*"],
+      "@actions/*": ["src/actions/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,

@@ -6,7 +6,7 @@ export default {
     '^.+\\.(t|j)sx?$': [
       'ts-jest',
       {
-        tsconfig: 'tsconfig.json',
+        tsconfig: 'tsconfig.test.json',
         useESM: false, // Since you're using CommonJS
         diagnostics: {
           ignoreCodes: [1343],
@@ -15,6 +15,14 @@ export default {
     ],
   },
   moduleNameMapper: {
+    '@test/(.*)': '<rootDir>/test/$1',
+    '@routes/(.*)': '<rootDir>/src/routes/$1',
+    '@mocks/(.*)': '<rootDir>/src/mocks/$1',
+    '@i18n/(.*)': '<rootDir>/src/i18n/$1',
+    '@libs/(.*)': '<rootDir>/src/libs/$1',
+    '@utils/(.*)': '<rootDir>/src/utils/$1',
+    '@middlewares/(.*)': '<rootDir>/src/middlewares/$1',
+    '@actions/(.*)': '<rootDir>/src/actions/$1',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   coverageDirectory: 'coverage',

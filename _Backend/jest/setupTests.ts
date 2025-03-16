@@ -1,3 +1,5 @@
+// console.log('jest/setupTests');
+
 // Add any global test setup here
 // For example, if you need to mock global objects or set up test environment
 

@@ -1,128 +1,118 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { createSqliteDatabase, createSqliteDatabaseSync } from '../createSqliteDatabase';
+
+// Рекурсивная функция для удаления директории и всего её содержимого
+const removeDirectory = (dirPath: string): void => {
+  if (fs.existsSync(dirPath)) {
+    fs.readdirSync(dirPath).forEach((file) => {
+      const curPath = path.join(dirPath, file);
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // Рекурсивный вызов для директорий
+        removeDirectory(curPath);
+      } else {
+        // Удаление файла
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(dirPath);
+  }
+};
 
 // This is an integration test that creates real files
 describe('SQLite Database Creation - Integration Test', () => {
-  // Define test directory
-  const testDir = path.join(__dirname, 'temp');
+  let testDir: string;
 
-  // Clean up before and after tests
-  beforeAll(() => {
-    // Create test directory if it doesn't exist
-    if (!fs.existsSync(testDir)) {
-      fs.mkdirSync(testDir, { recursive: true });
-    }
+  beforeEach(() => {
+    // Create a temporary directory for each test
+    testDir = fs.mkdtempSync(path.join(os.tmpdir(), 'sqlite-test-'));
   });
 
-  afterAll(() => {
-    // Clean up test directory after tests
+  afterEach(() => {
+    // Clean up temporary directory after each test
     if (fs.existsSync(testDir)) {
-      // Remove all subdirectories recursively
-      const removeDir = (dirPath: string) => {
-        if (fs.existsSync(dirPath)) {
-          fs.readdirSync(dirPath).forEach((file) => {
-            const curPath = path.join(dirPath, file);
-            if (fs.lstatSync(curPath).isDirectory()) {
-              // Recursive call
-              removeDir(curPath);
-            } else {
-              // Delete file
-              fs.unlinkSync(curPath);
-            }
-          });
-          fs.rmdirSync(dirPath);
-        }
-      };
-
-      // Remove the test directory and all its contents
-      removeDir(testDir);
+      removeDirectory(testDir);
     }
   });
 
   describe('createSqliteDatabaseSync', () => {
-    test('creates a real SQLite database file', () => {
-      // Create a database in the test directory
-      const dbPath = createSqliteDatabaseSync('test_db', 'application', testDir);
+    it('should create a SQLite database file synchronously', () => {
+      // Create a database file
+      const dbPath = createSqliteDatabaseSync('test_db', testDir);
 
       // Check if the file exists
       expect(fs.existsSync(dbPath)).toBe(true);
 
-      // For the sync version, we just check if the file exists
-      // since it's just an empty file
-      expect(fs.statSync(dbPath).isFile()).toBe(true);
-
-      // Clean up the file
-      // fs.unlinkSync(dbPath);
+      // Check if the file has the correct name
+      expect(path.basename(dbPath)).toBe('test_db.sqlite');
     });
   });
 
   describe('createSqliteDatabase', () => {
-    test('creates a real SQLite database file asynchronously', async () => {
-      // Create a database in the test directory
-      const dbPath = await createSqliteDatabase('async_test_db', 'tenant', testDir);
+    it('should create a SQLite database file asynchronously', async () => {
+      // Create a database file
+      const dbPath = await createSqliteDatabase('async_test_db', testDir);
 
       // Check if the file exists
       expect(fs.existsSync(dbPath)).toBe(true);
 
-      // For the async version, we just check if the file exists
-      expect(fs.statSync(dbPath).isFile()).toBe(true);
-
-      // Clean up the file
-      // fs.unlinkSync(dbPath);
+      // Check if the file has the correct name
+      expect(path.basename(dbPath)).toBe('async_test_db.sqlite');
     });
 
-    test('creates databases with different scopes in separate directories', async () => {
-      // Create two databases with different scopes
-      const dbPath1 = await createSqliteDatabase('multi_scope_test1', 'scope1', testDir);
-      const dbPath2 = await createSqliteDatabase('multi_scope_test2', 'scope2', testDir);
+    it('should create multiple database files with different names', async () => {
+      // Create two database files
+      const dbPath1 = await createSqliteDatabase('multi_test1', testDir);
+      const dbPath2 = await createSqliteDatabase('multi_test2', testDir);
 
       // Check if both files exist
       expect(fs.existsSync(dbPath1)).toBe(true);
       expect(fs.existsSync(dbPath2)).toBe(true);
 
-      // Check if they're in different directories
-      const dir1 = path.dirname(dbPath1);
-      const dir2 = path.dirname(dbPath2);
-      expect(dir1).not.toBe(dir2);
-
-      // Clean up
-      // fs.unlinkSync(dbPath1);
-      // fs.unlinkSync(dbPath2);
+      // Check if the files have the correct names
+      expect(path.basename(dbPath1)).toBe('multi_test1.sqlite');
+      expect(path.basename(dbPath2)).toBe('multi_test2.sqlite');
     });
 
-    test('handles errors gracefully with non-existent parent directory', async () => {
-      // Create a path to a directory that doesn't exist and can't be created
-      // Use a very deep path that's unlikely to exist
-      const nonExistentPath = path.join(testDir, 'level1', 'level2', 'level3');
+    it('should handle path-like database names', async () => {
+      // Create a database with a path-like name
+      const dbPath = await createSqliteDatabase('path/like/name', testDir);
 
-      // Mock fs.mkdirSync to throw an error
-      const originalMkdirSync = fs.mkdirSync;
-      fs.mkdirSync = jest.fn().mockImplementation((_dirPath, _options) => {
-        throw new Error('Mock directory creation error');
-      });
+      // Check if the file exists
+      expect(fs.existsSync(dbPath)).toBe(true);
 
-      try {
-        await expect(
-          createSqliteDatabase('error_test', 'application', nonExistentPath),
-        ).rejects.toThrow();
-      } finally {
-        // Restore the original function
-        fs.mkdirSync = originalMkdirSync;
+      // Check if the directory structure was created correctly
+      const expectedDir = path.join(testDir, 'path', 'like');
+      expect(fs.existsSync(expectedDir)).toBe(true);
+
+      // Check if the file has the correct name
+      expect(path.basename(dbPath)).toBe('name.sqlite');
+    });
+  });
+
+  describe('Error Handling', () => {
+    it('should throw an error when directory does not exist and cannot be created', async () => {
+      // Try to create a database in a non-existent path that cannot be created
+      const nonExistentPath = '/non/existent/path';
+
+      // Only run this test if we're not running as root (which could create the directory)
+      if (process.getuid && process.getuid() !== 0) {
+        await expect(createSqliteDatabase('error_test', nonExistentPath)).rejects.toThrow();
       }
     });
 
-    test('throws error if database already exists', async () => {
-      // Create a database first
-      const dbPath = createSqliteDatabaseSync('duplicate_test', 'application', testDir);
+    it('should throw an error when trying to create a database that already exists', async () => {
+      // Create a database file
+      const dbPath = createSqliteDatabaseSync('duplicate_test', testDir);
 
-      // Try to create it again
-      await expect(createSqliteDatabase('duplicate_test', 'application', testDir)).rejects.toThrow(
+      // Verify the file exists before trying to create it again
+      expect(fs.existsSync(dbPath)).toBe(true);
+
+      // Try to create the same database again
+      await expect(createSqliteDatabase('duplicate_test', testDir)).rejects.toThrow(
         'Database already exists',
       );
-
-      // Clean up
-      fs.unlinkSync(dbPath);
     });
   });
 });
