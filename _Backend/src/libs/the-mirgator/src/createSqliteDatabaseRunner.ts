@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// TS Example: yarn tsx src/libs/the-mirgator/src/createSqliteDatabaseRunner.ts users
+// TS Example: yarn tsx src/libs/the-mirgator/src/createSqliteDatabaseRunner.ts application
 
 import { createSqliteDatabase } from './createSqliteDatabase';
 import path from 'path';
@@ -13,18 +13,17 @@ import { getDatabaseRootDir } from './databasePaths';
  * This module provides a command-line interface for creating SQLite database files.
  *
  * Usage:
- *   node createSqliteDatabaseRunner.js <dbName> [scope] [directory]
+ *   node createSqliteDatabaseRunner.js <dbName> [directory]
  *
  * Examples:
- *   node createSqliteDatabaseRunner.js users
- *   node createSqliteDatabaseRunner.js products tenant
- *   node createSqliteDatabaseRunner.js analytics reporting ./src/data/sqlite
+ *   node createSqliteDatabaseRunner.js application
+ *   node createSqliteDatabaseRunner.js tenant
+ *   node createSqliteDatabaseRunner.js reporting ./src/data/sqlite
  *
  * @module the-migrator/createSqliteDatabaseRunner
  */
 
 // Default values
-const DEFAULT_SCOPE = 'application';
 const DEFAULT_DIRECTORY = path.join(process.cwd(), getDatabaseRootDir());
 
 /**
@@ -33,7 +32,6 @@ const DEFAULT_DIRECTORY = path.join(process.cwd(), getDatabaseRootDir());
  */
 const parseArgs = (): {
   dbName: string | undefined;
-  scope: string;
   directory: string;
 } => {
   // Get command line arguments (skip first two: node and script path)
@@ -41,10 +39,9 @@ const parseArgs = (): {
 
   // Parse arguments
   const dbName = args[0];
-  let scope = args[1] || DEFAULT_SCOPE;
-  let directory = args[2] || DEFAULT_DIRECTORY;
+  const directory = args[1] || DEFAULT_DIRECTORY;
 
-  return { dbName, scope, directory };
+  return { dbName, directory };
 };
 
 /**
@@ -57,22 +54,21 @@ const showHelp = (): void => {
 The Migrator - SQLite Database Creator
 
 Usage:
-  node createSqliteDatabaseRunner.js <dbName> [scope] [directory]
+  node createSqliteDatabaseRunner.js <dbName> [directory]
 
 Arguments:
-  dbName     Name of the database to create (required)
-  scope      Database scope (default: "application")
-  directory  Directory to save the database (default: ./${defaultDir})
+  dbName      Name of the database to create (required)
+  directory   Directory to save the database (default: ./${defaultDir})
 
 Environment:
-  NODE_ENV   Environment name (default: "development")
-             For "test" environment, databases are created in tmp/sqlite/test
-             For other environments, databases are created in data/sqlite/{NODE_ENV}
+  NODE_ENV    Environment name (default: "development")
+              For "test" environment, databases are created in tmp/sqlite/test
+              For other environments, databases are created in data/sqlite/{NODE_ENV}
 
 Examples:
-  node createSqliteDatabaseRunner.js users
-  node createSqliteDatabaseRunner.js products tenant
-  NODE_ENV=production node createSqliteDatabaseRunner.js analytics reporting
+  node createSqliteDatabaseRunner.js application
+  node createSqliteDatabaseRunner.js tenant
+  NODE_ENV=production node createSqliteDatabaseRunner.js reporting
   `);
 };
 
@@ -81,7 +77,7 @@ Examples:
  */
 const run = async (): Promise<void> => {
   // Parse command line arguments
-  const { dbName, scope, directory } = parseArgs();
+  const { dbName, directory } = parseArgs();
 
   // Show help if no database name provided
   if (!dbName) {
@@ -92,7 +88,7 @@ const run = async (): Promise<void> => {
 
   try {
     // Create database file
-    const dbPath = await createSqliteDatabase(dbName, scope, directory);
+    const dbPath = await createSqliteDatabase(dbName, directory);
     log(`Successfully created SQLite database: ${dbPath}`, 'success');
     process.exit(0);
   } catch (error) {

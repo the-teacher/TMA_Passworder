@@ -11,6 +11,7 @@ import {
   removeMigrationRecord,
 } from './migrationTracker';
 import { log } from './migrationLogger';
+import { getDatabaseRootDir } from './databasePaths';
 
 // TS Example: yarn tsx src/libs/the-mirgator/src/migrationRunner.ts up \
 // ./db/sqlite/application/application.sqlite \
@@ -36,8 +37,8 @@ import { log } from './migrationLogger';
  *   node migrationRunner.js <direction> <dbPath> <migrationPath>
  *
  * Examples:
- *   node migrationRunner.js up ./db/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts
- *   node migrationRunner.js down ./db/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts
+ *   node migrationRunner.js up ./data/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts
+ *   node migrationRunner.js down ./data/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts
  *
  * @module the-migrator/migrationRunner
  */
@@ -234,8 +235,8 @@ Arguments:
   updateSchema   Whether to update schema file (true/false, default: true)
 
 Examples:
-  node migrationRunner.js up ./db/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts
-  node migrationRunner.js down ./db/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts false
+  node migrationRunner.js up ./data/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts
+  node migrationRunner.js down ./data/sqlite/application/application.sqlite ./db/migrations/application/20250313125223_create_users_table.ts false
   `);
 };
 

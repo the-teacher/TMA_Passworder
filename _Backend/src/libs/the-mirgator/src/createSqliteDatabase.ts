@@ -18,43 +18,53 @@ import { getDatabaseRootDir } from './databasePaths';
  * Examples:
  *
  * // Create a database with default parameters
- * createSqliteDatabase('users');
- * // Result: ./data/sqlite/{NODE_ENV}/application/users.sqlite
+ * createSqliteDatabase('application');
+ * // Result: ./data/sqlite/{NODE_ENV}/application.sqlite
  *
- * // Create a database with a custom scope
- * createSqliteDatabase('products', 'tenant');
- * // Result: ./data/sqlite/{NODE_ENV}/tenant/products.sqlite
+ * // Create a database with a path-like name
+ * createSqliteDatabase('hamster/application');
+ * // Result: ./data/sqlite/{NODE_ENV}/hamster/application.sqlite
  *
- * // Create a database with a scope and custom directory
- * createSqliteDatabase('analytics', 'reporting', './src/data');
- * // Result: ./src/data/reporting/analytics.sqlite
+ * // Create a database with a custom directory
+ * createSqliteDatabase('tenant', './src/data');
+ * // Result: ./src/data/tenant.sqlite
  */
 
 /**
  * Creates a new SQLite database file
  * @param dbName Name of the database (without extension)
- * @param scope Database scope (default: "application")
  * @param directory Directory to save the database (optional)
  * @param _testMode Test mode flag (default: false)
  * @returns Path to the created database file
  */
 export const createSqliteDatabase = async (
   dbName: string,
-  scope: string = 'application',
   directory?: string,
   _testMode = false,
 ): Promise<string> => {
-  // Form the filename with .sqlite extension
-  const fileName = `${dbName}.sqlite`;
+  // Check if dbName contains path separators
+  const hasPathSeparators = dbName.includes('/') || dbName.includes('\\');
 
-  // Determine directory for database
-  const projectDir = process.cwd();
+  // Determine directory and filename
+  let dbDir: string;
+  let fileName: string;
 
-  // If directory is provided, use it with the scope as a subdirectory
-  // Otherwise, use the default path with scope based on NODE_ENV
-  const dbDir = directory
-    ? path.join(directory, scope)
-    : path.join(projectDir, getDatabaseRootDir(), scope);
+  if (hasPathSeparators) {
+    // If dbName contains path separators, split it into directory and filename
+    const dbNameParts = dbName.split(/[\/\\]/);
+    fileName = `${dbNameParts.pop()}.sqlite`; // Last part becomes the filename
+    const subDirs = dbNameParts.join('/'); // Rest becomes subdirectories
+
+    // Combine with base directory
+    const projectDir = process.cwd();
+    const baseDir = directory || path.join(projectDir, getDatabaseRootDir());
+    dbDir = path.join(baseDir, subDirs);
+  } else {
+    // Simple case - no path separators
+    fileName = `${dbName}.sqlite`;
+    const projectDir = process.cwd();
+    dbDir = directory || path.join(projectDir, getDatabaseRootDir());
+  }
 
   // Check if directory exists and create it if necessary
   if (!fs.existsSync(dbDir)) {
@@ -109,26 +119,33 @@ export const createSqliteDatabase = async (
 /**
  * Creates a new SQLite database file (synchronous version)
  * @param dbName Name of the database (without extension)
- * @param scope Database scope (default: "application")
  * @param directory Directory to save the database (optional)
  * @returns Path to the created database file
  */
-export const createSqliteDatabaseSync = (
-  dbName: string,
-  scope: string = 'application',
-  directory?: string,
-): string => {
-  // Form the filename with .sqlite extension
-  const fileName = `${dbName}.sqlite`;
+export const createSqliteDatabaseSync = (dbName: string, directory?: string): string => {
+  // Check if dbName contains path separators
+  const hasPathSeparators = dbName.includes('/') || dbName.includes('\\');
 
-  // Determine directory for database
-  const projectDir = process.cwd();
+  // Determine directory and filename
+  let dbDir: string;
+  let fileName: string;
 
-  // If directory is provided, use it with the scope as a subdirectory
-  // Otherwise, use the default path with scope based on NODE_ENV
-  const dbDir = directory
-    ? path.join(directory, scope)
-    : path.join(projectDir, getDatabaseRootDir(), scope);
+  if (hasPathSeparators) {
+    // If dbName contains path separators, split it into directory and filename
+    const dbNameParts = dbName.split(/[\/\\]/);
+    fileName = `${dbNameParts.pop()}.sqlite`; // Last part becomes the filename
+    const subDirs = dbNameParts.join('/'); // Rest becomes subdirectories
+
+    // Combine with base directory
+    const projectDir = process.cwd();
+    const baseDir = directory || path.join(projectDir, getDatabaseRootDir());
+    dbDir = path.join(baseDir, subDirs);
+  } else {
+    // Simple case - no path separators
+    fileName = `${dbName}.sqlite`;
+    const projectDir = process.cwd();
+    dbDir = directory || path.join(projectDir, getDatabaseRootDir());
+  }
 
   // Check if directory exists and create it if necessary
   if (!fs.existsSync(dbDir)) {
