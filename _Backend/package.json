@@ -19,11 +19,16 @@
     "test": "jest --config jest.config.ts",
     "test:coverage": "jest --coverage --config jest.config.ts",
     "test:watch": "jest --watch --config jest.config.ts",
-    "__db:migrator:notes": "next commands to create, migrate, drop sqlite application database",
+    "#db:migrator:development": "migration commands for development environment",
     "db-create-application": "tsx src/libs/the-mirgator/src/createSqliteDatabaseRunner.ts application",
     "db-migrate-up-application": "tsx src/libs/the-mirgator/src/migrationsRunner.ts up ./data/sqlite/application/application.sqlite ./src/db/migrations/application",
     "db-migrate-down-application": "tsx src/libs/the-mirgator/src/migrationsRunner.ts down ./data/sqlite/application/application.sqlite ./src/db/migrations/application",
-    "db-drop-application": "tsx src/libs/the-mirgator/src/dropDatabase.ts ./data/sqlite/application/application.sqlite"
+    "db-drop-application": "tsx src/libs/the-mirgator/src/dropDatabase.ts ./data/sqlite/application/application.sqlite",
+    "#db:migrator:test": "migration commands for test environment",
+    "db-create-test": "NODE_ENV=test yarn db-create-application",
+    "db-migrate-up-test": "NODE_ENV=test yarn db-migrate-up-application",
+    "db-migrate-down-test": "NODE_ENV=test yarn db-migrate-down-application",
+    "db-drop-test": "NODE_ENV=test yarn db-drop-application"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

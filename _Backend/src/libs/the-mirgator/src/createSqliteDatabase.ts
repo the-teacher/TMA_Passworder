@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import sqlite3 from 'sqlite3';
+import { getDatabaseRootDir } from './databasePaths';
 
 /**
  * The Migrator - SQLite Database Creation Module
@@ -13,19 +14,16 @@ import sqlite3 from 'sqlite3';
  * @module the-migrator/createSqliteDatabase
  */
 
-// Default paths configuration
-const DEFAULT_DB_ROOT_DIR = 'data/sqlite';
-
 /**
  * Examples:
  *
  * // Create a database with default parameters
  * createSqliteDatabase('users');
- * // Result: ./data/sqlite/application/users.sqlite
+ * // Result: ./data/sqlite/{NODE_ENV}/application/users.sqlite
  *
  * // Create a database with a custom scope
  * createSqliteDatabase('products', 'tenant');
- * // Result: ./data/sqlite/tenant/products.sqlite
+ * // Result: ./data/sqlite/{NODE_ENV}/tenant/products.sqlite
  *
  * // Create a database with a scope and custom directory
  * createSqliteDatabase('analytics', 'reporting', './src/data');
@@ -53,10 +51,10 @@ export const createSqliteDatabase = async (
   const projectDir = process.cwd();
 
   // If directory is provided, use it with the scope as a subdirectory
-  // Otherwise, use the default path with scope
+  // Otherwise, use the default path with scope based on NODE_ENV
   const dbDir = directory
     ? path.join(directory, scope)
-    : path.join(projectDir, DEFAULT_DB_ROOT_DIR, scope);
+    : path.join(projectDir, getDatabaseRootDir(), scope);
 
   // Check if directory exists and create it if necessary
   if (!fs.existsSync(dbDir)) {
@@ -127,10 +125,10 @@ export const createSqliteDatabaseSync = (
   const projectDir = process.cwd();
 
   // If directory is provided, use it with the scope as a subdirectory
-  // Otherwise, use the default path with scope
+  // Otherwise, use the default path with scope based on NODE_ENV
   const dbDir = directory
     ? path.join(directory, scope)
-    : path.join(projectDir, DEFAULT_DB_ROOT_DIR, scope);
+    : path.join(projectDir, getDatabaseRootDir(), scope);
 
   // Check if directory exists and create it if necessary
   if (!fs.existsSync(dbDir)) {
