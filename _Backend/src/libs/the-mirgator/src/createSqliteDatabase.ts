@@ -13,16 +13,19 @@ import sqlite3 from 'sqlite3';
  * @module the-migrator/createSqliteDatabase
  */
 
+// Default paths configuration
+const DEFAULT_DB_ROOT_DIR = 'data/sqlite';
+
 /**
  * Examples:
  *
  * // Create a database with default parameters
  * createSqliteDatabase('users');
- * // Result: ./db/sqlite/application/users.sqlite
+ * // Result: ./data/sqlite/application/users.sqlite
  *
  * // Create a database with a custom scope
  * createSqliteDatabase('products', 'tenant');
- * // Result: ./db/sqlite/tenant/products.sqlite
+ * // Result: ./data/sqlite/tenant/products.sqlite
  *
  * // Create a database with a scope and custom directory
  * createSqliteDatabase('analytics', 'reporting', './src/data');
@@ -53,7 +56,7 @@ export const createSqliteDatabase = async (
   // Otherwise, use the default path with scope
   const dbDir = directory
     ? path.join(directory, scope)
-    : path.join(projectDir, 'db', 'sqlite', scope);
+    : path.join(projectDir, DEFAULT_DB_ROOT_DIR, scope);
 
   // Check if directory exists and create it if necessary
   if (!fs.existsSync(dbDir)) {
@@ -127,7 +130,7 @@ export const createSqliteDatabaseSync = (
   // Otherwise, use the default path with scope
   const dbDir = directory
     ? path.join(directory, scope)
-    : path.join(projectDir, 'db', 'sqlite', scope);
+    : path.join(projectDir, DEFAULT_DB_ROOT_DIR, scope);
 
   // Check if directory exists and create it if necessary
   if (!fs.existsSync(dbDir)) {

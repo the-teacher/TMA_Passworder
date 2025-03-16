@@ -236,6 +236,7 @@ const run = async (): Promise<void> => {
     await runMigrations(direction, dbPath, migrationsDir, updateSchema, step);
     process.exit(0);
   } catch (error) {
+    console.error(error);
     process.exit(1);
   }
 };

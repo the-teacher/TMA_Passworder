@@ -22,7 +22,8 @@ import path from 'path';
  */
 
 // Default values
-const DEFAULT_DIRECTORY = path.join(process.cwd(), 'db', 'sqlite');
+const DEFAULT_DB_ROOT_DIR = 'data/sqlite';
+const DEFAULT_DIRECTORY = path.join(process.cwd(), DEFAULT_DB_ROOT_DIR);
 const DEFAULT_SCOPE = 'application';
 
 /**
