@@ -173,7 +173,7 @@ export const runMigration = async (
       return;
     }
 
-    log(`🟡 Migration ${migrationTimestamp} (${direction.toUpperCase()}): is running...`, 'info');
+    log(`👉 Migration ${migrationTimestamp} (${direction.toUpperCase()}): is running...`, 'info');
     await migration[direction](dbPath);
     log(`Migration ${migrationTimestamp} completed successfully`, 'success');
 
