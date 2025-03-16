@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { runMigration } from './migrationRunner';
 import { getMigrationTimestamp, getAppliedMigrations } from './migrationTracker';
+import { log } from './migrationLogger';
 
 /**
  * The Migrator - Migrations Runner
@@ -15,7 +16,6 @@ import { getMigrationTimestamp, getAppliedMigrations } from './migrationTracker'
  * - parseArgs: Parses command line arguments for migration runner
  * - showHelp: Displays help information for command line usage
  * - run: Main function that executes the migration process
- * - log: Enhanced logging function with different message types
  *
  * Usage:
  *   node migrationsRunner.js <direction> <dbPath> <migrationsDir>
@@ -26,26 +26,6 @@ import { getMigrationTimestamp, getAppliedMigrations } from './migrationTracker'
  *
  * @module the-migrator/migrationsRunner
  */
-
-/**
- * Enhanced logging function
- * @param message Message to log
- * @param type Type of message ('info', 'error', 'success')
- */
-const log = (message: string, type: 'info' | 'error' | 'success' = 'info'): void => {
-  const prefix = '[Migrator]';
-
-  switch (type) {
-    case 'error':
-      console.error(`${prefix} ❌ ${message}`);
-      break;
-    case 'success':
-      console.log(`${prefix} ✅ ${message}`);
-      break;
-    default:
-      console.log(`${prefix} ${message}`);
-  }
-};
 
 /**
  * Validates migration inputs

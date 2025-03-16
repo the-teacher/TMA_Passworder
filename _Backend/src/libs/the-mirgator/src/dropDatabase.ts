@@ -2,6 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { log } from './migrationLogger';
 
 /**
  * The Migrator - Database Drop Utility
@@ -27,29 +28,6 @@ import path from 'path';
  *
  * @module the-migrator/dropDatabase
  */
-
-/**
- * Enhanced logging function
- * @param message Message to log
- * @param type Type of message ('info', 'error', 'success', 'warning')
- */
-const log = (message: string, type: 'info' | 'error' | 'success' | 'warning' = 'info'): void => {
-  const prefix = '[Migrator]';
-
-  switch (type) {
-    case 'error':
-      console.error(`${prefix} ❌ ${message}`);
-      break;
-    case 'success':
-      console.log(`${prefix} ✅ ${message}`);
-      break;
-    case 'warning':
-      console.warn(`${prefix} 🟡 ${message}`);
-      break;
-    default:
-      console.log(`${prefix} ${message}`);
-  }
-};
 
 /**
  * Recursively removes a directory and all its contents

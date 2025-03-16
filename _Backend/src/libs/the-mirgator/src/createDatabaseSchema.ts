@@ -2,17 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import sqlite3 from 'sqlite3';
 import { getDatabase } from '../../sqlite/getDatabase';
-
-/**
- * Logs messages only when DEBUG_SCHEMA environment variable is set
- * @param message Message to log
- * @param level Log level ('log', 'error', etc.)
- */
-const log = (message: string, level: 'log' | 'error' | 'warn' = 'log'): void => {
-  if (process.env.DEBUG_SCHEMA) {
-    console[level](message);
-  }
-};
+import { log } from './migrationLogger';
 
 /**
  * Extracts and saves the database schema to a file
@@ -27,7 +17,7 @@ export const createDatabaseSchema = async (dbPath: string): Promise<string> => {
   // Create schema file path
   const schemaFilePath = path.join(dbDir, `${dbName}_schema.sql`);
 
-  log(`Extracting schema from database: ${dbPath}`);
+  log(`Extracting schema from database: ${dbPath}`, 'info', true);
 
   // Get database connection
   const db = getDatabase(dbPath);
@@ -44,10 +34,10 @@ export const createDatabaseSchema = async (dbPath: string): Promise<string> => {
     // Write schema to file
     fs.writeFileSync(schemaFilePath, schemaContent, 'utf8');
 
-    log(`Database schema saved to: ${schemaFilePath}`);
+    log(`Database schema saved to: ${schemaFilePath}`, 'info', true);
     return schemaFilePath;
   } catch (error) {
-    log(`Error creating database schema: ${error}`, 'error');
+    log(`Error creating database schema: ${error}`, 'error', true);
     throw error;
   } finally {
     // Close the database connection

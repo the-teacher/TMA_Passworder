@@ -10,6 +10,7 @@ import {
   isMigrationApplied,
   removeMigrationRecord,
 } from './migrationTracker';
+import { log } from './migrationLogger';
 
 // TS Example: yarn tsx src/libs/the-mirgator/src/migrationRunner.ts up \
 // ./db/sqlite/application/application.sqlite \
@@ -30,7 +31,6 @@ import {
  * - parseArgs: Parses command line arguments
  * - showHelp: Displays help information for command line usage
  * - run: Main function that executes a single migration
- * - log: Enhanced logging function with different message types
  *
  * Usage:
  *   node migrationRunner.js <direction> <dbPath> <migrationPath>
@@ -41,26 +41,6 @@ import {
  *
  * @module the-migrator/migrationRunner
  */
-
-/**
- * Enhanced logging function
- * @param message Message to log
- * @param type Type of message ('info', 'error', 'success')
- */
-const log = (message: string, type: 'info' | 'error' | 'success' = 'info'): void => {
-  const prefix = '[Migrator]';
-
-  switch (type) {
-    case 'error':
-      console.error(`${prefix} ❌ ${message}`);
-      break;
-    case 'success':
-      console.log(`${prefix} ✅ ${message}`);
-      break;
-    default:
-      console.log(`${prefix} ${message}`);
-  }
-};
 
 /**
  * Validates migration inputs

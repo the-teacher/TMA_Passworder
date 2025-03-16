@@ -1,5 +1,6 @@
 export { createMigrationFile, generateMigrationContent } from './createMigration';
 export { createSqliteDatabase, createSqliteDatabaseSync } from './createSqliteDatabase';
+export { log, type LogType } from './migrationLogger';
 
 export {
   parseArgs as parseMigrationArgs,
