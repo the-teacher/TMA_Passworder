@@ -29,6 +29,9 @@ import { log } from './migrationLogger';
  * @module the-migrator/dropDatabase
  */
 
+// Configuration constants
+const COUNTDOWN_SECONDS = 10;
+
 /**
  * Recursively removes a directory and all its contents
  * @param dirPath Path to the directory to remove
@@ -76,10 +79,10 @@ export const dropDatabase = async (dbPath: string, force: boolean = false): Prom
     log('Force flag detected. Skipping confirmation.', 'warning');
   } else {
     log('To cancel, press Ctrl+C now.', 'warning');
-    log('Deletion will proceed in 10 seconds...', 'warning');
+    log(`Deletion will proceed in ${COUNTDOWN_SECONDS} seconds...`, 'warning');
 
-    // Wait for 10 seconds with countdown
-    for (let i = 10; i > 0; i--) {
+    // Wait for countdown seconds with countdown
+    for (let i = COUNTDOWN_SECONDS; i > 0; i--) {
       process.stdout.write(`\r${i} seconds remaining...`);
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }

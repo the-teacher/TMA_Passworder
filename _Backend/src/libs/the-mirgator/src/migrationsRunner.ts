@@ -27,6 +27,9 @@ import { log } from './migrationLogger';
  * @module the-migrator/migrationsRunner
  */
 
+// Configuration constants
+const COUNTDOWN_SECONDS = 10;
+
 /**
  * Validates migration inputs
  * @param dbPath Path to the database file
@@ -96,6 +99,22 @@ const getDownMigrations = async (
 };
 
 /**
+ * Waits for a countdown before proceeding with potentially destructive operations
+ * @param seconds Number of seconds to wait
+ */
+const waitForCountdown = async (seconds: number): Promise<void> => {
+  log('To cancel, press Ctrl+C now.', 'warning');
+  log(`Rollback will proceed in ${seconds} seconds...`, 'warning');
+
+  // Wait for countdown seconds with countdown
+  for (let i = seconds; i > 0; i--) {
+    process.stdout.write(`\r${i} seconds remaining...`);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  process.stdout.write('\n');
+};
+
+/**
  * Parses command line arguments
  */
 export const parseArgs = (): {
@@ -104,6 +123,7 @@ export const parseArgs = (): {
   migrationsDir: string | undefined;
   updateSchema: boolean;
   step?: number;
+  force?: boolean;
 } => {
   const args = process.argv.slice(2);
   const direction = (args[0] || 'up') as 'up' | 'down';
@@ -111,6 +131,7 @@ export const parseArgs = (): {
   const migrationsDir = args[2];
   // Fourth argument can be used to disable schema update
   const updateSchema = args[3] !== 'false';
+  const force = args.includes('--force');
 
   // Parse STEP parameter from environment or command line
   let step: number | undefined;
@@ -126,10 +147,17 @@ export const parseArgs = (): {
   // Validate direction
   if (direction !== 'up' && direction !== 'down') {
     log(`Invalid direction: ${direction}. Must be 'up' or 'down'.`, 'error');
-    return { direction: 'up', dbPath: undefined, migrationsDir: undefined, updateSchema, step };
+    return {
+      direction: 'up',
+      dbPath: undefined,
+      migrationsDir: undefined,
+      updateSchema,
+      step,
+      force,
+    };
   }
 
-  return { direction, dbPath, migrationsDir, updateSchema, step };
+  return { direction, dbPath, migrationsDir, updateSchema, step, force };
 };
 
 /**
@@ -140,17 +168,19 @@ const showHelp = (): void => {
 The Migrator - Migrations Runner
 
 Usage:
-  node migrationsRunner.js <direction> <dbPath> <migrationsDir> [updateSchema]
+  node migrationsRunner.js <direction> <dbPath> <migrationsDir> [updateSchema] [--force]
 
 Arguments:
   direction      Migration direction (up or down)
   dbPath         Path to the database file
   migrationsDir  Path to the migrations directory
   updateSchema   Whether to update schema file (true/false, default: true)
+  --force        Skip confirmation countdown for down migrations
 
 Examples:
   node migrationsRunner.js up ./db/sqlite/application/application.sqlite ./db/migrations/application
   node migrationsRunner.js down ./db/sqlite/application/application.sqlite ./db/migrations/application false
+  node migrationsRunner.js down ./db/sqlite/application/application.sqlite ./db/migrations/application true --force STEP=2
   `);
 };
 
@@ -161,6 +191,7 @@ Examples:
  * @param migrationsDir Path to the migrations directory
  * @param updateSchema Whether to update the schema file after all migrations (default: true)
  * @param step Number of migrations to run (for 'down' direction)
+ * @param force Whether to skip confirmation countdown (default: false)
  */
 export const runMigrations = async (
   direction: 'up' | 'down',
@@ -168,6 +199,7 @@ export const runMigrations = async (
   migrationsDir: string,
   updateSchema: boolean = true,
   step?: number,
+  force: boolean = false,
 ): Promise<void> => {
   // Validate inputs
   validateMigrationsInputs(dbPath, migrationsDir);
@@ -187,6 +219,12 @@ export const runMigrations = async (
 
   log(`Found ${migrationFiles.length} migration files to process`, 'info');
 
+  // For down migrations, show a countdown to allow cancellation
+  if (direction === 'down' && migrationFiles.length > 0 && !force) {
+    log(`WARNING: You are about to roll back ${migrationFiles.length} migrations!`, 'warning');
+    await waitForCountdown(COUNTDOWN_SECONDS);
+  }
+
   // Run migrations in sequence
   for (const file of migrationFiles) {
     const migrationPath = path.join(migrationsDir, file);
@@ -202,7 +240,7 @@ export const runMigrations = async (
  */
 const run = async (): Promise<void> => {
   // Parse command line arguments
-  const { direction, dbPath, migrationsDir, updateSchema, step } = parseArgs();
+  const { direction, dbPath, migrationsDir, updateSchema, step, force } = parseArgs();
 
   // Show help if required arguments are missing
   if (!dbPath || !migrationsDir) {
@@ -213,7 +251,7 @@ const run = async (): Promise<void> => {
 
   try {
     // Run all migrations
-    await runMigrations(direction, dbPath, migrationsDir, updateSchema, step);
+    await runMigrations(direction, dbPath, migrationsDir, updateSchema, step, force);
     process.exit(0);
   } catch (error) {
     console.error(error);
