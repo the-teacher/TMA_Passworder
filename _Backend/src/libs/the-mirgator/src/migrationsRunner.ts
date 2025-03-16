@@ -3,11 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { runMigration } from './migrationRunner';
-import {
-  getMigrationTimestamp,
-  isMigrationApplied,
-  getAppliedMigrations,
-} from './migrationTracker';
+import { getMigrationTimestamp, getAppliedMigrations } from './migrationTracker';
 
 /**
  * The Migrator - Migrations Runner
