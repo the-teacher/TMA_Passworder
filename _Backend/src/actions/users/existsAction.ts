@@ -7,7 +7,7 @@ export type ServiceType = (typeof ALLOWED_SERVICES)[number];
 // Here we could connect a service to check user existence
 // import { userService } from '../../services/userService'
 
-export const perform = (req: Request, res: Response) => {
+export const perform = async (req: Request, res: Response) => {
   try {
     const { service, id } = req.params;
 
@@ -26,7 +26,7 @@ export const perform = (req: Request, res: Response) => {
     // Simulate user existence check
     const userExists = checkIfUserExists(id);
 
-    res.json({
+    res.status(200).json({
       status: 'success',
       exists: userExists,
       data: { service: validatedService, id },
@@ -48,8 +48,8 @@ const isValidService = (service: string): service is ServiceType => {
 
 // Function to check if user exists
 const checkIfUserExists = (id: string): boolean => {
-  // Example logic: user exists if id is longer than 3 characters
-  // and doesn't contain special characters
+  if (id === '123') return false;
+
   const validLoginPattern = /^[a-zA-Z0-9_]+$/;
   return id.length > 3 && validLoginPattern.test(id);
 };
