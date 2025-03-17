@@ -51,7 +51,7 @@ const toSnakeCase = (str: string): string => {
  * @returns Content for the migration file
  */
 export const generateMigrationContent = (snakeCaseName: string): string => {
-  return `import { runQuery } from '@libs/sqlite/runQuery';
+  return `import { runQuery } from '@libs/sqlite';
 
 /**
  * Migration: ${snakeCaseName}

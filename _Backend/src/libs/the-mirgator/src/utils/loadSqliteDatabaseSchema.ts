@@ -1,9 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { log } from './logger';
-import { getDatabase } from '@libs/sqlite/getDatabase';
 import { resolveDatabasePath } from './databasePaths';
-import { withTransaction, runCommand } from '@libs/sqlite/transactions';
+import { getDatabase, withTransaction, runCommand } from '@libs/sqlite';
 
 /**
  * The Migrator - SQLite Database Schema Loader

@@ -1,6 +1,5 @@
 import path from 'path';
-import { runQuery } from '@libs/sqlite/runQuery';
-import { getAllQuery, getFirstQuery } from '@libs/sqlite/getQuery';
+import { runQuery, getAllQuery, getFirstQuery } from '@libs/sqlite';
 
 /**
  * The Migrator - Migration Tracker

@@ -1,5 +1,5 @@
-import { resolveDatabasePath } from '@libs/the-mirgator/src';
-import { getFirstQuery } from '@libs/sqlite/getQuery';
+import { resolveDatabasePath } from '@libs/the-mirgator';
+import { getFirstQuery } from '@libs/sqlite';
 import { ServiceType } from '../types';
 
 /**

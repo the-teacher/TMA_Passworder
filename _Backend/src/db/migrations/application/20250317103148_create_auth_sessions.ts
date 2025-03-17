@@ -1,4 +1,4 @@
-import { runQuery } from '@libs/sqlite/runQuery';
+import { runQuery } from '@libs/sqlite';
 
 /**
  * Migration: create_auth_sessions

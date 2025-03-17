@@ -6,7 +6,7 @@ import {
   dropSqliteDatabase,
   createSqliteDatabase,
   loadSqliteDatabaseSchema,
-} from '@libs/the-mirgator/src';
+} from '@libs/the-mirgator';
 
 import { perform as existsAction } from '@actions/users/existsAction';
 import { perform as createAction } from '@actions/users/createAction';
