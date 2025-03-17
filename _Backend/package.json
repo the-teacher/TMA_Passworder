@@ -20,6 +20,7 @@
     "test:coverage": "jest --coverage --config jest.config.ts",
     "test:watch": "jest --watch --config jest.config.ts",
     "#db:migrator:development": "migration commands for development environment",
+    "new:migrate": "tsx src/libs/the-mirgator/src/createMigrationRunner.ts application",
     "db:create": "tsx src/libs/the-mirgator/src/createSqliteDatabaseRunner.ts application/database",
     "db:migrate": "tsx src/libs/the-mirgator/src/migrationsRunner.ts up application/database ./src/db/migrations/application",
     "db:migrate:down": "tsx src/libs/the-mirgator/src/migrationsRunner.ts down application/database ./src/db/migrations/application",

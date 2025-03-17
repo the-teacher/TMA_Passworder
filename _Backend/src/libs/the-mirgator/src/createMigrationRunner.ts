@@ -1,103 +1,80 @@
 #!/usr/bin/env node
 
-// TS Example: yarn tsx src/libs/the-mirgator/src/createMigrationRunner.ts CreatePostsTable application
-
 import { createMigrationFile } from './createMigration';
-import path from 'path';
 
 /**
- * The Migrator - Migration Runner
+ * The Migrator - Migration Creator CLI
  *
- * This module provides a command-line interface for creating migration files.
+ * This module provides a command-line interface for creating new migration files.
  *
  * Usage:
- *   node createMigrationRunner.js <migrationName> [scope] [directory]
+ *   node createMigrationRunner.ts <dbName> <migrationName>
  *
  * Examples:
- *   node createMigrationRunner.js CreateUsersTable
- *   node createMigrationRunner.js AddEmailToUsers tenant
- *   node createMigrationRunner.js CreateProductsTable tenant ./src/database/migrations
+ *   node createMigrationRunner.ts application/database create_users_table
+ *   node createMigrationRunner.ts tenant create_tenants_table
  *
  * @module the-migrator/createMigrationRunner
  */
-
-// Default values
-const DEFAULT_DIRECTORY = path.join(process.cwd(), 'db', 'migrations');
-const DEFAULT_SCOPE = 'application';
 
 /**
  * Parses command line arguments
  * @returns Object containing parsed arguments
  */
-const parseArgs = (): {
+export const parseArgs = (): {
+  dbName: string | undefined;
   migrationName: string | undefined;
-  scope: string;
-  directory: string;
+  migrationsDir: string | undefined;
 } => {
-  // Get command line arguments (skip first two: node and script path)
   const args = process.argv.slice(2);
+  const dbName = args[0];
+  const migrationName = args[1];
+  const migrationsDir = args[2];
 
-  // Parse arguments
-  const migrationName = args[0];
-  let scope = args[1] || DEFAULT_SCOPE;
-  let directory = args[2] || DEFAULT_DIRECTORY;
-
-  // Handle 'undefined' string as undefined value
-  if (scope === 'undefined') {
-    scope = DEFAULT_SCOPE;
-  }
-
-  if (directory === 'undefined') {
-    directory = DEFAULT_DIRECTORY;
-  }
-
-  return { migrationName, scope, directory };
+  return { dbName, migrationName, migrationsDir };
 };
 
 /**
- * Displays help information
+ * Shows help message
  */
-const showHelp = (): void => {
+export const showHelp = (): void => {
   console.log(`
-The Migrator - Migration File Creator
+The Migrator - Migration Creator
 
 Usage:
-  node createMigrationRunner.js <migrationName> [scope] [directory]
+  node createMigrationRunner.ts <dbName> <migrationName> [migrationsDir]
 
 Arguments:
-  migrationName  Name of the migration (required)
-  scope          Migration scope (optional, default: "${DEFAULT_SCOPE}")
-  directory      Directory to save the migration (optional, default: ${DEFAULT_DIRECTORY})
+  dbName         Name of the database or path-like name (e.g., 'application' or 'tenant/users')
+  migrationName  Name of the migration (e.g., 'create_users_table')
+  migrationsDir  Optional custom directory for migrations (default: ./db/migrations/{dbName})
 
 Examples:
-  node createMigrationRunner.js CreateUsersTable
-  node createMigrationRunner.js AddEmailToUsers tenant
-  node createMigrationRunner.js CreateProductsTable tenant ./src/database/migrations
+  node createMigrationRunner.ts application create_users_table
+  node createMigrationRunner.ts application/database create_tenants_table
+  node createMigrationRunner.ts tenant create_settings_table ./src/db/migrations/tenant
   `);
 };
 
 /**
  * Main function to run the migration creator
  */
-const run = (): void => {
-  // Parse command line arguments
-  const { migrationName, scope, directory } = parseArgs();
+export const run = async (): Promise<void> => {
+  const { dbName, migrationName, migrationsDir } = parseArgs();
 
-  // Show help if no migration name provided
-  if (!migrationName) {
+  // Show help if required arguments are missing
+  if (!dbName || !migrationName) {
     showHelp();
     process.exit(1);
-    return; // Add this return to prevent further execution
+    return;
   }
 
   try {
     // Create migration file
-    const filePath = createMigrationFile(migrationName, scope, directory);
-    console.log(`Successfully created migration: ${filePath}`);
+    await createMigrationFile(dbName, migrationName, migrationsDir);
     process.exit(0);
   } catch (error) {
-    console.error('Error creating migration file:');
-    console.error(error instanceof Error ? error.message : error);
+    console.error(error);
     process.exit(1);
   }
 };
@@ -107,5 +84,9 @@ if (require.main === module) {
   run();
 }
 
-// Export for testing
-export { parseArgs, showHelp, run };
+// Export for testing and programmatic use
+export {
+  parseArgs as parseMigrationCreatorArgs,
+  showHelp as showMigrationCreatorHelp,
+  run as runMigrationCreator,
+};
