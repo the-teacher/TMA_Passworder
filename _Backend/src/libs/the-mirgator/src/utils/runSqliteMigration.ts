@@ -43,10 +43,6 @@ export const runSqliteMigration = async (
   // Validate inputs
   validateMigrationInputs(dbPath, migrationPath);
 
-  // Get database connection
-  const { getDatabase } = await import('@libs/sqlite/getDatabase');
-  const db = getDatabase(dbPath);
-
   try {
     // Ensure migrations table exists
     await ensureMigrationsTable(dbPath);
@@ -55,7 +51,7 @@ export const runSqliteMigration = async (
     const timestamp = getMigrationTimestamp(migrationPath);
 
     // Check if migration should be skipped
-    if (await shouldSkipMigration(db, direction, timestamp)) {
+    if (await shouldSkipMigration(dbPath, direction, timestamp)) {
       log(`Migration already ${direction === 'up' ? 'applied' : 'reverted'}, skipping`, 'info');
       return;
     }
@@ -67,13 +63,13 @@ export const runSqliteMigration = async (
     log(`Running migration ${direction}: ${path.basename(migrationPath)}`, 'info');
 
     if (direction === 'up') {
-      await migration.up(db);
+      await migration.up(dbPath);
     } else {
-      await migration.down(db);
+      await migration.down(dbPath);
     }
 
     // Update migration records
-    await updateMigrationRecords(db, direction, timestamp);
+    await updateMigrationRecords(dbPath, direction, timestamp);
 
     // Update schema file if requested
     if (updateSchema) {
@@ -84,9 +80,6 @@ export const runSqliteMigration = async (
   } catch (error) {
     log(`Migration ${direction} failed: ${error}`, 'error');
     throw error;
-  } finally {
-    // Close database connection
-    db.close();
   }
 };
 
@@ -137,36 +130,36 @@ const validateAndImportMigration = async (migrationPath: string): Promise<Migrat
 
 /**
  * Determines if a migration should be skipped
- * @param db Database connection
+ * @param dbPath Path to the database file
  * @param direction Migration direction
  * @param timestamp Migration timestamp
  * @returns Whether migration should be skipped
  */
 const shouldSkipMigration = async (
-  db: any,
+  dbPath: string,
   direction: 'up' | 'down',
   timestamp: string,
 ): Promise<boolean> => {
-  const isApplied = await isMigrationApplied(db, timestamp);
+  const isApplied = await isMigrationApplied(dbPath, timestamp);
   return (direction === 'up' && isApplied) || (direction === 'down' && !isApplied);
 };
 
 /**
  * Updates migration tracking records in database
- * @param db Database connection
+ * @param dbPath Path to the database file
  * @param direction Migration direction
  * @param timestamp Migration timestamp
  */
 const updateMigrationRecords = async (
-  db: any,
+  dbPath: string,
   direction: 'up' | 'down',
   timestamp: string,
 ): Promise<void> => {
   if (direction === 'up') {
-    await recordMigration(db, timestamp);
+    await recordMigration(dbPath, timestamp);
     log(`Recorded migration: ${timestamp}`, 'info');
   } else {
-    await removeMigrationRecord(db, timestamp);
+    await removeMigrationRecord(dbPath, timestamp);
     log(`Removed migration record: ${timestamp}`, 'info');
   }
 };

@@ -65,10 +65,7 @@ export const runMigrations = async (
   const migrationsToRun = step ? migrationFiles.slice(0, step) : migrationFiles;
 
   // Get applied migrations
-  const { getDatabase } = await import('../sqlite/getDatabase');
-  const db = getDatabase(dbPath);
-  const appliedMigrations = await getAppliedMigrations(db);
-  db.close();
+  const appliedMigrations = await getAppliedMigrations(dbPath);
 
   // Filter migrations based on direction and applied status
   const filteredMigrations = filterMigrations(migrationsToRun, appliedMigrations, direction, force);
@@ -85,7 +82,6 @@ export const runMigrations = async (
     const migrationPath = path.join(resolvedMigrationsDir, migrationFile);
     await runSqliteMigration(direction, dbPath, migrationPath, updateSchema);
   }
-
   log(`All ${direction} migrations completed successfully`, 'success');
 };
 

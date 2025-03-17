@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { dropSqliteDatabase } from '@libs/the-mirgator/src/utils/dropSqliteDatabase';
 import { resolveDatabasePath } from '@libs/the-mirgator/src/utils/databasePaths';
 import { createSqliteDatabase } from '@libs/the-mirgator/src/utils/createSqliteDatabase';
-// import { runMigrations } from '@libs/the-mirgator/src/migrationsRunner';
+import { loadSqliteDatabaseSchema } from '@libs/the-mirgator/src/utils/loadSqliteDatabaseSchema';
 
 import { perform as existsAction } from '@actions/users/existsAction';
 import { perform as createAction } from '@actions/users/createAction';
@@ -25,14 +25,15 @@ describe('User creation workflow', () => {
 
   beforeEach(async () => {
     const fullPath = resolveDatabasePath('application/database');
+
     await dropSqliteDatabase(fullPath as string, true);
     await createSqliteDatabase('application/database');
-    // await loadSchema('application/database');
-    // await runMigrations('up', 'application/database', './src/db/migrations/application', true);
+    await loadSqliteDatabaseSchema(
+      'application/database',
+      'data/sqlite/development/application/database_schema.sql',
+    );
 
-    // Reset mocks before each test
-    jsonMock.mockClear();
-    statusMock.mockClear();
+    clearResponse();
 
     // Create a new mock response object
     actionResponse = {

@@ -1,38 +1,34 @@
-import { runQuery } from '../../sqlite/runQuery';
-import { getAllQuery, getFirstQuery } from '../../sqlite/getQuery';
 import path from 'path';
+import { runQuery } from '@libs/sqlite/runQuery';
+import { getAllQuery, getFirstQuery } from '@libs/sqlite/getQuery';
 
 /**
  * The Migrator - Migration Tracker
  *
- * This module provides functionality for tracking migrations in a SQLite database.
- * It creates and manages a migrations table to record which migrations have been applied.
- *
- * Functions:
- * - getMigrationTimestamp: Extracts timestamp from migration filename
- * - ensureMigrationsTable: Creates migrations tracking table if it doesn't exist
- * - recordMigration: Records a completed migration in the database
- * - isMigrationApplied: Checks if a migration has already been applied
- * - getAppliedMigrations: Retrieves all applied migrations from the database
- * - removeMigrationRecord: Removes a migration record from the database
+ * This module provides functionality for tracking applied migrations in a database.
  *
  * @module the-migrator/migrationTracker
  */
 
 /**
- * Extracts the timestamp from a migration file name
- * @param migrationPath Path to the migration file
- * @returns Timestamp of the migration file
+ * Extracts migration timestamp from filename
+ * @param migrationPath Path to migration file
+ * @returns Migration timestamp
  */
 export const getMigrationTimestamp = (migrationPath: string): string => {
-  const migrationFileName = path.basename(migrationPath);
-  const timestamp = migrationFileName.split('_')[0];
-  return timestamp;
+  const filename = path.basename(migrationPath);
+  const match = filename.match(/^(\d{14})_/);
+
+  if (!match) {
+    throw new Error(`Invalid migration filename format: ${filename}`);
+  }
+
+  return match[1];
 };
 
 /**
- * Creates the migrations table in the database if it doesn't exist
- * @param dbPath Path to the SQLite database file
+ * Ensures migrations table exists in database
+ * @param dbPath Path to the database file
  * @returns Promise that resolves when the table is created or already exists
  */
 export const ensureMigrationsTable = async (dbPath: string): Promise<void> => {
@@ -42,17 +38,16 @@ export const ensureMigrationsTable = async (dbPath: string): Promise<void> => {
       CREATE TABLE IF NOT EXISTS migrations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         timestamp TEXT NOT NULL UNIQUE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
+      )
     `,
   );
 };
 
 /**
- * Records a completed migration in the migrations table
- * @param dbPath Path to the SQLite database file
- * @param migrationTimestamp Timestamp of the migration file that was executed
- * @returns Promise that resolves when the migration is recorded
+ * Records a migration in the database
+ * @param dbPath Path to the database file
+ * @param migrationTimestamp Migration timestamp
  */
 export const recordMigration = async (
   dbPath: string,
@@ -62,52 +57,49 @@ export const recordMigration = async (
 };
 
 /**
- * Checks if a migration has already been applied
- * @param dbPath Path to the SQLite database file
- * @param migrationPath Path to the migration file to check
- * @returns Promise that resolves to true if migration has been applied, false otherwise
+ * Checks if a migration has been applied
+ * @param dbPath Path to the database file
+ * @param migrationTimestamp Migration timestamp
+ * @returns Whether the migration has been applied
  */
 export const isMigrationApplied = async (
   dbPath: string,
   migrationTimestamp: string,
 ): Promise<boolean> => {
+  // Ensure migrations table exists before querying
+  await ensureMigrationsTable(dbPath);
+
   const row = await getFirstQuery<{ id: number }>(
     dbPath,
     'SELECT id FROM migrations WHERE timestamp = ?',
     [migrationTimestamp],
   );
 
-  return !!row; // Return true if row exists, false if undefined
+  return !!row;
 };
 
 /**
- * Gets all applied migrations from the database
- * @param dbPath Path to the SQLite database file
- * @returns Promise that resolves to an array of migration records
+ * Gets all applied migrations from database
+ * @param dbPath Path to the database file
+ * @returns Array of applied migrations
  */
-export const getAppliedMigrations = async (
-  dbPath: string,
-): Promise<
-  Array<{
-    id: number;
-    timestamp: string;
-    created_at: string;
-  }>
-> => {
+export const getAppliedMigrations = async (dbPath: string): Promise<string[]> => {
+  // Ensure migrations table exists before querying
+  await ensureMigrationsTable(dbPath);
+
   const rows = await getAllQuery<{
     id: number;
     timestamp: string;
     created_at: string;
   }>(dbPath, 'SELECT * FROM migrations ORDER BY timestamp ASC');
 
-  return rows;
+  return rows.map((row) => row.timestamp);
 };
 
 /**
- * Removes a migration record from the migrations table
- * @param dbPath Path to the SQLite database file
- * @param migrationTimestamp Timestamp of the migration to remove
- * @returns Promise that resolves when the migration record is removed
+ * Removes a migration record from the database
+ * @param dbPath Path to the database file
+ * @param migrationTimestamp Migration timestamp
  */
 export const removeMigrationRecord = async (
   dbPath: string,

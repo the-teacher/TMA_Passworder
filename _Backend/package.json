@@ -23,7 +23,7 @@
     "db:create": "tsx src/libs/the-mirgator/src/createSqliteDatabaseRunner.ts application/database",
     "db:migrate": "tsx src/libs/the-mirgator/src/migrationsRunner.ts up application/database ./src/db/migrations/application",
     "db:migrate:down": "tsx src/libs/the-mirgator/src/migrationsRunner.ts down application/database ./src/db/migrations/application",
-    "db:drop": "tsx src/libs/the-mirgator/src/dropDatabase.ts application/database",
+    "db:drop": "tsx src/libs/the-mirgator/src/dropSqliteDatabaseRunner.ts application/database",
     "#db:migrator:test": "migration commands for test environment",
     "db:create:test": "NODE_ENV=test yarn db:create",
     "db:migrate:test": "NODE_ENV=test yarn db:migrate",

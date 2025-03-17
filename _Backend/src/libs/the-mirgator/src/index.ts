@@ -1,16 +1,25 @@
-export { createMigrationFile, generateMigrationContent } from './createMigration';
-export { createSqliteDatabase } from './createSqliteDatabase';
-export { log, type LogType } from './utils/logger';
-export { getDatabaseRootDir } from './utils/databasePaths';
+// Core functionality
+export { createMigration } from './createMigration';
+export { createMigrationRunner } from './createMigrationRunner';
 
-export {
-  parseArgs as parseMigrationArgs,
-  showHelp as showMigrationHelp,
-  run as runMigration,
-} from './createMigrationRunner';
+// Utilities
+export { log, setLogMode, getBufferedLogs, clearLogBuffer, flushLogBuffer } from './utils/logger';
+export { resolveDatabasePath, getDatabaseRootDir } from './utils/databasePaths';
+export { createSqliteDatabaseSchema } from './utils/createSqliteDatabaseSchema';
+export { loadSqliteDatabaseSchema } from './utils/loadSqliteDatabaseSchema';
+export { dropSqliteDatabase } from './utils/dropSqliteDatabase';
+export { runSqliteMigration } from './utils/runSqliteMigration';
 
+// Migration tracking
 export {
-  parseArgs as parseDatabaseArgs,
-  showHelp as showDatabaseHelp,
-  run as runDatabase,
-} from './createSqliteDatabaseRunner';
+  getMigrationTimestamp,
+  ensureMigrationsTable,
+  isMigrationApplied,
+  recordMigration,
+  removeMigrationRecord,
+  getAppliedMigrations,
+} from './migrationTracker';
+
+// Types
+export type { LogType, LogMode } from './utils/logger';
+export type { MigrationModule } from './utils/runSqliteMigration';

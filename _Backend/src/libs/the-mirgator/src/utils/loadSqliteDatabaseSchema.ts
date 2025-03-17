@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import sqlite3 from 'sqlite3';
-import { getDatabase } from '@libs/sqlite/getDatabase';
 import { log } from './logger';
+import { getDatabase } from '@libs/sqlite/getDatabase';
 import { resolveDatabasePath } from './databasePaths';
 import { withTransaction, runCommand } from '@libs/sqlite/transactions';
 
