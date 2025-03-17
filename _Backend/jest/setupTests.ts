@@ -1,4 +1,6 @@
 // console.log('jest/setupTests');
+process.env.MIGRATOR_LOGS = 'buffer';
+process.env.SQLITE_LOGS = 'buffer';
 
 // Add any global test setup here
 // For example, if you need to mock global objects or set up test environment

@@ -1,4 +1,13 @@
 import { Request, Response } from 'express';
+import {
+  getBufferedLogs,
+  resolveDatabasePath,
+  createSqliteDatabase,
+  dropSqliteDatabase,
+  loadSqliteDatabaseSchema,
+} from '@libs/the-mirgator/src';
+import { getBufferedLogs as sqliteLogs } from '@libs/sqlite';
+import { runQuery } from '@libs/sqlite/runQuery';
 import { perform } from '../existsAction';
 
 // Mock Express request and response
@@ -17,82 +26,85 @@ const mockResponse = () => {
 describe('User Exists Action', () => {
   let req: Request;
   let res: Response;
+  const dbPath = resolveDatabasePath('application/database') as string;
+
+  beforeAll(async () => {
+    // Setup test database
+    await dropSqliteDatabase(dbPath, true);
+    await createSqliteDatabase('application/database');
+
+    // Load database schema
+    await loadSqliteDatabaseSchema(
+      'application/database',
+      'data/sqlite/development/application/database_schema.sql',
+    );
+
+    // Create test data - we don't add any users yet, so queries should return false
+  });
+
+  afterAll(async () => {
+    // Cleanup test database
+    await dropSqliteDatabase(dbPath, true);
+    console.log(getBufferedLogs());
+    console.log(sqliteLogs());
+  });
 
   beforeEach(() => {
     res = mockResponse();
   });
 
-  describe('successful scenarios', () => {
-    test('should return exists=true for valid id longer than 3 characters', () => {
-      req = mockRequest({ service: 'github', id: 'validuser' });
+  test('should return exists=false when user does not exist in database', async () => {
+    // Create request with valid parameters for a non-existent user
+    req = mockRequest({ service: 'github', id: 'validuser123' });
 
-      perform(req, res);
+    // Call the action
+    await perform(req, res);
 
-      expect(res.json).toHaveBeenCalledWith({
-        status: 'success',
-        exists: true,
-        data: { service: 'github', id: 'validuser' },
-      });
-    });
-
-    test('should return exists=false for id with special characters', () => {
-      req = mockRequest({ service: 'telegram', id: 'invalid@user' });
-
-      perform(req, res);
-
-      expect(res.json).toHaveBeenCalledWith({
-        status: 'success',
-        exists: false,
-        data: { service: 'telegram', id: 'invalid@user' },
-      });
-    });
-
-    test('should return exists=false for id shorter than 4 characters', () => {
-      req = mockRequest({ service: 'gmail', id: 'abc' });
-
-      perform(req, res);
-
-      expect(res.json).toHaveBeenCalledWith({
-        status: 'success',
-        exists: false,
-        data: { service: 'gmail', id: 'abc' },
-      });
+    // Verify the response
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      status: 'success',
+      exists: false,
+      service: 'github',
+      id: 'validuser123',
     });
   });
 
-  describe('error scenarios', () => {
-    test('should return 400 for invalid service type', () => {
-      req = mockRequest({ service: 'invalid-service', id: 'user123' });
+  test('should return exists=true when user exists in database', async () => {
+    // First, add a test user to the database
+    const userId = 1;
+    const service = 'github';
+    const providerId = 'existinguser456';
 
-      perform(req, res);
+    // Insert a user
+    await runQuery(
+      dbPath,
+      `INSERT INTO users (id, system_id, name, email)
+       VALUES (?, ?, ?, ?)`,
+      [userId, 'sys123456789', 'Test User', 'test@example.com'],
+    );
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
-        status: 'error',
-        message: 'Invalid service type',
-        error: expect.stringContaining('Service must be one of:'),
-      });
-    });
+    // Insert auth provider for the user
+    await runQuery(
+      dbPath,
+      `INSERT INTO auth_providers (user_id, provider, provider_id)
+       VALUES (?, ?, ?)`,
+      [userId, service, providerId],
+    );
 
-    test('should handle errors and return 500 status', () => {
-      // Create a request with valid service but missing id
-      req = mockRequest({ service: 'github' }); // Missing id parameter
+    // Create request with parameters for the existing user
+    req = mockRequest({ service, id: providerId });
 
-      // Mock console.error to prevent test output pollution
-      const originalConsoleError = console.error;
-      console.error = jest.fn();
+    // Call the action
+    await perform(req, res);
 
-      perform(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({
-        status: 'error',
-        message: 'Failed to check if user exists',
-        error: expect.any(String),
-      });
-
-      // Restore console.error
-      console.error = originalConsoleError;
+    // Verify the response
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      status: 'success',
+      exists: true,
+      service,
+      id: providerId,
     });
   });
 });
