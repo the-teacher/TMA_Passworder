@@ -11,17 +11,14 @@ describe('User Exists Action', () => {
   let dbPath: string;
 
   beforeAll(async () => {
-    // Setup test database
     dbPath = await setupTestDatabase();
   });
 
   afterAll(async () => {
-    // Cleanup test database
     await cleanupTestDatabase(dbPath);
   });
 
   beforeEach(() => {
-    // Create a new mock response for each test
     res = mockResponse();
   });
 
