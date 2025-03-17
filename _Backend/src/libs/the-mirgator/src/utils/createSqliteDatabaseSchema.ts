@@ -17,7 +17,7 @@ export const createSqliteDatabaseSchema = async (dbPath: string): Promise<string
   // Create schema file path
   const schemaFilePath = path.join(dbDir, `${dbName}_schema.sql`);
 
-  log(`Extracting schema from database: ${dbPath}`, 'info', true);
+  log(`Extracting schema from database: ${dbPath}`, 'info');
 
   // Get database connection
   const db = getDatabase(dbPath);
@@ -34,10 +34,10 @@ export const createSqliteDatabaseSchema = async (dbPath: string): Promise<string
     // Write schema to file
     fs.writeFileSync(schemaFilePath, schemaContent, 'utf8');
 
-    log(`Database schema saved to: ${schemaFilePath}`, 'info', true);
+    log(`Database schema saved to: ${schemaFilePath}`, 'info');
     return schemaFilePath;
   } catch (error) {
-    log(`Error creating database schema: ${error}`, 'error', true);
+    log(`Error creating database schema: ${error}`, 'error');
     throw error;
   } finally {
     // Close the database connection

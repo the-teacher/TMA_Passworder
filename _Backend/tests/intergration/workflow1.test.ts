@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
 
-import { dropSqliteDatabase } from '@libs/the-mirgator/src/utils/dropSqliteDatabase';
-import { resolveDatabasePath } from '@libs/the-mirgator/src/utils/databasePaths';
-import { createSqliteDatabase } from '@libs/the-mirgator/src/utils/createSqliteDatabase';
-import { loadSqliteDatabaseSchema } from '@libs/the-mirgator/src/utils/loadSqliteDatabaseSchema';
+import {
+  getBufferedLogs,
+  resolveDatabasePath,
+  dropSqliteDatabase,
+  createSqliteDatabase,
+  loadSqliteDatabaseSchema,
+} from '@libs/the-mirgator/src';
 
 import { perform as existsAction } from '@actions/users/existsAction';
 import { perform as createAction } from '@actions/users/createAction';
 
 // Ensure logs are suppressed during tests
-process.env.MIGRATOR_SILENT = 'true';
+process.env.MIGRATOR_LOGS = 'buffer';
 
 describe('User creation workflow', () => {
   // Create mocks for response methods
@@ -40,6 +43,13 @@ describe('User creation workflow', () => {
       json: jsonMock,
       status: statusMock,
     } as unknown as Response;
+  });
+
+  afterAll(async () => {
+    const fullPath = resolveDatabasePath('application/database');
+    await dropSqliteDatabase(fullPath as string, true);
+
+    console.log(getBufferedLogs());
   });
 
   const existsActionRequest = {
