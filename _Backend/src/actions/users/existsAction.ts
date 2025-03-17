@@ -1,55 +1,37 @@
 import { Request, Response } from 'express';
 
-// Define allowed service types
-export const ALLOWED_SERVICES = ['telegram', 'gmail', 'github'] as const;
-export type ServiceType = (typeof ALLOWED_SERVICES)[number];
+import { ALLOWED_SERVICES } from './consts';
+import { type ServiceType } from './types';
+import { checkIfUserExists, isValidService, withErrorHandling } from './utils';
 
-// Here we could connect a service to check user existence
-// import { userService } from '../../services/userService'
-
+// Export the action handler at the top of the file
 export const perform = async (req: Request, res: Response) => {
-  try {
+  return withErrorHandling(async () => {
     const { service, id } = req.params;
 
     // Validate that service has an allowed value
     if (!isValidService(service)) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'Invalid service type',
-        error: `Service must be one of: ${ALLOWED_SERVICES.join(', ')}. Received: ${service}`,
-      });
+      return invalidServiceResponse(res, service);
     }
 
     // Now service is typed as ServiceType
     const validatedService: ServiceType = service as ServiceType;
 
-    // Simulate user existence check
-    const userExists = checkIfUserExists(id);
+    // Check if user exists in database
+    const userExists = await checkIfUserExists(validatedService, id);
 
     res.status(200).json({
       status: 'success',
       exists: userExists,
       data: { service: validatedService, id },
     });
-  } catch (error) {
-    console.error('Error checking user existence:', error);
-    res.status(500).json({
-      status: 'error',
-      message: 'Failed to check if user exists',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
-  }
+  })(req, res);
 };
 
-// Function to validate service type
-const isValidService = (service: string): service is ServiceType => {
-  return ALLOWED_SERVICES.includes(service as ServiceType);
-};
-
-// Function to check if user exists
-const checkIfUserExists = (id: string): boolean => {
-  if (id === '123') return false;
-
-  const validLoginPattern = /^[a-zA-Z0-9_]+$/;
-  return id.length > 3 && validLoginPattern.test(id);
+const invalidServiceResponse = (res: Response, service: string) => {
+  return res.status(400).json({
+    status: 'error',
+    message: 'Invalid service type',
+    error: `Service must be one of: ${ALLOWED_SERVICES.join(', ')}. Received: ${service}`,
+  });
 };
