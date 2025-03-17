@@ -23,6 +23,7 @@ export default {
     '@utils/(.*)': '<rootDir>/src/utils/$1',
     '@middlewares/(.*)': '<rootDir>/src/middlewares/$1',
     '@actions/(.*)': '<rootDir>/src/actions/$1',
+    '@app-types/(.*)': '<rootDir>/src/types/$1',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   coverageDirectory: 'coverage',

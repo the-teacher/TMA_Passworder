@@ -1,5 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { getDatabase } from './getDatabase';
+import { runCommand, withTransaction } from './transactions';
 
 /**
  * Logs messages only when DEBUG_SQL environment variable is set
@@ -10,21 +11,6 @@ const log = (message: string, level: 'log' | 'error' | 'warn' = 'log'): void => 
   if (process.env.DEBUG_SQL) {
     console[level](message);
   }
-};
-
-/**
- * Execute a SQL command on a database connection with parameters
- * @param db SQLite database connection
- * @param command SQL command to execute
- * @param params Parameters for the SQL command
- */
-const runCommand = (db: sqlite3.Database, command: string, params: any[] = []): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    db.run(command, params, (err) => {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
 };
 
 /**
@@ -39,24 +25,13 @@ export const runSqlQuery = async (
   params: any[] = [],
 ): Promise<void> => {
   try {
-    // Begin transaction
-    log('Begin transaction');
-    await runCommand(db, 'BEGIN TRANSACTION');
+    await withTransaction(db, async () => {
+      await runCommand(db, sql, params);
+    });
 
-    // Execute the query with parameters
-    await runCommand(db, sql, params);
-
-    // Commit transaction
-    await runCommand(db, 'COMMIT');
     log('Transaction was successfully committed');
   } catch (error) {
-    // Rollback on any error
-    try {
-      await runCommand(db, 'ROLLBACK');
-      log('Transaction rolled back', 'error');
-    } catch (rollbackError) {
-      log(`Failed to rollback transaction: ${rollbackError}`, 'error');
-    }
+    log(`Transaction failed: ${error}`, 'error');
     throw error;
   }
 };

@@ -9,17 +9,10 @@
 
 import crypto from 'crypto';
 import { createDataCheckString } from './telegram-validator';
+import { type TelegramUser } from '@app-types/telegram';
 
 export const TELEGRAM_TEST_BOT_TOKEN = '123456789:ABCDefGhIJKlmNoPQRsTUVwxyZ';
 export const TELEGRAM_TEST_MAX_AGE = 10 * 365 * 24 * 60 * 60 * 1000; // 10 years in milliseconds
-
-type TelegramUser = {
-  id: number;
-  first_name: string;
-  last_name?: string;
-  username?: string;
-  language_code?: string;
-};
 
 /**
  * Generates a random bot token for testing

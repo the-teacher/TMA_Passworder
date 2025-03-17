@@ -40,7 +40,8 @@
       "@libs/*": ["src/libs/*"],
       "@utils/*": ["src/utils/*"],
       "@middlewares/*": ["src/middlewares/*"],
-      "@actions/*": ["src/actions/*"]
+      "@actions/*": ["src/actions/*"],
+      "@app-types/*": ["src/types/*"]
     },
     "outDir": "dist",
     "rootDir": "src",

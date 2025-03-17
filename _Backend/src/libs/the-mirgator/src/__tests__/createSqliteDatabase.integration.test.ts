@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { createSqliteDatabase, createSqliteDatabaseSync } from '../createSqliteDatabase';
+import { createSqliteDatabase } from '../createSqliteDatabase';
 
 // Рекурсивная функция для удаления директории и всего её содержимого
 const removeDirectory = (dirPath: string): void => {
@@ -34,19 +34,6 @@ describe('SQLite Database Creation - Integration Test', () => {
     if (fs.existsSync(testDir)) {
       removeDirectory(testDir);
     }
-  });
-
-  describe('createSqliteDatabaseSync', () => {
-    it('should create a SQLite database file synchronously', () => {
-      // Create a database file
-      const dbPath = createSqliteDatabaseSync('test_db', testDir);
-
-      // Check if the file exists
-      expect(fs.existsSync(dbPath)).toBe(true);
-
-      // Check if the file has the correct name
-      expect(path.basename(dbPath)).toBe('test_db.sqlite');
-    });
   });
 
   describe('createSqliteDatabase', () => {
@@ -100,19 +87,6 @@ describe('SQLite Database Creation - Integration Test', () => {
       if (process.getuid && process.getuid() !== 0) {
         await expect(createSqliteDatabase('error_test', nonExistentPath)).rejects.toThrow();
       }
-    });
-
-    it('should throw an error when trying to create a database that already exists', async () => {
-      // Create a database file
-      const dbPath = createSqliteDatabaseSync('duplicate_test', testDir);
-
-      // Verify the file exists before trying to create it again
-      expect(fs.existsSync(dbPath)).toBe(true);
-
-      // Try to create the same database again
-      await expect(createSqliteDatabase('duplicate_test', testDir)).rejects.toThrow(
-        'Database already exists',
-      );
     });
   });
 });

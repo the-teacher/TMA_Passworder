@@ -1,6 +1,6 @@
 import { parseArgs, showHelp, run } from '../createSqliteDatabaseRunner';
 import { createSqliteDatabase } from '../createSqliteDatabase';
-import { log } from '../migrationLogger';
+import { log } from '../utils/logger';
 
 // Mock dependencies
 jest.mock('../createSqliteDatabase');

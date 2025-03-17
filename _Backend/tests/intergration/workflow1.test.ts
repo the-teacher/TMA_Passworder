@@ -1,6 +1,15 @@
 import { Request, Response } from 'express';
+
+import { dropSqliteDatabase } from '@libs/the-mirgator/src/utils/dropSqliteDatabase';
+import { resolveDatabasePath } from '@libs/the-mirgator/src/utils/databasePaths';
+import { createSqliteDatabase } from '@libs/the-mirgator/src/utils/createSqliteDatabase';
+// import { runMigrations } from '@libs/the-mirgator/src/migrationsRunner';
+
 import { perform as existsAction } from '@actions/users/existsAction';
 import { perform as createAction } from '@actions/users/createAction';
+
+// Ensure logs are suppressed during tests
+process.env.MIGRATOR_SILENT = 'true';
 
 describe('User creation workflow', () => {
   // Create mocks for response methods
@@ -14,7 +23,13 @@ describe('User creation workflow', () => {
     statusMock.mockClear();
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    const fullPath = resolveDatabasePath('application/database');
+    await dropSqliteDatabase(fullPath as string, true);
+    await createSqliteDatabase('application/database');
+    // await loadSchema('application/database');
+    // await runMigrations('up', 'application/database', './src/db/migrations/application', true);
+
     // Reset mocks before each test
     jsonMock.mockClear();
     statusMock.mockClear();
@@ -36,6 +51,8 @@ describe('User creation workflow', () => {
   const createActionRequest = {
     params: {
       service: 'telegram',
+      username: '',
+      name: 'John Doe',
       id: '123',
     },
   } as unknown as Request;

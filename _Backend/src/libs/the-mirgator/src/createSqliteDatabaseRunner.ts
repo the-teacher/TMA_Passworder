@@ -2,10 +2,10 @@
 
 // TS Example: yarn tsx src/libs/the-mirgator/src/createSqliteDatabaseRunner.ts application
 
-import { createSqliteDatabase } from './createSqliteDatabase';
 import path from 'path';
-import { log } from './migrationLogger';
-import { getDatabaseRootDir } from './databasePaths';
+import { log } from './utils/logger';
+import { getDatabaseRootDir } from './utils/databasePaths';
+import { createSqliteDatabase } from './utils/createSqliteDatabase';
 
 /**
  * The Migrator - SQLite Database Runner
@@ -30,7 +30,7 @@ const DEFAULT_DIRECTORY = path.join(process.cwd(), getDatabaseRootDir());
  * Parses command line arguments
  * @returns Object containing parsed arguments
  */
-const parseArgs = (): {
+export const parseArgs = (): {
   dbName: string | undefined;
   directory: string;
 } => {
@@ -47,7 +47,7 @@ const parseArgs = (): {
 /**
  * Shows help message
  */
-const showHelp = (): void => {
+export const showHelp = (): void => {
   const defaultDir = getDatabaseRootDir();
 
   console.log(`
@@ -75,7 +75,7 @@ Examples:
 /**
  * Main function to run the database creator
  */
-const run = async (): Promise<void> => {
+export const run = async (): Promise<void> => {
   // Parse command line arguments
   const { dbName, directory } = parseArgs();
 
@@ -83,7 +83,7 @@ const run = async (): Promise<void> => {
   if (!dbName) {
     showHelp();
     process.exit(1);
-    return; // Add this return to prevent further execution
+    return;
   }
 
   try {
@@ -102,6 +102,3 @@ const run = async (): Promise<void> => {
 if (require.main === module) {
   run();
 }
-
-// Export for testing
-export { parseArgs, showHelp, run };

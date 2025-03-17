@@ -1,15 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import sqlite3 from 'sqlite3';
-import { getDatabase } from '../../sqlite/getDatabase';
-import { log } from './migrationLogger';
+import { getDatabase } from '@libs/sqlite/getDatabase';
+import { log } from './logger';
 
 /**
  * Extracts and saves the database schema to a file
  * @param dbPath Path to the SQLite database file
  * @returns Path to the created schema file
  */
-export const createDatabaseSchema = async (dbPath: string): Promise<string> => {
+export const createSqliteDatabaseSchema = async (dbPath: string): Promise<string> => {
   // Get the database directory and name
   const dbDir = path.dirname(dbPath);
   const dbName = path.basename(dbPath, '.sqlite');
@@ -48,16 +48,23 @@ export const createDatabaseSchema = async (dbPath: string): Promise<string> => {
 // Interface for schema query result row
 interface SchemaRow {
   sql: string | null;
+  name: string;
+  type: string;
 }
 
 /**
  * Get the complete schema directly from SQLite
  * This returns all CREATE statements for tables, indexes, triggers, and views
+ * Excludes internal SQLite tables like sqlite_sequence
  */
 const getCompleteSchema = (db: sqlite3.Database): Promise<string> => {
   return new Promise((resolve, reject) => {
     db.all(
-      "SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND sql != '' ORDER BY type = 'table' DESC",
+      `SELECT sql, name, type FROM sqlite_master
+       WHERE sql IS NOT NULL
+       AND sql != ''
+       AND name != 'sqlite_sequence'
+       ORDER BY type = 'table' DESC`,
       (err, rows: SchemaRow[]) => {
         if (err) {
           reject(err);
