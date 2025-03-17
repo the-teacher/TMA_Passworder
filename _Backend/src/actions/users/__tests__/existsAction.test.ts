@@ -1,14 +1,9 @@
 import { Request, Response } from 'express';
 import { perform } from '../existsAction';
 import { createTestUser } from '../queries/createTestUser';
-import {
-  setupTestDatabase,
-  cleanupTestDatabase,
-  mockRequest,
-  mockResponse,
-} from '@utils/tests/dbHelpers';
 
-// Mock Express request and response
+import { mockRequest, mockResponse } from '@utils/tests/mockHelpers';
+import { setupTestDatabase, cleanupTestDatabase } from '@utils/tests/dbHelpers';
 
 describe('User Exists Action', () => {
   let req: Request;
