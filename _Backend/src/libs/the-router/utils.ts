@@ -36,11 +36,16 @@ const resolveFullActionPath = (actionsPath: string, actionPath: string): string 
     throw new Error('Action path cannot be empty');
   }
 
-  const actionFile = `${actionPath}Action`;
+  // Split the action path to get the last segment
+  const segments = actionPath.split('/');
+  const lastSegment = segments[segments.length - 1];
+
+  // Create the action file name using the last segment
+  const actionFile = `${lastSegment}Action`;
 
   return !isCustomActionsPath()
-    ? path.join(getProjectRoot(), actionsPath, actionFile)
-    : path.join(actionsPath, actionFile);
+    ? path.join(getProjectRoot(), actionsPath, actionPath, actionFile)
+    : path.join(actionsPath, actionPath, actionFile);
 };
 
 const validateActionFile = (fullActionPath: string, validExtensions: string[]): string => {

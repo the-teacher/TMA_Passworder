@@ -75,6 +75,7 @@ describe('Routes with RegExp', () => {
     app.use(getRouter());
 
     const response = await request(app).get('/api/v1/users');
+    console.log(response.body);
     expect(response.status).toBe(200);
     expect(response.body.path).toBe('/api/v1/users');
     expect(response.body.message).toBe('Handled by first route');
