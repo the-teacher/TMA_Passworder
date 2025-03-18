@@ -71,7 +71,7 @@ describe('createMigrationFile', () => {
   });
 
   test('creates a migration file with default parameters', () => {
-    const filePath = createMigrationFile('CreateUsersTable');
+    const filePath = createMigrationFile('CreateUsersTable', 'application');
 
     // Check if directory existence was checked
     expect(fs.existsSync).toHaveBeenCalledWith('/project/db/migrations/application');
@@ -143,7 +143,7 @@ describe('createMigrationFile', () => {
     // Mock fs.existsSync to return true (directory exists)
     (fs.existsSync as jest.Mock).mockReturnValue(true);
 
-    createMigrationFile('UpdateUserSchema');
+    createMigrationFile('UpdateUserSchema', 'application');
 
     // Check if directory was not created
     expect(fs.mkdirSync).not.toHaveBeenCalled();
@@ -157,7 +157,7 @@ describe('createMigrationFile', () => {
   });
 
   test('converts camelCase to snake_case correctly', () => {
-    createMigrationFile('addUserEmailAndPhoneNumber');
+    createMigrationFile('addUserEmailAndPhoneNumber', 'application');
 
     // Check if file was written with correct snake_case name
     expect(fs.writeFileSync).toHaveBeenCalledWith(

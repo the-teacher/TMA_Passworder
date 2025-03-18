@@ -7,6 +7,6 @@ export const responseExistsSuccess = (
 ) => {
   return res.status(200).json({
     status: 'success',
-    ...data,
+    data,
   });
 };

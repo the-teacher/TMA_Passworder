@@ -1,18 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { createSqliteDatabase } from '../createSqliteDatabase';
+import { createSqliteDatabase } from '../utils/createSqliteDatabase';
 
-// Рекурсивная функция для удаления директории и всего её содержимого
 const removeDirectory = (dirPath: string): void => {
   if (fs.existsSync(dirPath)) {
     fs.readdirSync(dirPath).forEach((file) => {
       const curPath = path.join(dirPath, file);
       if (fs.lstatSync(curPath).isDirectory()) {
-        // Рекурсивный вызов для директорий
         removeDirectory(curPath);
       } else {
-        // Удаление файла
         fs.unlinkSync(curPath);
       }
     });

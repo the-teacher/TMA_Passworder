@@ -14,6 +14,10 @@ import { perform as createAction } from '@actions/users/createAction/createActio
 // Ensure logs are suppressed during tests
 process.env.MIGRATOR_LOGS = 'buffer';
 
+export const getJsonMockValue = (mock: jest.Mock) => {
+  return mock.mock.calls[0][0];
+};
+
 describe('User creation workflow', () => {
   // Create mocks for response methods
   const jsonMock = jest.fn().mockReturnThis();
@@ -55,30 +59,40 @@ describe('User creation workflow', () => {
   const existsActionRequest = {
     params: {
       service: 'telegram',
-      id: '123',
+      id: 'abc123',
     },
   } as unknown as Request;
 
   const createActionRequest = {
     params: {
       service: 'telegram',
-      username: '',
+      username: 'test_user',
       name: 'John Doe',
-      id: '123',
+      id: 'abc123',
     },
   } as unknown as Request;
 
-  it('Workflow of creating a user', () => {
+  it('Workflow of creating a user', async () => {
     // FIRST STEP: Check if user exists
-    existsAction(existsActionRequest, actionResponse);
+    await existsAction(existsActionRequest, actionResponse);
 
+    // log value of jsonMock
+    console.log(getJsonMockValue(jsonMock));
+    console.log(getJsonMockValue(statusMock));
+
+    // console.log(jsonMock)
     // Verify calls after the first step
     expect(statusMock).toHaveBeenCalledWith(200);
-    expect(jsonMock).toHaveBeenCalledWith({
-      status: 'success',
-      exists: false,
-      data: { service: 'telegram', id: '123' },
-    });
+    expect(jsonMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'success',
+        data: expect.objectContaining({
+          exists: false,
+          service: 'telegram',
+          id: 'abc123',
+        }),
+      }),
+    );
 
     clearResponse();
 

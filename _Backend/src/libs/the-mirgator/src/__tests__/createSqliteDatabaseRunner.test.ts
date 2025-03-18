@@ -1,11 +1,11 @@
 import { parseArgs, showHelp, run } from '../createSqliteDatabaseRunner';
-import { createSqliteDatabase } from '../createSqliteDatabase';
+import { createSqliteDatabase } from '../utils/createSqliteDatabase';
 import { log } from '../utils/logger';
 
 // Mock dependencies
-jest.mock('../createSqliteDatabase');
 jest.mock('process');
-jest.mock('../migrationLogger');
+jest.mock('../utils/createSqliteDatabase');
+jest.mock('../utils/logger');
 
 describe('createSqliteDatabaseRunner', () => {
   // Save original process.argv and console methods
@@ -32,7 +32,6 @@ describe('createSqliteDatabaseRunner', () => {
 
     // Mock log function
     (log as jest.Mock).mockImplementation((message) => {
-      // Вызываем console.log или console.error в зависимости от типа сообщения
       if (typeof message === 'string' && message.includes('Error')) {
         console.error(message);
       } else {
@@ -78,7 +77,6 @@ describe('createSqliteDatabaseRunner', () => {
       const args = parseArgs();
 
       expect(args.dbName).toBe('users');
-      // Проверяем только наличие 'sqlite' в пути, так как точный путь может меняться в зависимости от окружения
       expect(args.directory).toContain('sqlite');
     });
 
@@ -89,7 +87,6 @@ describe('createSqliteDatabaseRunner', () => {
       const args = parseArgs();
 
       expect(args.dbName).toBeUndefined();
-      // Проверяем только наличие 'sqlite' в пути, так как точный путь может меняться в зависимости от окружения
       expect(args.directory).toContain('sqlite');
     });
   });
@@ -115,7 +112,6 @@ describe('createSqliteDatabaseRunner', () => {
     test('creates database file with name only', async () => {
       process.argv = ['node', 'script.js', 'users'];
 
-      // Мокируем возвращаемое значение createSqliteDatabase
       (createSqliteDatabase as jest.Mock).mockResolvedValue('/mock/path/users.sqlite');
 
       await run();
@@ -128,7 +124,6 @@ describe('createSqliteDatabaseRunner', () => {
     test('creates database file with all parameters', async () => {
       process.argv = ['node', 'script.js', 'products', './custom/dir'];
 
-      // Мокируем возвращаемое значение createSqliteDatabase
       (createSqliteDatabase as jest.Mock).mockResolvedValue('./custom/dir/products.sqlite');
 
       await run();
@@ -148,7 +143,6 @@ describe('createSqliteDatabaseRunner', () => {
 
       await run();
 
-      // Проверяем вызовы log вместо console.error
       expect(log).toHaveBeenCalledWith('Error creating SQLite database:', 'error');
       expect(log).toHaveBeenCalledWith('Test error', 'error');
       expect(process.exit).toHaveBeenCalledWith(0);
