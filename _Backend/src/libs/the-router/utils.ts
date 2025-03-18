@@ -18,22 +18,36 @@ import path from 'path';
 import { getActionsPath, isCustomActionsPath } from './base';
 import type { Request, Response } from 'express';
 
+// Constants for file extensions
 const VALID_EXTENSIONS = ['.js', '.ts'];
+
+// Error message constants
+const ERROR_ACTIONS_PATH_NOT_SET = 'Actions path is not set';
+const ERROR_ACTIONS_PATH_NOT_DIR = 'Actions path %s is not a directory';
+const ERROR_ACTION_PATH_EMPTY = 'Action path cannot be empty';
+const ERROR_ACTION_FILE_NOT_EXIST = 'Action "%s" does not exist';
+const ERROR_ACTION_MODULE_NO_PERFORM = "Action module at %s must export a 'perform' function";
+const ERROR_ACTION_LOADING_FAILED = 'Action loading failed';
+const ERROR_ACTION_LOADING_FAILED_MESSAGE = 'Failed to load the specified action';
+const ERROR_UNKNOWN = 'Unknown error';
+
+const isProduction = (): boolean => process.env.NODE_ENV === 'production';
+
 export const getProjectRoot = (): string => process.cwd();
 
 const validateActionsPath = (actionsPath: string): void => {
   if (!actionsPath) {
-    throw new Error('Actions path is not set');
+    throw new Error(ERROR_ACTIONS_PATH_NOT_SET);
   }
 
   if (!fs.existsSync(actionsPath) || !fs.lstatSync(actionsPath).isDirectory()) {
-    throw new Error(`Actions path ${actionsPath} is not a directory`);
+    throw new Error(ERROR_ACTIONS_PATH_NOT_DIR.replace('%s', actionsPath));
   }
 };
 
 const resolveFullActionPath = (actionsPath: string, actionPath: string): string => {
   if (!actionPath) {
-    throw new Error('Action path cannot be empty');
+    throw new Error(ERROR_ACTION_PATH_EMPTY);
   }
 
   // Split the action path to get the last segment
@@ -49,13 +63,17 @@ const resolveFullActionPath = (actionsPath: string, actionPath: string): string 
 };
 
 const validateActionFile = (fullActionPath: string, validExtensions: string[]): string => {
+  const fileName = path.basename(fullActionPath);
+
   for (const ext of validExtensions) {
     const candidatePath = `${fullActionPath}${ext}`;
     if (fs.existsSync(candidatePath) && fs.lstatSync(candidatePath).isFile()) {
       return candidatePath;
     }
   }
-  throw new Error(`Action file ${fullActionPath} does not exist`);
+
+  const actionPath = isProduction() ? fileName : fullActionPath;
+  throw new Error(ERROR_ACTION_FILE_NOT_EXIST.replace('%s', actionPath));
 };
 
 const validateActionModule = (
@@ -63,7 +81,7 @@ const validateActionModule = (
   fullActionPath: string,
 ): void => {
   if (typeof actionModule.perform !== 'function') {
-    throw new Error(`Action module at ${fullActionPath} must export a 'perform' function`);
+    throw new Error(ERROR_ACTION_MODULE_NO_PERFORM.replace('%s', fullActionPath));
   }
 };
 
@@ -89,9 +107,9 @@ export const loadAction = (
       return handler(req, res);
     } catch (error: Error | unknown) {
       res.status(501).json({
-        error: 'Action loading failed',
-        message: 'Failed to load the specified action',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: ERROR_ACTION_LOADING_FAILED,
+        message: ERROR_ACTION_LOADING_FAILED_MESSAGE,
+        details: error instanceof Error ? error.message : ERROR_UNKNOWN,
       });
     }
   };

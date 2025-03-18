@@ -42,13 +42,17 @@ import { addRouteToMap } from './route-map';
 import { loadAction } from './utils';
 import { buildRoutesSchema } from './helpers/buildRoutesSchema';
 
+// Error message constants
+const ERROR_ACTION_PATH_REQUIRED = 'Action path is required when middlewares are provided';
+const ERROR_UNSUPPORTED_HTTP_METHOD = 'Unsupported HTTP method: %s';
+
 export const root = (middlewares: RequestHandler[] | string, actionPath?: string): void => {
   let handlers: RequestHandler[] = [...getScopeMiddlewares()];
   let finalActionPath: string;
 
   if (Array.isArray(middlewares)) {
     if (!actionPath) {
-      throw new Error('Action path is required when middlewares are provided');
+      throw new Error(ERROR_ACTION_PATH_REQUIRED);
     }
     handlers = [...handlers, ...middlewares];
     finalActionPath = actionPath;
@@ -78,7 +82,7 @@ const createRouteHandler = (
 
     if (Array.isArray(middlewares)) {
       if (!actionPath) {
-        throw new Error('Action path is required when middlewares are provided');
+        throw new Error(ERROR_ACTION_PATH_REQUIRED);
       }
       handlers = [...handlers, ...middlewares];
       finalActionPath = actionPath;
@@ -123,7 +127,7 @@ const createRouteHandler = (
         router.all(normalizedPath, ...handlers);
         break;
       default:
-        throw new Error(`Unsupported HTTP method: ${method}`);
+        throw new Error(ERROR_UNSUPPORTED_HTTP_METHOD.replace('%s', method));
     }
   };
 };

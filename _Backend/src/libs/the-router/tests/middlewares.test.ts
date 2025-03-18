@@ -19,7 +19,7 @@ import { addDataMiddleware, authMiddleware } from './middlewares';
 describe('Routes with Middlewares', () => {
   beforeEach(() => {
     resetRouter();
-    console.log(path.join(__dirname, './test_actions'));
+    // console.log(path.join(__dirname, './test_actions'));
     setActionsPath(path.join(__dirname, './test_actions'));
   });
 

@@ -67,8 +67,27 @@ describe('Utils', () => {
       expect(res.json).toHaveBeenCalledWith({
         error: 'Action loading failed',
         message: 'Failed to load the specified action',
-        details: expect.stringContaining('Action file'),
+        details: expect.stringContaining('test_actions/test/nonExistent/nonExistentAction'),
       });
+    });
+
+    test('should return error handler for non-existent action (production)', async () => {
+      process.env.NODE_ENV = 'production';
+
+      const handler = loadAction('test/nonExistent');
+      const req = createMockRequest();
+      const res = createMockResponse();
+
+      await handler(req as Request, res as unknown as Response);
+
+      expect(res.status).toHaveBeenCalledWith(501);
+      expect(res.json).toHaveBeenCalledWith({
+        error: 'Action loading failed',
+        message: 'Failed to load the specified action',
+        details: expect.not.stringContaining('test_actions/test/nonExistent/nonExistentAction'),
+      });
+
+      process.env.NODE_ENV = 'test';
     });
 
     test("should return error handler when action module doesn't export perform function", async () => {
