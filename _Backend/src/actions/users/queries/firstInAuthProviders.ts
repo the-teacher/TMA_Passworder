@@ -14,9 +14,14 @@ export const firstInAuthProviders = async (service: ServiceType, id: string): Pr
   // Query the database to check if a user with the given provider and provider_id exists
   const firstRecord = await getFirstQuery<{ id: number }>(
     dbPath,
-    `SELECT id
-       FROM auth_providers
-       WHERE provider = ? AND provider_id = ?`,
+    `
+      SELECT
+        id
+      FROM
+        auth_providers
+      WHERE
+        provider = ? AND provider_id = ?
+    `,
     [service, id],
   );
 

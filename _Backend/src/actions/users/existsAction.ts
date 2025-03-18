@@ -3,10 +3,11 @@ import { Request, Response } from 'express';
 import { type ServiceType } from './types';
 import { withErrorHandling } from './utils';
 import { validateParams } from './utils/validateParams';
+
+import { firstInAuthProviders } from './queries/firstInAuthProviders';
 import { existsActionParamsSchema } from './validations/existsActionSchema';
 import { responseExistsSuccess, responseExistsInvalidParams } from './responses';
-import { firstInAuthProviders } from './queries/firstInAuthProviders';
-// Export the action handler at the top of the file
+
 export const perform = async (req: Request, res: Response) => {
   return withErrorHandling(async () => {
     const validation = validateParams(req, existsActionParamsSchema);

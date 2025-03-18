@@ -63,4 +63,95 @@ describe('User Exists Action', () => {
       id: providerId,
     });
   });
+
+  test('should return validation error when service is invalid', async () => {
+    // Create request with invalid service
+    req = mockRequest(req, { service: 'invalid-service', id: 'validuser123' });
+
+    // Call the action
+    await perform(req, res);
+
+    // Verify the response
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'error',
+        message: 'Validation error',
+        errors: expect.arrayContaining([
+          expect.objectContaining({
+            path: 'service',
+            message: expect.stringContaining('Invalid enum value'),
+          }),
+        ]),
+      }),
+    );
+  });
+
+  test('should return validation error when user ID is too short', async () => {
+    // Create request with ID that's too short (less than 6 characters)
+    req = mockRequest(req, { service: 'github', id: '12345' });
+
+    // Call the action
+    await perform(req, res);
+
+    // Verify the response
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'error',
+        message: 'Validation error',
+        errors: expect.arrayContaining([
+          expect.objectContaining({
+            path: 'id',
+            message: 'User ID must be at least 6 characters long',
+          }),
+        ]),
+      }),
+    );
+  });
+
+  test('should return validation error when user ID is empty', async () => {
+    // Create request with empty ID
+    req = mockRequest(req, { service: 'github', id: '' });
+
+    // Call the action
+    await perform(req, res);
+
+    // Verify the response
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'error',
+        message: 'Validation error',
+        errors: expect.arrayContaining([
+          expect.objectContaining({
+            path: 'id',
+            message: 'User ID is required',
+          }),
+        ]),
+      }),
+    );
+  });
+
+  test('should return validation error when extra parameters are provided', async () => {
+    // Create request with extra parameters
+    req = mockRequest(req, { service: 'github', id: 'validuser123', extra: 'param' });
+
+    // Call the action
+    await perform(req, res);
+
+    // Verify the response
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'error',
+        message: 'Validation error',
+        errors: expect.arrayContaining([
+          expect.objectContaining({
+            message: expect.stringContaining('Additional parameters are not allowed'),
+          }),
+        ]),
+      }),
+    );
+  });
 });
