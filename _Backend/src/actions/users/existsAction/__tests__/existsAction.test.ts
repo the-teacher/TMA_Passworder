@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
+
 import { perform } from '../existsAction';
-import { createTestUser } from '../queries/createTestUser';
+import { createTestUser } from '../../createAction/queries/createTestUser';
 
 import { mockRequest, mockResponse } from '@utils/tests/mockHelpers';
 import { setupTestDatabase, cleanupTestDatabase } from '@utils/tests/dbHelpers';

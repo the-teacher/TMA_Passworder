@@ -1,6 +1,6 @@
 import { resolveDatabasePath } from '@libs/the-mirgator';
 import { getFirstQuery } from '@libs/sqlite';
-import { ServiceType } from '../types';
+import { ServiceType } from '../../types';
 
 /**
  * Function to check if user exists in database

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ALLOWED_SERVICES } from '../consts';
+import { ALLOWED_SERVICES } from '../../consts';
 
 // Schema for validating request parameters
 export const existsActionParamsSchema = z

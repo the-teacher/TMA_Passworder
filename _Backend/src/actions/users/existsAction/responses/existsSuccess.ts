@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { ServiceType } from '../types';
+import { ServiceType } from '../../types';
 
 export const responseExistsSuccess = (
   res: Response,

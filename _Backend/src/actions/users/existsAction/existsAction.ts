@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
 
-import { type ServiceType } from './types';
-import { withErrorHandling } from './utils';
-import { validateParams } from './utils/validateParams';
+import { type ServiceType } from '../types';
+import { withErrorHandling } from '../utils';
 
-import { firstInAuthProviders } from './queries/firstInAuthProviders';
-import { existsActionParamsSchema } from './validations/existsActionSchema';
+import { firstInAuthProviders } from './queries';
+import { validateExistsParams } from './validations';
 import { responseExistsSuccess, responseExistsInvalidParams } from './responses';
 
 export const perform = async (req: Request, res: Response) => {
   return withErrorHandling(async () => {
-    const validation = validateParams(req, existsActionParamsSchema);
+    const validation = validateExistsParams(req);
 
     if (!validation.success) {
       return responseExistsInvalidParams(res, validation.error);
