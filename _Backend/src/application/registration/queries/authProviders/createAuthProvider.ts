@@ -1,48 +1,45 @@
-import { resolveDatabasePath } from '@libs/the-mirgator';
-import { runQuery } from '@libs/sqlite';
 import { ServiceType } from '@actions/users/types';
+import { getFirstQuery } from '@libs/sqlite';
 import { AuthProvider } from '../../types';
-import { findAuthProvider } from './findAuthProvider';
 
 /**
- * Create a new auth provider record
- * @param provider Authentication provider type (email, telegram, gmail, github)
- * @param providerId Provider-specific user ID
- * @param providerData Optional metadata for the provider (e.g., OAuth tokens)
- * @param userId Optional User ID to associate with the auth provider
- * @returns The newly created auth provider record
+ * Creates a new auth provider in the database
+ * @param dbPath Path to the database
+ * @param provider The provider type (github, telegram, etc.)
+ * @param providerId The unique ID from the provider
+ * @param providerData Optional provider-specific data (e.g., tokens)
+ * @param userId Optional user ID to associate with this provider
+ * @returns The created auth provider
  */
-export const createAuthProvider = async (
+export async function createAuthProvider(
+  dbPath: string,
   provider: ServiceType,
   providerId: string,
-  providerData?: string,
+  providerData?: string | null,
   userId?: number,
-): Promise<AuthProvider> => {
-  const dbPath = resolveDatabasePath('application/database') as string;
+): Promise<AuthProvider> {
+  // Validate provider type
+  const validProviders: ServiceType[] = ['github', 'telegram', 'gmail'];
+  if (!validProviders.includes(provider)) {
+    throw new Error(`Invalid provider type: ${provider}`);
+  }
+
   const now = new Date().toISOString();
 
-  // Insert the new auth provider
-  await runQuery(
+  const result = await getFirstQuery<AuthProvider>(
     dbPath,
     `
       INSERT INTO auth_providers (
-        userId,
-        provider,
-        providerId,
-        providerData,
-        createdAt,
-        updatedAt
+        userId, provider, providerId, providerData, createdAt, updatedAt
       ) VALUES (?, ?, ?, ?, ?, ?)
+      RETURNING *
     `,
     [userId || null, provider, providerId, providerData || null, now, now],
   );
 
-  // Reuse findAuthProvider to get the newly created record
-  const newProvider = await findAuthProvider(provider, providerId);
-
-  if (!newProvider) {
+  if (!result) {
     throw new Error('Failed to create auth provider');
   }
 
-  return newProvider;
-};
+  return result;
+}

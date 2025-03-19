@@ -11,13 +11,13 @@ export const up = async (dbPath: string): Promise<void> => {
     dbPath,
     `CREATE TABLE auth_providers (
         id             INTEGER PRIMARY KEY AUTOINCREMENT,
-        userId         INTEGER NOT NULL,
+        userId         INTEGER NULL REFERENCES users(id) ON DELETE CASCADE,
         provider       TEXT NOT NULL CHECK (provider IN ('email', 'telegram', 'gmail', 'github')),
         providerId     TEXT NOT NULL,  -- Unique ID per provider (email, Telegram ID, GitHub ID, etc.)
-        providerData   TEXT, -- Optional metadata (e.g., OAuth tokens)
+        providerData   TEXT NULL, -- Optional metadata (e.g., OAuth tokens)
         createdAt      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updatedAt      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+        UNIQUE(provider, providerId)
     );`,
   );
 };

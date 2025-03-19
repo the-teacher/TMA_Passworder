@@ -28,7 +28,9 @@ describe('createAuthProvider', () => {
 
   afterAll(async () => {
     // Clean up after all tests
-    await dropSqliteDatabase(dbPath, true);
+    if (dbPath) {
+      await dropSqliteDatabase(dbPath, true);
+    }
   });
 
   it('should create a new auth provider with minimal data', async () => {
@@ -37,7 +39,7 @@ describe('createAuthProvider', () => {
     const providerId = 'github123';
 
     // Create auth provider with just the required fields
-    const result = await createAuthProvider(provider, providerId, undefined, userId);
+    const result = await createAuthProvider(dbPath, provider, providerId, undefined, userId);
 
     // Verify the result
     expect(result).toBeDefined();
@@ -50,7 +52,7 @@ describe('createAuthProvider', () => {
     expect(result.updatedAt).toBeDefined();
 
     // Verify it was actually saved to the database
-    const savedProvider = await findAuthProvider(provider, providerId);
+    const savedProvider = await findAuthProvider(dbPath, provider, providerId);
     expect(savedProvider).toEqual(result);
   });
 
@@ -61,7 +63,7 @@ describe('createAuthProvider', () => {
     const providerData = JSON.stringify({ username: 'testuser' });
 
     // Create auth provider with provider data
-    const result = await createAuthProvider(provider, providerId, providerData, userId);
+    const result = await createAuthProvider(dbPath, provider, providerId, providerData, userId);
 
     // Verify the result
     expect(result).toBeDefined();
@@ -74,7 +76,7 @@ describe('createAuthProvider', () => {
     expect(result.updatedAt).toBeDefined();
 
     // Verify it was actually saved to the database
-    const savedProvider = await findAuthProvider(provider, providerId);
+    const savedProvider = await findAuthProvider(dbPath, provider, providerId);
     expect(savedProvider).toEqual(result);
   });
 
@@ -93,7 +95,7 @@ describe('createAuthProvider', () => {
     const providerId = 'gmail789';
 
     // Create auth provider with a different user ID
-    const result = await createAuthProvider(provider, providerId, undefined, anotherUserId);
+    const result = await createAuthProvider(dbPath, provider, providerId, undefined, anotherUserId);
 
     // Verify the result
     expect(result).toBeDefined();
@@ -106,7 +108,7 @@ describe('createAuthProvider', () => {
     expect(result.updatedAt).toBeDefined();
 
     // Verify it was actually saved to the database
-    const savedProvider = await findAuthProvider(provider, providerId);
+    const savedProvider = await findAuthProvider(dbPath, provider, providerId);
     expect(savedProvider).toEqual(result);
   });
 
@@ -117,7 +119,7 @@ describe('createAuthProvider', () => {
 
     // Expect the function to throw an error
     await expect(
-      createAuthProvider(invalidProvider, providerId, undefined, userId),
+      createAuthProvider(dbPath, invalidProvider, providerId, undefined, userId),
     ).rejects.toThrow();
   });
 });

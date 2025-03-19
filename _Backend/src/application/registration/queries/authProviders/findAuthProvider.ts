@@ -1,38 +1,26 @@
-import { resolveDatabasePath } from '@libs/the-mirgator';
 import { getFirstQuery } from '@libs/sqlite';
-import { ServiceType } from '@actions/users/types';
 import { AuthProvider } from '../../types';
 
 /**
- * Find an existing auth provider by provider type and provider ID
- * @param provider Authentication provider type (email, telegram, gmail, github)
- * @param providerId Provider-specific user ID
- * @returns The auth provider record or null if not found
+ * Finds an auth provider by provider type and provider ID
+ * @param dbPath Path to the database
+ * @param provider The provider type (github, telegram, etc.)
+ * @param providerId The unique ID from the provider
+ * @returns The auth provider or null if not found
  */
-export const findAuthProvider = async (
-  provider: ServiceType,
+export async function findAuthProvider(
+  dbPath: string,
+  provider: string,
   providerId: string,
-): Promise<AuthProvider | null> => {
-  const dbPath = resolveDatabasePath('application/database') as string;
-
-  const existingProvider = await getFirstQuery<AuthProvider>(
+): Promise<AuthProvider | null> {
+  const result = await getFirstQuery<AuthProvider>(
     dbPath,
     `
-      SELECT
-        auth_providers.id,
-        auth_providers.userId,
-        auth_providers.provider,
-        auth_providers.providerId,
-        auth_providers.providerData,
-        auth_providers.createdAt,
-        auth_providers.updatedAt
-      FROM
-        auth_providers
-      WHERE
-        auth_providers.provider = ? AND auth_providers.providerId = ?
+      SELECT * FROM auth_providers
+      WHERE provider = ? AND providerId = ?
     `,
     [provider, providerId],
   );
 
-  return existingProvider || null;
-};
+  return result || null;
+}

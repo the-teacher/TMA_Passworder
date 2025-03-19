@@ -4,27 +4,29 @@ import { findAuthProvider } from './findAuthProvider';
 import { createAuthProvider } from './createAuthProvider';
 
 /**
- * Find an existing auth provider or create a new one if it doesn't exist
- * @param provider Authentication provider type (email, telegram, gmail, github)
- * @param providerId Provider-specific user ID
- * @param userId Optional User ID to associate with the auth provider
- * @param providerData Optional metadata for the provider (e.g., OAuth tokens)
- * @returns The auth provider record
+ * Finds an existing auth provider or creates a new one if it doesn't exist
+ * @param dbPath Path to the database
+ * @param provider The provider type (github, telegram, etc.)
+ * @param providerId The unique ID from the provider
+ * @param userId Optional user ID to associate with this provider
+ * @param providerData Optional provider-specific data (e.g., tokens)
+ * @returns The found or created auth provider
  */
-export const findOrCreateAuthProvider = async (
+export async function findOrCreateAuthProvider(
+  dbPath: string,
   provider: ServiceType,
   providerId: string,
   userId?: number,
   providerData?: string,
-): Promise<AuthProvider> => {
-  // First, try to find an existing auth provider
-  const existingProvider = await findAuthProvider(provider, providerId);
+): Promise<AuthProvider> {
+  // First, try to find the auth provider
+  const existingProvider = await findAuthProvider(dbPath, provider, providerId);
 
-  // If the provider exists, return it
+  // If it exists, return it
   if (existingProvider) {
     return existingProvider;
   }
 
-  // Otherwise, create a new auth provider
-  return createAuthProvider(provider, providerId, providerData, userId);
-};
+  // Otherwise, create a new one
+  return createAuthProvider(dbPath, provider, providerId, providerData, userId);
+}
