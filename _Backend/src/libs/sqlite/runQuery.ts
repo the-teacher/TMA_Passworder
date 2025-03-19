@@ -1,5 +1,4 @@
-import sqlite3 from 'sqlite3';
-import { getDatabase } from './getDatabase';
+import { getDatabase, type SQLiteDatabase } from './getDatabase';
 import { runCommand, withTransaction } from './transactions';
 
 /**
@@ -20,7 +19,7 @@ const log = (message: string, level: 'log' | 'error' | 'warn' = 'log'): void => 
  * @param params Parameters for the SQL query
  */
 export const runSqlQuery = async (
-  db: sqlite3.Database,
+  db: SQLiteDatabase,
   sql: string,
   params: any[] = [],
 ): Promise<void> => {
@@ -49,6 +48,7 @@ export const runQuery = async (dbPath: string, sql: string, params: any[] = []):
     await runSqlQuery(db, sql, params);
   } finally {
     // Always close the database connection
+    console.log('Closing database connection 1');
     db.close();
   }
 };

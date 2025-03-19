@@ -5,20 +5,21 @@ import { ServiceType } from '@actions/users/types';
 import { findAuthProvider } from '../findAuthProvider';
 import { createAuthProvider } from '../createAuthProvider';
 import { createTestUser } from './utils/createTestUser';
-import { setupTestDatabase } from './utils/setupTestDatabase';
+import { setupTestDatabase } from '@utils/tests/dbHelpers';
+import { type SQLiteDatabase } from '@libs/sqlite';
 // Ensure logs are suppressed during tests
 process.env.MIGRATOR_LOGS = 'buffer';
 
 describe('findAuthProvider', () => {
-  let dbPath: string;
+  let db: SQLiteDatabase;
   let userId: number;
 
   beforeEach(async () => {
     // Setup a fresh test database before each test
-    dbPath = await setupTestDatabase();
+    db = await setupTestDatabase();
 
     // Create a test user
-    userId = await createTestUser(dbPath, {
+    userId = await createTestUser(db, {
       id: 1,
       uid: 'user1',
       name: 'Test User 1',
@@ -29,14 +30,14 @@ describe('findAuthProvider', () => {
 
   afterAll(async () => {
     // Clean up after all tests
-    if (dbPath) {
-      await dropSqliteDatabase(dbPath, true);
+    if (db.path) {
+      await dropSqliteDatabase(db.path, true);
     }
   });
 
   it('should return null when auth provider does not exist', async () => {
     // Try to find a non-existent auth provider
-    const result = await findAuthProvider(dbPath, 'github', 'nonexistent');
+    const result = await findAuthProvider(db, 'github', 'nonexistent');
 
     // Verify the result is null
     expect(result).toBeNull();
@@ -50,7 +51,7 @@ describe('findAuthProvider', () => {
 
     // Create an auth provider using the actual createAuthProvider function
     const createdProvider = await createAuthProvider(
-      dbPath,
+      db,
       provider,
       providerId,
       providerData,
@@ -58,7 +59,7 @@ describe('findAuthProvider', () => {
     );
 
     // Find the auth provider
-    const result = await findAuthProvider(dbPath, provider, providerId);
+    const result = await findAuthProvider(db, provider, providerId);
 
     // Verify the result
     expect(result).not.toBeNull();
@@ -97,7 +98,7 @@ describe('findAuthProvider', () => {
     // Insert all providers using createAuthProvider
     for (const provider of providers) {
       await createAuthProvider(
-        dbPath,
+        db,
         provider.provider as ServiceType,
         provider.providerId,
         provider.providerData,
@@ -108,7 +109,7 @@ describe('findAuthProvider', () => {
     // Find the telegram provider
     const targetProvider = 'telegram';
     const targetProviderId = 'telegram456';
-    const result = await findAuthProvider(dbPath, targetProvider, targetProviderId);
+    const result = await findAuthProvider(db, targetProvider, targetProviderId);
 
     // Verify we found the correct provider
     expect(result).not.toBeNull();
@@ -124,15 +125,15 @@ describe('findAuthProvider', () => {
     const providerId = 'GitHubUser123';
 
     // Create the auth provider
-    await createAuthProvider(dbPath, provider, providerId, undefined, userId);
+    await createAuthProvider(db, provider, providerId, undefined, userId);
 
     // Try to find with exact case
-    const result1 = await findAuthProvider(dbPath, provider, providerId);
+    const result1 = await findAuthProvider(db, provider, providerId);
     expect(result1).not.toBeNull();
     expect(result1?.providerId).toBe(providerId);
 
     // Try to find with different case (should not match due to case sensitivity in SQLite)
-    const result2 = await findAuthProvider(dbPath, provider, providerId.toLowerCase());
+    const result2 = await findAuthProvider(db, provider, providerId.toLowerCase());
     expect(result2).toBeNull();
   });
 });

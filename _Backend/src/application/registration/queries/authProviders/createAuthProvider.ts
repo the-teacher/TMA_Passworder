@@ -1,5 +1,5 @@
 import { ServiceType } from '@actions/users/types';
-import { getFirstQuery } from '@libs/sqlite';
+import { getFirstQuery, SQLiteDatabase } from '@libs/sqlite';
 import { AuthProvider } from '../../types';
 
 /**
@@ -12,7 +12,7 @@ import { AuthProvider } from '../../types';
  * @returns The created auth provider
  */
 export async function createAuthProvider(
-  dbPath: string,
+  db: SQLiteDatabase,
   provider: ServiceType,
   providerId: string,
   providerData?: string | null,
@@ -27,7 +27,7 @@ export async function createAuthProvider(
   const now = new Date().toISOString();
 
   const result = await getFirstQuery<AuthProvider>(
-    dbPath,
+    db,
     `
       INSERT INTO auth_providers (
         userId, provider, providerId, providerData, createdAt, updatedAt

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 // Actions level
 import { withErrorHandling } from '@actions/utils';
+import { withDatabase } from '@libs/sqlite';
 
 // Users level
 import { type ServiceType } from '../types';
@@ -26,7 +27,9 @@ export const perform = async (req: Request, res: Response) => {
     const service = req.params.service as ServiceType;
 
     // Check if user exists in database
-    const exists = await firstInAuthProviders(service, id);
+    const exists = await withDatabase('application/database', async (db) => {
+      return await firstInAuthProviders(db, service, id);
+    });
 
     // response with exists status
     responseExistsSuccess(res, { service, id, exists });

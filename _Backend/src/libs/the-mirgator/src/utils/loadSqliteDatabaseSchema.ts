@@ -75,6 +75,7 @@ export const loadSqliteDatabaseSchema = async (
     throw error;
   } finally {
     // Close database connection
+    console.log('Closing database connection 4');
     db.close();
   }
 };

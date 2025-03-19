@@ -4,8 +4,9 @@ import fs from 'fs';
 import path from 'path';
 import { log } from '../utils/logger';
 import { runSqliteMigration } from '../utils/runSqliteMigration';
-import { resolveDatabasePath } from '../utils/databasePaths';
 import { getMigrationTimestamp, getAppliedMigrations } from '../utils/migrationTracker';
+import { withDatabase } from '@libs/sqlite';
+import { updateDatabaseSchema } from '../utils/updateSqlSchema';
 
 /**
  * The Migrator - Migrations Runner CLI
@@ -40,48 +41,58 @@ export const runMigrations = async (
   step?: number,
   force: boolean = false,
 ): Promise<void> => {
-  // Resolve database path and migrations directory
-  const dbPath = resolveDatabasePath(dbName) as string;
-  const resolvedMigrationsDir = resolveMigrationsDir(dbName, migrationsDir);
+  await withDatabase(dbName, async (db) => {
+    const resolvedMigrationsDir = resolveMigrationsDir(dbName, migrationsDir);
 
-  // Check if migrations directory exists
-  if (!fs.existsSync(resolvedMigrationsDir)) {
-    throw new Error(`Migrations directory not found: ${resolvedMigrationsDir}`);
-  }
+    // Check if migrations directory exists
+    if (!fs.existsSync(resolvedMigrationsDir)) {
+      throw new Error(`Migrations directory not found: ${resolvedMigrationsDir}`);
+    }
 
-  // Get all migration files
-  const migrationFiles = getMigrationFiles(resolvedMigrationsDir);
+    // Get all migration files
+    const migrationFiles = getMigrationFiles(resolvedMigrationsDir);
 
-  if (migrationFiles.length === 0) {
-    log(`No migration files found in ${resolvedMigrationsDir}`, 'warning');
-    return;
-  }
+    if (migrationFiles.length === 0) {
+      log(`No migration files found in ${resolvedMigrationsDir}`, 'warning');
+      return;
+    }
 
-  // Sort migration files
-  sortMigrationFiles(migrationFiles, direction);
+    // Sort migration files
+    sortMigrationFiles(migrationFiles, direction);
 
-  // Limit number of migrations if step is specified
-  const migrationsToRun = step ? migrationFiles.slice(0, step) : migrationFiles;
+    // Limit number of migrations if step is specified
+    const migrationsToRun = step ? migrationFiles.slice(0, step) : migrationFiles;
 
-  // Get applied migrations
-  const appliedMigrations = await getAppliedMigrations(dbPath);
+    // Get applied migrations
+    const appliedMigrations = await getAppliedMigrations(db);
 
-  // Filter migrations based on direction and applied status
-  const filteredMigrations = filterMigrations(migrationsToRun, appliedMigrations, direction, force);
+    // Filter migrations based on direction and applied status
+    const filteredMigrations = filterMigrations(
+      migrationsToRun,
+      appliedMigrations,
+      direction,
+      force,
+    );
 
-  if (filteredMigrations.length === 0) {
-    log(`No ${direction} migrations to run`, 'info');
-    return;
-  }
+    if (filteredMigrations.length === 0) {
+      log(`No ${direction} migrations to run`, 'info');
+      return;
+    }
 
-  log(`Running ${filteredMigrations.length} ${direction} migrations`, 'info');
+    log(`Running ${filteredMigrations.length} ${direction} migrations`, 'info');
 
-  // Run each migration in sequence
-  for (const migrationFile of filteredMigrations) {
-    const migrationPath = path.join(resolvedMigrationsDir, migrationFile);
-    await runSqliteMigration(direction, dbPath, migrationPath, updateSchema);
-  }
-  log(`All ${direction} migrations completed successfully`, 'success');
+    // Run each migration in sequence
+    for (const migrationFile of filteredMigrations) {
+      const migrationPath = path.join(resolvedMigrationsDir, migrationFile);
+      await runSqliteMigration(direction, db, migrationPath, false);
+    }
+    log(`All ${direction} migrations completed successfully`, 'success');
+
+    // Update schema file after all migrations are run
+    if (updateSchema) {
+      await updateDatabaseSchema(db);
+    }
+  });
 };
 
 /**

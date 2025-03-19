@@ -1,14 +1,14 @@
-import { runQuery } from '@libs/sqlite';
+import { runSqlQuery, type SQLiteDatabase } from '@libs/sqlite';
 
 /**
  * Migration: create_auth_sessions
  * Created at: 2025-03-17T10:31:48.087Z
  */
 
-export const up = async (dbPath: string): Promise<void> => {
+export const up = async (db: SQLiteDatabase): Promise<void> => {
   // Code for applying migration
-  await runQuery(
-    dbPath,
+  await runSqlQuery(
+    db,
     `CREATE TABLE auth_sessions (
       id            INTEGER PRIMARY KEY AUTOINCREMENT,
       userId        INTEGER NOT NULL,
@@ -24,7 +24,7 @@ export const up = async (dbPath: string): Promise<void> => {
   );
 };
 
-export const down = async (dbPath: string): Promise<void> => {
+export const down = async (db: SQLiteDatabase): Promise<void> => {
   // Code for rolling back migration
-  await runQuery(dbPath, `DROP TABLE IF EXISTS auth_sessions;`);
+  await runSqlQuery(db, `DROP TABLE IF EXISTS auth_sessions;`);
 };

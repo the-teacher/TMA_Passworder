@@ -2,7 +2,7 @@ import { ServiceType } from '@actions/users/types';
 import { AuthProvider } from '../../types';
 import { findAuthProvider } from './findAuthProvider';
 import { createAuthProvider } from './createAuthProvider';
-
+import { type SQLiteDatabase } from '@libs/sqlite';
 /**
  * Finds an existing auth provider or creates a new one if it doesn't exist
  * @param dbPath Path to the database
@@ -13,14 +13,14 @@ import { createAuthProvider } from './createAuthProvider';
  * @returns The found or created auth provider
  */
 export async function findOrCreateAuthProvider(
-  dbPath: string,
+  db: SQLiteDatabase,
   provider: ServiceType,
   providerId: string,
   userId?: number,
   providerData?: string,
 ): Promise<AuthProvider> {
   // First, try to find the auth provider
-  const existingProvider = await findAuthProvider(dbPath, provider, providerId);
+  const existingProvider = await findAuthProvider(db, provider, providerId);
 
   // If it exists, return it
   if (existingProvider) {
@@ -28,5 +28,5 @@ export async function findOrCreateAuthProvider(
   }
 
   // Otherwise, create a new one
-  return createAuthProvider(dbPath, provider, providerId, providerData, userId);
+  return createAuthProvider(db, provider, providerId, providerData, userId);
 }

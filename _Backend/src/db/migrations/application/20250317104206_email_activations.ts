@@ -1,14 +1,14 @@
-import { runQuery } from '@libs/sqlite';
+import { runSqlQuery, type SQLiteDatabase } from '@libs/sqlite';
 
 /**
  * Migration: email_activations
  * Created at: 2025-03-17T10:42:06.130Z
  */
 
-export const up = async (dbPath: string): Promise<void> => {
+export const up = async (db: SQLiteDatabase): Promise<void> => {
   // Code for applying migration
-  await runQuery(
-    dbPath,
+  await runSqlQuery(
+    db,
     `CREATE TABLE email_activations (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
       uid         TEXT NOT NULL UNIQUE, -- Unique identifier for activation
@@ -23,7 +23,7 @@ export const up = async (dbPath: string): Promise<void> => {
   );
 };
 
-export const down = async (dbPath: string): Promise<void> => {
+export const down = async (db: SQLiteDatabase): Promise<void> => {
   // Code for rolling back migration
-  await runQuery(dbPath, `DROP TABLE IF EXISTS email_activations;`);
+  await runSqlQuery(db, `DROP TABLE IF EXISTS email_activations;`);
 };

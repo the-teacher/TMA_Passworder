@@ -1,7 +1,5 @@
-import { Database } from 'sqlite3';
-import { getDatabase } from './getDatabase';
 import { debug, error } from './logger';
-
+import { type SQLiteDatabase } from './getDatabase';
 /**
  * Executes a query and returns all results
  * @param dbPath Path to the SQLite database
@@ -10,15 +8,13 @@ import { debug, error } from './logger';
  * @returns Promise resolving to an array of query results
  */
 export const getAllQuery = <T = any>(
-  dbPath: string,
+  db: SQLiteDatabase,
   query: string,
   params: any[] = [],
 ): Promise<T[]> => {
-  debug(`Executing query: ${query}`, { dbPath, params });
+  debug(`Executing query: ${query}`, { db, params });
 
   return new Promise((resolve, reject) => {
-    const db: Database = getDatabase(dbPath);
-
     db.all(query, params, (err, rows) => {
       if (err) {
         error(`Query error: ${err.message}`, { query, params, error: err });
@@ -40,15 +36,13 @@ export const getAllQuery = <T = any>(
  * @returns Promise resolving to the first result or undefined if no results
  */
 export const getFirstQuery = <T = any>(
-  dbPath: string,
+  db: SQLiteDatabase,
   query: string,
   params: any[] = [],
 ): Promise<T | undefined> => {
-  debug(`Executing first query: ${query}`, { dbPath, params });
+  debug(`Executing first query: ${query}`, { params });
 
   return new Promise((resolve, reject) => {
-    const db: Database = getDatabase(dbPath);
-
     db.get(query, params, (err, row) => {
       if (err) {
         error(`Query error: ${err.message}`, { query, params, error: err });

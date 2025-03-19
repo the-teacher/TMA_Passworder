@@ -1,6 +1,6 @@
 import fs from 'fs';
 import sqlite3 from 'sqlite3';
-import { resolveDatabasePath } from './databasePaths';
+import { resolveDatabasePathWithDetails } from './databasePaths';
 import { log } from './logger';
 
 /**
@@ -27,10 +27,7 @@ export const createSqliteDatabase = async (
   _testMode = false,
 ): Promise<string> => {
   // Resolve the database path
-  const pathDetails = resolveDatabasePath(dbName, {
-    directory,
-    returnDetails: true,
-  }) as { dbDir: string; fileName: string; fullPath: string };
+  const pathDetails = resolveDatabasePathWithDetails(dbName, { directory });
 
   const { dbDir, fullPath } = pathDetails;
 
@@ -60,6 +57,7 @@ export const createSqliteDatabase = async (
           return;
         }
 
+        console.log('Closing database connection 2');
         // Close the database connection
         db.close((closeErr: Error | null) => {
           if (closeErr) {

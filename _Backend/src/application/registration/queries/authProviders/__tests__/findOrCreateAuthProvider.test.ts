@@ -4,21 +4,22 @@ import { ServiceType } from '@actions/users/types';
 import { findOrCreateAuthProvider } from '../findOrCreateAuthProvider';
 import { findAuthProvider } from '../findAuthProvider';
 import { createTestUser } from './utils/createTestUser';
-import { setupTestDatabase } from './utils/setupTestDatabase';
+import { setupTestDatabase } from '@utils/tests/dbHelpers';
+import { type SQLiteDatabase } from '@libs/sqlite';
 
 // Ensure logs are suppressed during tests
 process.env.MIGRATOR_LOGS = 'buffer';
 
 describe('findOrCreateAuthProvider', () => {
-  let dbPath: string;
+  let db: SQLiteDatabase;
   let userId: number;
 
   beforeEach(async () => {
     // Setup a fresh test database before each test
-    dbPath = await setupTestDatabase();
+    db = await setupTestDatabase();
 
     // Create a test user
-    userId = await createTestUser(dbPath, {
+    userId = await createTestUser(db, {
       id: 1,
       uid: 'user1',
       name: 'Test User 1',
@@ -29,8 +30,8 @@ describe('findOrCreateAuthProvider', () => {
 
   afterAll(async () => {
     // Clean up after all tests
-    if (dbPath) {
-      await dropSqliteDatabase(dbPath, true);
+    if (db.path) {
+      await dropSqliteDatabase(db.path, true);
     }
   });
 
@@ -41,13 +42,7 @@ describe('findOrCreateAuthProvider', () => {
     const providerData = JSON.stringify({ accessToken: 'token123' });
 
     // Find or create the auth provider
-    const result = await findOrCreateAuthProvider(
-      dbPath,
-      provider,
-      providerId,
-      userId,
-      providerData,
-    );
+    const result = await findOrCreateAuthProvider(db, provider, providerId, userId, providerData);
 
     // Verify the result
     expect(result).toBeDefined();
@@ -60,7 +55,7 @@ describe('findOrCreateAuthProvider', () => {
     expect(result.updatedAt).toBeDefined();
 
     // Verify it was actually saved to the database
-    const savedProvider = await findAuthProvider(dbPath, provider, providerId);
+    const savedProvider = await findAuthProvider(db, provider, providerId);
     expect(savedProvider).toEqual(result);
   });
 
@@ -72,7 +67,7 @@ describe('findOrCreateAuthProvider', () => {
 
     // First, create the auth provider
     const createdProvider = await findOrCreateAuthProvider(
-      dbPath,
+      db,
       provider,
       providerId,
       userId,
@@ -81,7 +76,7 @@ describe('findOrCreateAuthProvider', () => {
 
     // Then, try to find or create it again
     const result = await findOrCreateAuthProvider(
-      dbPath,
+      db,
       provider,
       providerId,
       userId,
@@ -117,7 +112,7 @@ describe('findOrCreateAuthProvider', () => {
     // Find or create each provider
     for (const provider of providers) {
       const result = await findOrCreateAuthProvider(
-        dbPath,
+        db,
         provider.provider,
         provider.providerId,
         userId,
@@ -134,7 +129,7 @@ describe('findOrCreateAuthProvider', () => {
 
     // Verify all providers were saved
     for (const provider of providers) {
-      const savedProvider = await findAuthProvider(dbPath, provider.provider, provider.providerId);
+      const savedProvider = await findAuthProvider(db, provider.provider, provider.providerId);
       expect(savedProvider).not.toBeNull();
       expect(savedProvider?.provider).toBe(provider.provider);
       expect(savedProvider?.providerId).toBe(provider.providerId);
@@ -149,7 +144,7 @@ describe('findOrCreateAuthProvider', () => {
 
     // Find or create without a user ID
     const result = await findOrCreateAuthProvider(
-      dbPath,
+      db,
       provider,
       providerId,
       undefined,
@@ -173,7 +168,7 @@ describe('findOrCreateAuthProvider', () => {
     const providerId = 'github999';
 
     // Find or create without provider data
-    const result = await findOrCreateAuthProvider(dbPath, provider, providerId, userId);
+    const result = await findOrCreateAuthProvider(db, provider, providerId, userId);
 
     // Verify the result
     expect(result).toBeDefined();

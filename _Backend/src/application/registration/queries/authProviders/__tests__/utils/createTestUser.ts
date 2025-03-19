@@ -1,4 +1,4 @@
-import { getFirstQuery } from '@libs/sqlite';
+import { getFirstQuery, type SQLiteDatabase } from '@libs/sqlite';
 
 /**
  * Helper function to create a test user in the database
@@ -7,7 +7,7 @@ import { getFirstQuery } from '@libs/sqlite';
  * @returns The created user ID
  */
 export const createTestUser = async (
-  dbPath: string,
+  db: SQLiteDatabase,
   userData: {
     id: number;
     uid: string;
@@ -19,7 +19,7 @@ export const createTestUser = async (
   const now = new Date().toISOString();
 
   await getFirstQuery(
-    dbPath,
+    db,
     `
       INSERT INTO users (
         id, uid, name, email, status, createdAt, updatedAt

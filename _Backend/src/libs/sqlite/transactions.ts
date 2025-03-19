@@ -1,5 +1,8 @@
 import sqlite3 from 'sqlite3';
 
+// Database level
+import { type SQLiteDatabase } from './getDatabase';
+
 /**
  * SQLite Transaction Utilities
  *
@@ -12,7 +15,7 @@ import sqlite3 from 'sqlite3';
  * Begin a database transaction
  * @param db SQLite database connection
  */
-export const beginTransaction = (db: sqlite3.Database): Promise<void> => {
+export const beginTransaction = (db: SQLiteDatabase): Promise<void> => {
   return new Promise((resolve, reject) => {
     db.run('BEGIN TRANSACTION', (err) => {
       if (err) reject(err);
@@ -74,10 +77,7 @@ export const runCommand = (
  * @param db SQLite database connection
  * @param fn Function to execute within the transaction
  */
-export const withTransaction = async <T>(
-  db: sqlite3.Database,
-  fn: () => Promise<T>,
-): Promise<T> => {
+export const withTransaction = async <T>(db: SQLiteDatabase, fn: () => Promise<T>): Promise<T> => {
   try {
     // Begin transaction
     await beginTransaction(db);
@@ -107,7 +107,7 @@ export const withTransaction = async <T>(
  * @param params Array of parameters for each command
  */
 export const runCommands = async (
-  db: sqlite3.Database,
+  db: SQLiteDatabase,
   commands: string[],
   params: any[][] = [],
 ): Promise<void> => {

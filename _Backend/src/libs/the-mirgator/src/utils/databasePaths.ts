@@ -31,37 +31,15 @@ export const getDatabaseRootDir = (): string => {
  * @param dbNameOrPath Database name or path
  * @param options Configuration options
  * @param options.directory Optional custom base directory
- * @param options.returnDetails Whether to return detailed path information
- * @returns Full path to the database file or path details object
- *
- * @example
- * // Basic usage with database name
- * resolveDatabasePath('users')
- * // Returns: '/path/to/project/data/sqlite/development/users.sqlite'
- *
- * @example
- * // With path-like database name
- * resolveDatabasePath('tenant/users')
- * // Returns: '/path/to/project/data/sqlite/development/tenant/users.sqlite'
- *
- * @example
- * // With custom directory
- * resolveDatabasePath('users', { directory: './custom/dir' })
- * // Returns: '/path/to/project/custom/dir/users.sqlite'
- *
- * @example
- * // Return detailed path information
- * resolveDatabasePath('tenant/users', { returnDetails: true })
- * // Returns: { dbDir: '...', fileName: 'users.sqlite', fullPath: '...' }
+ * @returns Full path to the database file
  */
 export const resolveDatabasePath = (
   dbNameOrPath: string,
   options: {
     directory?: string;
-    returnDetails?: boolean;
   } = {},
-): string | { dbDir: string; fileName: string; fullPath: string } => {
-  const { directory, returnDetails = false } = options;
+): string => {
+  const { directory } = options;
 
   // Get the absolute path to the database root directory
   const projectDir = process.cwd();
@@ -69,11 +47,6 @@ export const resolveDatabasePath = (
 
   // If the path is already an absolute path or exists as is, return it
   if (path.isAbsolute(dbNameOrPath) || fs.existsSync(dbNameOrPath)) {
-    if (returnDetails) {
-      const dbDir = path.dirname(dbNameOrPath);
-      const fileName = path.basename(dbNameOrPath);
-      return { dbDir, fileName, fullPath: dbNameOrPath };
-    }
     return dbNameOrPath;
   }
 
@@ -101,7 +74,29 @@ export const resolveDatabasePath = (
     fullPath = path.join(rootDir, fileName);
   }
 
-  return returnDetails ? { dbDir, fileName, fullPath } : fullPath;
+  return fullPath;
+};
+
+/**
+ * Resolves the full database path and returns detailed path information
+ *
+ * @param dbNameOrPath Database name or path
+ * @param options Configuration options
+ * @param options.directory Optional custom base directory
+ * @returns Path details object
+ */
+export const resolveDatabasePathWithDetails = (
+  dbNameOrPath: string,
+  options: {
+    directory?: string;
+  } = {},
+): { dbDir: string; fileName: string; fullPath: string } => {
+  const fullPath = resolveDatabasePath(dbNameOrPath, options);
+
+  const dbDir = path.dirname(fullPath);
+  const fileName = path.basename(fullPath);
+
+  return { dbDir, fileName, fullPath };
 };
 
 /**

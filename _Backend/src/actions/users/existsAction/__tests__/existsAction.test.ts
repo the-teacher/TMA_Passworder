@@ -5,22 +5,40 @@ import { createTestUser } from '../../createAction/queries/createTestUser';
 
 import { mockRequest, mockResponse } from '@utils/tests/mockHelpers';
 import { setupTestDatabase, cleanupTestDatabase } from '@utils/tests/dbHelpers';
+import { type SQLiteDatabase } from '@libs/sqlite';
+import * as sqliteModule from '@libs/sqlite';
 
 describe('User Exists Action', () => {
   let req: Request;
   let res: Response;
+  let db: SQLiteDatabase;
   let dbPath: string;
+  let withDatabaseSpy: jest.SpyInstance;
 
   beforeAll(async () => {
-    dbPath = await setupTestDatabase();
+    // Setup test database
+    db = await setupTestDatabase();
+    dbPath = db.path;
+
+    // Create a spy on withDatabase function
+    withDatabaseSpy = jest
+      .spyOn(sqliteModule, 'withDatabase')
+      .mockImplementation(async (_dbName, callback) => {
+        return callback(db);
+      });
   });
 
   afterAll(async () => {
+    // Clean up test database
     await cleanupTestDatabase(dbPath);
+
+    // Restore original withDatabase function
+    withDatabaseSpy.mockRestore();
   });
 
   beforeEach(() => {
     res = mockResponse();
+    withDatabaseSpy.mockClear();
   });
 
   test('should return exists=false when user does not exist in database', async () => {
@@ -49,7 +67,7 @@ describe('User Exists Action', () => {
     const providerId = 'existinguser456';
 
     // Create test user in database
-    await createTestUser(dbPath, userId, service, providerId);
+    await createTestUser(db, userId, service, providerId);
 
     // Create request with parameters for the existing user
     req = mockRequest(req, { service, id: providerId });

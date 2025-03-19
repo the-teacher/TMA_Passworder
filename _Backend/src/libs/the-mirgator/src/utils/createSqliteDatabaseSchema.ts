@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import sqlite3 from 'sqlite3';
-import { getDatabase } from '@libs/sqlite';
+import { type SQLiteDatabase } from '@libs/sqlite';
 import { log } from './logger';
 
 /**
@@ -9,18 +8,15 @@ import { log } from './logger';
  * @param dbPath Path to the SQLite database file
  * @returns Path to the created schema file
  */
-export const createSqliteDatabaseSchema = async (dbPath: string): Promise<string> => {
+export const createSqliteDatabaseSchema = async (db: SQLiteDatabase): Promise<string> => {
   // Get the database directory and name
-  const dbDir = path.dirname(dbPath);
-  const dbName = path.basename(dbPath, '.sqlite');
+  const dbDir = path.dirname(db.path);
+  const dbName = path.basename(db.path, '.sqlite');
 
   // Create schema file path
   const schemaFilePath = path.join(dbDir, `${dbName}_schema.sql`);
 
-  log(`Extracting schema from database: ${dbPath}`, 'info');
-
-  // Get database connection
-  const db = getDatabase(dbPath);
+  log(`Extracting schema from database: ${db.path}`, 'info');
 
   try {
     // Get complete schema using SQLite's internal mechanism
@@ -57,7 +53,7 @@ interface SchemaRow {
  * This returns all CREATE statements for tables, indexes, triggers, and views
  * Excludes internal SQLite tables like sqlite_sequence
  */
-const getCompleteSchema = (db: sqlite3.Database): Promise<string> => {
+const getCompleteSchema = (db: SQLiteDatabase): Promise<string> => {
   return new Promise((resolve, reject) => {
     db.all(
       `SELECT sql, name, type FROM sqlite_master

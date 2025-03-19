@@ -1,5 +1,5 @@
 import path from 'path';
-import { runQuery, getAllQuery, getFirstQuery } from '@libs/sqlite';
+import { runSqlQuery, getAllQuery, getFirstQuery, type SQLiteDatabase } from '@libs/sqlite';
 
 /**
  * The Migrator - Migration Tracker
@@ -27,12 +27,12 @@ export const getMigrationTimestamp = (migrationPath: string): string => {
 
 /**
  * Ensures migrations table exists in database
- * @param dbPath Path to the database file
+ * @param db Database instance
  * @returns Promise that resolves when the table is created or already exists
  */
-export const ensureMigrationsTable = async (dbPath: string): Promise<void> => {
-  await runQuery(
-    dbPath,
+export const ensureMigrationsTable = async (db: SQLiteDatabase): Promise<void> => {
+  await runSqlQuery(
+    db,
     `
       CREATE TABLE IF NOT EXISTS migrations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,31 +45,31 @@ export const ensureMigrationsTable = async (dbPath: string): Promise<void> => {
 
 /**
  * Records a migration in the database
- * @param dbPath Path to the database file
+ * @param db Database instance
  * @param migrationTimestamp Migration timestamp
  */
 export const recordMigration = async (
-  dbPath: string,
+  db: SQLiteDatabase,
   migrationTimestamp: string,
 ): Promise<void> => {
-  await runQuery(dbPath, `INSERT INTO migrations (timestamp) VALUES (?)`, [migrationTimestamp]);
+  await runSqlQuery(db, `INSERT INTO migrations (timestamp) VALUES (?)`, [migrationTimestamp]);
 };
 
 /**
  * Checks if a migration has been applied
- * @param dbPath Path to the database file
+ * @param db Database instance
  * @param migrationTimestamp Migration timestamp
  * @returns Whether the migration has been applied
  */
 export const isMigrationApplied = async (
-  dbPath: string,
+  db: SQLiteDatabase,
   migrationTimestamp: string,
 ): Promise<boolean> => {
   // Ensure migrations table exists before querying
-  await ensureMigrationsTable(dbPath);
+  await ensureMigrationsTable(db);
 
   const row = await getFirstQuery<{ id: number }>(
-    dbPath,
+    db,
     'SELECT id FROM migrations WHERE timestamp = ?',
     [migrationTimestamp],
   );
@@ -79,30 +79,30 @@ export const isMigrationApplied = async (
 
 /**
  * Gets all applied migrations from database
- * @param dbPath Path to the database file
+ * @param db Database instance
  * @returns Array of applied migrations
  */
-export const getAppliedMigrations = async (dbPath: string): Promise<string[]> => {
+export const getAppliedMigrations = async (db: SQLiteDatabase): Promise<string[]> => {
   // Ensure migrations table exists before querying
-  await ensureMigrationsTable(dbPath);
+  await ensureMigrationsTable(db);
 
   const rows = await getAllQuery<{
     id: number;
     timestamp: string;
     created_at: string;
-  }>(dbPath, 'SELECT * FROM migrations ORDER BY timestamp ASC');
+  }>(db, 'SELECT * FROM migrations ORDER BY timestamp ASC');
 
   return rows.map((row) => row.timestamp);
 };
 
 /**
  * Removes a migration record from the database
- * @param dbPath Path to the database file
+ * @param db Database instance
  * @param migrationTimestamp Migration timestamp
  */
 export const removeMigrationRecord = async (
-  dbPath: string,
+  db: SQLiteDatabase,
   migrationTimestamp: string,
 ): Promise<void> => {
-  await runQuery(dbPath, `DELETE FROM migrations WHERE timestamp = ?`, [migrationTimestamp]);
+  await runSqlQuery(db, `DELETE FROM migrations WHERE timestamp = ?`, [migrationTimestamp]);
 };

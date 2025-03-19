@@ -1,23 +1,23 @@
 import { dropSqliteDatabase } from '@libs/the-mirgator';
-
+import { type SQLiteDatabase } from '@libs/sqlite';
 import { createAuthProvider } from '../createAuthProvider';
 import { findAuthProvider } from '../findAuthProvider';
 import { createTestUser } from './utils/createTestUser';
-import { setupTestDatabase } from './utils/setupTestDatabase';
+import { setupTestDatabase } from '@utils/tests/dbHelpers';
 
 // Ensure logs are suppressed during tests
 process.env.MIGRATOR_LOGS = 'buffer';
 
 describe('createAuthProvider', () => {
-  let dbPath: string;
+  let db: SQLiteDatabase;
   let userId: number;
 
   beforeEach(async () => {
     // Setup a fresh test database before each test
-    dbPath = await setupTestDatabase();
+    db = await setupTestDatabase();
 
     // Create a test user for all tests since userId is required
-    userId = await createTestUser(dbPath, {
+    userId = await createTestUser(db, {
       id: 1,
       uid: 'user1',
       name: 'Test User 1',
@@ -28,9 +28,7 @@ describe('createAuthProvider', () => {
 
   afterAll(async () => {
     // Clean up after all tests
-    if (dbPath) {
-      await dropSqliteDatabase(dbPath, true);
-    }
+    await dropSqliteDatabase(db.path, true);
   });
 
   it('should create a new auth provider with minimal data', async () => {
@@ -39,7 +37,7 @@ describe('createAuthProvider', () => {
     const providerId = 'github123';
 
     // Create auth provider with just the required fields
-    const result = await createAuthProvider(dbPath, provider, providerId, undefined, userId);
+    const result = await createAuthProvider(db, provider, providerId, undefined, userId);
 
     // Verify the result
     expect(result).toBeDefined();
@@ -52,7 +50,7 @@ describe('createAuthProvider', () => {
     expect(result.updatedAt).toBeDefined();
 
     // Verify it was actually saved to the database
-    const savedProvider = await findAuthProvider(dbPath, provider, providerId);
+    const savedProvider = await findAuthProvider(db, provider, providerId);
     expect(savedProvider).toEqual(result);
   });
 
@@ -63,7 +61,7 @@ describe('createAuthProvider', () => {
     const providerData = JSON.stringify({ username: 'testuser' });
 
     // Create auth provider with provider data
-    const result = await createAuthProvider(dbPath, provider, providerId, providerData, userId);
+    const result = await createAuthProvider(db, provider, providerId, providerData, userId);
 
     // Verify the result
     expect(result).toBeDefined();
@@ -76,13 +74,13 @@ describe('createAuthProvider', () => {
     expect(result.updatedAt).toBeDefined();
 
     // Verify it was actually saved to the database
-    const savedProvider = await findAuthProvider(dbPath, provider, providerId);
+    const savedProvider = await findAuthProvider(db, provider, providerId);
     expect(savedProvider).toEqual(result);
   });
 
   it('should create a new auth provider with a different user ID', async () => {
     // Create another user with explicit data
-    const anotherUserId = await createTestUser(dbPath, {
+    const anotherUserId = await createTestUser(db, {
       id: 2,
       uid: 'user2',
       name: 'Test User 2',
@@ -95,7 +93,7 @@ describe('createAuthProvider', () => {
     const providerId = 'gmail789';
 
     // Create auth provider with a different user ID
-    const result = await createAuthProvider(dbPath, provider, providerId, undefined, anotherUserId);
+    const result = await createAuthProvider(db, provider, providerId, undefined, anotherUserId);
 
     // Verify the result
     expect(result).toBeDefined();
@@ -108,7 +106,7 @@ describe('createAuthProvider', () => {
     expect(result.updatedAt).toBeDefined();
 
     // Verify it was actually saved to the database
-    const savedProvider = await findAuthProvider(dbPath, provider, providerId);
+    const savedProvider = await findAuthProvider(db, provider, providerId);
     expect(savedProvider).toEqual(result);
   });
 
@@ -119,7 +117,7 @@ describe('createAuthProvider', () => {
 
     // Expect the function to throw an error
     await expect(
-      createAuthProvider(dbPath, invalidProvider, providerId, undefined, userId),
+      createAuthProvider(db, invalidProvider, providerId, undefined, userId),
     ).rejects.toThrow();
   });
 });

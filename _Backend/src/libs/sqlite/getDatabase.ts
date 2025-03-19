@@ -5,9 +5,15 @@ import sqlite3 from 'sqlite3';
  * @param dbPath Path to the database file
  * @returns SQLite database connection
  */
-export const getDatabase = (dbPath: string): sqlite3.Database => {
+export type SQLiteDatabase = sqlite3.Database & { path: string };
+
+export const getDatabase = (dbPath: string): SQLiteDatabase => {
   if (typeof dbPath !== 'string') {
     throw new Error(`Invalid database path: ${dbPath}. String expected.`);
   }
-  return new sqlite3.Database(dbPath);
+
+  const db = new sqlite3.Database(dbPath) as SQLiteDatabase;
+  db.path = dbPath;
+
+  return db;
 };

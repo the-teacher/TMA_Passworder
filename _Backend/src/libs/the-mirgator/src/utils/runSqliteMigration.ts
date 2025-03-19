@@ -1,7 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import { log } from './logger';
-import { createSqliteDatabaseSchema } from './createSqliteDatabaseSchema';
+import { updateDatabaseSchema } from './updateSqlSchema';
+
 import {
   getMigrationTimestamp,
   ensureMigrationsTable,
@@ -9,7 +10,7 @@ import {
   recordMigration,
   removeMigrationRecord,
 } from './migrationTracker';
-
+import { type SQLiteDatabase } from '@libs/sqlite';
 /**
  * The Migrator - SQLite Migration Runner
  *
@@ -29,29 +30,29 @@ export type MigrationModule = {
 /**
  * Executes a single migration file against a database
  * @param direction Migration direction ('up' or 'down')
- * @param dbPath Path to the database file
+ * @param db Database instance
  * @param migrationPath Path to the migration file
  * @param updateSchema Whether to update schema file after migration
  * @returns Promise that resolves when migration is complete
  */
 export const runSqliteMigration = async (
   direction: 'up' | 'down',
-  dbPath: string,
+  db: SQLiteDatabase,
   migrationPath: string,
-  updateSchema: boolean = true,
+  updateSchema: boolean = false,
 ): Promise<void> => {
   // Validate inputs
-  validateMigrationInputs(dbPath, migrationPath);
+  validateMigrationInputs(db, migrationPath);
 
   try {
     // Ensure migrations table exists
-    await ensureMigrationsTable(dbPath);
+    await ensureMigrationsTable(db);
 
     // Get migration timestamp from filename
     const timestamp = getMigrationTimestamp(migrationPath);
 
     // Check if migration should be skipped
-    if (await shouldSkipMigration(dbPath, direction, timestamp)) {
+    if (await shouldSkipMigration(db, direction, timestamp)) {
       log(`Migration already ${direction === 'up' ? 'applied' : 'reverted'}, skipping`, 'info');
       return;
     }
@@ -63,17 +64,17 @@ export const runSqliteMigration = async (
     log(`Running migration ${direction}: ${path.basename(migrationPath)}`, 'info');
 
     if (direction === 'up') {
-      await migration.up(dbPath);
+      await migration.up(db);
     } else {
-      await migration.down(dbPath);
+      await migration.down(db);
     }
 
     // Update migration records
-    await updateMigrationRecords(dbPath, direction, timestamp);
+    await updateMigrationRecords(db, direction, timestamp);
 
     // Update schema file if requested
     if (updateSchema) {
-      await updateDatabaseSchema(dbPath);
+      await updateDatabaseSchema(db);
     }
 
     log(`Migration ${direction} completed successfully`, 'success');
@@ -89,9 +90,9 @@ export const runSqliteMigration = async (
  * @param migrationPath Path to the migration file
  * @throws Error if validation fails
  */
-const validateMigrationInputs = (dbPath: string, migrationPath: string): void => {
-  if (!fs.existsSync(dbPath)) {
-    throw new Error(`Database file not found: ${dbPath}`);
+const validateMigrationInputs = (db: SQLiteDatabase, migrationPath: string): void => {
+  if (!db) {
+    throw new Error(`Database not provided`);
   }
 
   if (!fs.existsSync(migrationPath)) {
@@ -136,11 +137,11 @@ const validateAndImportMigration = async (migrationPath: string): Promise<Migrat
  * @returns Whether migration should be skipped
  */
 const shouldSkipMigration = async (
-  dbPath: string,
+  db: SQLiteDatabase,
   direction: 'up' | 'down',
   timestamp: string,
 ): Promise<boolean> => {
-  const isApplied = await isMigrationApplied(dbPath, timestamp);
+  const isApplied = await isMigrationApplied(db, timestamp);
   return (direction === 'up' && isApplied) || (direction === 'down' && !isApplied);
 };
 
@@ -151,29 +152,15 @@ const shouldSkipMigration = async (
  * @param timestamp Migration timestamp
  */
 const updateMigrationRecords = async (
-  dbPath: string,
+  db: SQLiteDatabase,
   direction: 'up' | 'down',
   timestamp: string,
 ): Promise<void> => {
   if (direction === 'up') {
-    await recordMigration(dbPath, timestamp);
+    await recordMigration(db, timestamp);
     log(`Recorded migration: ${timestamp}`, 'info');
   } else {
-    await removeMigrationRecord(dbPath, timestamp);
+    await removeMigrationRecord(db, timestamp);
     log(`Removed migration record: ${timestamp}`, 'info');
-  }
-};
-
-/**
- * Updates database schema file
- * @param dbPath Path to the database file
- */
-const updateDatabaseSchema = async (dbPath: string): Promise<void> => {
-  try {
-    const schemaPath = await createSqliteDatabaseSchema(dbPath);
-    log(`Schema file updated: ${schemaPath}`, 'success');
-  } catch (schemaError) {
-    log(`Warning: Failed to update schema file: ${schemaError}`, 'warning');
-    // Continue execution even if schema update fails
   }
 };

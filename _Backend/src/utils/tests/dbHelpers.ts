@@ -1,25 +1,36 @@
 import {
-  // getBufferedLogs as migratorLogs,
   resolveDatabasePath,
   createSqliteDatabase,
-  dropSqliteDatabase,
   loadSqliteDatabaseSchema,
+  dropSqliteDatabase,
 } from '@libs/the-mirgator';
 
-// Helper functions for database operations
-export const setupTestDatabase = async () => {
-  const dbPath = resolveDatabasePath('application/database') as string;
-  await dropSqliteDatabase(dbPath, true);
-  await createSqliteDatabase('application/database');
+import { type SQLiteDatabase, getDatabase } from '@libs/sqlite';
+
+/**
+ * Set up a fresh test database with a random name
+ * @returns The path to the test database
+ */
+export const setupTestDatabase = async (): Promise<SQLiteDatabase> => {
+  // Generate a unique database name using timestamp and random number
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 10000);
+  const randomDbName = `application/database_test_${timestamp}_${random}`;
+
+  const dbPath = resolveDatabasePath(randomDbName) as string;
+
+  // Create a new database with the random name
+  await createSqliteDatabase(randomDbName);
+
+  // Load the schema
   await loadSqliteDatabaseSchema(
-    'application/database',
+    randomDbName,
     'data/sqlite/development/application/database_schema.sql',
   );
-  return dbPath;
+
+  return getDatabase(dbPath);
 };
 
 export const cleanupTestDatabase = async (dbPath: string) => {
   await dropSqliteDatabase(dbPath, true);
-  // console.log(migratorLogs());
-  // console.log(sqliteLogs());
 };
