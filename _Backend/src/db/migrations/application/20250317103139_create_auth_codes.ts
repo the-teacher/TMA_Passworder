@@ -11,12 +11,13 @@ export const up = async (dbPath: string): Promise<void> => {
     dbPath,
     `CREATE TABLE auth_codes (
         id          INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id     INTEGER NOT NULL,
+        userId      INTEGER NOT NULL,
         code        TEXT NOT NULL,  -- One-time login code (e.g., 6-digit numeric)
-        expires_at  TIMESTAMP NOT NULL,  -- Expiration time (e.g., 10 minutes)
         used        INTEGER DEFAULT 0 CHECK (used IN (0, 1)),  -- Mark as used
-        created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        expiresAt   TIMESTAMP NOT NULL,  -- Expiration time (e.g., 10 minutes)
+        createdAt   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedAt   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     );`,
   );
 };

@@ -11,13 +11,12 @@ export const up = async (dbPath: string): Promise<void> => {
     dbPath,
     `CREATE TABLE users (
         id             INTEGER PRIMARY KEY AUTOINCREMENT,
-        system_id      TEXT NOT NULL UNIQUE, -- Unique string ID (12 chars) used for user data directory
+        uid            TEXT NOT NULL UNIQUE, -- Unique string ID (12 chars) used for user data directory
         name           TEXT NOT NULL,
         email          TEXT UNIQUE NOT NULL,
-        is_active      INTEGER DEFAULT 0 CHECK (is_active IN (0, 1)),  -- 0 = Not Activated, 1 = Activated
-        activation_pin TEXT,  -- 4-digit PIN for email confirmation
-        created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        status         TEXT NOT NULL DEFAULT 'inactive' CHECK (status IN ('active', 'inactive')), -- User status
+        createdAt      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedAt      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`,
   );
 };

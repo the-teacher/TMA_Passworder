@@ -11,12 +11,14 @@ export const up = async (dbPath: string): Promise<void> => {
     dbPath,
     `CREATE TABLE email_activations (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id     INTEGER NOT NULL,
-      pin_code    TEXT NOT NULL,  -- 4-digit PIN
-      expires_at  TIMESTAMP NOT NULL,  -- Expiration time (e.g., 10 minutes)
+      uid         TEXT NOT NULL UNIQUE, -- Unique identifier for activation
+      userId      INTEGER, -- Optional link to user (can be NULL for pre-registration)
+      pinCode     TEXT NOT NULL,  -- 4 or 6 digit PIN
       used        INTEGER DEFAULT 0 CHECK (used IN (0, 1)),  -- 0 = Not Used, 1 = Used
-      created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      expiresAt   TIMESTAMP NOT NULL,  -- Expiration time (e.g., 10 minutes)
+      createdAt   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updatedAt   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     );`,
   );
 };

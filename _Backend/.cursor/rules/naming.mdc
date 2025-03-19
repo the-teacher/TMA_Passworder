@@ -1,0 +1,9 @@
+---
+description: Naming in different areas
+globs: *.ts, *.js
+---
+- Use `SCREAMING_SNAKE_CASE` for JS constants
+- Use `camelCase` for JS variables
+- User `snake_case` for SQL tables
+- Use `camelCase` for SQL fields
+- Always add `createdAt` and `updatedAt` to database tables

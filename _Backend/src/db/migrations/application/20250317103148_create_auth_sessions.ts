@@ -11,14 +11,15 @@ export const up = async (dbPath: string): Promise<void> => {
     dbPath,
     `CREATE TABLE auth_sessions (
       id            INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id       INTEGER NOT NULL,
-      token_id      TEXT NOT NULL UNIQUE,  -- Unique session ID (UUID)
-      refresh_token TEXT NOT NULL UNIQUE,  -- Refresh token for renewing JWT
-      user_agent    TEXT,  -- Browser or device information
-      ip_address    TEXT,  -- User's IP address
-      created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      expires_at    TIMESTAMP DEFAULT (DATETIME('now', '+7 days')),  -- JWT expiration (7 days)
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      userId        INTEGER NOT NULL,
+      tokenId       TEXT NOT NULL UNIQUE,  -- Unique session ID (UUID)
+      refreshToken  TEXT NOT NULL UNIQUE,  -- Refresh token for renewing JWT
+      userAgent     TEXT,  -- Browser or device information
+      ipAddress     TEXT,  -- User's IP address
+      createdAt     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updatedAt     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      expiresAt     TIMESTAMP DEFAULT (DATETIME('now', '+7 days')),  -- JWT expiration (7 days)
+      FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     );`,
   );
 };
