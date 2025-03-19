@@ -31,6 +31,7 @@ export const setupTestDatabase = async (): Promise<SQLiteDatabase> => {
   return getDatabase(dbPath);
 };
 
-export const cleanupTestDatabase = async (dbPath: string) => {
-  await dropSqliteDatabase(dbPath, true);
+export const cleanupTestDatabase = async (db: SQLiteDatabase) => {
+  await db.close();
+  await dropSqliteDatabase(db.path, true);
 };

@@ -1,5 +1,5 @@
 import { getFirstQuery, type SQLiteDatabase } from '@libs/sqlite';
-import { AuthProvider } from '../../types';
+import { AuthProvider } from '../types';
 /**
  * Finds an auth provider by provider type and provider ID
  * @param dbPath Path to the database

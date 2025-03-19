@@ -8,7 +8,9 @@ import { withDatabase } from '@libs/sqlite';
 import { type ServiceType } from '../types';
 
 // Action level
-import { firstInAuthProviders } from './queries';
+import { firstInAuthProviders } from '@queries/authProviders/firstInAuthProviders';
+
+// application/registration/queries/authProviders/firstInAuthProviders
 import { validateExistsParams } from './validations';
 import { responseExistsSuccess, responseExistsInvalidParams } from './responses';
 
@@ -27,9 +29,11 @@ export const perform = async (req: Request, res: Response) => {
     const service = req.params.service as ServiceType;
 
     // Check if user exists in database
-    const exists = await withDatabase('application/database', async (db) => {
+    const firstRecord = await withDatabase('application/database', async (db) => {
       return await firstInAuthProviders(db, service, id);
     });
+
+    const exists = !!firstRecord;
 
     // response with exists status
     responseExistsSuccess(res, { service, id, exists });

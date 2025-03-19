@@ -12,13 +12,11 @@ describe('User Exists Action', () => {
   let req: Request;
   let res: Response;
   let db: SQLiteDatabase;
-  let dbPath: string;
   let withDatabaseSpy: jest.SpyInstance;
 
   beforeAll(async () => {
     // Setup test database
     db = await setupTestDatabase();
-    dbPath = db.path;
 
     // Create a spy on withDatabase function
     withDatabaseSpy = jest
@@ -28,17 +26,17 @@ describe('User Exists Action', () => {
       });
   });
 
-  afterAll(async () => {
-    // Clean up test database
-    await cleanupTestDatabase(dbPath);
-
-    // Restore original withDatabase function
-    withDatabaseSpy.mockRestore();
-  });
-
   beforeEach(() => {
     res = mockResponse();
     withDatabaseSpy.mockClear();
+  });
+
+  afterAll(async () => {
+    // Clean up test database
+    await cleanupTestDatabase(db);
+
+    // Restore original withDatabase function
+    withDatabaseSpy.mockRestore();
   });
 
   test('should return exists=false when user does not exist in database', async () => {

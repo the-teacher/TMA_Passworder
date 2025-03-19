@@ -17,7 +17,8 @@
       "@utils/*": ["src/utils/*"],
       "@middlewares/*": ["src/middlewares/*"],
       "@actions/*": ["src/actions/*"],
-      "@app-types/*": ["src/types/*"]
+      "@app-types/*": ["src/types/*"],
+      "@queries/*": ["src/queries/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,

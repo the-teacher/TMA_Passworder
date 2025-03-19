@@ -24,6 +24,7 @@ export default {
     '@middlewares/(.*)': '<rootDir>/src/middlewares/$1',
     '@actions/(.*)': '<rootDir>/src/actions/$1',
     '@app-types/(.*)': '<rootDir>/src/types/$1',
+    '@queries/(.*)': ['<rootDir>/src/queries/$1'],
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   coverageDirectory: 'coverage',

@@ -1,6 +1,6 @@
 import { ServiceType } from '@actions/users/types';
 import { getFirstQuery, SQLiteDatabase } from '@libs/sqlite';
-import { AuthProvider } from '../../types';
+import { AuthProvider } from '../types';
 
 /**
  * Creates a new auth provider in the database

@@ -27,5 +27,6 @@ export const createTestUser = async (
     `,
     [userData.id, userData.uid, userData.name, userData.email, userData.status, now, now],
   );
+
   return userData.id;
 };

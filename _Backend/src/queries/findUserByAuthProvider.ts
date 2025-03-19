@@ -1,5 +1,4 @@
-import { resolveDatabasePath } from '@libs/the-mirgator';
-import { getFirstQuery } from '@libs/sqlite';
+import { getFirstQuery, type SQLiteDatabase } from '@libs/sqlite';
 import { ServiceType } from '@actions/users/types';
 
 type UserWithProvider = {
@@ -21,14 +20,13 @@ type UserWithProvider = {
  * @returns User data with provider information or null if not found
  */
 export const findUserByAuthProvider = async (
+  db: SQLiteDatabase,
   provider: ServiceType,
   providerId: string,
-): Promise<UserWithProvider | null> => {
-  const dbPath = resolveDatabasePath('application/database') as string;
-
+): Promise<UserWithProvider | undefined> => {
   // Query the database to find user with the given provider and providerId
   const user = await getFirstQuery<UserWithProvider>(
-    dbPath,
+    db,
     `
       SELECT
         users.id,
@@ -48,5 +46,5 @@ export const findUserByAuthProvider = async (
     [provider, providerId],
   );
 
-  return user || null;
+  return user;
 };
