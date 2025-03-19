@@ -2,11 +2,10 @@
 
 import fs from 'fs';
 import path from 'path';
-import { log } from './utils/logger';
-import { getDatabaseRootDir } from './utils/databasePaths';
-import { runSqliteMigration } from './utils/runSqliteMigration';
-import { resolveDatabasePath } from './utils/databasePaths';
-import { getMigrationTimestamp, getAppliedMigrations } from './migrationTracker';
+import { log } from '../utils/logger';
+import { runSqliteMigration } from '../utils/runSqliteMigration';
+import { resolveDatabasePath } from '../utils/databasePaths';
+import { getMigrationTimestamp, getAppliedMigrations } from '../utils/migrationTracker';
 
 /**
  * The Migrator - Migrations Runner CLI

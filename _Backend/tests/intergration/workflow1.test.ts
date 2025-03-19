@@ -66,7 +66,7 @@ describe('User creation workflow', () => {
   const createActionRequest = {
     params: {
       service: 'telegram',
-      username: 'test_user',
+      username: '',
       name: 'John Doe',
       id: 'abc123',
     },

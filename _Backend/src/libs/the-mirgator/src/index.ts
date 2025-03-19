@@ -1,5 +1,9 @@
 // Core functionality
 
+// Types
+export type { LogType, LogMode } from './utils/logger';
+export type { MigrationModule } from './utils/runSqliteMigration';
+
 // Utilities
 export { log, setLogMode, getBufferedLogs, clearLogBuffer, flushLogBuffer } from './utils/logger';
 export { resolveDatabasePath, getDatabaseRootDir } from './utils/databasePaths';
@@ -18,8 +22,4 @@ export {
   recordMigration,
   removeMigrationRecord,
   getAppliedMigrations,
-} from './migrationTracker';
-
-// Types
-export type { LogType, LogMode } from './utils/logger';
-export type { MigrationModule } from './utils/runSqliteMigration';
+} from './utils/migrationTracker';

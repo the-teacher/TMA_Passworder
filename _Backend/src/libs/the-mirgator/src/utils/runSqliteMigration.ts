@@ -8,7 +8,7 @@ import {
   isMigrationApplied,
   recordMigration,
   removeMigrationRecord,
-} from '../migrationTracker';
+} from './migrationTracker';
 
 /**
  * The Migrator - SQLite Migration Runner

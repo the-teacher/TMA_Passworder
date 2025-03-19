@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import { createMigrationFile } from './createMigration';
+import path from 'path';
+import { createMigrationFile } from '../utils/createMigration';
 
 /**
  * The Migrator - Migration Creator CLI
@@ -8,30 +9,31 @@ import { createMigrationFile } from './createMigration';
  * This module provides a command-line interface for creating new migration files.
  *
  * Usage:
- *   node createMigrationRunner.ts <dbName> <migrationName>
+ *   node createMigrationRunner.ts <migrationName> [migrationsDir]
  *
  * Examples:
- *   node createMigrationRunner.ts application/database create_users_table
- *   node createMigrationRunner.ts tenant create_tenants_table
+ *   node createMigrationRunner.ts create_users_table
+ *   node createMigrationRunner.ts create_tenants_table ./db/migrations/tenant
  *
  * @module the-migrator/createMigrationRunner
  */
+
+// Default migrations directory
+const DEFAULT_MIGRATIONS_DIR = path.join(process.cwd(), 'db/migrations/application');
 
 /**
  * Parses command line arguments
  * @returns Object containing parsed arguments
  */
 export const parseArgs = (): {
-  dbName: string | undefined;
   migrationName: string | undefined;
   migrationsDir: string | undefined;
 } => {
   const args = process.argv.slice(2);
-  const dbName = args[0];
-  const migrationName = args[1];
-  const migrationsDir = args[2];
+  const migrationName = args[0];
+  const migrationsDir = args[1];
 
-  return { dbName, migrationName, migrationsDir };
+  return { migrationName, migrationsDir };
 };
 
 /**
@@ -42,17 +44,16 @@ export const showHelp = (): void => {
 The Migrator - Migration Creator
 
 Usage:
-  node createMigrationRunner.ts <dbName> <migrationName> [migrationsDir]
+  node createMigrationRunner.ts <migrationName> [migrationsDir]
 
 Arguments:
-  dbName         Name of the database or path-like name (e.g., 'application' or 'tenant/users')
   migrationName  Name of the migration (e.g., 'create_users_table')
-  migrationsDir  Optional custom directory for migrations (default: ./db/migrations/{dbName})
+  migrationsDir  Directory for migrations (default: ./db/migrations/application)
 
 Examples:
-  node createMigrationRunner.ts application create_users_table
-  node createMigrationRunner.ts application/database create_tenants_table
-  node createMigrationRunner.ts tenant create_settings_table ./src/db/migrations/tenant
+  node createMigrationRunner.ts create_users_table
+  node createMigrationRunner.ts add_email_to_users ./db/migrations/tenant
+  node createMigrationRunner.ts create_settings_table ./src/database/migrations/custom
   `);
 };
 
@@ -60,20 +61,26 @@ Examples:
  * Main function to run the migration creator
  */
 export const run = async (): Promise<void> => {
-  const { dbName, migrationName, migrationsDir } = parseArgs();
+  const { migrationName, migrationsDir } = parseArgs();
 
   // Show help if required arguments are missing
-  if (!dbName || !migrationName) {
+  if (!migrationName) {
     showHelp();
     process.exit(1);
     return;
   }
 
   try {
+    // Resolve the full directory path
+    const fullDir = migrationsDir || DEFAULT_MIGRATIONS_DIR;
+
     // Create migration file
-    await createMigrationFile(dbName, migrationName, migrationsDir);
+    const migrationPath = createMigrationFile(fullDir, migrationName);
+
+    console.log(`Successfully created migration: ${migrationPath}`);
     process.exit(0);
   } catch (error) {
+    console.error('Error creating migration file:');
     console.error(error);
     process.exit(1);
   }

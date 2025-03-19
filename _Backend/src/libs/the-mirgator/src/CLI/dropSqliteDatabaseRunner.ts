@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { resolveDatabasePath } from './utils/databasePaths';
-import { dropSqliteDatabase } from './utils/dropSqliteDatabase';
+import { resolveDatabasePath } from '../utils/databasePaths';
+import { dropSqliteDatabase } from '../utils/dropSqliteDatabase';
 /**
  * The Migrator - Database Drop Utility
  *

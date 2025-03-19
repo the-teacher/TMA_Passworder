@@ -1,4 +1,4 @@
-import { parseArgs, showHelp, run } from '../createSqliteDatabaseRunner';
+import { parseArgs, showHelp, run } from '../CLI/createSqliteDatabaseRunner';
 import { createSqliteDatabase } from '../utils/createSqliteDatabase';
 import { log } from '../utils/logger';
 

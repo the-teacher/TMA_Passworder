@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { log } from './utils/logger';
-import { runSqliteMigration } from './utils/runSqliteMigration';
+import { log } from '../utils/logger';
+import { runSqliteMigration } from '../utils/runSqliteMigration';
 
 /**
  * The Migrator - Migration Runner CLI

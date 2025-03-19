@@ -1,8 +1,8 @@
-import { parseArgs, showHelp, run } from '../createMigrationRunner';
-import { createMigrationFile } from '../createMigration';
+import { parseArgs, showHelp, run } from '../CLI/createMigrationRunner';
+import { createMigrationFile } from '../utils/createMigration';
 
 // Mock dependencies
-jest.mock('../createMigration');
+jest.mock('../utils/createMigration');
 jest.mock('process');
 
 describe('createMigrationRunner', () => {
@@ -21,9 +21,7 @@ describe('createMigrationRunner', () => {
     console.error = jest.fn();
 
     // Mock createMigrationFile
-    (createMigrationFile as jest.Mock).mockImplementation((name, scope, dir) =>
-      dir ? `${dir}/${scope}/${name}.ts` : `/mock/path/${scope}/${name}.ts`,
-    );
+    (createMigrationFile as jest.Mock).mockImplementation((dir, name) => `${dir}/${name}.ts`);
   });
 
   afterEach(() => {
@@ -43,41 +41,17 @@ describe('createMigrationRunner', () => {
 
       expect(args).toEqual({
         migrationName: 'CreateUsersTable',
-        scope: 'application',
-        directory: expect.any(String),
+        migrationsDir: undefined,
       });
     });
 
-    test('parses migration name and scope', () => {
-      process.argv = ['node', 'script.js', 'CreateUsersTable', 'tenant'];
+    test('parses migration name and directory', () => {
+      process.argv = ['node', 'script.js', 'CreateUsersTable', './custom/dir'];
       const args = parseArgs();
 
       expect(args).toEqual({
         migrationName: 'CreateUsersTable',
-        scope: 'tenant',
-        directory: expect.any(String),
-      });
-    });
-
-    test('parses migration name, scope, and directory', () => {
-      process.argv = ['node', 'script.js', 'CreateUsersTable', 'tenant', './custom/dir'];
-      const args = parseArgs();
-
-      expect(args).toEqual({
-        migrationName: 'CreateUsersTable',
-        scope: 'tenant',
-        directory: './custom/dir',
-      });
-    });
-
-    test('handles "undefined" string as default value', () => {
-      process.argv = ['node', 'script.js', 'CreateUsersTable', 'undefined', 'tenant'];
-      const args = parseArgs();
-
-      expect(args).toEqual({
-        migrationName: 'CreateUsersTable',
-        scope: 'application',
-        directory: 'tenant',
+        migrationsDir: './custom/dir',
       });
     });
   });
@@ -110,9 +84,8 @@ describe('createMigrationRunner', () => {
       run();
 
       expect(createMigrationFile).toHaveBeenCalledWith(
+        expect.stringContaining('db/migrations/application'),
         'CreateUsersTable',
-        'application',
-        expect.any(String),
       );
       expect(console.log).toHaveBeenCalledWith(
         expect.stringContaining('Successfully created migration:'),
@@ -120,15 +93,11 @@ describe('createMigrationRunner', () => {
       expect(process.exit).toHaveBeenCalledWith(0);
     });
 
-    test('creates migration file with all parameters', () => {
-      process.argv = ['node', 'script.js', 'CreateUsersTable', 'tenant', './custom/dir'];
+    test('creates migration file with custom directory', () => {
+      process.argv = ['node', 'script.js', 'CreateUsersTable', './custom/dir'];
       run();
 
-      expect(createMigrationFile).toHaveBeenCalledWith(
-        'CreateUsersTable',
-        'tenant',
-        './custom/dir',
-      );
+      expect(createMigrationFile).toHaveBeenCalledWith('./custom/dir', 'CreateUsersTable');
       expect(process.exit).toHaveBeenCalledWith(0);
     });
 
@@ -143,7 +112,7 @@ describe('createMigrationRunner', () => {
       run();
 
       expect(console.error).toHaveBeenCalledWith('Error creating migration file:');
-      expect(console.error).toHaveBeenCalledWith('Test error');
+      expect(console.error).toHaveBeenCalledWith(expect.any(Error));
       expect(process.exit).toHaveBeenCalledWith(1);
     });
   });

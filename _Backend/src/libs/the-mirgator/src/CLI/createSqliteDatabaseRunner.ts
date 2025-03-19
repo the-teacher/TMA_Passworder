@@ -3,9 +3,9 @@
 // TS Example: yarn tsx src/libs/the-mirgator/src/createSqliteDatabaseRunner.ts application
 
 import path from 'path';
-import { log } from './utils/logger';
-import { getDatabaseRootDir } from './utils/databasePaths';
-import { createSqliteDatabase } from './utils/createSqliteDatabase';
+import { log } from '../utils/logger';
+import { getDatabaseRootDir } from '../utils/databasePaths';
+import { createSqliteDatabase } from '../utils/createSqliteDatabase';
 
 /**
  * The Migrator - SQLite Database Runner

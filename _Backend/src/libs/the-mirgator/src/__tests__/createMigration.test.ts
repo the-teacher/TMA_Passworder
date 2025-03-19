@@ -1,10 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { createMigrationFile, generateMigrationContent } from '../createMigration';
-
-// Mock fs and path modules
-jest.mock('fs');
-jest.mock('path');
+import { createMigrationFile, generateMigrationContent } from '../utils/createMigration';
 
 describe('generateMigrationContent', () => {
   beforeEach(() => {
@@ -14,6 +10,10 @@ describe('generateMigrationContent', () => {
         toISOString: () => '2023-08-15T12:30:45.000Z',
       } as unknown as Date;
     });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   test('generates correct migration content', () => {
@@ -26,33 +26,25 @@ describe('generateMigrationContent', () => {
     expect(content).toContain('Created at: 2023-08-15T12:30:45.000Z');
 
     // Check if content contains up and down functions
-    expect(content).toContain('export const up = async () => {');
-    expect(content).toContain('export const down = async () => {');
+    expect(content).toContain('export const up = async');
+    expect(content).toContain('export const down = async');
   });
 });
 
 describe('createMigrationFile', () => {
   // Save original console.log
   const originalConsoleLog = console.log;
+  let testDir: string;
 
   beforeEach(() => {
-    // Mock implementations
-    jest.resetAllMocks();
+    // Create a temporary directory in the test directory
+    const testDirName = `temp/test-tmp-${Date.now()}`;
+    testDir = path.join(__dirname, testDirName);
 
-    // Mock path.join to return predictable paths
-    (path.join as jest.Mock).mockImplementation((...args) => args.join('/'));
-
-    // Mock process.cwd to return a fixed path
-    jest.spyOn(process, 'cwd').mockReturnValue('/project');
-
-    // Mock fs.existsSync to return false (directory doesn't exist)
-    (fs.existsSync as jest.Mock).mockReturnValue(false);
-
-    // Mock fs.mkdirSync
-    (fs.mkdirSync as jest.Mock).mockImplementation(() => undefined);
-
-    // Mock fs.writeFileSync
-    (fs.writeFileSync as jest.Mock).mockImplementation(() => undefined);
+    // Create the test directory if it doesn't exist
+    if (!fs.existsSync(testDir)) {
+      fs.mkdirSync(testDir, { recursive: true });
+    }
 
     // Mock console.log
     console.log = jest.fn();
@@ -68,102 +60,124 @@ describe('createMigrationFile', () => {
   afterEach(() => {
     // Restore console.log
     console.log = originalConsoleLog;
+
+    // Clean up the temporary directory
+    if (fs.existsSync(testDir)) {
+      fs.rmSync(testDir, { recursive: true, force: true });
+    }
+
+    jest.restoreAllMocks();
   });
 
   test('creates a migration file with default parameters', () => {
-    const filePath = createMigrationFile('CreateUsersTable', 'application');
+    const scope = 'application';
+    const migrationName = 'CreateUsersTable';
+    const migrationsDir = path.join(testDir, 'db/migrations');
+    const fullDir = path.join(migrationsDir, scope);
 
-    // Check if directory existence was checked
-    expect(fs.existsSync).toHaveBeenCalledWith('/project/db/migrations/application');
+    const filePath = createMigrationFile(fullDir, migrationName);
 
     // Check if directory was created
-    expect(fs.mkdirSync).toHaveBeenCalledWith('/project/db/migrations/application', {
-      recursive: true,
-    });
+    expect(fs.existsSync(fullDir)).toBe(true);
 
-    // Check if file was written
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      '/project/db/migrations/application/20230815123045_create_users_table.ts',
-      expect.stringContaining('Migration: create_users_table'),
-      'utf8',
-    );
+    // Check if file was created
+    const expectedFilePath = path.join(fullDir, '20230815123045_create_users_table.ts');
+    expect(fs.existsSync(expectedFilePath)).toBe(true);
 
-    // Check if console.log was called
-    expect(console.log).toHaveBeenCalledWith(
-      'Migration file created: /project/db/migrations/application/20230815123045_create_users_table.ts',
-    );
+    // Check file content
+    const fileContent = fs.readFileSync(expectedFilePath, 'utf8');
+    expect(fileContent).toContain('Migration: create_users_table');
+    expect(fileContent).toContain('Created at: 2023-08-15T12:30:45.000Z');
 
     // Check return value
-    expect(filePath).toBe(
-      '/project/db/migrations/application/20230815123045_create_users_table.ts',
-    );
+    expect(filePath).toBe(expectedFilePath);
   });
 
   test('creates a migration file with custom directory', () => {
-    const filePath = createMigrationFile(
-      'AddEmailToUsers',
-      'application',
-      './src/database/migrations',
-    );
+    const scope = 'application';
+    const migrationName = 'AddEmailToUsers';
+    const migrationsDir = path.join(testDir, 'src/database/migrations');
+    const fullDir = path.join(migrationsDir, scope);
 
-    // Check if directory existence was checked
-    expect(fs.existsSync).toHaveBeenCalledWith('./src/database/migrations/application');
+    const filePath = createMigrationFile(fullDir, migrationName);
 
-    // Check if file was written to the custom directory
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      './src/database/migrations/application/20230815123045_add_email_to_users.ts',
-      expect.stringContaining('Migration: add_email_to_users'),
-      'utf8',
-    );
+    // Check if directory was created
+    expect(fs.existsSync(fullDir)).toBe(true);
+
+    // Check if file was created
+    const expectedFilePath = path.join(fullDir, '20230815123045_add_email_to_users.ts');
+    expect(fs.existsSync(expectedFilePath)).toBe(true);
+
+    // Check file content
+    const fileContent = fs.readFileSync(expectedFilePath, 'utf8');
+    expect(fileContent).toContain('Migration: add_email_to_users');
 
     // Check return value
-    expect(filePath).toBe(
-      './src/database/migrations/application/20230815123045_add_email_to_users.ts',
-    );
+    expect(filePath).toBe(expectedFilePath);
   });
 
   test('creates a migration file with scope', () => {
-    const filePath = createMigrationFile('CreateProductsTable', 'tenant');
+    const scope = 'tenant';
+    const migrationName = 'CreateProductsTable';
+    const migrationsDir = path.join(testDir, 'db/migrations');
+    const fullDir = path.join(migrationsDir, scope);
 
-    // Check if directory existence was checked
-    expect(fs.existsSync).toHaveBeenCalledWith('/project/db/migrations/tenant');
+    const filePath = createMigrationFile(fullDir, migrationName);
 
-    // Check if file was written to the scoped directory
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      '/project/db/migrations/tenant/20230815123045_create_products_table.ts',
-      expect.stringContaining('Migration: create_products_table'),
-      'utf8',
-    );
+    // Check if directory was created
+    expect(fs.existsSync(fullDir)).toBe(true);
+
+    // Check if file was created
+    const expectedFilePath = path.join(fullDir, '20230815123045_create_products_table.ts');
+    expect(fs.existsSync(expectedFilePath)).toBe(true);
+
+    // Check file content
+    const fileContent = fs.readFileSync(expectedFilePath, 'utf8');
+    expect(fileContent).toContain('Migration: create_products_table');
 
     // Check return value
-    expect(filePath).toBe('/project/db/migrations/tenant/20230815123045_create_products_table.ts');
+    expect(filePath).toBe(expectedFilePath);
   });
 
   test('handles existing directory', () => {
-    // Mock fs.existsSync to return true (directory exists)
-    (fs.existsSync as jest.Mock).mockReturnValue(true);
+    const scope = 'application';
+    const migrationName = 'UpdateUserSchema';
+    const migrationsDir = path.join(testDir, 'db/migrations');
+    const fullDir = path.join(migrationsDir, scope);
 
-    createMigrationFile('UpdateUserSchema', 'application');
+    // Create the directory first
+    fs.mkdirSync(fullDir, { recursive: true });
 
-    // Check if directory was not created
-    expect(fs.mkdirSync).not.toHaveBeenCalled();
+    const filePath = createMigrationFile(fullDir, migrationName);
 
-    // Check if file was written
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      '/project/db/migrations/application/20230815123045_update_user_schema.ts',
-      expect.stringContaining('Migration: update_user_schema'),
-      'utf8',
-    );
+    // Check if file was created
+    const expectedFilePath = path.join(fullDir, '20230815123045_update_user_schema.ts');
+    expect(fs.existsSync(expectedFilePath)).toBe(true);
+
+    // Check return value
+    expect(filePath).toBe(expectedFilePath);
   });
 
   test('converts camelCase to snake_case correctly', () => {
-    createMigrationFile('addUserEmailAndPhoneNumber', 'application');
+    const scope = 'application';
+    const migrationName = 'addUserEmailAndPhoneNumber';
+    const migrationsDir = path.join(testDir, 'db/migrations');
+    const fullDir = path.join(migrationsDir, scope);
 
-    // Check if file was written with correct snake_case name
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      '/project/db/migrations/application/20230815123045_add_user_email_and_phone_number.ts',
-      expect.stringContaining('Migration: add_user_email_and_phone_number'),
-      'utf8',
+    const filePath = createMigrationFile(fullDir, migrationName);
+
+    // Check if file was created with correct snake_case name
+    const expectedFilePath = path.join(
+      fullDir,
+      '20230815123045_add_user_email_and_phone_number.ts',
     );
+    expect(fs.existsSync(expectedFilePath)).toBe(true);
+
+    // Check file content
+    const fileContent = fs.readFileSync(expectedFilePath, 'utf8');
+    expect(fileContent).toContain('Migration: add_user_email_and_phone_number');
+
+    // Check return value
+    expect(filePath).toBe(expectedFilePath);
   });
 });

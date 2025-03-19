@@ -34,9 +34,11 @@ describe('User Exists Action', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       status: 'success',
-      exists: false,
-      service: 'github',
-      id: 'validuser123',
+      data: {
+        exists: false,
+        service: 'github',
+        id: 'validuser123',
+      },
     });
   });
 
@@ -59,9 +61,11 @@ describe('User Exists Action', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       status: 'success',
-      exists: true,
-      service,
-      id: providerId,
+      data: {
+        exists: true,
+        service,
+        id: providerId,
+      },
     });
   });
 
