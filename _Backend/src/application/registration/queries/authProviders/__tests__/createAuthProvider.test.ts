@@ -1,13 +1,9 @@
-import {
-  resolveDatabasePath,
-  dropSqliteDatabase,
-  createSqliteDatabase,
-  loadSqliteDatabaseSchema,
-} from '@libs/the-mirgator';
+import { dropSqliteDatabase } from '@libs/the-mirgator';
 
 import { createAuthProvider } from '../createAuthProvider';
 import { findAuthProvider } from '../findAuthProvider';
 import { createTestUser } from './utils/createTestUser';
+import { setupTestDatabase } from './utils/setupTestDatabase';
 
 // Ensure logs are suppressed during tests
 process.env.MIGRATOR_LOGS = 'buffer';
@@ -18,13 +14,7 @@ describe('createAuthProvider', () => {
 
   beforeEach(async () => {
     // Setup a fresh test database before each test
-    dbPath = resolveDatabasePath('application/database') as string;
-    await dropSqliteDatabase(dbPath, true);
-    await createSqliteDatabase('application/database');
-    await loadSqliteDatabaseSchema(
-      'application/database',
-      'data/sqlite/development/application/database_schema.sql',
-    );
+    dbPath = await setupTestDatabase();
 
     // Create a test user for all tests since userId is required
     userId = await createTestUser(dbPath, {
