@@ -143,6 +143,11 @@
         "invalid": "Please enter a valid email address",
         "max": "Email cannot exceed {{max}} characters"
       }
+    },
+    "info": {
+      "emailSent": "An email with a <PinCode>PIN code</PinCode> for account activation will be sent to your email.",
+      "pinCodes": "We send one-time PIN codes for logging into your account and confirming your actions.",
+      "emailSecurity": "Please do not share access to your email and use strong passwords for your email account."
     }
   },
   "UserRegistrationData": {

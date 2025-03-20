@@ -48,7 +48,7 @@ const WelcomeMessageView = ({
 
           <button
             type="button"
-            className="btn btn--secondary btn--large"
+            className="btn btn--light btn--large"
             onClick={onDecline}
           >
             {t("actions.decline")}

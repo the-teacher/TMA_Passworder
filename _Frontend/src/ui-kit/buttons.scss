@@ -49,6 +49,20 @@
     background-color: color.scale($color-secondary, $lightness: -15%);
   }
 
+  &--light {
+    background-color: $color-light;
+    color: color.scale($color-dark, $lightness: 70%);
+  }
+
+  &--light:hover {
+    background-color: color.scale($color-light, $lightness: -10%);
+    color: color.scale($color-dark, $lightness: 30%);
+  }
+
+  &--light:active {
+    background-color: color.scale($color-light, $lightness: -15%);
+  }
+
   &--success {
     background-color: $color-success;
     color: $color-white;
