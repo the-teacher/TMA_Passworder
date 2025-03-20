@@ -18,6 +18,9 @@
       "serverError": "An error occurred. Please try again."
     },
     "validation": {
+      "pleaseEnterField": "Please fill in this field",
+      "filledCorrectly": "Filled correctly",
+      "hasError": "Error in field",
       "email": {
         "required": "Email is required",
         "invalid": "Please enter a valid email address",

@@ -1,0 +1,67 @@
+@use "sass:map";
+
+$gap-values: (0, 8, 16, 20, 24, 32);
+
+.flex,
+.flex--row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.flex--col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flex--col-rev {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+}
+
+.flex--row-rev {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 8px;
+}
+
+.flex--vcenter {
+  align-items: center;
+}
+
+.flex--hcenter {
+  justify-content: center;
+}
+
+.flex--center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex--between {
+  justify-content: space-between;
+}
+
+.flex--end {
+  justify-content: flex-end;
+}
+
+.flex--start {
+  justify-content: flex-start;
+}
+
+.flex--wrap {
+  flex-wrap: wrap;
+}
+
+.flex--nowrap {
+  flex-wrap: nowrap;
+}
+
+@each $value in $gap-values {
+  .gap#{$value} {
+    gap: #{$value}px;
+  }
+}

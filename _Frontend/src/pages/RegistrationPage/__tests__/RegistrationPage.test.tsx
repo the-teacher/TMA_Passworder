@@ -36,7 +36,7 @@ jest.mock("@components/SorryAboutDecline", () => ({
   )
 }));
 
-jest.mock("@components/UserRegistrationData", () => ({
+jest.mock("@components/UserRegistration/UserRegistrationData", () => ({
   __esModule: true,
   default: ({
     onConfirm,

@@ -1,5 +1,4 @@
 import { useTranslation, Trans } from "react-i18next";
-import { Link } from "react-router";
 
 import "@ui-kit/card.scss";
 import "@ui-kit/text-styles.scss";
@@ -8,6 +7,8 @@ import "@ui-kit/info-blocks.scss";
 import "@ui-kit/data-display.scss";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/buttons.scss";
+import "@ui-kit/flex.scss";
+import "@ui-kit/brand.scss";
 import "./styles.scss";
 
 type WelcomeMessageViewProps = {
@@ -22,18 +23,36 @@ const WelcomeMessageView = ({
   const { t } = useTranslation("WelcomeMessage");
 
   return (
-    <div className="card__centered">
+    <div className="card card__centered mt20 mb20">
       <div className="card--container">
-        <div className="card--header">
+        <div className="card--header flex--col flex--center">
           <img
-            width={200}
-            height={200}
-            className="m20 card--logo"
+            className="m20 brand--logo"
             src="/brand/icons/HamsterLogoHeart.svg"
             alt="Hamster Logo Heart"
           />
           <h2 className="card--title">{t("title")}</h2>
           <p className="card--subtitle">{t("subtitle")}</p>
+        </div>
+
+        <div className="card--content flex--col gap20">
+          <p className="text text--bold text--center">{t("tryFree")}</p>
+
+          <button
+            type="button"
+            className="btn btn--primary btn--jumbo"
+            onClick={onConfirm}
+          >
+            {t("actions.accept")}
+          </button>
+
+          <button
+            type="button"
+            className="btn btn--secondary btn--large"
+            onClick={onDecline}
+          >
+            {t("actions.decline")}
+          </button>
         </div>
 
         <div className="card--content">
@@ -69,35 +88,6 @@ const WelcomeMessageView = ({
               {t("security.backupReminder")}
             </p>
           </div>
-
-          <p className="text mb16">
-            <Trans
-              i18nKey="WelcomeMessage:disclaimer"
-              components={{
-                RulesLink: <Link to="/rules" />,
-                PolicyLink: <Link to="/privacy-policy" />
-              }}
-            />
-          </p>
-        </div>
-        <p className="text mb16 text--center">{t("tryFree")}</p>
-
-        <div className="card--footer">
-          <button
-            type="button"
-            className="btn btn--secondary btn--large"
-            onClick={onDecline}
-          >
-            {t("actions.decline")}
-          </button>
-
-          <button
-            type="button"
-            className="btn btn--primary btn--large"
-            onClick={onConfirm}
-          >
-            {t("actions.accept")}
-          </button>
         </div>
       </div>
     </div>

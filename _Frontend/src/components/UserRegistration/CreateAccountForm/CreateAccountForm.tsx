@@ -17,6 +17,7 @@ import "@ui-kit/margins.scss";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/buttons.scss";
+import "@ui-kit/brand.scss";
 
 type CreateAccountFormProps = {
   onSubmit: (data: CreateAccountValidationSchemaType) => void;
@@ -43,13 +44,11 @@ const CreateAccountForm = ({
   });
 
   return (
-    <div className="card__centered">
+    <div className="mt20 card card__centered mb20">
       <div className="card--container">
-        <div className="card--header">
+        <div className="card--header flex--col flex--center">
           <img
-            width={200}
-            height={200}
-            className="m20 card--logo"
+            className="m20 brand--logo"
             src="/brand/icons/HamsterLogoHeart.svg"
             alt="Hamster Logo Heart"
           />

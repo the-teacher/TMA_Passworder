@@ -24,7 +24,7 @@ const EmailInput = () => {
 
   return (
     <div className="form-group">
-      <label className="form-label" htmlFor="email">
+      <label className="form--label" htmlFor="email">
         {t("fields.email")}
       </label>
       <input

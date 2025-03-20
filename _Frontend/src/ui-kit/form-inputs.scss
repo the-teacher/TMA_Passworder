@@ -1,6 +1,14 @@
 @use "sass:color";
 @use "./colors" as *;
 
+.form {
+  &--label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: $color-secondary;
+  }
+}
+
 .form-input,
 .form-select,
 .form-textarea {

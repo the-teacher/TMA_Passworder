@@ -4,7 +4,8 @@ import "@ui-kit/text-styles.scss";
 import "@ui-kit/margins.scss";
 import "@ui-kit/buttons.scss";
 import "@ui-kit/utils.scss";
-import "./styles.scss";
+import "@ui-kit/flex.scss";
+import "@ui-kit/brand.scss";
 
 type SorryAboutDeclineProps = {
   buttonHandler: () => void;
@@ -14,13 +15,11 @@ const SorryAboutDecline = ({ buttonHandler }: SorryAboutDeclineProps) => {
   const { t } = useTranslation("SorryAboutDecline");
 
   return (
-    <div className="card__centered">
+    <div className="mt20 card card__centered">
       <div className="card--container">
-        <div className="card--header">
+        <div className="card--header flex--col flex--center">
           <img
-            width={150}
-            height={150}
-            className="m20 card--logo"
+            className="m20 brand--logo"
             src="/brand/icons/HamsterLogoTears.svg"
             alt="Hamster Logo Heart"
           />

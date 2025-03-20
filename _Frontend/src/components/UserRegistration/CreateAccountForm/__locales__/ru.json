@@ -18,6 +18,9 @@
       "serverError": "Произошла ошибка. Пожалуйста, попробуйте снова."
     },
     "validation": {
+      "pleaseEnterField": "Пожалуйста, заполните это поле",
+      "filledCorrectly": "Заполнено корректно",
+      "hasError": "Ошибка в поле",
       "email": {
         "required": "Email обязателен",
         "invalid": "Пожалуйста, введите корректный email адрес",

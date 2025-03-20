@@ -8,7 +8,7 @@ jest.mock("../inputs/EmailInput", () => ({
   __esModule: true,
   default: () => (
     <div className="form-group" data-testid="email-input-mock">
-      <label htmlFor="email" className="form-label">
+      <label htmlFor="email" className="form--label">
         Email Address
       </label>
       <input

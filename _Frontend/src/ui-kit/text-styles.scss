@@ -2,7 +2,7 @@
 @use "./colors" as *;
 
 .text {
-  font-size: 16px;
+  font-size: 1.4rem;
   line-height: 1.5;
 
   &--center {
@@ -43,14 +43,18 @@
 
   // Text sizes
   &--small {
-    font-size: 14px;
+    font-size: 1.4rem;
   }
 
   &--medium {
-    font-size: 16px;
+    font-size: 1.6rem;
   }
 
   &--large {
-    font-size: 20px;
+    font-size: 2rem;
+  }
+
+  &--bold {
+    font-weight: 700;
   }
 }

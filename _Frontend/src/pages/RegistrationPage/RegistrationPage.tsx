@@ -1,13 +1,15 @@
 import { useState } from "react";
 import WelcomeMessage from "@components/WelcomeMessage";
 import SorryAboutDecline from "@components/SorryAboutDecline";
-import UserRegistrationData from "@components/UserRegistrationData";
+import UserRegistrationData from "@components/UserRegistration/UserRegistrationData";
+import CreateAccountForm from "@components/UserRegistration/CreateAccountForm";
 import "@ui-kit/margins.scss";
 
 type RegistrationState =
   | "welcomeMessage"
   | "sorryAboutDecline"
   | "userRegistrationData"
+  | "createAccountForm"
   | "registrationConfirmed";
 
 const mockUserData = {
@@ -22,6 +24,15 @@ const RegistrationPage = () => {
 
   if (regState === "registrationConfirmed") {
     return <div>Registration confirmed! Redirecting...</div>;
+  }
+
+  if (regState === "createAccountForm") {
+    return (
+      <CreateAccountForm
+        onSubmit={() => setRegState("registrationConfirmed")}
+        onCancel={() => setRegState("welcomeMessage")}
+      />
+    );
   }
 
   if (regState === "userRegistrationData") {
@@ -42,7 +53,7 @@ const RegistrationPage = () => {
 
   return (
     <WelcomeMessage
-      onConfirm={() => setRegState("userRegistrationData")}
+      onConfirm={() => setRegState("createAccountForm")}
       onDecline={() => setRegState("sorryAboutDecline")}
     />
   );
