@@ -69,6 +69,25 @@ const CreateAccountForm = ({
 
               <EmailInput />
 
+              <div className="info info--secondary mb16">
+                <p className="text mb16">
+                  На ваш email{" "}
+                  <span className="text--bold text--success">
+                    будет отправлено письмо с PIN кодом
+                  </span>{" "}
+                  активации аккаунта.
+                </p>
+
+                <p className="text mb8">
+                  Мы отправляем одноразовые PIN коды для входа в ваш аккакунт и
+                  подтверждения ваших действий.
+                </p>
+                <p className="text">
+                  Пожалуйста, никому не передавайте доступ к вашему email и
+                  используйте сложные пароли для доступа в ваш почтовый ящик.
+                </p>
+              </div>
+
               <p className="text mb16">
                 <Trans
                   i18nKey="CreateAccountForm:disclaimer"

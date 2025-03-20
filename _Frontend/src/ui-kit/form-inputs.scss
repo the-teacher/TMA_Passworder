@@ -3,8 +3,7 @@
 
 .form {
   &--label {
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.2rem;
     color: $color-secondary;
   }
 }
@@ -14,7 +13,7 @@
 .form-textarea {
   width: 100%;
   padding: 8px 12px;
-  font-size: 16px;
+  font-size: 1.6rem;
   border: 1px solid color.scale($color-dark, $lightness: 70%);
   border-radius: 4px;
   transition:
