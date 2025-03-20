@@ -7,9 +7,6 @@ import { createTestUser } from './utils/createTestUser';
 import { setupTestDatabase } from '@utils/tests/dbHelpers';
 import { type SQLiteDatabase } from '@libs/sqlite';
 
-// Ensure logs are suppressed during tests
-process.env.MIGRATOR_LOGS = 'buffer';
-
 describe('findOrCreateAuthProvider', () => {
   let db: SQLiteDatabase;
   let userId: number;

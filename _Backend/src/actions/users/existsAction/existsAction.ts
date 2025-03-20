@@ -8,7 +8,7 @@ import { withDatabase } from '@libs/sqlite';
 import { type ServiceType } from '../types';
 
 // Action level
-import { firstInAuthProviders } from '@queries/authProviders/firstInAuthProviders';
+import { firstInAuthProviders } from '@queries/authProviders';
 
 // application/registration/queries/authProviders/firstInAuthProviders
 import { validateExistsParams } from './validations';
