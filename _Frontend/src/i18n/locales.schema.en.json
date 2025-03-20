@@ -116,6 +116,32 @@
     "benefitsMessage": "Remember, our password manager offers secure storage, easy organization, and peace of mind knowing your digital life is protected.",
     "tryAgainButton": "I'd like to try it after all"
   },
+  "CreateAccountForm": {
+    "title": "Create Account",
+    "subtitle": "Please enter your email address to create a new account.",
+    "fields": {
+      "email": "Email Address"
+    },
+    "placeholders": {
+      "email": "your.email@example.com"
+    },
+    "disclaimer": "By continuing, you confirm your agreement with the <RulesLink>project rules</RulesLink> and <PolicyLink>data processing policy</PolicyLink>.",
+    "actions": {
+      "submit": "Create Account",
+      "submitting": "Creating...",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "serverError": "An error occurred. Please try again."
+    },
+    "validation": {
+      "email": {
+        "required": "Email is required",
+        "invalid": "Please enter a valid email address",
+        "max": "Email cannot exceed {{max}} characters"
+      }
+    }
+  },
   "UserRegistrationData": {
     "title": "Account Creation",
     "subtitle": "We will create a new account for you using the following data.",

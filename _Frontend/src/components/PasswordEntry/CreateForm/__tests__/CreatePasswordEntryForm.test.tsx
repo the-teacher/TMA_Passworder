@@ -7,7 +7,7 @@ import CreatePasswordEntryForm from "../CreatePasswordEntryForm";
 import { useSubmitForm } from "../hooks/useSubmitForm";
 import EventEmitter from "@lib/EventEmitter";
 import { validationSchema } from "../validationSchema";
-import type { ServerErrors } from "../utils/getFieldStatus";
+import type { ServerErrors } from "../../../../utils/forms/getFieldStatus";
 
 // Mock dependencies
 jest.mock("react-hook-form", () => ({

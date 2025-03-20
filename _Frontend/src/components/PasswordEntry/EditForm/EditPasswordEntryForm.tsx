@@ -11,7 +11,7 @@ import {
   type FormData
 } from "../CreateForm/validationSchema";
 import { useSubmitForm } from "../CreateForm/hooks/useSubmitForm";
-import type { ServerErrors } from "../CreateForm/utils/getFieldStatus";
+import type { ServerErrors } from "../../../utils/forms/getFieldStatus";
 import FormError from "../CreateForm/components/FormError/FormError";
 
 import "@ui-kit/text-styles.scss";

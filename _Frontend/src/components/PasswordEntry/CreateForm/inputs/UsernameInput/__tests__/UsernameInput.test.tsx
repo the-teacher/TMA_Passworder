@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import UsernameInput from "../UsernameInput";
-import { getFieldStatus } from "../../../utils/getFieldStatus";
+import { getFieldStatus } from "@utils/forms";
 
 jest.mock("react-hook-form", () => ({
   useFormContext: jest.fn()
@@ -13,7 +13,7 @@ jest.mock("react-i18next", () => ({
 }));
 
 // Mock getFieldStatus at file level
-jest.mock("../../../utils/getFieldStatus", () => ({
+jest.mock("@utils/forms/getFieldStatus", () => ({
   getFieldStatus: jest.fn().mockReturnValue({
     className: "info--success",
     message: "Valid username"

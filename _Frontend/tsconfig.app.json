@@ -19,7 +19,8 @@
       "@i18n/*": ["src/i18n/*"],
       "@story/*": [".storybook/*"],
       "@lib/*": ["src/lib/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@hooks/*": ["src/hooks/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,

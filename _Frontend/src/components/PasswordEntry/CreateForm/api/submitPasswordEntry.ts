@@ -1,5 +1,5 @@
 import type { FormData } from "../validationSchema";
-import type { ServerErrors } from "../utils/getFieldStatus";
+import type { ServerErrors } from "../../../../utils/forms/getFieldStatus";
 
 export const submitPasswordEntry = async (
   data: FormData

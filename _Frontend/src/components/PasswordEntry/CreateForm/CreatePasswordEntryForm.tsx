@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema, type FormData } from "./validationSchema";
 import { useSubmitForm } from "./hooks/useSubmitForm";
 import { useTranslation } from "react-i18next";
-import type { ServerErrors } from "./utils/getFieldStatus";
+import type { ServerErrors } from "@utils/forms/getFieldStatus";
 import { useParams } from "react-router";
 
 import "@ui-kit/text-styles.scss";

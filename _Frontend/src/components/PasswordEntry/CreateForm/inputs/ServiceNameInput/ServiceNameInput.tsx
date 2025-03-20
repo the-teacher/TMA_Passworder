@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import type { FormData } from "../../validationSchema";
 import {
+  getFieldStatus,
   createHandleSpaces,
   createHandleTrim
-} from "../../utils/handleSpacesUtils";
-import { getFieldStatus } from "../../utils/getFieldStatus";
+} from "@utils/forms";
 
 const ServiceNameInput = () => {
   const { t } = useTranslation("CreatePasswordEntryForm");

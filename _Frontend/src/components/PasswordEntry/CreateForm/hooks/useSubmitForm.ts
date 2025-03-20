@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import EventEmitter from "@lib/EventEmitter";
 import { useNavigate } from "react-router";
 import { type FormData } from "../validationSchema";
-import { type ServerErrors } from "../utils/getFieldStatus";
+import { type ServerErrors } from "../../../../utils/forms/getFieldStatus";
 import { submitPasswordEntry } from "../api/submitPasswordEntry";
 import { showPasswordEntryPath } from "@routes/helpers";
 

@@ -18,9 +18,7 @@ const mockUserData = {
 };
 
 const RegistrationPage = () => {
-  const [regState, setRegState] = useState<RegistrationState>(
-    "userRegistrationData"
-  );
+  const [regState, setRegState] = useState<RegistrationState>("welcomeMessage");
 
   if (regState === "registrationConfirmed") {
     return <div>Registration confirmed! Redirecting...</div>;

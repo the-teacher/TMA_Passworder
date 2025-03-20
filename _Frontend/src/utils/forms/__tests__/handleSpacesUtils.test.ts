@@ -4,11 +4,19 @@ import {
   createHandleNoSpaces
 } from "../handleSpacesUtils";
 import type { UseFormSetValue } from "react-hook-form";
-import type { FormData } from "../../validationSchema";
+
+// Mock form data type instead of importing from external schema
+type MockFormData = {
+  serviceName: string;
+  username: string;
+  password: string;
+  serviceUrl?: string;
+  notes?: string;
+};
 
 describe("handleSpacesUtils", () => {
   const mockSetValue = jest.fn() as jest.MockedFunction<
-    UseFormSetValue<FormData>
+    UseFormSetValue<MockFormData>
   >;
 
   beforeEach(() => {
@@ -16,7 +24,7 @@ describe("handleSpacesUtils", () => {
   });
 
   describe("createHandleSpaces", () => {
-    const handleSpaces = createHandleSpaces(mockSetValue);
+    const handleSpaces = createHandleSpaces<MockFormData>(mockSetValue);
 
     it("normalizes multiple spaces to single space", () => {
       const event = {
@@ -54,7 +62,7 @@ describe("handleSpacesUtils", () => {
   });
 
   describe("createHandleTrim", () => {
-    const handleTrim = createHandleTrim(mockSetValue);
+    const handleTrim = createHandleTrim<MockFormData>(mockSetValue);
 
     it("trims spaces from both ends", () => {
       const event = {
@@ -69,7 +77,7 @@ describe("handleSpacesUtils", () => {
       expect(mockSetValue).toHaveBeenCalledWith(
         "serviceName",
         "text with spaces",
-        { shouldValidate: true }
+        { shouldValidate: true, shouldDirty: true }
       );
     });
 
@@ -86,13 +94,13 @@ describe("handleSpacesUtils", () => {
       expect(mockSetValue).toHaveBeenCalledWith(
         "serviceName",
         "multiple   internal   spaces",
-        { shouldValidate: true }
+        { shouldValidate: true, shouldDirty: true }
       );
     });
   });
 
   describe("createHandleNoSpaces", () => {
-    const handleNoSpaces = createHandleNoSpaces(mockSetValue);
+    const handleNoSpaces = createHandleNoSpaces<MockFormData>(mockSetValue);
 
     it("removes all spaces", () => {
       const event = {
@@ -128,7 +136,7 @@ describe("handleSpacesUtils", () => {
   });
 
   it("handles different field names correctly", () => {
-    const handleNoSpaces = createHandleNoSpaces(mockSetValue);
+    const handleNoSpaces = createHandleNoSpaces<MockFormData>(mockSetValue);
     const fields = [
       "serviceName",
       "username",

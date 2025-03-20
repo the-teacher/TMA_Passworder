@@ -1,0 +1,28 @@
+{
+  "CreateAccountForm": {
+    "title": "Создание учетной записи",
+    "subtitle": "Пожалуйста, введите ваш email для создания новой учетной записи.",
+    "fields": {
+      "email": "Email адрес"
+    },
+    "placeholders": {
+      "email": "ваш.email@example.com"
+    },
+    "disclaimer": "Продолжая процесс, вы подтверждаете свое согласие с <RulesLink>правилами проекта</RulesLink> и <PolicyLink>процессом обработки данных</PolicyLink>.",
+    "actions": {
+      "submit": "Создать учетную запись",
+      "submitting": "Создание...",
+      "cancel": "Отмена"
+    },
+    "errors": {
+      "serverError": "Произошла ошибка. Пожалуйста, попробуйте снова."
+    },
+    "validation": {
+      "email": {
+        "required": "Email обязателен",
+        "invalid": "Пожалуйста, введите корректный email адрес",
+        "max": "Email не может превышать {{max}} символов"
+      }
+    }
+  }
+}

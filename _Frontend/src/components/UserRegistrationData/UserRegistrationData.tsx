@@ -8,6 +8,8 @@ import "@ui-kit/data-display.scss";
 import "@ui-kit/buttons.scss";
 import "./styles.scss";
 
+import CreateAccountForm from "@components/UserRegistration/CreateAccountForm";
+
 type UserData = {
   id: number;
   username?: string;
@@ -27,6 +29,17 @@ const UserRegistrationData = ({
   onDecline
 }: UserRegistrationDataProps) => {
   const { t } = useTranslation("UserRegistrationData");
+  const test = true;
+
+  if (test) {
+    return (
+      <CreateAccountForm
+        onSubmit={() => {}}
+        onCancel={() => {}}
+        isSubmitting={false}
+      />
+    );
+  }
 
   return (
     <div className="card__centered">
