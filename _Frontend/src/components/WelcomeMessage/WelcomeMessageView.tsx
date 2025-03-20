@@ -25,6 +25,13 @@ const WelcomeMessageView = ({
     <div className="card__centered">
       <div className="card--container">
         <div className="card--header">
+          <img
+            width={200}
+            height={200}
+            className="m20 card--logo"
+            src="/brand/icons/HamsterLogoHeart.svg"
+            alt="Hamster Logo Heart"
+          />
           <h2 className="card--title">{t("title")}</h2>
           <p className="card--subtitle">{t("subtitle")}</p>
         </div>

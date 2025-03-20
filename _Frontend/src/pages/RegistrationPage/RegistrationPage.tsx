@@ -18,7 +18,9 @@ const mockUserData = {
 };
 
 const RegistrationPage = () => {
-  const [regState, setRegState] = useState<RegistrationState>("welcomeMessage");
+  const [regState, setRegState] = useState<RegistrationState>(
+    "userRegistrationData"
+  );
 
   if (regState === "registrationConfirmed") {
     return <div>Registration confirmed! Redirecting...</div>;
@@ -41,12 +43,10 @@ const RegistrationPage = () => {
   }
 
   return (
-    <div className="m20">
-      <WelcomeMessage
-        onConfirm={() => setRegState("userRegistrationData")}
-        onDecline={() => setRegState("sorryAboutDecline")}
-      />
-    </div>
+    <WelcomeMessage
+      onConfirm={() => setRegState("userRegistrationData")}
+      onDecline={() => setRegState("sorryAboutDecline")}
+    />
   );
 };
 

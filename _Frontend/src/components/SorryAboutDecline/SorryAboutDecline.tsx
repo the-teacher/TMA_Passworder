@@ -17,6 +17,13 @@ const SorryAboutDecline = ({ buttonHandler }: SorryAboutDeclineProps) => {
     <div className="card__centered">
       <div className="card--container">
         <div className="card--header">
+          <img
+            width={150}
+            height={150}
+            className="m20 card--logo"
+            src="/brand/icons/HamsterLogoTears.svg"
+            alt="Hamster Logo Heart"
+          />
           <h2 className="card--title">{t("title")}</h2>
         </div>
 

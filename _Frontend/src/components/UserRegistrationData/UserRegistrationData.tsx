@@ -32,17 +32,19 @@ const UserRegistrationData = ({
     <div className="card__centered">
       <div className="card--container">
         <div className="card--header">
+          <img
+            width={200}
+            height={200}
+            className="m20 card--logo"
+            src="/brand/icons/HamsterLogoHeart.svg"
+            alt="Hamster Logo Heart"
+          />
           <h2 className="card--title">{t("title")}</h2>
           <p className="card--subtitle">{t("subtitle")}</p>
         </div>
 
         <div className="card--content">
           <div className="data-display--container">
-            <div className="data-display--field">
-              <div className="data-display--label">{t("fields.userId")}</div>
-              <div className="data-display--value">{userData.id}</div>
-            </div>
-
             {userData.username && (
               <div className="data-display--field">
                 <div className="data-display--label">
@@ -51,6 +53,11 @@ const UserRegistrationData = ({
                 <div className="data-display--value">{userData.username}</div>
               </div>
             )}
+
+            <div className="data-display--field">
+              <div className="data-display--label">{t("fields.userId")}</div>
+              <div className="data-display--value">{userData.id}</div>
+            </div>
 
             {userData.first_name && (
               <div className="data-display--field">
