@@ -14,6 +14,7 @@ import EmailInput from "./inputs/EmailInput";
 import "@ui-kit/card.scss";
 import "@ui-kit/text-styles.scss";
 import "@ui-kit/margins.scss";
+import "@ui-kit/paddings.scss";
 import "@ui-kit/form-inputs.scss";
 import "@ui-kit/form-groups.scss";
 import "@ui-kit/buttons.scss";
@@ -69,19 +70,19 @@ const CreateAccountForm = ({
 
               <EmailInput />
 
-              <div className="info info--secondary mb16">
-                <p className="text mb16">
+              <ul className="ul mt32 mb32 pl24">
+                <li className="text mb16">
                   <Trans
                     i18nKey="CreateAccountForm:info.emailSent"
                     components={{
-                      PinCode: <span className="text--bold text--success" />
+                      PinCode: <span className="text--bold" />
                     }}
                   />
-                </p>
+                </li>
 
-                <p className="text mb8">{t("info.pinCodes")}</p>
-                <p className="text">{t("info.emailSecurity")}</p>
-              </div>
+                <li className="text mb8">{t("info.pinCodes")}</li>
+                <li className="text">{t("info.emailSecurity")}</li>
+              </ul>
 
               <p className="text mb16">
                 <Trans

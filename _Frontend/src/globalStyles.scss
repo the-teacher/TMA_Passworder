@@ -31,7 +31,7 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 16px;
+  margin-bottom: 1.6rem;
 }
 
 input,
@@ -45,14 +45,14 @@ ul,
 ol,
 li {
   list-style: none;
-  list-style-position: inside;
+  list-style-position: outside;
 }
 
-ul {
+ul li {
   list-style: circle;
 }
 
-ol {
+ol li {
   list-style: decimal;
 }
 
